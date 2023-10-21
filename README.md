@@ -4,12 +4,12 @@
 
 
 - ### ***Lấy source trên git về nếu máy tính chưa có***
-**Cách 1**
+- **Cách 1**
   Vào folder nơi muốn chứa file và mở terminal 
   - **git clone url** (url => là đường link từ trên github bấm nút màu xamh lá (<> Code) sẽ thấy))
   - **git pull**
     
-**Cách2**
+- **Cách2**
   - Lên github bấm vào nút xanh lá download file .zip
 
     
