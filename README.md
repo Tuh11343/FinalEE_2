@@ -27,7 +27,7 @@
     - **git status** kiểm tra trạng thấi những thay đổi có sẵn sàng được push
     - **git commit -m "Message"** *Message => ghi tóm tắt nội dung đã thay đổi trên source*
     - **git push origin branchName** hoặc **git push** *branchName => là nhánh của mình*
-- ### ***Kiểm tra và tạo *Pull Request* sau khi *Push* code ***
+- ### ***Kiểm tra và tạo *Pull Request* sau khi *Push* code***
 
    - Lên github kiểm tra đã được push lên chưa và tạo **Pull Request**
    - Phần nội dung nên ghi chi tiết nội dung mình đã thay đổi
