@@ -4,6 +4,7 @@ import FinalEE.Entity.ItemMaterial;
 import FinalEE.Repository.ItemMaterialRepository;
 import FinalEE.Service.ItemMaterialService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,22 +20,33 @@ public class ItemMaterialServiceImpl implements ItemMaterialService{
     }
     
     @Override
-    public ItemMaterial create(ItemMaterial itemMaterial) {
-        return itemMaterialRepository.save(itemMaterial);
-        
+    public boolean create(ItemMaterial itemMaterial) {
+        try {
+            // Kiểm tra xem itemMaterial có tồn tại trong database hay không
+            Optional<ItemMaterial> existingItemMaterial = itemMaterialRepository.findById(itemMaterial.getId());
+
+            // Lưu itemMaterial và kiểm tra kết quả
+            itemMaterialRepository.save(itemMaterial);
+            if (existingItemMaterial.isPresent()) {
+                System.out.println("Cap nhat thanh cong itemMaterial:" + itemMaterial.getId());
+            } else {
+                System.out.println("Them thanh cong itemMaterial:" + itemMaterial.getId());
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
-    public ItemMaterial update(ItemMaterial itemMaterial, int id) {
-        
-        ItemMaterial itemMaterialGet=itemMaterialRepository.findById(id).orElse(null);
-        
-        return itemMaterialRepository.save(itemMaterialGet);
-    }
-
-    @Override
-    public void delete(ItemMaterial itemMaterial) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean deleteByID(int id) {
+        if (itemMaterialRepository.existsById(id)) {
+            //itemMaterialRepository.deleteById(itemMaterialID);
+            System.out.println("Ban da xoa:" + id);
+            return true;
+        }
+        return false;
     }
 
     @Override

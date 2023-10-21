@@ -5,6 +5,7 @@ import FinalEE.Repository.ItemTypeRepository;
 import FinalEE.Service.ItemTypeService;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,25 +20,34 @@ public class ItemTypeServiceImpl implements ItemTypeService{
         
     }
     
-    
-    
     @Override
-    public ItemType create(ItemType itemType) {
-        return itemTypeRepository.save(itemType);
-        
+    public boolean create(ItemType itemType) {
+        try {
+            // Kiểm tra xem itemType có tồn tại trong database hay không
+            Optional<ItemType> existingItemType = itemTypeRepository.findById(itemType.getId());
+
+            // Lưu itemType và kiểm tra kết quả
+            itemTypeRepository.save(itemType);
+            if (existingItemType.isPresent()) {
+                System.out.println("Cap nhat thanh cong itemType:" + itemType.getId());
+            } else {
+                System.out.println("Them thanh cong itemType:" + itemType.getId());
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
-    public ItemType update(ItemType itemType, int id) {
-        
-        ItemType itemTypeGet=itemTypeRepository.findById(id).orElse(null);
-        
-        return itemTypeRepository.save(itemTypeGet);
-    }
-
-    @Override
-    public void delete(ItemType itemType) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean deleteByID(int id) {
+        if (itemTypeRepository.existsById(id)) {
+            //itemTypeRepository.deleteById(itemTypeID);
+            System.out.println("Ban da xoa:" + id);
+            return true;
+        }
+        return false;
     }
 
     @Override

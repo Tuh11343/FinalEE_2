@@ -6,9 +6,8 @@ import java.util.List;
 
 public interface OrderDetailService {
     
-    OrderDetail create(OrderDetail item);
-    OrderDetail update(OrderDetail item,int id);
-    void delete(OrderDetail item);
+    boolean create(OrderDetail orderDetail);
+    boolean deleteByID(int id);
     OrderDetail getOrderDetail(int id);
     List<OrderDetail> getAllOrderDetail();
     

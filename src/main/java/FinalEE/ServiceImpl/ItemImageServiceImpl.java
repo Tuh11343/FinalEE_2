@@ -5,6 +5,7 @@ import FinalEE.Repository.ItemImageRepository;
 import FinalEE.Service.ItemImageService;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,22 +23,33 @@ public class ItemImageServiceImpl implements ItemImageService{
     
     
     @Override
-    public ItemImage create(ItemImage itemImage) {
-        return itemImageRepository.save(itemImage);
-        
+    public boolean create(ItemImage itemImage) {
+        try {
+            // Kiểm tra xem itemImage có tồn tại trong database hay không
+            Optional<ItemImage> existingItemImage = itemImageRepository.findById(itemImage.getId());
+
+            // Lưu itemImage và kiểm tra kết quả
+            itemImageRepository.save(itemImage);
+            if (existingItemImage.isPresent()) {
+                System.out.println("Cap nhat thanh cong itemImage:" + itemImage.getId());
+            } else {
+                System.out.println("Them thanh cong itemImage:" + itemImage.getId());
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
-    public ItemImage update(ItemImage itemImage, int id) {
-        
-        ItemImage itemImageGet=itemImageRepository.findById(id).orElse(null);
-        
-        return itemImageRepository.save(itemImageGet);
-    }
-
-    @Override
-    public void delete(ItemImage itemImage) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean deleteByID(int id) {
+        if (itemImageRepository.existsById(id)) {
+            //itemImageRepository.deleteById(itemImageID);
+            System.out.println("Ban da xoa:" + id);
+            return true;
+        }
+        return false;
     }
 
     @Override

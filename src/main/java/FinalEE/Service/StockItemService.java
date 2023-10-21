@@ -6,9 +6,8 @@ import java.util.List;
 
 public interface StockItemService {
     
-    StockItem create(StockItem stockItem);
-    StockItem update(StockItem stockItem,int id);
-    void delete(StockItem stockItem);
+    boolean create(StockItem stockItem);
+    boolean deleteByID(int id);
     StockItem getStockItem(int id);
     List<StockItem> getAllStockItem();
     

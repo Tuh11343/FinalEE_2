@@ -6,9 +6,8 @@ import java.util.List;
 
 public interface PermissionService {
     
-    Permission create(Permission item);
-    Permission update(Permission item,int id);
-    void delete(Permission item);
+    boolean create(Permission permission);
+    boolean deleteByID(int id);
     Permission getPermission(int id);
     List<Permission> getAllPermission();
     

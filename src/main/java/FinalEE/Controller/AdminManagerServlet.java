@@ -15,6 +15,8 @@ import FinalEE.Entity.ItemOrder;
 import FinalEE.Entity.ItemType;
 import FinalEE.Entity.OrderDetail;
 import FinalEE.Entity.Permission;
+import FinalEE.Entity.Sale;
+import FinalEE.Entity.StockItem;
 import FinalEE.ServiceImpl.AccountServiceImpl;
 import FinalEE.ServiceImpl.CustomerServiceImpl;
 import FinalEE.ServiceImpl.DiscountCardServiceImpl;
@@ -33,15 +35,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
- *
  * @author ADMIN
  */
 @Controller
@@ -99,27 +102,32 @@ public class AdminManagerServlet extends HttpServlet {
 
         List<Account> accountList = accountServiceImpl.getAllAccount();
         List<Customer> customerList = customerServiceImpl.getAllCustomer();
-        //List<DiscountCard> discountCardList = discountCardServiceImpl.getAllDiscountCard();
+        List<DiscountCard> discountCardList = discountCardServiceImpl.getAllDiscountCard();
         List<Item> itemList = itemServiceImpl.getAllItem();
         List<ItemCollection> itemCollectionList = itemCollectionServiceImpl.getAllItemCollection();
         List<ItemImage> itemImageList = itemImageServiceImpl.getAllItemImage();
         List<ItemMaterial> itemMaterialList = itemMaterialServiceImpl.getAllItemMaterial();
-//        List<ItemOrder> orderList = orderServiceImpl.getAllOrder();
-//        List<OrderDetail> orderDetailList = orderDetailServiceImpl.getAllOrderDetail();
-        
-
-
-        List<Permission> permissionList = permissionServiceImpl.getAllPermission();
+        List<ItemOrder> orderList = orderServiceImpl.getAllOrder();
+        List<OrderDetail> orderDetailList = orderDetailServiceImpl.getAllOrderDetail();
         List<ItemType> itemTypeList = itemTypeServiceImpl.getAllItemType();
+        List<Permission> permissionList = permissionServiceImpl.getAllPermission();
+        List<Sale> saleList = saleServiceImpl.getAllSale();
+        List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
 
         HttpSession session = request.getSession();
-        session.setAttribute("itemList", itemList);
         session.setAttribute("accountList", accountList);
-        session.setAttribute("permissionList", permissionList);
         session.setAttribute("customerList", customerList);
+        session.setAttribute("discountCardList", discountCardList);
+        session.setAttribute("itemList", itemList);
         session.setAttribute("itemCollectionList", itemCollectionList);
+        session.setAttribute("itemImageList", itemImageList);
         session.setAttribute("itemMaterialList", itemMaterialList);
+        session.setAttribute("orderList", orderList);
+        session.setAttribute("orderDetailList", orderDetailList);
         session.setAttribute("itemTypeList", itemTypeList);
+        session.setAttribute("permissionList", permissionList);
+        session.setAttribute("saleList", saleList);
+        session.setAttribute("stockItemList", stockItemList);
 
         request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
 
@@ -135,7 +143,7 @@ public class AdminManagerServlet extends HttpServlet {
         HttpSession session = request.getSession();
         switch (action) {
 
-//            Account Handle
+//            Account
             case "account_btnDelete" -> {
                 int accountID = Integer.parseInt(request.getParameter("accountID"));
                 if (accountServiceImpl.deleteByID(accountID)) {
@@ -335,7 +343,7 @@ public class AdminManagerServlet extends HttpServlet {
 
                 int customerID = Integer.parseInt(request.getParameter("add_discountCardID"));
                 String name = request.getParameter("add_discountCardName");
-                int discountPercentage = Integer.parseInt(request.getParameter("add_discountPercentage"));
+                int discountPercentage = Integer.parseInt(request.getParameter("add_discountCardDiscountPercentage"));
 
                 DiscountCard discountCard = new DiscountCard();
                 discountCard.setCustomer_id(customerID);
@@ -354,18 +362,79 @@ public class AdminManagerServlet extends HttpServlet {
             }
 
             case "discountCard_btnUpdate" -> {
+                int id = Integer.parseInt(request.getParameter("update_discountCardID"));
+                int discountPercentage = Integer.parseInt(request.getParameter("update_discountCardDiscountPercentage"));
+                String name = request.getParameter("update_discountCardName");
+                int customerID = Integer.parseInt(request.getParameter("update_discountCardID"));
 
+                DiscountCard discountCard = new DiscountCard();
+                discountCard.setId(id);
+                discountCard.setCustomer_id(customerID);
+                discountCard.setDiscount_percentage(discountPercentage);
+                discountCard.setName(name);
+
+                if (discountCardServiceImpl.create(discountCard)) {
+                    response.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thành công!');</script>");
+
+                } else {
+                    response.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thất bại!');</script>");
+                }
+
+                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
             }
 
             case "discountCard_btnDelete" -> {
+                int discountCardID = Integer.parseInt(request.getParameter("discountCardID"));
+                if (discountCardServiceImpl.deleteByID(discountCardID)) {
+                    response.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thành công!');</script>");
+                } else {
+                    response.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thất bại!');</script>");
+                }
+                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+            }
+
+//            Item Collection
+            case "itemCollection_btnAdd" -> {
+
+                String name = request.getParameter("add_itemCollectionName");
+
+                ItemCollection itemCollection = new ItemCollection();
+                itemCollection.setName(name);
+
+                if (itemCollectionServiceImpl.create(itemCollection)) {
+                    response.getWriter().println("<script>alert('Thêm bộ sưu tập thành công!');</script>");
+                } else {
+                    response.getWriter().println("<script>alert('Thêm bộ sưu tập thất bại!');</script>");
+                }
+
+                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+            }
+
+            case "itemCollection_btnUpdate" -> {
+
+                int id = Integer.parseInt(request.getParameter("update_itemCollectionID"));
+                String name = request.getParameter("update_itemCollectionName");
+
+                ItemCollection itemCollection = new ItemCollection();
+                itemCollection.setId(id);
+                itemCollection.setName(name);
+
+                if (itemCollectionServiceImpl.create(itemCollection)) {
+                    response.getWriter().println("<script>alert('Thêm bộ sưu tập thành công!');</script>");
+                } else {
+                    response.getWriter().println("<script>alert('Thêm bộ sưu tập thất bại!');</script>");
+                }
 
             }
 
-            default -> {
+            case "itemCollection_btnDelete" -> {
 
-                System.out.println("Khong ton tai action trong AdminManagerServlet");
 
             }
+
+            default -> System.out.println("Khong ton tai action trong AdminManagerServlet");
+
+
         }
 
     }

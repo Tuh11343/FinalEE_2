@@ -65,15 +65,14 @@
                                 <ul class="dropmenu">
                                     <c:forEach items="${itemCollectionList}" var="itemCollection">
                                         <li>
-
                                             <a onclick="itemCollectionClick(`form_itemCollection`)" >${itemCollection.name}</a>
                                             <form id="form_itemCollection" action="/ItemServlet" method="post">
                                                 <input type="hidden" value="${itemCollection.name}"  name="itemType"/>
                                                 <input type="hidden" value="itemCollectionClick" name="action"/>
                                             </form>
                                         </li>
-
                                     </c:forEach>
+
                                 </ul>
                             </li>
                             <li class="item">
@@ -103,6 +102,7 @@
                                     <li><a href="productlist.html">Phụ Kiện</a></li>
                                     <li><a href="productlist.html">Quần Áo</a></li>
                                     <li><a href="productlist.html">Giày dép</a></li>
+
                                 </ul>
                             </li>
                         </ul>
@@ -718,6 +718,7 @@
                         <a href="">chính sách đổi tả</a>
                         <a href="">chính sách bảo mật</a>
                         <a href="">hướng dẫn mua hàng</a>
+                        
                     </div>
                     <div class="footer__right--store">
                         <h5 class="title --h5">hệ thống cửa hàng</h5>

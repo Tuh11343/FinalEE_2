@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface OrderService {
     
-    ItemOrder create(ItemOrder itemOrder);
-    void delete(ItemOrder itemOrder);
+    boolean create(ItemOrder order);
+    boolean deleteByID(int id);
     ItemOrder getOrder(int id);
     List<ItemOrder> getAllOrder();
     
