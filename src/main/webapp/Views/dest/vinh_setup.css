@@ -1,0 +1,92 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+* {
+  font-family: "Roboto", sans-serif;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+li {
+  list-style: none;
+}
+button,
+input,
+select,
+textarea,
+label {
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+input {
+  cursor: text;
+}
+
+.flex {
+  display: flex;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-wrap-reverse {
+  flex-wrap: wrap-reverse;
+}
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+.item-center {
+  align-items: center;
+}
+.item-start {
+  align-items: flex-start;
+}
+.item-end {
+  align-items: flex-end;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-start {
+  justify-content: flex-start;
+}
+.justify-end {
+  justify-content: flex-end;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.justify-evenly {
+  justify-content: space-evenly;
+}
+.justify-around {
+  justify-content: space-around;
+}
+.flex-col {
+  flex-direction: column;
+}
+.flex-row {
+  flex-direction: row;
+}
+.flex-col-reverse {
+  flex-direction: column-reverse;
+}
+.flex-row-reverse {
+  flex-direction: column-reverse;
+}
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+:root{
+     --title-color: #514e62;
+    --bg-color: #fddfd7;
+    --submit-color: #f82444;
+}
+
