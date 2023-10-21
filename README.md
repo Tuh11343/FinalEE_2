@@ -14,6 +14,7 @@
 
     
 - ### ***Làm việc khi đã có source trên máy***
+  - Mở terminal và gõ **git clone url** => (url => là đường link từ trên github bấm nút màu xamh lá (<> Code) sẽ thấy))
   - **git checkout master** => (chuyển sang nhánh master)
   - **git pull** => (lấy toàn bộ code đã được các thành viên thay đổi)
   - **git checkout -b <branchName>** (tạo nhánh của mình nếu chưa có < ***có rồi thì bỏ -b*** >)
