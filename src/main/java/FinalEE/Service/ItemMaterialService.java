@@ -6,9 +6,8 @@ import java.util.List;
 
 public interface ItemMaterialService {
     
-    ItemMaterial create(ItemMaterial item);
-    ItemMaterial update(ItemMaterial item,int id);
-    void delete(ItemMaterial item);
+    boolean create(ItemMaterial itemMaterial);
+    boolean deleteByID(int id);
     ItemMaterial getItemMaterial(int id);
     List<ItemMaterial> getAllItemMaterial();
     

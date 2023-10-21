@@ -6,9 +6,8 @@ import java.util.List;
 
 public interface SaleService {
     
-    Sale create(Sale item);
-    Sale update(Sale item,int id);
-    void delete(Sale item);
+    boolean create(Sale sale);
+    boolean deleteByID(int id);
     Sale getSale(int id);
     List<Sale> getAllSale();
     

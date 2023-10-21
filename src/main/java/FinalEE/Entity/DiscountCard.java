@@ -18,7 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "discountCard")
+@Table(name = "discountcard")
 public class DiscountCard {
     
     @Id
