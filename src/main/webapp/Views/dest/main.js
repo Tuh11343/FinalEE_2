@@ -34,6 +34,13 @@ $(document).ready(function () {
     }
 
     productSlider();
+    console.log(1);    console.log(1);
+    console.log(1);
+    console.log(1);
+    console.log(1);
+    console.log(1);
+
+
 });
 
 
@@ -217,5 +224,6 @@ function itemCollectionClick(itemId) {
 function test() {
     console.log(1);
 }
+
 
 

@@ -99,13 +99,13 @@ public class AdminManagerServlet extends HttpServlet {
 
         List<Account> accountList = accountServiceImpl.getAllAccount();
         List<Customer> customerList = customerServiceImpl.getAllCustomer();
-        List<DiscountCard> discountCardList = discountCardServiceImpl.getAllDiscountCard();
+        //List<DiscountCard> discountCardList = discountCardServiceImpl.getAllDiscountCard();
         List<Item> itemList = itemServiceImpl.getAllItem();
         List<ItemCollection> itemCollectionList = itemCollectionServiceImpl.getAllItemCollection();
         List<ItemImage> itemImageList = itemImageServiceImpl.getAllItemImage();
         List<ItemMaterial> itemMaterialList = itemMaterialServiceImpl.getAllItemMaterial();
-        List<ItemOrder> orderList = orderServiceImpl.getAllOrder();
-        List<OrderDetail> orderDetailList = orderDetailServiceImpl.getAllOrderDetail();
+//        List<ItemOrder> orderList = orderServiceImpl.getAllOrder();
+//        List<OrderDetail> orderDetailList = orderDetailServiceImpl.getAllOrderDetail();
         
 
 
