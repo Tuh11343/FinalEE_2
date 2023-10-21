@@ -1,9 +1,9 @@
 # ProjectEE
 
-##Quy trình làm việc
+## Quy trình làm việc
 
 
-###***Lấy source trên git về nếu máy tính chưa có***
+### ***Lấy source trên git về nếu máy tính chưa có***
 
 - text ỉn red git checkout master
 
