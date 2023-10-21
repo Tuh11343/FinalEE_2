@@ -5,7 +5,7 @@
 
 ***Làm 1 chức năng mới***
 
-- git checkout master
+- text ỉn red git checkout master
 
 -git pull
 
