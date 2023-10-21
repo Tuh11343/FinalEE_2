@@ -18,7 +18,7 @@
   - **git checkout master** => (chuyển sang nhánh master)
   - **git pull** => (lấy toàn bộ code đã được các thành viên thay đổi)
   - **git checkout -b <branchName>** (tạo nhánh của mình nếu chưa có < ***có rồi thì bỏ -b*** >)
-*//tiếp tục làm việc trên branchName của mình*
+ - => *//tiếp tục làm việc trên branchName của mình*
 
 - ### ***Đẩy source sau khi đã code xong mỗi phiên làm việc***
   ***Kiểm tra đang ở branch nào***
