@@ -38,8 +38,8 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
-    <link rel="stylesheet" href="dest/style.min.css" />
-    <link rel="stylesheet" href="dest/fonts.css" />
+    <link rel="stylesheet" href="../dest/style.min.css" />
+    <link rel="stylesheet" href="../dest/fonts.css" />
 </head>
 
 <body class="homepage">
@@ -47,7 +47,7 @@
     <div class="container">
         <div class="header__left">
             <div class="header__logo">
-                <a href="#"><img class="img" src="./img/logo.png" alt="img-logo" /></a>
+                <a href="#"><img class="img" src="../img/logo.png" alt="img-logo" /></a>
             </div>
             <nav class="hedaer__navbar">
                 <ul class="header__navbar-sitemenu">
@@ -176,8 +176,8 @@
 </footer>
 
 <!-- Javascript -->
-<script type="text/javascript" src="dest/jsmain.min.js"></script>
-<script type="text/javascript" src="dest/main.js"></script>
+<script type="text/javascript" src="../dest/jsmain.min.js"></script>
+<script type="text/javascript" src="../dest/main.js"></script>
 </body>
 
 </html>
