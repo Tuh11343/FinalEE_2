@@ -55,7 +55,7 @@
                 <!--Account-->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed text" data-type="accountlist" type="button"
+                        <button class="accordion-button collapsed text" data-type="accountList" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
                                 aria-controls="flush-collapseOne">
                             Quản lý tài khoản
@@ -70,7 +70,7 @@
                 <!--Item-->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingTwo">
-                        <button class="accordion-button collapsed text" data-type="itemlist" type="button"
+                        <button class="accordion-button collapsed text" data-type="itemList" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false"
                                 aria-controls="flush-collapseTwo">
                             Quản lý sản phẩm
@@ -100,7 +100,7 @@
                 <!--Customer-->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingFour">
-                        <button class="accordion-button collapsed text" data-type="customerlist" type="button"
+                        <button class="accordion-button collapsed text" data-type="customerList" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false"
                                 aria-controls="flush-collapseFour">
                             Quản lý khách hàng
@@ -115,7 +115,7 @@
                 <!--Coupon-->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingFive">
-                        <button class="accordion-button collapsed text" data-type="couponlist" type="button"
+                        <button class="accordion-button collapsed text" data-type="discountCardList" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false"
                                 aria-controls="flush-collapseFive">
                             Quản lý mã giảm giá
@@ -130,7 +130,7 @@
                 <!--Item collection-->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingSix">
-                        <button class="accordion-button collapsed text" data-type="collectionlist" type="button"
+                        <button class="accordion-button collapsed text" data-type="itemCollectionList" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false"
                                 aria-controls="flush-collapseSix">
                             Quản lý bộ sưu tập
@@ -145,7 +145,7 @@
                 <!--Item image-->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingSeven">
-                        <button class="accordion-button collapsed text" data-type="imagelist" type="button"
+                        <button class="accordion-button collapsed text" data-type="itemImageList" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false"
                                 aria-controls="flush-collapseSeven">
                             Quản lý hình ảnh
@@ -160,7 +160,7 @@
                 <!--Item Material-->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingEight">
-                        <button class="accordion-button collapsed text" data-type="materiallist" type="button"
+                        <button class="accordion-button collapsed text" data-type="itemMaterialList" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseEight" aria-expanded="false"
                                 aria-controls="flush-collapseEight">
                             Quản lý nguyên liệu
@@ -175,7 +175,7 @@
                 <!--Item Order-->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingNine">
-                        <button class="accordion-button collapsed text" data-type="orderlist" type="button"
+                        <button class="accordion-button collapsed text" data-type="orderList" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseNine" aria-expanded="false"
                                 aria-controls="flush-collapseNine">
                             Quản lý hóa đơn
@@ -190,7 +190,7 @@
                 <!--Item Order Detail-->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingTen">
-                        <button class="accordion-button collapsed text" data-type="orderdetaillist" type="button"
+                        <button class="accordion-button collapsed text" data-type="orderDetailList" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseTen" aria-expanded="false"
                                 aria-controls="flush-collapseTen">
                             Quản lý chi tiết hóa đơn
@@ -205,7 +205,7 @@
                 <!--Item Type-->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingEleven">
-                        <button class="accordion-button collapsed text" data-type="itemtypelist" type="button"
+                        <button class="accordion-button collapsed text" data-type="itemTypeList" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseEleven" aria-expanded="false"
                                 aria-controls="flush-collapseEleven">
                             Quản lý kiểu sản phẩm
@@ -220,7 +220,7 @@
                 <!--Permission-->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingTwelve">
-                        <button class="accordion-button collapsed text" data-type="permissionlist" type="button"
+                        <button class="accordion-button collapsed text" data-type="permissionList" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseTwelve" aria-expanded="false"
                                 aria-controls="flush-collapseTwelve">
                             Quản lý phân quyền
@@ -235,7 +235,7 @@
                 <!--Sale-->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingThirdteen">
-                        <button class="accordion-button collapsed text" data-type="salelist" type="button"
+                        <button class="accordion-button collapsed text" data-type="saleList" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseThirdteen"
                                 aria-expanded="false" aria-controls="flush-collapseThirdteen">
                             Quản lý giảm giá
@@ -250,7 +250,7 @@
                 <!--Stock item-->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingFourteen">
-                        <button class="accordion-button collapsed text" data-type="salelist" type="button"
+                        <button class="accordion-button collapsed text" data-type="stockItemList" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseFourteen" aria-expanded="false"
                                 aria-controls="flush-collapseFourteen">
                             Quản lý màu sắc kích cỡ + số lượng
@@ -292,7 +292,6 @@
                     <th>Name</th>
                     <th>Password</th>
                     <th>Action</th>
-
                 </tr>
 
                 <c:forEach items="${accountList}" var="account">
@@ -826,7 +825,7 @@
 
         <!--Discount Card-->
         <div class="product-data table-data" data-type="discountCardList">
-            <h2 style="font-size:30px">Quản lý khách hàng</h2>
+            <h2 style="font-size:30px">Quản lý Thẻ Khuyến Mãi</h2>
 
             <!--Add Discount Card Button-->
             <div class="AddDiscountCard">
