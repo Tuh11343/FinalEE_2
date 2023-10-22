@@ -134,7 +134,6 @@ public class AdminManagerServlet extends HttpServlet {
         session.setAttribute("stockItemList", stockItemList);
 
         request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
-
     }
 
     @Override
