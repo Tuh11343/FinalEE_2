@@ -5,24 +5,18 @@
         <servlet-class>FinalEE.Controller.ItemServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>NewServlet</servlet-name>
-        <servlet-class>NewServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ItemServlet</servlet-name>
-        <url-pattern>/ItemServlet</url-pattern>
-        <url-pattern>/AddItemServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
         <servlet-name>AdminManagerServlet</servlet-name>
         <servlet-class>FinalEE.Controller.AdminManagerServlet</servlet-class>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>AdminManagerServlet</servlet-name>
         <url-pattern>/AdminManagerServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>NewServlet</servlet-name>
-        <url-pattern>/NewServlet</url-pattern>
+        <servlet-name>ItemServlet</servlet-name>
+        <url-pattern>/ItemServlet</url-pattern>
+        <url-pattern>/AddItemServlet</url-pattern>
     </servlet-mapping>
+
 </web-app>

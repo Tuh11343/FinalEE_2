@@ -861,7 +861,7 @@
                                         data-discountCardID="${discountCard.id}"
                                         data-discountCardCustomerID="${discountCard.customer_id}"
                                         data-discountCardName="${discountCard.name}"
-                                        data-discountCardDiscountPercentage="${discountCard.discount_percentage}"
+                                        data-discountCardPercentage="${discountCard.discount_percentage}"
                                 >Sửa
                                 </button>
                                 <input type="hidden" name="discountCardID" value="${discountCard.id}"/>
@@ -903,7 +903,7 @@
                         <div class="form-grp">
                             <label for="update_discountCardDiscountPercentage">Phần Trăm Giảm:</label>
                             <input type="number" maxlength="1000" id="update_discountCardDiscountPercentage"
-                                   name="update_discountCardDiscountPercentage" value=""
+                                   name="update_discountCardPercentage" value=""
                                    placeholder="Nhập vào phần trăm giảm"/>
                         </div>
 
@@ -945,7 +945,7 @@
                         <div class="form-grp">
                             <label for="add_discountCardDiscountPercentage">Phần Trăm Giảm:</label>
                             <input type="number" maxlength="1000" id="add_discountCardDiscountPercentage"
-                                   name="add_discountCardDiscountPercentage" value=""
+                                   name="add_discountCardPercentage" value=""
                                    placeholder="Nhập vào phần trăm giảm"/>
                         </div>
 

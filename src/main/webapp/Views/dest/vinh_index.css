@@ -516,7 +516,9 @@ https://flickity.metafizzy.co
 }
 
 /*# sourceMappingURL=style.min.css.map */
+.accordion-body {
 
+}
 .text{
     font-size: 20px;
 }
@@ -530,18 +532,32 @@ https://flickity.metafizzy.co
 }
 
 .left{
-    height: calc(100vh - 90px);
+    position:relative;
+    width:300px;
+
+}
+.left  .menu_left{
+    width:250px;
+    position: absolute;
+    top: 0;
+    left: 0;
     background-color: #f2f2f2;
     text-align: left;
-    width: 220px;
     border-right: 1px solid #000;
 }
 .center{
+    width:70%;
     padding:24px;
     display: flex;
     justify-content: center;
     flex:1;
 
+}
+.bang{
+    width: 100%;
+    max-height: 100vh;
+    overflow-x: scroll;
+    overflow-y: scroll;
 }
 .table-data{
     display:none;
@@ -565,7 +581,10 @@ th{
 .table-data.active{
     display:block;
 }
-.bang thead tr th:nth-child(1) {
+.bang tr td {
+    text-align: center;
+}
+/*.bang thead tr th:nth-child(1) {
     width: 20%;
 }
 .bang thead tr th:nth-child(2) {
@@ -582,7 +601,7 @@ th{
 }
 .bang thead tr th:nth-child(6){
     width:10%;
-}
+}*/
 .btnHD{
     width: 100px;
     max-height: 100px;
@@ -595,19 +614,16 @@ th{
     gap:5px;
     display:flex;
 }
-button[type="add"]{
+.btnAdd{
     background-color:green;
 }
-button[type="delete"]{
+.btnDel{
     background-color:red;
 }
-button[type="update"]{
+.btnUpdateUser,.btnUpdateItem{
     background-color:aquamarine;
 }
-button[type="save"]{
-    display:none;
-    background-color:#19f;
-}
+
 button:hover{
     cursor: pointer;
     color:#514e62;
@@ -643,13 +659,13 @@ button:hover{
 .form__add{
     margin:16px;
 }
-#add-user input {
+#modal-add-account input {
     border-bottom: 1px solid var(--title-color);
     background: transparent;
     height: 100%;
     padding: 0 5px;
 }
-#add-user button {
+#modal-add-account button {
     font-size: 1.2rem;
     color: #fff;
     background-color: var(--submit-color);
@@ -659,11 +675,11 @@ button:hover{
     width: 200px;
     border-radius: 10px;
 }
-#add-user button:hover {
+#modal-add-account button:hover {
     background: #ccc;
     color: #000000;
 }
-#add-user > label {
+#modal-add-account > label {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -742,20 +758,20 @@ button:hover{
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #888;
-    height: 580px;
+    height: 615px;
     max-width: 600px;
 }
 #update-products{
-/*    display:none;
-    position:fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);*/
-    
+    /*    display:none;
+        position:fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);*/
+
     display:none;
     position: fixed;
     z-index: 1;
@@ -765,7 +781,7 @@ button:hover{
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
-    
+
 }
 .form__update{
     margin:16px;
@@ -787,6 +803,7 @@ button:hover{
     background: transparent;
     height: 100%;
     padding: 0 5px;
+    width: 300px;
 }
 #update-products button {
     font-size: 1.2rem;
@@ -861,7 +878,7 @@ button:hover{
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #888;
-    height: 580px;
+    height: 615px;
     max-width: 600px; /* Giới hạn chiều rộng tối đa */
 }
 .modal__addproduct{
@@ -877,5 +894,6 @@ button:hover{
     transition: 0.4;
 
 }
+
 
 
