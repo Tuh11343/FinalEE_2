@@ -61,7 +61,7 @@ public class ItemServlet extends HttpServlet {
         session.setAttribute("itemCollectionList", itemCollectionList);
         //request.setAttribute("itemTypeList", itemTypeList);
         
-        request.getRequestDispatcher("Views/Home2.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/User/Test_Home.jsp").forward(request, response);
         //response.sendRedirect("Views/Home2.jsp");au
     }
 
@@ -94,9 +94,17 @@ public class ItemServlet extends HttpServlet {
         switch(action){
             case "itemCollectionClick" -> {
                 System.out.println("Ban da click itemCollection"+request.getParameter("itemType"));
+                request.getRequestDispatcher("Views/User/Test_Home.jsp").forward(request, response);
+
+            }
+            case "itemTypeClick"->{
+                System.out.println("Ban da click itemType"+request.getParameter("itemType"));
+                request.getRequestDispatcher("Views/User/Test_Home.jsp").forward(request, response);
             }
             case "btnSearchClick" -> {
                 System.out.println("Ban da search:"+request.getParameter("btnSearch_data"));
+                request.getRequestDispatcher("Views/User/Test_Home.jsp").forward(request, response);
+
             }
             default -> {
                 System.out.println(action);
