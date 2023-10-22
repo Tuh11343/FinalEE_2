@@ -26,8 +26,10 @@ public class Sale {
     
     @Column(name = "item_id")
     private int item_id;
+    @Column(name = "name")
+    private String name;
     @Column(name = "on_sale")
-    private boolean on_sale;
+    private int on_sale;
     @Column(name = "sale_percentage")
     private int sale_percentage;
     
