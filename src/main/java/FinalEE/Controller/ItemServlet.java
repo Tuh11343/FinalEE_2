@@ -4,12 +4,8 @@
  */
 package FinalEE.Controller;
 
-import FinalEE.Entity.Item;
-import FinalEE.Entity.ItemCollection;
-import FinalEE.Entity.ItemType;
-import FinalEE.ServiceImpl.ItemCollectionServiceImpl;
-import FinalEE.ServiceImpl.ItemServiceImpl;
-import FinalEE.ServiceImpl.ItemTypeServiceImpl;
+import FinalEE.Entity.*;
+import FinalEE.ServiceImpl.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,6 +24,9 @@ public class ItemServlet extends HttpServlet {
     private ItemServiceImpl itemServiceImpl;
     private ItemTypeServiceImpl itemTypeServiceImpl;
     private ItemCollectionServiceImpl itemCollectionServiceImpl;
+    private ItemImageServiceImpl itemImageServiceImpl;
+    private SaleServiceImpl saleServiceImpl;
+
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -53,42 +52,30 @@ public class ItemServlet extends HttpServlet {
         itemServiceImpl = webApplicationContext.getBean(ItemServiceImpl.class);
         itemTypeServiceImpl=webApplicationContext.getBean(ItemTypeServiceImpl.class);
         itemCollectionServiceImpl=webApplicationContext.getBean(ItemCollectionServiceImpl.class);
+        itemImageServiceImpl = webApplicationContext.getBean(ItemImageServiceImpl.class);
+        saleServiceImpl = webApplicationContext.getBean(SaleServiceImpl.class);
 
         List<ItemType> itemTypeList=itemTypeServiceImpl.getAllItemType();
         List<ItemCollection> itemCollectionList=itemCollectionServiceImpl.getAllItemCollection();
+        List<Item> itemList=itemServiceImpl.getAllItem();
+        List<ItemImage> itemImageList = itemImageServiceImpl.getAllItemImage();
+        List<Sale> saleList = saleServiceImpl.getAllSale();
+
+
         HttpSession session=request.getSession();
         session.setAttribute("itemTypeList", itemTypeList);
         session.setAttribute("itemCollectionList", itemCollectionList);
-        //request.setAttribute("itemTypeList", itemTypeList);
-        
+        session.setAttribute("itemList",itemList);
+        session.setAttribute("imageList",itemImageList);
+        session.setAttribute("saleList", saleList);
+
+
         request.getRequestDispatcher("Views/User/Test_Home.jsp").forward(request, response);
-        //response.sendRedirect("Views/Home2.jsp");au
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-//        String requestUri = request.getRequestURI();
-//        if (requestUri.equals("/AddItemServlet")) {
-//            Item item=new Item();
-//            item.setAmount(Integer.parseInt(request.getParameter("amount")));
-//            item.set_hot(Boolean.parseBoolean(request.getParameter("isHot")));
-//            item.setItem_type_id(Integer.parseInt(request.getParameter("itemTypeID")));
-//            item.setName(request.getParameter("name"));
-//            item.set_new(Boolean.parseBoolean(request.getParameter("isNew")));
-//            item.setPrice(Double.parseDouble(request.getParameter("price")));
-//            item.setYear_produce(Integer.parseInt(request.getParameter("yearProduce")));
-//            System.out.println(item.toString());
-//            itemServiceImpl.create(item);
-//        } else {
-//            List<Item> itemList = itemServiceImpl.getAllItem();
-//            System.out.println("Số lượng sản phẩm:" + itemList.size());
-//            HttpSession session=request.getSession();
-//            session.setAttribute("itemList", itemList);
-////            request.setAttribute("itemList", itemList);
-//            request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
-//        }
 
         String action=request.getParameter("action");
         switch(action){
