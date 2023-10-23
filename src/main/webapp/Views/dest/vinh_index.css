@@ -516,6 +516,14 @@ https://flickity.metafizzy.co
 }
 
 /*# sourceMappingURL=style.min.css.map */
+#add_itemImageItemID,#update_itemImageItemID,
+#update_orderDetailItemID,#add_orderDetailItemID,
+#update_saleItemID,#add_saleItemID,
+#update_stockItemItemID,#add_stockItemItemID{
+    max-width: 100px;
+  text-overflow: ellipsis;
+
+}
 .accordion-body {
 
 }
@@ -602,6 +610,12 @@ th{
 .bang thead tr th:nth-child(6){
     width:10%;
 }*/
+#load-more {
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+}
 .btnHD{
     width: 100px;
     max-height: 100px;
@@ -620,7 +634,10 @@ th{
 .btnDel{
     background-color:red;
 }
-.btnUpdateUser,.btnUpdateItem{
+.btnUpdateUser,.btnUpdateItem,.btnUpdateCustomer,.btnUpdateDiscountCard,
+.btnUpdateItemCollection,.btnUpdateItemImage,.btnUpdateItemMaterial,
+.btnUpdateOrder,.btnUpdateOrderDetail,.btnUpdateItemType,
+.btnUpdatePermission,.btnUpdateSale,.btnUpdateStockItem{
     background-color:aquamarine;
 }
 
@@ -783,21 +800,6 @@ button:hover{
     background-color: rgba(0, 0, 0, 0.4);
 
 }
-.form__update{
-    margin:16px;
-}
-.modal__updateproduct{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: 0.4s;
-}
-.modal__updateproduct.active{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: 0.4s;
-}
 #update-products input {
     border-bottom: 1px solid var(--title-color);
     background: transparent;
@@ -895,5 +897,1186 @@ button:hover{
 
 }
 
+/*Update customer*/
+#update-customers{
+    /*    display:none;
+        position:fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);*/
+
+    display:none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+#update-customers input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+    width: 300px;
+}
+#update-customers button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#update-customers button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#update-customers > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
 
 
+/*Add customer*/
+#add-customer {
+    display:block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#add-customer.active{
+    display:block;
+}
+#add-customer input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+}
+#add-customer button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#add-customer button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#add-customer > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.modal__addCustomer{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 0.4s;
+}
+.modal__addCustomer.active{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: 0.4;
+
+}
+
+
+/*Update discount*/
+#update-discountCard{
+    /*    display:none;
+        position:fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);*/
+
+    display:none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+#update-discountCard input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+    width: 300px;
+}
+#update-discountCard button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#update-discountCard button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#update-discountCard > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/*Add discount*/
+#add-discountCard {
+    display:block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#add-discountCard.active{
+    display:block;
+}
+#add-discountCard input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+}
+#add-discountCard button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#add-discountCard button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#add-discountCard > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.modal__addDiscountCard{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 0.4s;
+}
+.modal__addDiscountCard.active{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: 0.4;
+
+}
+
+/*Update ItemCollection*/
+#update-itemCollection{
+    /*    display:none;
+        position:fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);*/
+
+    display:none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+#update-itemCollection input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+    width: 300px;
+}
+#update-itemCollection button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#update-itemCollection button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#update-itemCollection > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/*Add ItemCollection*/
+#add-itemCollection {
+    display:block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#add-itemCollection.active{
+    display:block;
+}
+#add-itemCollection input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+}
+#add-itemCollection button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#add-itemCollection button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#add-itemCollection > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.modal__addItemCollection{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 0.4s;
+}
+.modal__addItemCollection.active{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: 0.4;
+
+}
+
+
+/*Update Image*/
+#update-itemImage{
+    /*    display:none;
+        position:fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);*/
+
+    display:none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+#update-itemImage input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+    width: 300px;
+}
+#update-itemImage button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#update-itemImage button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#update-itemImage > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+/*Add Image*/
+#add-itemImage {
+    display:block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#add-itemImage.active{
+    display:block;
+}
+#add-itemImage input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+}
+#add-itemImage button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#add-itemImage button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#add-itemImage > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.modal__addItemImage{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 0.4s;
+}
+.modal__addItemImage.active{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: 0.4;
+
+}
+
+/*Update Material*/
+#update-itemMaterial{
+    /*    display:none;
+        position:fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);*/
+
+    display:none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+#update-itemMaterial input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+    width: 300px;
+}
+#update-itemMaterial button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#update-itemMaterial button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#update-itemMaterial > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+/*Add Material*/
+#add-itemMaterial {
+    display:block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#add-itemMaterial.active{
+    display:block;
+}
+#add-itemMaterial input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+}
+#add-itemMaterial button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#add-itemMaterial button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#add-itemMaterial > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.modal__addItemMaterial{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 0.4s;
+}
+.modal__addItemMaterial.active{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: 0.4;
+
+}
+
+/*Update Order*/
+#update-order{
+    /*    display:none;
+        position:fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);*/
+
+    display:none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+#update-order input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+    width: 300px;
+}
+#update-order button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#update-order button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#update-order > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+/*Add Order*/
+#add-order {
+    display:block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#add-order.active{
+    display:block;
+}
+#add-order input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+}
+#add-order button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#add-order button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#add-order > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.modal__addOrder{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 0.4s;
+}
+.modal__addOrder.active{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: 0.4;
+
+}
+
+
+/*Update OrderDetail*/
+#update-orderDetail{
+    /*    display:none;
+        position:fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);*/
+
+    display:none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+#update-orderDetail input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+    width: 300px;
+}
+#update-orderDetail button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#update-orderl button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#update-orderDetail > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+/*Add OrderDetail*/
+#add-orderDetail {
+    display:block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#add-orderDetail.active{
+    display:block;
+}
+#add-orderDetail input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+}
+#add-orderDetail button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#add-orderDetail button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#add-orderDetail > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.modal__addOrderDetail{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 0.4s;
+}
+.modal__addOrderDetail.active{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: 0.4;
+
+}
+
+/*Update ItemType*/
+#update-itemType{
+    /*    display:none;
+        position:fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);*/
+
+    display:none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+#update-itemType input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+    width: 300px;
+}
+#update-itemType button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#update-itemType button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#update-itemType > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+/*Add ItemType*/
+#add-itemType {
+    display:block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#add-itemType.active{
+    display:block;
+}
+#add-itemType input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+}
+#add-itemType button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#add-itemType button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#add-itemType > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.modal__addItemType{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 0.4s;
+}
+.modal__addItemType.active{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: 0.4;
+
+}
+
+/*Update Permission*/
+#update-permission{
+    /*    display:none;
+        position:fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);*/
+
+    display:none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+#update-permission input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+    width: 300px;
+}
+#update-permission button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#update-permission button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#update-permission > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+/*Add Permission*/
+#add-permission {
+    display:block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#add-permission.active{
+    display:block;
+}
+#add-permission input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+}
+#add-permission button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#add-permission button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#add-permission > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.modal__addPermission{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 0.4s;
+}
+.modal__addPermission.active{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: 0.4;
+
+}
+
+/*Update Sale*/
+#update-sale{
+    /*    display:none;
+        position:fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);*/
+
+    display:none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+#update-sale input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+    width: 300px;
+}
+#update-sale button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#update-sale button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#update-sale > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+/*Add Sale*/
+#add-sale {
+    display:block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#add-sale.active{
+    display:block;
+}
+#add-sale input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+}
+#add-sale button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#add-sale button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#add-sale > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.modal__addSale{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 0.4s;
+}
+.modal__addSale.active{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: 0.4;
+
+}
+
+/*Update Stock Item*/
+#update-stockItem{
+    /*    display:none;
+        position:fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);*/
+
+    display:none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+#update-stockItem input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+    width: 300px;
+}
+#update-stockItem button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#update-stockItem button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#update-stockItem > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+/*Add Sale*/
+#add-stockItem {
+    display:block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#add-stockItem.active{
+    display:block;
+}
+#add-stockItem input {
+    border-bottom: 1px solid var(--title-color);
+    background: transparent;
+    height: 100%;
+    padding: 0 5px;
+}
+#add-stockItem button {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: var(--submit-color);
+    align-items: center;
+    margin: 16px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+}
+#add-stockItem button:hover {
+    background: #ccc;
+    color: #000000;
+}
+#add-stockItem > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.modal__addStockItem{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 0.4s;
+}
+.modal__addStockItem.active{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: 0.4;
+
+}

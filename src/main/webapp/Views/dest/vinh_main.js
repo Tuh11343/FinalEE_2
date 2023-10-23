@@ -26,8 +26,6 @@ function showtable() {
 
 }
 showtable();
-
-
 function handleDelete(e) {
     let confirmationResult = false;
     const deltabs = document.querySelectorAll('.btnDel');
@@ -211,10 +209,11 @@ function handleAddCustomer() {
     });
 }
 handleAddCustomer();
+
 function handleUpdateCustomer() {
 
     var updateCustomer = document.querySelectorAll(".btnUpdateCustomer");
-    var modal = document.getElementById("update-customer");
+    var modal = document.getElementById("update-customers");
     var btnClose = document.querySelector(".clsUpdateCustomer");
 
     updateCustomer.forEach(function (item) {
