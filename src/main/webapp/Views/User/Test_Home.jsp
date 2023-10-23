@@ -44,7 +44,7 @@
     <div class="container">
         <div class="header__left">
             <div class="header__logo">
-                <a href="#"><img class="img" src="img/logo.png" alt="img-logo"/></a>
+                <a href="#"><img class="img" src="../img/logo.png" alt="img-logo"/></a>
             </div>
             <nav class="hedaer__navbar">
                 <ul class="header__navbar-sitemenu">
@@ -79,6 +79,28 @@
                     <li class="item">
                         <a href="#" class="nameitem">Contact
                         </a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="nameitem">
+                            sản phẩm
+                            <svg  class="arrow" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                <path
+                                        d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
+                            </svg>
+                        </a>
+
+                        <ul class="dropmenu sortmenu">
+                            <c:forEach items="${itemTypeList}" var="itemType">
+                                <li>
+                                    <a onclick="itemTypeClick(`form_itemType`)">${itemType.name}</a>
+                                    <form id="form_itemType" action="/ItemServlet" method="post">
+                                        <input type="hidden" value="${itemType.id}" name="itemTypeID"/>
+                                        <input type="hidden" value="itemTypeClick" name="action"/>
+                                    </form>
+                                </li>
+
+                            </c:forEach>
+                        </ul>
                     </li>
                 </ul>
             </nav>
@@ -130,21 +152,21 @@
 <main class="main">
     <section class="hero">
         <div class="container">
-            <img src="img/sale.jpg" alt="">
+            <img src="../img/sale.jpg" alt="">
         </div>
     </section>
     <section class="sale">
         <div class="container">
             <div class="sale__slider">
-                <img src="img/banner/banner.jpg" alt="banner-product"/>
+                <img src="../img/banner/banner.jpg" alt="banner-product"/>
             </div>
             <div class="sale__right">
                 <h4 class="heading --h4">sale giá tốt</h4>
                 <div class="sale__right--list">
                     <div class="sale__product product">
                         <div class="carousel-img" data-type="account">
-                            <a href="#" class="img"><img src="img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
-                            <a href="#" class="img"><img src="img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
+                            <a href="#" class="img"><img src="../img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
+                            <a href="#" class="img"><img src="../img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
                         </div>
                         <div class="productInfo">
                             <h3 class="name"><a href="#">Áo Thun</a></h3>
@@ -175,8 +197,8 @@
                     </div>
                     <div class="sale__product product">
                         <div class="carousel-img" data-type="account">
-                            <a href="#" class="img"><img src="img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
-                            <a href="#" class="img"><img src="img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
+                            <a href="#" class="img"><img src="../img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
+                            <a href="#" class="img"><img src="../img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
                         </div>
                         <div class="productInfo">
                             <h3 class="name"><a href="#">Áo Thun</a></h3>
@@ -207,8 +229,8 @@
                     </div>
                     <div class="sale__product product">
                         <div class="carousel-img" data-type="account">
-                            <a href="#" class="img"><img src="img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
-                            <a href="#" class="img"><img src="img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
+                            <a href="#" class="img"><img src="../img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
+                            <a href="#" class="img"><img src="../img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
                         </div>
                         <div class="productInfo">
                             <h3 class="name"><a href="#">Áo Thun</a></h3>
@@ -239,8 +261,8 @@
                     </div>
                     <div class="sale__product product">
                         <div class="carousel-img" data-type="account">
-                            <a href="#" class="img"><img src="img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
-                            <a href="#" class="img"><img src="img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
+                            <a href="#" class="img"><img src="../img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
+                            <a href="#" class="img"><img src="../img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
                         </div>
                         <div class="productInfo">
                             <h3 class="name"><a href="#">Áo Thun</a></h3>
@@ -279,8 +301,8 @@
             <div class="ao__list listproduct">
                 <div class="ao__list--item product">
                     <div class="carousel-img" data-type="account">
-                        <a href="#" class="img"><img src="img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
-                        <a href="#" class="img"><img src="img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
+                        <a href="#" class="img"><img src="../img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
+                        <a href="#" class="img"><img src="../img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
                     </div>
                     <div class="productInfo">
                         <h3 class="name"><a href="#">Áo Thun</a></h3>
@@ -310,8 +332,8 @@
                 </div>
                 <div class="ao__list--item product">
                     <div class="carousel-img" data-type="account">
-                        <a href="#" class="img"><img src="img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
-                        <a href="#" class="img"><img src="img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
+                        <a href="#" class="img"><img src="../img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
+                        <a href="#" class="img"><img src="../img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
                     </div>
                     <div class="productInfo">
                         <h3 class="name"><a href="#">Áo Thun</a></h3>
@@ -341,8 +363,8 @@
                 </div>
                 <div class="ao__list--item product">
                     <div class="carousel-img" data-type="account">
-                        <a href="#" class="img"><img src="img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
-                        <a href="#" class="img"><img src="img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
+                        <a href="#" class="img"><img src="../img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
+                        <a href="#" class="img"><img src="../img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
                     </div>
                     <div class="productInfo">
                         <h3 class="name"><a href="#">Áo Thun</a></h3>
@@ -372,8 +394,8 @@
                 </div>
                 <div class="ao__list--item product">
                     <div class="carousel-img" data-type="account">
-                        <a href="#" class="img"><img src="img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
-                        <a href="#" class="img"><img src="img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
+                        <a href="#" class="img"><img src="../img/ao/ao-1-a.jpg" alt="ao-thun"/></a>
+                        <a href="#" class="img"><img src="../img/ao/ao-1-b.jpg" alt="ao-thun"/></a>
                     </div>
                     <div class="productInfo">
                         <h3 class="name"><a href="#">Áo Thun</a></h3>

@@ -133,7 +133,7 @@ public class AdminManagerServlet extends HttpServlet {
         session.setAttribute("saleList", saleList);
         session.setAttribute("stockItemList", stockItemList);
 
-        request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
     }
 
     @Override
@@ -154,7 +154,7 @@ public class AdminManagerServlet extends HttpServlet {
                 } else {
                     response.getWriter().println("<script>alert('Xóa tài khoản thất bại!');</script>");
                 }
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "account_btnUpdate" -> {
 
@@ -178,7 +178,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Cập nhật tài khoản thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
 
             }
             case "account_btnAdd" -> {
@@ -201,7 +201,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Thêm tài khoản thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
 
 //            Item Handle
@@ -233,7 +233,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Thêm sản phẩm thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "item_btnUpdate" -> {
 
@@ -264,7 +264,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Cập nhật sản phẩm thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "item_btnDelete" -> {
                 int itemID = Integer.parseInt(request.getParameter("itemID"));
@@ -273,7 +273,7 @@ public class AdminManagerServlet extends HttpServlet {
                 } else {
                     response.getWriter().println("<script>alert('Xóa sản phẩm thất bại!');</script>");
                 }
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
 
             /*Customer Handle*/
@@ -297,7 +297,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Thêm khách hàng thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
 
             }
             case "customer_btnUpdate" -> {
@@ -322,7 +322,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Cập nhật khách hàng thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
 
             }
             case "customer_btnDelete" -> {
@@ -332,7 +332,7 @@ public class AdminManagerServlet extends HttpServlet {
                 } else {
                     response.getWriter().println("<script>alert('Xóa khách hàng thất bại!');</script>");
                 }
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
 
             /*Discount Card*/
@@ -354,7 +354,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Thêm khách hàng thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
 
             }
             case "discountCard_btnUpdate" -> {
@@ -376,7 +376,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "discountCard_btnDelete" -> {
                 int discountCardID = Integer.parseInt(request.getParameter("discountCardID"));
@@ -385,7 +385,7 @@ public class AdminManagerServlet extends HttpServlet {
                 } else {
                     response.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thất bại!');</script>");
                 }
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
 
             /*Item Collection*/
@@ -402,7 +402,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Thêm bộ sưu tập thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "itemCollection_btnUpdate" -> {
 
@@ -427,7 +427,7 @@ public class AdminManagerServlet extends HttpServlet {
                 } else {
                     response.getWriter().println("<script>alert('Xóa bộ sưu tập thất bại!');</script>");
                 }
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
 
             /*Item Image*/
@@ -445,7 +445,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Thêm ảnh cho sản phẩm thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "itemImage_btnUpdate"->{
                 int id=Integer.parseInt(request.getParameter("update_itemImageID"));
@@ -470,7 +470,7 @@ public class AdminManagerServlet extends HttpServlet {
                 } else {
                     response.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thất bại!');</script>");
                 }
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
 
             /*Item Material*/
@@ -486,7 +486,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Thêm vật liệu thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "itemMaterial_btnUpdate"->{
                 int id=Integer.parseInt(request.getParameter("update_itemMaterialID"));
@@ -502,7 +502,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Cập nhật vật liệu thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "itemMaterial_btnDelete"->{
                 int itemMaterialID = Integer.parseInt(request.getParameter("itemMaterialID"));
@@ -511,7 +511,7 @@ public class AdminManagerServlet extends HttpServlet {
                 } else {
                     response.getWriter().println("<script>alert('Xóa vật liệu thất bại!');</script>");
                 }
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
 
             /*Order*/
@@ -542,7 +542,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Thêm hóa đơn thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "order_btnUpdate"->{
                 int id=Integer.parseInt(request.getParameter("add_orderID"));
@@ -573,7 +573,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Cập nhật hóa đơn thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "order_btnDelete"->{
                 int orderID = Integer.parseInt(request.getParameter("orderID"));
@@ -582,7 +582,7 @@ public class AdminManagerServlet extends HttpServlet {
                 } else {
                     response.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thất bại!');</script>");
                 }
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
 
             /*Order Detail*/
@@ -608,7 +608,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Thêm chi tiết hóa đơn thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "orderDetail_btnUpdate"->{
                 int orderDetailID=Integer.parseInt(request.getParameter("add_orderDetailID"));
@@ -641,7 +641,7 @@ public class AdminManagerServlet extends HttpServlet {
                 } else {
                     response.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thất bại!');</script>");
                 }
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
 
             /*Item Type*/
@@ -657,7 +657,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Thêm loại sản phẩm thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "itemType_btnUpdate"->{
                 int id=Integer.parseInt(request.getParameter("update_itemTypeID"));
@@ -673,7 +673,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Cập nhật loại sản phẩm thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "itemType_btnDelete"->{
                 int itemTypeID = Integer.parseInt(request.getParameter("itemTypeID"));
@@ -682,7 +682,7 @@ public class AdminManagerServlet extends HttpServlet {
                 } else {
                     response.getWriter().println("<script>alert('Xóa loại sản phẩm thất bại!');</script>");
                 }
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
 
             /*Permission*/
@@ -700,7 +700,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Thêm quyền thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "permission_btnUpdate"->{
                 int id=Integer.parseInt(request.getParameter("update_permissionID"));
@@ -718,7 +718,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Cập nhật quyền thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "permission_btnDelete"->{
                 int permissionID = Integer.parseInt(request.getParameter("permissionID"));
@@ -727,7 +727,7 @@ public class AdminManagerServlet extends HttpServlet {
                 } else {
                     response.getWriter().println("<script>alert('Xóa vật liệu thất bại!');</script>");
                 }
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
 
             /*Sale*/
@@ -749,7 +749,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Thêm thẻ khuyến mãi thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "sale_btnUpdate"->{
                 int id=Integer.parseInt(request.getParameter("update_saleID"));
@@ -771,7 +771,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "sale_btnDelete"->{
                 int saleID = Integer.parseInt(request.getParameter("saleID"));
@@ -780,7 +780,7 @@ public class AdminManagerServlet extends HttpServlet {
                 } else {
                     response.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thất bại!');</script>");
                 }
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
 
             /*Stock Item*/
@@ -802,7 +802,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Thêm hàng hóa sản phẩm thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "stockItem_btnUpdate"->{
                 int id=Integer.parseInt(request.getParameter("add_stockItemID"));
@@ -824,7 +824,7 @@ public class AdminManagerServlet extends HttpServlet {
                     response.getWriter().println("<script>alert('Cập nhật hàng hóa sản phẩm thất bại!');</script>");
                 }
 
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "stockItem_btnDelete"->{
                 int stockItemID = Integer.parseInt(request.getParameter("stockItemID"));
@@ -833,7 +833,7 @@ public class AdminManagerServlet extends HttpServlet {
                 } else {
                     response.getWriter().println("<script>alert('Xóa hàng hóa sản phẩm thất bại!');</script>");
                 }
-                request.getRequestDispatcher("Views/QuanLy.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
 
             default -> System.out.println("Khong ton tai action trong AdminManagerServlet");

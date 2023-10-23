@@ -47,7 +47,7 @@
             <div class="container">
                 <div class="header__left">
                     <div class="header__logo">
-                        <a href="#"><img class="img" src="./img/logo.png" alt="img-logo" /></a>
+                        <a href="#"><img class="img" src="../img/logo.png" alt="img-logo" /></a>
                     </div>
                     <nav class="hedaer__navbar">
                         <ul class="header__navbar-sitemenu">
@@ -180,8 +180,8 @@
                         <!-- 1 san pham -->
                         <div class="scproduct__list--item product">
                             <div class="carousel-img" data-type="account">
-                                <a href="#" class="img"><img src="./img/ao/ao-1-a.jpg" alt="ao-thun" /></a>
-                                <a href="#" class="img"><img src="./img/ao/ao-1-b.jpg" alt="ao-thun" /></a>
+                                <a href="#" class="img"><img src="../img/ao/ao-1-a.jpg" alt="ao-thun" /></a>
+                                <a href="#" class="img"><img src="../img/ao/ao-1-b.jpg" alt="ao-thun" /></a>
                             </div>
                             <div class="productInfo">
                                 <h3 class="name"><a href="#">Áo Thun</a></h3>
@@ -211,8 +211,8 @@
                         <!-- 1 san pham -->
                         <div class="scproduct__list--item product">
                             <div class="carousel-img" data-type="account">
-                                <a href="#" class="img"><img src="./img/ao/ao-1-a.jpg" alt="ao-thun" /></a>
-                                <a href="#" class="img"><img src="./img/ao/ao-1-b.jpg" alt="ao-thun" /></a>
+                                <a href="#" class="img"><img src="../img/ao/ao-1-a.jpg" alt="ao-thun" /></a>
+                                <a href="#" class="img"><img src="../img/ao/ao-1-b.jpg" alt="ao-thun" /></a>
                             </div>
                             <div class="productInfo">
                                 <h3 class="name"><a href="#">Áo Thun</a></h3>
@@ -242,8 +242,8 @@
                         <!-- 1 san pham -->
                         <div class="scproduct__list--item product">
                             <div class="carousel-img" data-type="account">
-                                <a href="#" class="img"><img src="./img/ao/ao-1-a.jpg" alt="ao-thun" /></a>
-                                <a href="#" class="img"><img src="./img/ao/ao-1-b.jpg" alt="ao-thun" /></a>
+                                <a href="#" class="img"><img src="../img/ao/ao-1-a.jpg" alt="ao-thun" /></a>
+                                <a href="#" class="img"><img src="../img/ao/ao-1-b.jpg" alt="ao-thun" /></a>
                             </div>
                             <div class="productInfo">
                                 <h3 class="name"><a href="#">Áo Thun</a></h3>
@@ -272,8 +272,8 @@
                         <!-- 1 san pham -->
                         <div class="scproduct__list--item product">
                             <div class="carousel-img" data-type="account">
-                                <a href="#" class="img"><img src="./img/ao/ao-1-a.jpg" alt="ao-thun" /></a>
-                                <a href="#" class="img"><img src="./img/ao/ao-1-b.jpg" alt="ao-thun" /></a>
+                                <a href="#" class="img"><img src="../img/ao/ao-1-a.jpg" alt="ao-thun" /></a>
+                                <a href="#" class="img"><img src="../img/ao/ao-1-b.jpg" alt="ao-thun" /></a>
                             </div>
                             <div class="productInfo">
                                 <h3 class="name"><a href="#">Áo Thun</a></h3>
