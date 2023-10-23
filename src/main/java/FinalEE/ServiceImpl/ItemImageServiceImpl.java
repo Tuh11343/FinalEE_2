@@ -61,7 +61,11 @@ public class ItemImageServiceImpl implements ItemImageService{
     public List<ItemImage> getAllItemImage() {
         return itemImageRepository.findAll();
     }
-    
-    
-    
+
+    @Override
+    public List<ItemImage> findByItemID(int itemID) {
+        return itemImageRepository.findByItemId(itemID);
+    }
+
+
 }
