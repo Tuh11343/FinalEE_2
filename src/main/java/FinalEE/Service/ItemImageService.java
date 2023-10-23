@@ -10,5 +10,6 @@ public interface ItemImageService {
     boolean deleteByID(int id);
     ItemImage getItemImage(int id);
     List<ItemImage> getAllItemImage();
+    List<ItemImage> findByItemID(int itemID);
     
 }
