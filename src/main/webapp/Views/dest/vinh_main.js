@@ -226,6 +226,8 @@ function handleUpdateCustomer() {
             var email = item.getAttribute("data-customerEmail");
             var address = item.getAttribute("data-customerAddress");
 
+            console.log(name+phoneNumber+email+address);
+
             document.getElementById("update_customerName").value = name;
             document.getElementById("update_customerPhoneNumber").value = phoneNumber;
             document.getElementById("update_customerEmail").value = email;
