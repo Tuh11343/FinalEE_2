@@ -26,6 +26,7 @@ function showtable() {
 
 }
 showtable();
+
 function handleDelete(e) {
     let confirmationResult = false;
     const deltabs = document.querySelectorAll('.btnDel');
