@@ -36,6 +36,7 @@
         <style>
             /* CSS Loading Here */
         </style>
+    
         <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -294,6 +295,9 @@
                                 <th>Action</th>
                             </tr>
 
+                            
+                        </thead>
+                        <tbody>
                             <c:forEach items="${accountList}" var="account">
                                 <tr>
                                     <td>${account.id}</td>
@@ -319,7 +323,7 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                        </thead>
+                        </tbody>
                     </table>
 
                     <!--Update Account-->
@@ -459,6 +463,9 @@
                                 <th>Action</th>
                             </tr>
 
+                            
+                        </thead>
+                        <tbody>
                             <c:forEach items="${itemList}" var="item">
                                 <tr>
                                     <td>${item.id}</td>
@@ -508,7 +515,7 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                        </thead>
+                        </tbody>
                     </table>
 
                     <!--Update Item-->
@@ -696,6 +703,9 @@
                                 <th>Action</th>
                             </tr>
 
+                            
+                        </thead>
+                        <tbody>
                             <c:forEach items="${customerList}" var="customer">
                                 <tr>
                                     <td>${customer.id}</td>
@@ -722,7 +732,7 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                        </thead>
+                        </tbody>
                     </table>
 
                     <!--Update Customer Modal-->
@@ -843,7 +853,9 @@
                                 <th>Action</th>
                             </tr>
 
-                            <c:forEach items="${discountCardList}" var="discountCard">
+                           
+                        </thead>
+                        <tbody> <c:forEach items="${discountCardList}" var="discountCard">
                                 <tr>
                                     <td>${discountCard.id}</td>
                                     <td>${discountCard.customer_id}</td>
@@ -867,8 +879,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                            </c:forEach>
-                        </thead>
+                            </c:forEach></tbody>
                     </table>
 
                     <!--Update Discount Card Modal-->
@@ -976,6 +987,9 @@
                                 <th>Action</th>
                             </tr>
 
+                            
+                        </thead>
+                        <tbody>
                             <c:forEach items="${itemCollectionList}" var="itemCollection">
                                 <tr>
                                     <td>${itemCollection.id}</td>
@@ -997,7 +1011,7 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                        </thead>
+                        </tbody>
                     </table>
 
                     <!--Update Item Collection Modal-->
@@ -1070,6 +1084,9 @@
                                 <th>Action</th>
                             </tr>
 
+                            
+                        </thead>
+                        <tbody>
                             <c:forEach items="${itemImageList}" var="itemImage">
                                 <tr>
                                     <td>${itemImage.id}</td>
@@ -1092,7 +1109,7 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                        </thead>
+                        </tbody>
                     </table>
 
                     <!--Update Item Image Modal-->
@@ -1185,6 +1202,9 @@
                                 <th>Action</th>
                             </tr>
 
+                            
+                        </thead>
+                        <tbody>
                             <c:forEach items="${itemMaterialList}" var="itemMaterial">
                                 <tr>
                                     <td>${itemMaterial.id}</td>
@@ -1206,7 +1226,7 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                        </thead>
+                        </tbody>
                     </table>
 
                     <!--Update Item Material Modal-->
@@ -1283,7 +1303,10 @@
                                 <th>Action</th>
                             </tr>
 
-                            <c:forEach items="${orderList}" var="order">
+                           
+                        </thead>
+                        <tbody>
+                             <c:forEach items="${orderList}" var="order">
                                 <tr>
                                     <td>${order.id}</td>
                                     <td>${order.customer_id}</td>
@@ -1308,7 +1331,7 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                        </thead>
+                        </tbody>
                     </table>
 
                     <!--Update Order Modal-->
@@ -1442,6 +1465,9 @@
                                 <th>Action</th>
                             </tr>
 
+                            
+                        </thead>
+                        <tbody>
                             <c:forEach items="${orderDetailList}" var="orderDetail">
                                 <tr>
                                     <td>${orderDetail.id}</td>
@@ -1470,7 +1496,7 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                        </thead>
+                        </tbody>
                     </table>
 
                     <!--Update OrderDetail Modal-->
@@ -1639,6 +1665,9 @@
                                 <th>Action</th>
                             </tr>
 
+                            
+                        </thead>
+                        <tbody>
                             <c:forEach items="${itemTypeList}" var="itemType">
                                 <tr>
                                     <td>${itemType.id}</td>
@@ -1659,7 +1688,7 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                        </thead>
+                        </tbody>
                     </table>
 
                     <!--Update Item Type Modal-->
@@ -1733,7 +1762,10 @@
                                 <th>Action</th>
                             </tr>
 
-                            <c:forEach items="${permissionList}" var="permission">
+                           
+                        </thead>
+                        <tbody>
+                             <c:forEach items="${permissionList}" var="permission">
                                 <tr>
                                     <td>${permission.id}</td>
                                     <td>${permission.name}</td>
@@ -1755,7 +1787,7 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                        </thead>
+                        </tbody>
                     </table>
 
                     <!--Update Permission Modal-->
@@ -1848,6 +1880,9 @@
                                 <th>Action</th>
                             </tr>
 
+                            
+                        </thead>
+                        <tbody>
                             <c:forEach items="${saleList}" var="sale">
                                 <tr>
                                     <td>${sale.id}</td>
@@ -1873,7 +1908,7 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                        </thead>
+                        </tbody>
                     </table>
 
                     <!--Update Sale Modal-->
@@ -2001,7 +2036,10 @@
                                 <th>Action</th>
                             </tr>
 
-                            <c:forEach items="${stockItemList}" var="stockItem">
+                          
+                        </thead>
+                        <tbody>
+                              <c:forEach items="${stockItemList}" var="stockItem">
                                 <tr>
                                     <td>${stockItem.id}</td>
                                     <td>${stockItem.item_id}</td>
@@ -2026,7 +2064,7 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                        </thead>
+                        </tbody>
                     </table>
                               
 
@@ -2148,6 +2186,7 @@
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
         <script src="${pageContext.request.contextPath}/Views/dest/vinh_main.js"></script>
+        
     </body>
 </html>
 
