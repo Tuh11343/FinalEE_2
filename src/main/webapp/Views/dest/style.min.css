@@ -170,6 +170,14 @@ strong {
 .--hidden {
   display: none;
 }
+.--h2 {
+  font-family: pb;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  color: var(--black-cl);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
 .--h3 {
   font-family: pb;
   font-size: var(--fs-h3);
@@ -467,6 +475,19 @@ sup {
   -ms-transition: var(--t);
   -o-transition: var(--t);
   opacity: 0.8;
+}
+.btn-del {
+  background: var(--main-cl);
+}
+.btn-gray {
+  background: var(--gray-cl);
+}
+.location-path {
+  background: var(--gray-cl);
+  padding: 5px 8px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
 }
 /*! Flickity v2.3.0
   
@@ -945,5 +966,130 @@ https://flickity.metafizzy.co
 }
 .productpage .productsearch__form--btn {
   height: 100%;
+}
+
+.cartpage .cart {
+  padding-bottom: 80px;
+}
+.cartpage .cart .container {
+  display: flex;
+  gap: 40px;
+}
+.cartpage .cart__detail {
+  width: 70%;
+}
+.cartpage .cart__detail--top {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--grayop-cl);
+  align-items: center;
+}
+.cartpage .cart__detail--top .title {
+  margin-bottom: 0;
+}
+.cartpage .cart__detail--top .total strong {
+  color: red;
+}
+.cartpage .cart__detail--list .cart__item {
+  display: flex;
+  gap: 15px;
+  padding: 10px 10px;
+}
+.cartpage .cart__detail--list .cart__item:not(:last-child) {
+  border-bottom: 1px solid var(--grayop-cl);
+}
+.cartpage .cart__detail--list .cart__item .gr--img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  flex-direction: column;
+}
+.cartpage .cart__detail--list .cart__item .gr--img .img {
+  max-width: 100px;
+}
+.cartpage .cart__detail--list .cart__item .gr--info {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  flex: 1;
+}
+.cartpage .cart__detail--list .cart__item .gr--info .info-top {
+  border-bottom: 1px solid var(--grayop-cl);
+  padding-bottom: 10px;
+}
+.cartpage .cart__detail--list .cart__item .gr--info .info-top .name {
+  font-family: pr;
+  font-size: 1.9rem;
+  line-height: 2.5rem;
+  color: var(--black-cl);
+  text-transform: capitalize;
+  display: -webkit-inline-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.cartpage .cart__detail--list .cart__item .gr--info .info-top .qty {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.cartpage .cart__detail--list .cart__item .gr--info .info-top .qty .discount-price {
+  color: red;
+}
+.cartpage .cart__detail--list .cart__item .gr--info .info-top .discount-info {
+  margin-bottom: 10px;
+}
+.cartpage .cart__detail--list .cart__item .gr--info .total-item {
+  padding-top: 20px;
+}
+.cartpage .cart__detail--shipping {
+  border-top: 1px solid var(--grayop-cl);
+  border-bottom: 1px solid var(--grayop-cl);
+  padding: 15px;
+  padding-left: 30px;
+}
+.cartpage .cart__detail--shipping .text {
+  text-transform: capitalize;
+}
+.cartpage .cart__detail--shipping .text strong {
+  color: red;
+}
+.cartpage .cart__formgr {
+  width: 30%;
+}
+.cartpage .cart__formgr .title {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--grayop-cl);
+  margin-bottom: 0;
+}
+.cartpage .cart__formgr--form {
+  padding-top: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--grayop-cl);
+}
+.cartpage .cart__formgr--form .form-gr {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.cartpage .cart__formgr--form .form-gr input,
+.cartpage .cart__formgr--form .form-gr textarea {
+  border-radius: 3px;
+  border: 1px solid var(--grayop-cl);
+  padding: 5px;
+}
+.cartpage .cart__formgr--form .form-gr textarea {
+  resize: none;
+}
+.cartpage .cart__formgr--form .btn {
+  width: 100%;
+}
+.cartpage .cart__formgr--btnadd {
+  width: 100%;
+  margin-top: 12px;
 }
 /*# sourceMappingURL=style.min.css.map */
