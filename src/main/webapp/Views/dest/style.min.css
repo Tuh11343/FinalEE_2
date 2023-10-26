@@ -1077,7 +1077,7 @@ https://flickity.metafizzy.co
   margin-bottom: 15px;
 }
 .cartpage .cart__formgr--form .form-gr input,
-.cartpage .cart__formgr--form .form-gr textarea {
+.cartpage .cart__formgr--form .form-gr textarea,.cartpage .cart__formgr--form .form-gr select {
   border-radius: 3px;
   border: 1px solid var(--grayop-cl);
   padding: 5px;

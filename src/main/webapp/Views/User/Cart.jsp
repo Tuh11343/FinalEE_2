@@ -240,6 +240,14 @@
                         <label for="note">Ghi chú</label>
                         <textarea type="text" name="note" id="note" placeholder="Ghi chú"></textarea>
                     </div>
+                    <div class="form-gr">
+                        <label for="note">Giảm giá </label>
+                        <select name="discount-code" id="discount-code">
+                            <option value="10%">Giảm giá 10%</option>
+                            <option value="20%">Giảm giá 20%</option>
+                            <option value="30%">Giảm giá 30%</option>
+                        </select>
+                    </div>
                     <button class="btn ">Đặt hàng</button>
                 </form>
                 <button class="btn btn-gray cart__formgr--btnadd">Thêm sản phẩm khác</button>
