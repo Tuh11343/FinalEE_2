@@ -52,6 +52,7 @@ table {
   --white-cl: #ffffff;
   --black-cl: #141414;
   --gray-cl: #666666;
+  --grayop-cl: #6666666b;
   --green-cl: #11bd99;
   --blue-cl: #00aabb;
   --fs-h1: 6.4rem;
@@ -71,7 +72,7 @@ table {
   --pd-section: 70px;
   --t: 0.4s;
   --cubic: cubic-bezier(0.59, 0.29, 0.15, 0.93);
-  --brus: 10px;
+  --brus: 7px;
 }
 @media screen and (max-width: 1199.98px) {
   :root {
@@ -141,9 +142,6 @@ body .container {
 body .main {
   position: relative;
 }
-body .main section {
-  padding-top: var(--pd-section);
-}
 img {
   max-width: 100%;
   height: auto;
@@ -165,7 +163,7 @@ a {
   outline: 0;
 }
 strong {
-  font-family: ab;
+  font-family: pb;
 }
 .--hidden {
   display: none;
@@ -455,7 +453,7 @@ sup {
   -o-transition: var(--t);
   pointer-events: auto;
   visibility: visible;
-} 
+}
 .btn {
   padding: 5px 10px;
   border-radius: var(--brus);
@@ -488,9 +486,7 @@ sup {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
-}
-/*! Flickity v2.3.0
-  
+} /*! Flickity v2.3.0
 https://flickity.metafizzy.co
 ---------------------------------------------- */
 .flickity-enabled {
@@ -677,12 +673,6 @@ https://flickity.metafizzy.co
   margin-top: 20px;
   border-top: 2px solid var(--main-cl);
 }
-.header__navbar-sitemenu .item .sortmenu {
-          width: max-content;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          min-width: 150px;
-        }
 .header__navbar-sitemenu .item .dropmenu li {
   transition: var(--t);
   -webkit-transition: var(--t);
@@ -742,6 +732,12 @@ https://flickity.metafizzy.co
   -ms-transition: var(--t);
   -o-transition: var(--t);
   margin-top: 0;
+}
+.header__navbar-sitemenu .item .sortmenu {
+  width: max-content;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-width: 150px;
 }
 .header__right {
   display: flex;
@@ -920,6 +916,10 @@ https://flickity.metafizzy.co
   -ms-transition: var(--t);
   -o-transition: var(--t);
 }
+.homepage .main .hero {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 .homepage .main .sale .container {
   display: flex;
   align-items: center;
@@ -935,8 +935,6 @@ https://flickity.metafizzy.co
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
-/*ProductPage*/
-
 .productpage .productsearch {
   padding-bottom: 30px;
 }
@@ -967,7 +965,6 @@ https://flickity.metafizzy.co
 .productpage .productsearch__form--btn {
   height: 100%;
 }
-
 .cartpage .cart {
   padding-bottom: 80px;
 }
@@ -1077,7 +1074,8 @@ https://flickity.metafizzy.co
   margin-bottom: 15px;
 }
 .cartpage .cart__formgr--form .form-gr input,
-.cartpage .cart__formgr--form .form-gr textarea,.cartpage .cart__formgr--form .form-gr select {
+.cartpage .cart__formgr--form .form-gr textarea,
+.cartpage .cart__formgr--form .form-gr select {
   border-radius: 3px;
   border: 1px solid var(--grayop-cl);
   padding: 5px;
