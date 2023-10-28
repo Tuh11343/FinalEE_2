@@ -46,7 +46,6 @@
 
 <body class="homepage">
 
-
 <!--<div class="container" >-->
 <main class='main'>
     <div class="left">
