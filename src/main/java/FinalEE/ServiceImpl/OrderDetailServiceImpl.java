@@ -11,16 +11,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class OrderDetailServiceImpl implements OrderDetailService{
-    
+
     @Autowired
     private OrderDetailRepository orderDetailRepository;
 
     public OrderDetailServiceImpl() {
-        
+
     }
-    
-    
-    
+
+
+
     @Override
     public boolean create(OrderDetail orderDetail) {
         try {
@@ -60,7 +60,11 @@ public class OrderDetailServiceImpl implements OrderDetailService{
     public List<OrderDetail> getAllOrderDetail() {
         return orderDetailRepository.findAll();
     }
-    
-    
-    
+
+    @Override
+    public double getOrderTotal(int orderID) {
+        return orderDetailRepository.getOrderTotal(orderID);
+    }
+
+
 }
