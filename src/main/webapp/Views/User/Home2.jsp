@@ -38,8 +38,8 @@
 
         <!--        <link rel="stylesheet" href="dest/style.min.css" />
                 <link rel="stylesheet" href="dest/fonts.css" />-->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/dest/style.min.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/dest/fonts.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/User/dest/style.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/User/dest/fonts.css" />
 
     </head>
     <body class="homepage">
