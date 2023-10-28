@@ -4,37 +4,16 @@
  */
 package FinalEE.Controller;
 
-import FinalEE.Entity.Account;
-import FinalEE.Entity.Customer;
-import FinalEE.Entity.DiscountCard;
-import FinalEE.Entity.Item;
-import FinalEE.Entity.ItemCollection;
-import FinalEE.Entity.ItemImage;
-import FinalEE.Entity.ItemMaterial;
-import FinalEE.Entity.ItemOrder;
-import FinalEE.Entity.ItemType;
-import FinalEE.Entity.OrderDetail;
-import FinalEE.Entity.Permission;
-import FinalEE.Entity.Sale;
-import FinalEE.Entity.StockItem;
-import FinalEE.ServiceImpl.AccountServiceImpl;
-import FinalEE.ServiceImpl.CustomerServiceImpl;
-import FinalEE.ServiceImpl.DiscountCardServiceImpl;
-import FinalEE.ServiceImpl.ItemCollectionServiceImpl;
-import FinalEE.ServiceImpl.ItemImageServiceImpl;
-import FinalEE.ServiceImpl.ItemMaterialServiceImpl;
-import FinalEE.ServiceImpl.ItemServiceImpl;
-import FinalEE.ServiceImpl.ItemTypeServiceImpl;
-import FinalEE.ServiceImpl.OrderDetailServiceImpl;
-import FinalEE.ServiceImpl.OrderServiceImpl;
-import FinalEE.ServiceImpl.PermissionServiceImpl;
-import FinalEE.ServiceImpl.SaleServiceImpl;
-import FinalEE.ServiceImpl.StockItemServiceImpl;
+import FinalEE.Entity.*;
+import FinalEE.ServiceImpl.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,10 +21,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * @author ADMIN
@@ -88,6 +63,7 @@ public class AdminManagerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        /*WebApplicationContext webApplicationContext = (WebApplicationContext) getServletContext().getAttribute("appContext");*/
         WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
         accountServiceImpl = webApplicationContext.getBean(AccountServiceImpl.class);
         customerServiceImpl = webApplicationContext.getBean(CustomerServiceImpl.class);
