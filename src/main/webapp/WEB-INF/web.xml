@@ -9,6 +9,11 @@
         <servlet-class>FinalEE.Controller.AdminManagerServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>ItemDetailServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.ItemDetailServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>AdminManagerServlet</servlet-name>
         <url-pattern>/AdminManagerServlet</url-pattern>
@@ -17,6 +22,11 @@
         <servlet-name>ItemServlet</servlet-name>
         <url-pattern>/ItemServlet</url-pattern>
         <url-pattern>/AddItemServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ItemDetailServlet</servlet-name>
+        <url-pattern>/ItemDetailServlet</url-pattern>
     </servlet-mapping>
 
 </web-app>

@@ -38,8 +38,8 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/dest/style.min.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/dest/fonts.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/User/dest/style.min.css/"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/User/dest/fonts.css" />
 </head>
 
 <body class="cartpage">
@@ -131,7 +131,7 @@
                             d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
                 </svg>
             </a>
-            <a href="#" class="header__right--icon">
+            <a href="#" class="header__right--icon loginicon">
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                     <path
                             d="M256 288A144 144 0 1 0 256 0a144 144 0 1 0 0 288zm-94.7 32C72.2 320 0 392.2 0 481.3c0 17 13.8 30.7 30.7 30.7H481.3c17 0 30.7-13.8 30.7-30.7C512 392.2 439.8 320 350.7 320H161.3z" />
@@ -305,9 +305,11 @@
         </div>
 </footer>
 
+<jsp:include page="component/ModalLogin.jsp"/>
+
 <!-- Javascript -->
-<script src="${pageContext.request.contextPath}/Views/dest/jsmain.min.js"></script>
-<script src="${pageContext.request.contextPath}/Views/dest/main.js" ></script>
+<script src="${pageContext.request.contextPath}/Views/User/dest/jsmain.min.js"></script>
+<script src="${pageContext.request.contextPath}/Views/User/dest/main.js" ></script>
 </body>
 
 </html>

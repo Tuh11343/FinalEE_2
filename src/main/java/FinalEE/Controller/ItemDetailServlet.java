@@ -15,7 +15,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import java.io.IOException;
 import java.util.Date;
 
-public class CartServlet extends HttpServlet {
+public class ItemDetailServlet extends HttpServlet {
 
     private AccountServiceImpl accountServiceImpl;
     private CustomerServiceImpl customerServiceImpl;
@@ -30,6 +30,8 @@ public class CartServlet extends HttpServlet {
     private PermissionServiceImpl permissionServiceImpl;
     private SaleServiceImpl saleServiceImpl;
     private StockItemServiceImpl stockItemServiceImpl;
+
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -97,6 +99,7 @@ public class CartServlet extends HttpServlet {
         saleServiceImpl = webApplicationContext.getBean(SaleServiceImpl.class);
         stockItemServiceImpl = webApplicationContext.getBean(StockItemServiceImpl.class);
 
+        req.getRequestDispatcher("/Views/User/ItemDetail.jsp").forward(req,resp);
 
     }
 }
