@@ -6,6 +6,7 @@ package FinalEE.Controller;
 
 import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -34,24 +37,7 @@ public class ItemServlet extends HttpServlet {
     private PermissionServiceImpl permissionServiceImpl;
     private SaleServiceImpl saleServiceImpl;
     private StockItemServiceImpl stockItemServiceImpl;
-
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ItemServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ItemServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+    private CartServiceImpl cartServiceImpl;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -71,13 +57,30 @@ public class ItemServlet extends HttpServlet {
         permissionServiceImpl = webApplicationContext.getBean(PermissionServiceImpl.class);
         saleServiceImpl = webApplicationContext.getBean(SaleServiceImpl.class);
         stockItemServiceImpl = webApplicationContext.getBean(StockItemServiceImpl.class);
+        cartServiceImpl=webApplicationContext.getBean(CartServiceImpl.class);
+
+        ServletContext servletContext=getServletContext();
+        servletContext.setAttribute("accountServiceImpl",accountServiceImpl);
+        servletContext.setAttribute("customerServiceImpl",customerServiceImpl);
+        servletContext.setAttribute("discountCardServiceImpl",discountCardServiceImpl);
+        servletContext.setAttribute("itemServiceImpl",itemServiceImpl);
+        servletContext.setAttribute("itemCollectionServiceImpl",itemCollectionServiceImpl);
+        servletContext.setAttribute("itemImageServiceImpl",itemImageServiceImpl);
+        servletContext.setAttribute("itemMaterialServiceImpl",itemMaterialServiceImpl);
+        servletContext.setAttribute("orderServiceImpl",orderServiceImpl);
+        servletContext.setAttribute("orderDetailServiceImpl",orderDetailServiceImpl);
+        servletContext.setAttribute("itemTypeServiceImpl",itemTypeServiceImpl);
+        servletContext.setAttribute("permissionServiceImpl",permissionServiceImpl);
+        servletContext.setAttribute("saleServiceImpl",saleServiceImpl);
+        servletContext.setAttribute("stockItemServiceImpl",stockItemServiceImpl);
+        servletContext.setAttribute("cartServiceImpl",cartServiceImpl);
 
         List<Account> accountList = accountServiceImpl.getAllAccount();
         List<Customer> customerList = customerServiceImpl.getAllCustomer();
         List<DiscountCard> discountCardList = discountCardServiceImpl.getAllDiscountCard();
         List<Item> itemList = itemServiceImpl.getAllItem();
         List<ItemCollection> itemCollectionList = itemCollectionServiceImpl.getAllItemCollection();
-        List<ItemImage> itemImageList = itemImageServiceImpl.getAllItemImage();
+        List<ItemImage> imageList = itemImageServiceImpl.getAllItemImage();
         List<ItemMaterial> itemMaterialList = itemMaterialServiceImpl.getAllItemMaterial();
         List<ItemOrder> orderList = orderServiceImpl.getAllOrder();
         List<OrderDetail> orderDetailList = orderDetailServiceImpl.getAllOrderDetail();
@@ -87,20 +90,19 @@ public class ItemServlet extends HttpServlet {
         List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
 
         /*Set Data List*/
-        HttpSession session = req.getSession();
-        session.setAttribute("accountList", accountList);
-        session.setAttribute("customerList", customerList);
-        session.setAttribute("discountCardList", discountCardList);
-        session.setAttribute("itemList", itemList);
-        session.setAttribute("itemCollectionList", itemCollectionList);
-        session.setAttribute("itemImageList", itemImageList);
-        session.setAttribute("itemMaterialList", itemMaterialList);
-        session.setAttribute("orderList", orderList);
-        session.setAttribute("orderDetailList", orderDetailList);
-        session.setAttribute("itemTypeList", itemTypeList);
-        session.setAttribute("permissionList", permissionList);
-        session.setAttribute("saleList", saleList);
-        session.setAttribute("stockItemList", stockItemList);
+        req.setAttribute("accountList", accountList);
+        req.setAttribute("customerList", customerList);
+        req.setAttribute("discountCardList", discountCardList);
+        req.setAttribute("itemList", itemList);
+        req.setAttribute("itemCollectionList", itemCollectionList);
+        req.setAttribute("imageList", imageList);
+        req.setAttribute("itemMaterialList", itemMaterialList);
+        req.setAttribute("orderList", orderList);
+        req.setAttribute("orderDetailList", orderDetailList);
+        req.setAttribute("itemTypeList", itemTypeList);
+        req.setAttribute("permissionList", permissionList);
+        req.setAttribute("saleList", saleList);
+        req.setAttribute("stockItemList", stockItemList);
 
 
         req.getRequestDispatcher("Views/User/Test_Home.jsp").forward(req, resp);
@@ -111,21 +113,29 @@ public class ItemServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String action=request.getParameter("action");
+        HttpSession session=request.getSession();
         switch(action){
             case "itemCollectionClick" -> {
                 System.out.println("Ban da click itemCollection"+request.getParameter("itemType"));
                 request.getRequestDispatcher("Views/User/Test_Home.jsp").forward(request, response);
 
             }
+
             case "itemTypeClick"->{
                 System.out.println("Ban da click itemType"+request.getParameter("itemType"));
                 request.getRequestDispatcher("Views/User/Test_Home.jsp").forward(request, response);
             }
+
             case "btnSearchClick" -> {
                 System.out.println("Ban da search:"+request.getParameter("btnSearch_data"));
                 request.getRequestDispatcher("Views/User/Test_Home.jsp").forward(request, response);
-
             }
+
+            case "itemClick"->{
+                session.setAttribute("itemClickID",request.getParameter("itemClickID"));
+                response.sendRedirect("/FinalEE/ItemDetailServlet");
+            }
+
             default -> {
                 System.out.println(action);
             }
