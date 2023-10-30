@@ -21,11 +21,19 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 @Controller
 public class ItemServlet extends HttpServlet {
 
+    private AccountServiceImpl accountServiceImpl;
+    private CustomerServiceImpl customerServiceImpl;
+    private DiscountCardServiceImpl discountCardServiceImpl;
     private ItemServiceImpl itemServiceImpl;
-    private ItemTypeServiceImpl itemTypeServiceImpl;
     private ItemCollectionServiceImpl itemCollectionServiceImpl;
     private ItemImageServiceImpl itemImageServiceImpl;
+    private ItemMaterialServiceImpl itemMaterialServiceImpl;
+    private OrderServiceImpl orderServiceImpl;
+    private OrderDetailServiceImpl orderDetailServiceImpl;
+    private ItemTypeServiceImpl itemTypeServiceImpl;
+    private PermissionServiceImpl permissionServiceImpl;
     private SaleServiceImpl saleServiceImpl;
+    private StockItemServiceImpl stockItemServiceImpl;
 
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -46,31 +54,56 @@ public class ItemServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
+        WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
+
+        accountServiceImpl = webApplicationContext.getBean(AccountServiceImpl.class);
+        customerServiceImpl = webApplicationContext.getBean(CustomerServiceImpl.class);
+        discountCardServiceImpl = webApplicationContext.getBean(DiscountCardServiceImpl.class);
         itemServiceImpl = webApplicationContext.getBean(ItemServiceImpl.class);
-        itemTypeServiceImpl=webApplicationContext.getBean(ItemTypeServiceImpl.class);
-        itemCollectionServiceImpl=webApplicationContext.getBean(ItemCollectionServiceImpl.class);
+        itemCollectionServiceImpl = webApplicationContext.getBean(ItemCollectionServiceImpl.class);
         itemImageServiceImpl = webApplicationContext.getBean(ItemImageServiceImpl.class);
+        itemMaterialServiceImpl = webApplicationContext.getBean(ItemMaterialServiceImpl.class);
+        orderServiceImpl = webApplicationContext.getBean(OrderServiceImpl.class);
+        orderDetailServiceImpl = webApplicationContext.getBean(OrderDetailServiceImpl.class);
+        itemTypeServiceImpl = webApplicationContext.getBean(ItemTypeServiceImpl.class);
+        permissionServiceImpl = webApplicationContext.getBean(PermissionServiceImpl.class);
         saleServiceImpl = webApplicationContext.getBean(SaleServiceImpl.class);
+        stockItemServiceImpl = webApplicationContext.getBean(StockItemServiceImpl.class);
 
-        List<ItemType> itemTypeList=itemTypeServiceImpl.getAllItemType();
-        List<ItemCollection> itemCollectionList=itemCollectionServiceImpl.getAllItemCollection();
-        List<Item> itemList=itemServiceImpl.getAllItem();
+        List<Account> accountList = accountServiceImpl.getAllAccount();
+        List<Customer> customerList = customerServiceImpl.getAllCustomer();
+        List<DiscountCard> discountCardList = discountCardServiceImpl.getAllDiscountCard();
+        List<Item> itemList = itemServiceImpl.getAllItem();
+        List<ItemCollection> itemCollectionList = itemCollectionServiceImpl.getAllItemCollection();
         List<ItemImage> itemImageList = itemImageServiceImpl.getAllItemImage();
+        List<ItemMaterial> itemMaterialList = itemMaterialServiceImpl.getAllItemMaterial();
+        List<ItemOrder> orderList = orderServiceImpl.getAllOrder();
+        List<OrderDetail> orderDetailList = orderDetailServiceImpl.getAllOrderDetail();
+        List<ItemType> itemTypeList = itemTypeServiceImpl.getAllItemType();
+        List<Permission> permissionList = permissionServiceImpl.getAllPermission();
         List<Sale> saleList = saleServiceImpl.getAllSale();
+        List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
 
-
-        HttpSession session=request.getSession();
-        session.setAttribute("itemTypeList", itemTypeList);
+        /*Set Data List*/
+        HttpSession session = req.getSession();
+        session.setAttribute("accountList", accountList);
+        session.setAttribute("customerList", customerList);
+        session.setAttribute("discountCardList", discountCardList);
+        session.setAttribute("itemList", itemList);
         session.setAttribute("itemCollectionList", itemCollectionList);
-        session.setAttribute("itemList",itemList);
-        session.setAttribute("imageList",itemImageList);
+        session.setAttribute("itemImageList", itemImageList);
+        session.setAttribute("itemMaterialList", itemMaterialList);
+        session.setAttribute("orderList", orderList);
+        session.setAttribute("orderDetailList", orderDetailList);
+        session.setAttribute("itemTypeList", itemTypeList);
+        session.setAttribute("permissionList", permissionList);
         session.setAttribute("saleList", saleList);
+        session.setAttribute("stockItemList", stockItemList);
 
 
-        request.getRequestDispatcher("Views/User/Test_Home.jsp").forward(request, response);
+        req.getRequestDispatcher("Views/User/Test_Home.jsp").forward(req, resp);
     }
 
     @Override

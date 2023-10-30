@@ -64,8 +64,8 @@ public class AdminManagerServlet extends HttpServlet {
             throws ServletException, IOException {
 
         /*WebApplicationContext webApplicationContext = (WebApplicationContext) getServletContext().getAttribute("appContext");*/
-        WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
-        accountServiceImpl = webApplicationContext.getBean(AccountServiceImpl.class);
+        /*WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());*/
+        /*accountServiceImpl = webApplicationContext.getBean(AccountServiceImpl.class);
         customerServiceImpl = webApplicationContext.getBean(CustomerServiceImpl.class);
         discountCardServiceImpl = webApplicationContext.getBean(DiscountCardServiceImpl.class);
         itemServiceImpl = webApplicationContext.getBean(ItemServiceImpl.class);
@@ -77,9 +77,9 @@ public class AdminManagerServlet extends HttpServlet {
         itemTypeServiceImpl = webApplicationContext.getBean(ItemTypeServiceImpl.class);
         permissionServiceImpl = webApplicationContext.getBean(PermissionServiceImpl.class);
         saleServiceImpl = webApplicationContext.getBean(SaleServiceImpl.class);
-        stockItemServiceImpl = webApplicationContext.getBean(StockItemServiceImpl.class);
+        stockItemServiceImpl = webApplicationContext.getBean(StockItemServiceImpl.class);*/
 
-        List<Account> accountList = accountServiceImpl.getAllAccount();
+        /*List<Account> accountList = accountServiceImpl.getAllAccount();
         List<Customer> customerList = customerServiceImpl.getAllCustomer();
         List<DiscountCard> discountCardList = discountCardServiceImpl.getAllDiscountCard();
         List<Item> itemList = itemServiceImpl.getAllItem();
@@ -93,7 +93,7 @@ public class AdminManagerServlet extends HttpServlet {
         List<Sale> saleList = saleServiceImpl.getAllSale();
         List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
 
-        /*Set Data List*/
+        *//*Set Data List*//*
         HttpSession session = request.getSession();
         session.setAttribute("accountList", accountList);
         session.setAttribute("customerList", customerList);
@@ -107,7 +107,7 @@ public class AdminManagerServlet extends HttpServlet {
         session.setAttribute("itemTypeList", itemTypeList);
         session.setAttribute("permissionList", permissionList);
         session.setAttribute("saleList", saleList);
-        session.setAttribute("stockItemList", stockItemList);
+        session.setAttribute("stockItemList", stockItemList);*/
 
         request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
     }
