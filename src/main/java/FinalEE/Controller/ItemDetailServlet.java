@@ -84,7 +84,7 @@ public class ItemDetailServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
+        /*WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
         accountServiceImpl = webApplicationContext.getBean(AccountServiceImpl.class);
         customerServiceImpl = webApplicationContext.getBean(CustomerServiceImpl.class);
         discountCardServiceImpl = webApplicationContext.getBean(DiscountCardServiceImpl.class);
@@ -97,7 +97,7 @@ public class ItemDetailServlet extends HttpServlet {
         itemTypeServiceImpl = webApplicationContext.getBean(ItemTypeServiceImpl.class);
         permissionServiceImpl = webApplicationContext.getBean(PermissionServiceImpl.class);
         saleServiceImpl = webApplicationContext.getBean(SaleServiceImpl.class);
-        stockItemServiceImpl = webApplicationContext.getBean(StockItemServiceImpl.class);
+        stockItemServiceImpl = webApplicationContext.getBean(StockItemServiceImpl.class);*/
 
         req.getRequestDispatcher("/Views/User/ItemDetail.jsp").forward(req,resp);
 

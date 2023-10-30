@@ -1,8 +1,6 @@
 package FinalEE.Controller;
 
-import FinalEE.Entity.Item;
-import FinalEE.Entity.ItemOrder;
-import FinalEE.Entity.OrderDetail;
+import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -14,6 +12,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 public class CartServlet extends HttpServlet {
 
@@ -82,7 +81,9 @@ public class CartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
+        //WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
+        /*WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
+
         accountServiceImpl = webApplicationContext.getBean(AccountServiceImpl.class);
         customerServiceImpl = webApplicationContext.getBean(CustomerServiceImpl.class);
         discountCardServiceImpl = webApplicationContext.getBean(DiscountCardServiceImpl.class);
@@ -96,6 +97,36 @@ public class CartServlet extends HttpServlet {
         permissionServiceImpl = webApplicationContext.getBean(PermissionServiceImpl.class);
         saleServiceImpl = webApplicationContext.getBean(SaleServiceImpl.class);
         stockItemServiceImpl = webApplicationContext.getBean(StockItemServiceImpl.class);
+
+        List<Account> accountList = accountServiceImpl.getAllAccount();
+        List<Customer> customerList = customerServiceImpl.getAllCustomer();
+        List<DiscountCard> discountCardList = discountCardServiceImpl.getAllDiscountCard();
+        List<Item> itemList = itemServiceImpl.getAllItem();
+        List<ItemCollection> itemCollectionList = itemCollectionServiceImpl.getAllItemCollection();
+        List<ItemImage> itemImageList = itemImageServiceImpl.getAllItemImage();
+        List<ItemMaterial> itemMaterialList = itemMaterialServiceImpl.getAllItemMaterial();
+        List<ItemOrder> orderList = orderServiceImpl.getAllOrder();
+        List<OrderDetail> orderDetailList = orderDetailServiceImpl.getAllOrderDetail();
+        List<ItemType> itemTypeList = itemTypeServiceImpl.getAllItemType();
+        List<Permission> permissionList = permissionServiceImpl.getAllPermission();
+        List<Sale> saleList = saleServiceImpl.getAllSale();
+        List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
+
+        *//*Set Data List*//*
+        HttpSession session = req.getSession();
+        session.setAttribute("accountList", accountList);
+        session.setAttribute("customerList", customerList);
+        session.setAttribute("discountCardList", discountCardList);
+        session.setAttribute("itemList", itemList);
+        session.setAttribute("itemCollectionList", itemCollectionList);
+        session.setAttribute("itemImageList", itemImageList);
+        session.setAttribute("itemMaterialList", itemMaterialList);
+        session.setAttribute("orderList", orderList);
+        session.setAttribute("orderDetailList", orderDetailList);
+        session.setAttribute("itemTypeList", itemTypeList);
+        session.setAttribute("permissionList", permissionList);
+        session.setAttribute("saleList", saleList);
+        session.setAttribute("stockItemList", stockItemList);*/
 
 
     }
