@@ -2,6 +2,7 @@ package FinalEE.Controller;
 
 import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ public class CartServlet extends HttpServlet {
     private PermissionServiceImpl permissionServiceImpl;
     private SaleServiceImpl saleServiceImpl;
     private StockItemServiceImpl stockItemServiceImpl;
+    private CartServiceImpl cartServiceImpl;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -81,29 +83,29 @@ public class CartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
-        /*WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
+        ServletContext servletContext=getServletContext();
 
-        accountServiceImpl = webApplicationContext.getBean(AccountServiceImpl.class);
-        customerServiceImpl = webApplicationContext.getBean(CustomerServiceImpl.class);
-        discountCardServiceImpl = webApplicationContext.getBean(DiscountCardServiceImpl.class);
-        itemServiceImpl = webApplicationContext.getBean(ItemServiceImpl.class);
-        itemCollectionServiceImpl = webApplicationContext.getBean(ItemCollectionServiceImpl.class);
-        itemImageServiceImpl = webApplicationContext.getBean(ItemImageServiceImpl.class);
-        itemMaterialServiceImpl = webApplicationContext.getBean(ItemMaterialServiceImpl.class);
-        orderServiceImpl = webApplicationContext.getBean(OrderServiceImpl.class);
-        orderDetailServiceImpl = webApplicationContext.getBean(OrderDetailServiceImpl.class);
-        itemTypeServiceImpl = webApplicationContext.getBean(ItemTypeServiceImpl.class);
-        permissionServiceImpl = webApplicationContext.getBean(PermissionServiceImpl.class);
-        saleServiceImpl = webApplicationContext.getBean(SaleServiceImpl.class);
-        stockItemServiceImpl = webApplicationContext.getBean(StockItemServiceImpl.class);
+        accountServiceImpl = (AccountServiceImpl) servletContext.getAttribute("accountServiceImpl");
+        cartServiceImpl = (CartServiceImpl) servletContext.getAttribute("cartServiceImpl");
+        customerServiceImpl = (CustomerServiceImpl) servletContext.getAttribute("customerServiceImpl");
+        discountCardServiceImpl = (DiscountCardServiceImpl) servletContext.getAttribute("discountCardServiceImpl");
+        itemServiceImpl = (ItemServiceImpl) servletContext.getAttribute("itemServiceImpl");
+        itemCollectionServiceImpl = (ItemCollectionServiceImpl) servletContext.getAttribute("itemCollectionServiceImpl");
+        itemImageServiceImpl = (ItemImageServiceImpl) servletContext.getAttribute("itemImageServiceImpl");
+        itemMaterialServiceImpl = (ItemMaterialServiceImpl) servletContext.getAttribute("itemMaterialServiceImpl");
+        orderServiceImpl = (OrderServiceImpl) servletContext.getAttribute("orderServiceImpl");
+        orderDetailServiceImpl = (OrderDetailServiceImpl) servletContext.getAttribute("orderDetailServiceImpl");
+        itemTypeServiceImpl = (ItemTypeServiceImpl) servletContext.getAttribute("itemTypeServiceImpl");
+        permissionServiceImpl = (PermissionServiceImpl) servletContext.getAttribute("permissionServiceImpl");
+        saleServiceImpl = (SaleServiceImpl) servletContext.getAttribute("saleServiceImpl");
+        stockItemServiceImpl = (StockItemServiceImpl) servletContext.getAttribute("stockItemServiceImpl");
 
         List<Account> accountList = accountServiceImpl.getAllAccount();
         List<Customer> customerList = customerServiceImpl.getAllCustomer();
         List<DiscountCard> discountCardList = discountCardServiceImpl.getAllDiscountCard();
         List<Item> itemList = itemServiceImpl.getAllItem();
         List<ItemCollection> itemCollectionList = itemCollectionServiceImpl.getAllItemCollection();
-        List<ItemImage> itemImageList = itemImageServiceImpl.getAllItemImage();
+        List<ItemImage> imageList = itemImageServiceImpl.getAllItemImage();
         List<ItemMaterial> itemMaterialList = itemMaterialServiceImpl.getAllItemMaterial();
         List<ItemOrder> orderList = orderServiceImpl.getAllOrder();
         List<OrderDetail> orderDetailList = orderDetailServiceImpl.getAllOrderDetail();
@@ -112,21 +114,20 @@ public class CartServlet extends HttpServlet {
         List<Sale> saleList = saleServiceImpl.getAllSale();
         List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
 
-        *//*Set Data List*//*
-        HttpSession session = req.getSession();
-        session.setAttribute("accountList", accountList);
-        session.setAttribute("customerList", customerList);
-        session.setAttribute("discountCardList", discountCardList);
-        session.setAttribute("itemList", itemList);
-        session.setAttribute("itemCollectionList", itemCollectionList);
-        session.setAttribute("itemImageList", itemImageList);
-        session.setAttribute("itemMaterialList", itemMaterialList);
-        session.setAttribute("orderList", orderList);
-        session.setAttribute("orderDetailList", orderDetailList);
-        session.setAttribute("itemTypeList", itemTypeList);
-        session.setAttribute("permissionList", permissionList);
-        session.setAttribute("saleList", saleList);
-        session.setAttribute("stockItemList", stockItemList);*/
+        /*Set Data List*/
+        req.setAttribute("accountList", accountList);
+        req.setAttribute("customerList", customerList);
+        req.setAttribute("discountCardList", discountCardList);
+        req.setAttribute("itemList", itemList);
+        req.setAttribute("itemCollectionList", itemCollectionList);
+        req.setAttribute("imageList", imageList);
+        req.setAttribute("itemMaterialList", itemMaterialList);
+        req.setAttribute("orderList", orderList);
+        req.setAttribute("orderDetailList", orderDetailList);
+        req.setAttribute("itemTypeList", itemTypeList);
+        req.setAttribute("permissionList", permissionList);
+        req.setAttribute("saleList", saleList);
+        req.setAttribute("stockItemList", stockItemList);
 
 
     }

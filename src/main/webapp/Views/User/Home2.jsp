@@ -733,8 +733,8 @@
 
         <!--                <script type="text/javascript" src="dest/jsmain.min.js"></script>-->
         <!--                <script type="text/javascript" src="./dest/main.js"></script>-->
-        <script src="${pageContext.request.contextPath}/Views/dest/jsmain.min.js"></script>
-        <script src="${pageContext.request.contextPath}/Views/dest/main.js" ></script>
+        <script src="${pageContext.request.contextPath}/Views/User/dest/jsmain.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Views/User/dest/main.js" ></script>
 
 
     </body>

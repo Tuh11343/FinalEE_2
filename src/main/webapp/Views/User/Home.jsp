@@ -38,8 +38,8 @@
 
         <!--        <link rel="stylesheet" href="dest/style.min.css" />
                 <link rel="stylesheet" href="dest/fonts.css" />-->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/dest/style.min.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/dest/fonts.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/User/dest/style.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/User/dest/fonts.css" />
 
     </head>
     <body class="homepage">
@@ -732,8 +732,8 @@
 
         <!--                <script type="text/javascript" src="dest/jsmain.min.js"></script>-->
         <!--                <script type="text/javascript" src="./dest/main.js"></script>-->
-        <script src="${pageContext.request.contextPath}/Views/dest/jsmain.min.js"></script>
-        <script src="${pageContext.request.contextPath}/Views/dest/main.js" ></script>
+        <script src="${pageContext.request.contextPath}/Views/User/dest/jsmain.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Views/User/dest/main.js" ></script>
 
 
     </body>
