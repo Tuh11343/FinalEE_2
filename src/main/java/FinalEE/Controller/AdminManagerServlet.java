@@ -81,6 +81,7 @@ public class AdminManagerServlet extends HttpServlet {
         permissionServiceImpl = (PermissionServiceImpl) servletContext.getAttribute("permissionServiceImpl");
         saleServiceImpl = (SaleServiceImpl) servletContext.getAttribute("saleServiceImpl");
         stockItemServiceImpl = (StockItemServiceImpl) servletContext.getAttribute("stockItemServiceImpl");
+        req.setAttribute("cartServiceImpl",cartServiceImpl);
 
         List<Account> accountList = accountServiceImpl.getAllAccount();
         List<Customer> customerList = customerServiceImpl.getAllCustomer();

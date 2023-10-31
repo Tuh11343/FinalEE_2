@@ -218,34 +218,38 @@
                                     <td class="needHover" style="text-align: right"><b>${stockItem.amount}</b> CH còn
                                     </td>
                                     <td style="text-align: right">
-                                        <a class=" select-buy" href="">Chọn mua <i class="fa fa-plus-circle"></i></a>
+                                        <a class=" select-buy" id="select-buy-${stockItem.id}"
+                                           onclick="sendAjaxRequest('${stockItem.color}','${stockItem.size}','${stockItem.item_id}')">Chọn mua
+                                            <i class="fa fa-plus-circle"></i>
+                                            <script>
+                                                function sendAjaxRequest(color,size,itemID) {
+                                                    var xhr = new XMLHttpRequest();
+                                                    xhr.open("POST", "${pageContext.request.contextPath}/ItemDetailServlet", true);
+                                                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                                                    var params = "size=" + encodeURIComponent(size) + "&color=" + encodeURIComponent(color);
+
+                                                    // Đánh dấu yêu cầu AJAX
+                                                    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+
+                                                    xhr.onreadystatechange = function() {
+                                                        if (xhr.readyState === 4 && xhr.status === 200) {
+                                                            console.log(1);
+                                                        }
+                                                    };
+
+                                                    xhr.send(params);
+                                                }
+
+                                            </script>
+                                        </a>
+
+
                                     </td>
                                 </tr>
                             </c:if>
 
                         </c:forEach>
-
-                        <%--<tr>
-                            <td>Đen, 41</td>
-                            <td class="needHover" style="text-align: right"><b>14</b> CH còn</td>
-                            <td style="text-align: right">
-                                <a class=" select-buy" href="">Chọn mua <i class="fa fa-plus-circle"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Đen, 42</td>
-                            <td class="needHover" style="text-align: right"><b>19</b> CH còn</td>
-                            <td style="text-align: right">
-                                <a class=" select-buy" href="">Chọn mua <i class="fa fa-plus-circle"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Đen, 43</td>
-                            <td class="needHover" style="text-align: right"><b>15</b> CH còn</td>
-                            <td style="text-align: right">
-                                <a class=" select-buy" href="">Chọn mua <i class="fa fa-plus-circle"></i></a>
-                            </td>
-                        </tr>--%>
                         </tbody>
                     </table>
                     <div class="tutorials">
@@ -329,6 +333,7 @@
 
 <script src="${pageContext.request.contextPath}/Views/User/dest/jsmain.min.js"></script>
 <script src="${pageContext.request.contextPath}/Views/User/dest/main.js"></script>
+<script src="${pageContext.request.contextPath}/Views/User/dest/tuh.js"></script>
 </body>
 </html>
 
