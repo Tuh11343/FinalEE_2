@@ -42,49 +42,22 @@ public class ItemDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String action = req.getParameter("action");
-        HttpSession session = req.getSession();
-        switch (action) {
-            case "setOrder"->{
-                int customerID=Integer.parseInt(req.getParameter("logInCustomerID"));
-                int discountCardID=Integer.parseInt(req.getParameter("logInDiscountCardID"));
-                double total=0.0;
+        String requestedWith = req.getHeader("X-Requested-With");
+        if (requestedWith != null && requestedWith.equals("XMLHttpRequest")) {
+            String size=req.getParameter("size");
+            String color=req.getParameter("color");
+            int itemID=Integer.parseInt(req.getParameter("itemID"));
+            System.out.println("size:"+size);
+            System.out.println("color:"+color);
+            System.out.println("itemID:"+itemID);
 
-                ItemOrder order=new ItemOrder();
-                order.setCustomer_id(customerID);
-                order.setTotal(total);
-                order.setDate_purchase(new Date());
-                order.setDiscount_card_id(discountCardID);
-                orderServiceImpl.create(order);
 
-                int orderID=order.getId();
-                System.out.println("OrderID:"+orderID);
 
-                //Handle OrderDetail
-                int itemOrderCount=Integer.parseInt(req.getParameter("itemOrderCount"));
-                for (int i=0;i<itemOrderCount;i++){
-                    int amount=Integer.parseInt(req.getParameter("amount_"+i));
-                    int itemID=Integer.parseInt(req.getParameter("itemID_"+i));
-                    String size=req.getParameter("itemSize_"+i);
-                    String color=req.getParameter("itemColor_"+i);
-                    Item item=itemServiceImpl.getItem(itemID);
-                    double orderDetailTotal=amount*item.getPrice();
 
-                    OrderDetail orderDetail=new OrderDetail();
-                    orderDetail.setAmount(amount);
-                    orderDetail.setTotal(orderDetailTotal);
-                    orderDetail.setOrder_id(orderID);
-                    orderDetail.setItem_id(itemID);
-                    orderDetail.setItem_size(size);
-                    orderDetail.setItem_color(color);
-                    orderDetailServiceImpl.create(orderDetail);
-                }
-                double orderTotal=orderDetailServiceImpl.getOrderTotal(orderID);
-                order.setTotal(orderTotal);
-                orderServiceImpl.create(order);
-                req.getRequestDispatcher("").forward(req,resp);
-            }
         }
+
+
+
 
     }
 
@@ -107,6 +80,7 @@ public class ItemDetailServlet extends HttpServlet {
         permissionServiceImpl = (PermissionServiceImpl) servletContext.getAttribute("permissionServiceImpl");
         saleServiceImpl = (SaleServiceImpl) servletContext.getAttribute("saleServiceImpl");
         stockItemServiceImpl = (StockItemServiceImpl) servletContext.getAttribute("stockItemServiceImpl");
+        req.setAttribute("cartServiceImpl",cartServiceImpl);
 
         List<Account> accountList = accountServiceImpl.getAllAccount();
         List<Customer> customerList = customerServiceImpl.getAllCustomer();
