@@ -1,7 +1,9 @@
 package FinalEE.ServiceImpl;
 
 import FinalEE.Entity.Cart;
+import FinalEE.Entity.StockItem;
 import FinalEE.Repository.CartRepository;
+import FinalEE.Repository.StockItemRepository;
 import FinalEE.Service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private CartRepository cartRepository;
+    @Autowired
+    private StockItemRepository stockItemRepository;
 
     public CartServiceImpl() {
 
@@ -22,16 +26,23 @@ public class CartServiceImpl implements CartService {
     @Override
     public boolean create(Cart cart) {
         try {
-            // Kiểm tra xem cart có tồn tại trong database hay không
-            Optional<Cart> existingCart = cartRepository.findById(cart.getId());
-
-            // Lưu cart và kiểm tra kết quả
-            cartRepository.save(cart);
-            if (existingCart.isPresent()) {
-                System.out.println("Cap nhat thanh cong cart:" + cart.getId());
-            } else {
-                System.out.println("Them thanh cong cart:" + cart.getId());
+            Cart existingCart=cartRepository.findByItemIDAndCustomerID(cart.getStock_item_id(),cart.getCustomer_id());
+            if(existingCart==null){
+                cartRepository.save(cart);
+                System.out.println("Them thanh cong cart:"+cart.getId());
             }
+            else{
+                existingCart.setAmount(existingCart.getAmount()+1);
+                cartRepository.save(existingCart);
+                System.out.println("Cap nhat thanh cong cart:" + existingCart.getId());
+            }
+            if(stockItemRepository.findById(cart.getStock_item_id()).isPresent()){
+                StockItem stockItem=stockItemRepository.findById(cart.getStock_item_id()).get();
+                stockItem.setAmount(stockItem.getAmount()-1);
+                stockItemRepository.save(stockItem);
+                System.out.println("Giam so luong thanh cong stockItem:"+stockItem.getId());
+            }
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,6 +73,11 @@ public class CartServiceImpl implements CartService {
             er.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Cart findCartByItemIDAndCustomerID(int itemID,Integer customerID) {
+        return cartRepository.findByItemIDAndCustomerID(itemID,customerID);
     }
 
     @Override

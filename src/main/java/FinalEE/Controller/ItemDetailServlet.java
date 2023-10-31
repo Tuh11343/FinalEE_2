@@ -42,17 +42,24 @@ public class ItemDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        HttpSession session=req.getSession();
         String requestedWith = req.getHeader("X-Requested-With");
         if (requestedWith != null && requestedWith.equals("XMLHttpRequest")) {
-            String size=req.getParameter("size");
-            String color=req.getParameter("color");
-            int itemID=Integer.parseInt(req.getParameter("itemID"));
-            System.out.println("size:"+size);
-            System.out.println("color:"+color);
-            System.out.println("itemID:"+itemID);
+            int stockItemID=Integer.parseInt(req.getParameter("stockItemID"));
+            Integer customerID=null;
+            if(session.getAttribute("logInCustomerID")!=null)
+            {
+                customerID=Integer.parseInt((String) session.getAttribute("loginCustomerID"));
+            }
 
-
-
+            Cart cart=new Cart();
+            cart.setStock_item_id(stockItemID);
+            cart.setAmount(1);
+            if(customerID!=null)
+            {
+                cart.setCustomer_id(customerID);
+            }
+            cartServiceImpl.create(cart);
 
         }
 

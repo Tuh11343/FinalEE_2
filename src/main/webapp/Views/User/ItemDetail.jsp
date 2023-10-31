@@ -219,15 +219,16 @@
                                     </td>
                                     <td style="text-align: right">
                                         <a class=" select-buy" id="select-buy-${stockItem.id}"
-                                           onclick="sendAjaxRequest('${stockItem.color}','${stockItem.size}','${stockItem.item_id}')">Chọn mua
+                                           onclick="sendAjaxRequest('${stockItem.id}')">Chọn mua
                                             <i class="fa fa-plus-circle"></i>
                                             <script>
-                                                function sendAjaxRequest(color,size,itemID) {
+                                                /*function sendAjaxRequest(color,size,itemID) {
                                                     var xhr = new XMLHttpRequest();
                                                     xhr.open("POST", "${pageContext.request.contextPath}/ItemDetailServlet", true);
                                                     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-                                                    var params = "size=" + encodeURIComponent(size) + "&color=" + encodeURIComponent(color);
+                                                    var params = "size=" + encodeURIComponent(size) + "&color=" + encodeURIComponent(color)+
+                                                        "&itemID="+encodeURIComponent(itemID);
 
                                                     // Đánh dấu yêu cầu AJAX
                                                     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -239,8 +240,19 @@
                                                     };
 
                                                     xhr.send(params);
+                                                }*/
+                                                function sendAjaxRequest(stockItemID) {
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "${pageContext.request.contextPath}/ItemDetailServlet",
+                                                        data: {
+                                                            stockItemID:stockItemID
+                                                        },
+                                                        success: function() {
+                                                            console.log(1);
+                                                        }
+                                                    });
                                                 }
-
                                             </script>
                                         </a>
 
@@ -334,6 +346,7 @@
 <script src="${pageContext.request.contextPath}/Views/User/dest/jsmain.min.js"></script>
 <script src="${pageContext.request.contextPath}/Views/User/dest/main.js"></script>
 <script src="${pageContext.request.contextPath}/Views/User/dest/tuh.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 </html>
 
