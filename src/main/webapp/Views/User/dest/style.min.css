@@ -48,7 +48,7 @@ table {
   --max-width-container-fluid: 1920px;
   --max-width-container: calc(1400px + calc(var(--gap) * 2));
   --main-cl: #ee4266;
-  --yellow-cl: ##ffd700;
+  --yellow-cl: #ffd700;
   --white-cl: #ffffff;
   --black-cl: #141414;
   --gray-cl: #666666;
@@ -748,11 +748,30 @@ https://flickity.metafizzy.co
 .header__right--icon {
   position: relative;
   padding: 10px;
+   color: var(--white-cl);
+      text-transform: uppercase;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+        transition: var(--t);
+        -webkit-transition: var(--t);
+        -moz-transition: var(--t);
+        -ms-transition: var(--t);
+        -o-transition: var(--t);
 }
 .header__right--icon svg {
   height: 19px;
   width: 19px;
   fill: #fff;
+  transition: var(--t);
+  -webkit-transition: var(--t);
+  -moz-transition: var(--t);
+  -ms-transition: var(--t);
+  -o-transition: var(--t);
+}
+.header__right--icon:hover {
+  color: var(--main-cl);
   transition: var(--t);
   -webkit-transition: var(--t);
   -moz-transition: var(--t);
