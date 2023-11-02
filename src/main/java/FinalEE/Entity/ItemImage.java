@@ -4,10 +4,7 @@
  */
 package FinalEE.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,9 +20,11 @@ public class ItemImage {
     
     @Id
     private int id;
-    
-    @Column(name = "item_id")
-    private int item_id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item item;
+
     @Column(name = "image_url")
     private String image_url;
 }

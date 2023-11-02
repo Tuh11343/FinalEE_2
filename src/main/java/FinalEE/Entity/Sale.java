@@ -4,10 +4,7 @@
  */
 package FinalEE.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,14 +20,16 @@ import lombok.Setter;
 public class Sale {
     @Id
     private int id;
-    
-    @Column(name = "item_id")
-    private int item_id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private Item item;
+
     @Column(name = "name")
     private String name;
     @Column(name = "on_sale")
     private int on_sale;
     @Column(name = "sale_percentage")
-    private int sale_percentage;
+    private double sale_percentage;
     
 }

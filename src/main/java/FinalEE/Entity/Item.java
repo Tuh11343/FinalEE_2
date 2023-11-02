@@ -1,14 +1,13 @@
 
 package FinalEE.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -23,12 +22,19 @@ public class Item {
 
     @Column(name = "name")
     private String name;
-    @Column(name = "item_type_id")
-    private int item_type_id;
-    @Column(name = "item_collection_id")
-    private Integer item_collection_id;
-    @Column(name = "item_material_id")
-    private int item_material_id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_type_id",nullable = false)
+    private ItemType itemType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_collection_id")
+    private ItemCollection itemCollection;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_material_id",nullable = false)
+    private ItemMaterial itemMaterial;
+
     @Column(name = "description")
     private String description;
     @Column(name = "is_new")
@@ -40,10 +46,14 @@ public class Item {
     @Column(name = "year_produce")
     private int year_produce;
 
-    @Override
-    public String toString() {
-        return "Item{" + "id=" + id + ", name=" + name + ", item_type_id=" + item_type_id + ", item_collection_id=" + item_collection_id + ", item_material_id=" + item_material_id + ", is_new=" + is_new + ", is_hot=" + is_hot + ", price=" + price + ", year_produce=" + year_produce + '}';
-    }
+    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL)
+    private Sale sale;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<ItemImage> imageList;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    private List<StockItem> stockItemList;
 
 
 }

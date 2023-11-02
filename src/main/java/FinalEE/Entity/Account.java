@@ -4,10 +4,7 @@
  */
 package FinalEE.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,18 +21,19 @@ public class Account {
     
     @Id
     private Integer id;
-    @Column(name = "customer_id")
-    private int customer_id;
-    @Column(name = "permission_id")
-    private int permission_id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id",nullable = false)
+    private Customer customer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "permission_id",nullable = false)
+    private Permission permission;
+
     @Column(name = "name")
     private String name;
     @Column(name = "password")
     private String password;
 
-    @Override
-    public String toString() {
-        return "Account{" + "id=" + id + ", customer_id=" + customer_id + ", permission_id=" + permission_id + ", name=" + name + ", password=" + password + '}';
-    }
-    
+
 }

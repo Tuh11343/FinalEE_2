@@ -61,8 +61,7 @@
 
                             <svg class="arrow" xmlns="http://www.w3.org/2000/svg" height="1em"
                                  viewBox="0 0 512 512">
-                                <path
-                                        d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/>
+                                <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/>
                             </svg>
                         </a>
                         <ul class="dropmenu">
@@ -86,8 +85,7 @@
                             sản phẩm
                             <svg class="arrow" xmlns="http://www.w3.org/2000/svg" height="1em"
                                  viewBox="0 0 512 512">
-                                <path
-                                        d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/>
+                                <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/>
                             </svg>
                         </a>
                         <ul class="dropmenu sortmenu">
@@ -161,7 +159,7 @@
 
                     <c:set var="itemImageCount" value="0"/>
                     <c:forEach items="${imageList}" var="image">
-                        <c:if test="${image.item_id == itemList[itemIndex].id && itemImageCount < 1}">
+                        <c:if test="${image.getItem().id == itemList[itemIndex].id && itemImageCount < 1}">
                             <a href="#" class="img"><img src="${image.image_url}" alt="ao-thun"/></a>
                             <c:set var="itemImageCount" value="${itemImageCount+1}"/>
                         </c:if>
@@ -177,7 +175,7 @@
                     </p>
                     <c:set var="isSale" value="false"/>
                     <c:forEach items="${saleList}" var="sale">
-                        <c:if test="${sessionScope.itemClickID eq sale.item_id && sale.on_sale==1}">
+                        <c:if test="${sessionScope.itemClickID eq sale.getItem().id && sale.on_sale eq 1}">
                             <h5 class="sale">
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAADsAAAA7AF5KHG9AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAA8xJREFUWIXFl11oHGUUhp8zM7sbo2kTijbBakqMRYlooYYEBUWKZhPTdLO4UEVbEBWpBQsFIVrtNjZgrJbSitSfChWpaKm5iEEbL2wF0SsllILoTSuktqakTUzs7szsHC82aSbZnexuUuK5+n7O977PzJxvvhlYZDht8Ycm2hLVC11vLMbcjsYbPU8HI55b/78AINoDRByRs0sOoImEqcojAOJx55IDMDZWBlgAIrpLk8kFaS0YQAYHJ4FzAAIPp38e+kBBlgwAQISea214zmmNHygVYlEAoab7DgucnO6r6jY7Gu+ZZ8niAOzHYuvS0c5vpvuSTHoZdM/sLO2yW+LPXHcATSRuUEO+QFjlHy9LXTmVkyv6nrYmbr6uAM545gngDpQ6v7hTvnxdnvRlNu4LxehaxQKoaPtUs9z23MF0NPa2CJXqyet585VHgYL1UDQAKrWIZtvCWpCjqsHpAnXFyJZQhLqs+FwAMtONVGusNdXWuaYkAE0kTH9fhIslAozMiMlrkpHeogHS0fib6fHMwVlAMFySvRJSkIn1HSsFmhBtn2yJ1xQEyJ7t+oqgT+r6zhUzF8E/JQEIa+2Wzl9CIesnsrVmWWQPL3/kFKGlmU1AGCFsW/KxdnRstlNmLUqsJIApCJipVBG9HzjqT8m5A6La5OvEbNscx+A0UA0gt9ZgNDdCeXmuYTiMrK4N5FHRlXPH8tSAVgUJGA80ETr4DubTmwgd2o9ULp+ZjESwundibnw8EABPcrTzAMhk0Hoz1o576BOcbTvQs38iDzbPmO9+FRwb9/2PggGEscIAyh9B6/XSKMa99yB3rUFuXwUXR3zmDm53LzhOsL9ozk7KBTDk1yCBzOEjUFWJ1bUD7/sf8E6fKdocAM8YyoGaO6AbNpTbjnUBqJhXrIQrnwo3bNq3yMDAZf9g7i7o7/9XVT4r2nzPXqytzxPu/5LQ/l6kOqfQs6Hy9VzzvAAAjmoS5UpB8+5ejOZGpOFunBdfxvvtd8xn836LZEB25pvIC1Ax2Pe3CNsLmeM4cNON6Ohl9PwFGD6f//0A+yInjp8pGgAg/G3fEWCvf8zavhWupnB3v3XtmXunfkRWVBH69EPMLU/hHeubKzUQrrC6gnzm/YJVEDsa3wX6BiBSU42OjICbmZ0YCiH1dejwXzA+7p/pC6eszXLy2MSCAKYj3RqLoXIAuK2YfGBCVZKRE1/tE/9hsFAAyG7PtGO9JLAFaAhIOwd8Hg6570p//6VidEv+kwFItXTUC2aDoqsNg6uKMaquDJV9dzzwLRoU/wGxqGF2wiMubwAAAABJRU5ErkJggg=="
                                      alt=""/>
@@ -187,7 +185,7 @@
                         </c:if>
                     </c:forEach>
 
-                    <c:if test="${isSale==true}">
+                    <c:if test="${isSale eq true}">
                         <fmt:formatNumber value="${itemList[itemIndex].price}" pattern="#,###" var="formattedNumber"/>
                         <fmt:formatNumber value="${itemList[itemIndex].price * 0.8}" pattern="#,###" var="salePrice"/>
                         <fmt:formatNumber value="${itemList[itemIndex].price * 0.2}" pattern="#,###" var="savedAmount"/>
@@ -198,7 +196,7 @@
                         </h5>
                     </c:if>
 
-                    <c:if test="${isSale==false}">
+                    <c:if test="${isSale eq false}">
                         <fmt:formatNumber value="${itemList[itemIndex].price}" pattern="#,###" var="formattedNumber"/>
                         <h6 class="salePrice">Giá: <span>${formattedNumber}</span> đ</h6>
                     </c:if>
@@ -212,7 +210,7 @@
                         <tbody>
                         <c:forEach items="${stockItemList}" var="stockItem">
 
-                            <c:if test="${stockItem.item_id eq sessionScope.itemClickID}">
+                            <c:if test="${stockItem.getItem().id eq sessionScope.itemClickID}">
                                 <tr>
                                     <td>${stockItem.color}, ${stockItem.size}</td>
                                     <td class="needHover" style="text-align: right"><b>${stockItem.amount}</b> CH còn
@@ -222,31 +220,15 @@
                                            onclick="sendAjaxRequest('${stockItem.id}')">Chọn mua
                                             <i class="fa fa-plus-circle"></i>
                                             <script>
-                                                /*function sendAjaxRequest(color,size,itemID) {
-                                                    var xhr = new XMLHttpRequest();
-                                                    xhr.open("POST", "${pageContext.request.contextPath}/ItemDetailServlet", true);
-                                                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-                                                    var params = "size=" + encodeURIComponent(size) + "&color=" + encodeURIComponent(color)+
-                                                        "&itemID="+encodeURIComponent(itemID);
-
-                                                    // Đánh dấu yêu cầu AJAX
-                                                    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-
-                                                    xhr.onreadystatechange = function() {
-                                                        if (xhr.readyState === 4 && xhr.status === 200) {
-                                                            console.log(1);
-                                                        }
-                                                    };
-
-                                                    xhr.send(params);
-                                                }*/
                                                 function sendAjaxRequest(stockItemID) {
                                                     $.ajax({
                                                         type: "POST",
                                                         url: "${pageContext.request.contextPath}/ItemDetailServlet",
                                                         data: {
                                                             stockItemID:stockItemID
+                                                        },
+                                                        headers: {
+                                                            "X-Requested-With": "XMLHttpRequest"
                                                         },
                                                         success: function() {
                                                             console.log(1);

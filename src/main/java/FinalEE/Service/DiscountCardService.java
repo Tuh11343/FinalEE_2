@@ -10,5 +10,6 @@ public interface DiscountCardService {
     boolean deleteByID(int id);
     DiscountCard getDiscountCard(int id);
     List<DiscountCard> getAllDiscountCard();
+    List<DiscountCard> findByCustomerID(Integer customerID);
     
 }

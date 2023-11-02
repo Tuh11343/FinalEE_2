@@ -4,10 +4,7 @@
  */
 package FinalEE.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,10 +20,14 @@ public class DiscountCard {
     
     @Id
     private int id;
-    @Column(name = "customer_id")
-    private int customer_id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id",nullable = false)
+    private Customer  customer;
+
     @Column(name = "name")
     private String name;
+
     @Column(name="discount_percentage")
     private int discount_percentage;
 }

@@ -451,9 +451,16 @@ function handleUpdateOrder() {
             var discountCardID = item.getAttribute("data-orderDiscountCardID");
             var total = item.getAttribute("data-orderTotal");
             var datePurchase = item.getAttribute("data-orderDatePurchase");
+            var address=item.getAttribute("data-orderAddress")
+            var orderStatus=item.getAttribute("data-orderStatus");
+            var note=item.getAttribute("data-note");
 
             document.getElementById("update_orderTotal").value = total;
             document.getElementById("update_orderDatePurchase").value = datePurchase;
+            document.getElementById("update_orderAddress").value = address;
+            document.getElementById("update_orderStatus").value = orderStatus;
+            document.getElementById("update_orderNote").value = note;
+
 
             /*Combobox CustomerID*/
             var update_order_selectElement = document.getElementById("update_orderCustomerID");

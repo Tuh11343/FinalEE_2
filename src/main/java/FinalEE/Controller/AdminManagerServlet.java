@@ -97,6 +97,8 @@ public class AdminManagerServlet extends HttpServlet {
         List<Sale> saleList = saleServiceImpl.getAllSale();
         List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
 
+
+
         /*Set Data List*/
         req.setAttribute("accountList", accountList);
         req.setAttribute("customerList", customerList);
@@ -143,12 +145,15 @@ public class AdminManagerServlet extends HttpServlet {
                 int permissionID = Integer.parseInt(request.getParameter("update_accountPermissionID"));
                 int customerID = Integer.parseInt(request.getParameter("update_accountCustomerID"));
 
+                Permission permission=permissionServiceImpl.getPermission(permissionID);
+                Customer customer=customerServiceImpl.getCustomer(customerID);
+
                 Account account = new Account();
                 account.setId(id);
                 account.setName(name);
-                account.setCustomer_id(customerID);
+                account.setCustomer(customer);
                 account.setPassword(password);
-                account.setPermission_id(permissionID);
+                account.setPermission(permission);
 
                 if (accountServiceImpl.create(account)) {
                     response.getWriter().println("<script>alert('Cập nhật tài khoản thành công!');</script>");
@@ -167,11 +172,14 @@ public class AdminManagerServlet extends HttpServlet {
                 int permissionID = Integer.parseInt(request.getParameter("add_accountPermissionID"));
                 int customerID = Integer.parseInt(request.getParameter("add_accountCustomerID"));
 
+                Customer customer=customerServiceImpl.getCustomer(customerID);
+                Permission permission=permissionServiceImpl.getPermission(permissionID);
+
                 Account account = new Account();
                 account.setName(name);
-                account.setCustomer_id(customerID);
+                account.setCustomer(customer);
                 account.setPassword(password);
-                account.setPermission_id(permissionID);
+                account.setPermission(permission);
 
                 if (accountServiceImpl.create(account)) {
                     response.getWriter().println("<script>alert('Thêm tài khoản thành công!');</script>");
@@ -195,12 +203,16 @@ public class AdminManagerServlet extends HttpServlet {
                 double price = Double.parseDouble(request.getParameter("add_itemPrice"));
                 int yearProduce = Integer.parseInt(request.getParameter("add_itemYearProduce"));
 
+                ItemCollection itemCollection=itemCollectionServiceImpl.getItemCollection(itemCollectionID);
+                ItemMaterial itemMaterial=itemMaterialServiceImpl.getItemMaterial(itemMaterialID);
+                ItemType itemType=itemTypeServiceImpl.getItemType(itemTypeID);
+
                 Item item = new Item();
                 item.setIs_hot(isHot);
                 item.setIs_new(isNew);
-                item.setItem_collection_id(itemCollectionID);
-                item.setItem_material_id(itemMaterialID);
-                item.setItem_type_id(itemTypeID);
+                item.setItemCollection(itemCollection);
+                item.setItemMaterial(itemMaterial);
+                item.setItemType(itemType);
                 item.setName(name);
                 item.setPrice(price);
                 item.setYear_produce(yearProduce);
@@ -226,13 +238,17 @@ public class AdminManagerServlet extends HttpServlet {
                 double price = Double.parseDouble(request.getParameter("update_itemPrice"));
                 int yearProduce = Integer.parseInt(request.getParameter("update_itemYearProduce"));
 
+                ItemCollection itemCollection=itemCollectionServiceImpl.getItemCollection(itemCollectionID);
+                ItemMaterial itemMaterial=itemMaterialServiceImpl.getItemMaterial(itemMaterialID);
+                ItemType itemType=itemTypeServiceImpl.getItemType(itemTypeID);
+
                 Item item = new Item();
                 item.setId(id);
                 item.setIs_hot(isHot);
                 item.setIs_new(isNew);
-                item.setItem_collection_id(itemCollectionID);
-                item.setItem_material_id(itemMaterialID);
-                item.setItem_type_id(itemTypeID);
+                item.setItemCollection(itemCollection);
+                item.setItemMaterial(itemMaterial);
+                item.setItemType(itemType);
                 item.setName(name);
                 item.setPrice(price);
                 item.setYear_produce(yearProduce);
@@ -321,8 +337,10 @@ public class AdminManagerServlet extends HttpServlet {
                 String name = request.getParameter("add_discountCardName");
                 int discountPercentage = Integer.parseInt(request.getParameter("add_discountCardDiscountPercentage"));
 
+                Customer customer=customerServiceImpl.getCustomer(customerID);
+
                 DiscountCard discountCard = new DiscountCard();
-                discountCard.setCustomer_id(customerID);
+                discountCard.setCustomer(customer);
                 discountCard.setDiscount_percentage(discountPercentage);
                 discountCard.setName(name);
 
@@ -342,9 +360,11 @@ public class AdminManagerServlet extends HttpServlet {
                 String name = request.getParameter("update_discountCardName");
                 int customerID = Integer.parseInt(request.getParameter("update_discountCardID"));
 
+                Customer customer=customerServiceImpl.getCustomer(customerID);
+
                 DiscountCard discountCard = new DiscountCard();
                 discountCard.setId(id);
-                discountCard.setCustomer_id(customerID);
+                discountCard.setCustomer(customer);
                 discountCard.setDiscount_percentage(discountPercentage);
                 discountCard.setName(name);
 
@@ -414,9 +434,11 @@ public class AdminManagerServlet extends HttpServlet {
                 int itemID = Integer.parseInt(request.getParameter("add_itemImageItemID"));
                 String url=request.getParameter("add_itemImageURL");
 
+                Item item=itemServiceImpl.getItem(itemID);
+
                 ItemImage itemImage=new ItemImage();
                 itemImage.setImage_url(url);
-                itemImage.setItem_id(itemID);
+                itemImage.setItem(item);
 
                 if (itemImageServiceImpl.create(itemImage)) {
                     response.getWriter().println("<script>alert('Thêm ảnh cho sản phẩm thành công!');</script>");
@@ -431,10 +453,12 @@ public class AdminManagerServlet extends HttpServlet {
                 int itemID = Integer.parseInt(request.getParameter("update_itemImageItemID"));
                 String url=request.getParameter("update_itemImageURL");
 
+                Item item=itemServiceImpl.getItem(itemID);
+
                 ItemImage itemImage=new ItemImage();
                 itemImage.setId(id);
                 itemImage.setImage_url(url);
-                itemImage.setItem_id(itemID);
+                itemImage.setItem(item);
 
                 if (itemImageServiceImpl.create(itemImage)) {
                     response.getWriter().println("<script>alert('Cập nhật ảnh cho sản phẩm thành công!');</script>");
@@ -509,11 +533,15 @@ public class AdminManagerServlet extends HttpServlet {
                     e.printStackTrace();
                 }
 
+                Customer customer=customerServiceImpl.getCustomer(customerID);
+                DiscountCard discountCard=discountCardServiceImpl.getDiscountCard(discountCardID);
+
+
                 ItemOrder order=new ItemOrder();
-                order.setCustomer_id(customerID);
+                order.setCustomer(customer);
                 order.setTotal(total);
                 order.setDate_purchase(datePurchaseFormatted);
-                order.setDiscount_card_id(discountCardID);
+                order.setDiscountCard(discountCard);
 
                 if (orderServiceImpl.create(order)) {
                     response.getWriter().println("<script>alert('Thêm hóa đơn thành công!');</script>");
@@ -524,11 +552,11 @@ public class AdminManagerServlet extends HttpServlet {
                 request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "order_btnUpdate"->{
-                int id=Integer.parseInt(request.getParameter("add_orderID"));
-                int customerID=Integer.parseInt(request.getParameter("add_orderCustomerID"));
-                int discountCardID=Integer.parseInt(request.getParameter("add_orderDiscountCardID"));
-                double total=Double.parseDouble(request.getParameter("add_orderTotal"));
-                String datePurchase=request.getParameter("add_orderDatePurchase");
+                int id=Integer.parseInt(request.getParameter("update_orderID"));
+                int customerID=Integer.parseInt(request.getParameter("update_orderCustomerID"));
+                int discountCardID=Integer.parseInt(request.getParameter("update_orderDiscountCardID"));
+                double total=Double.parseDouble(request.getParameter("update_orderTotal"));
+                String datePurchase=request.getParameter("update_orderDatePurchase");
 
                 /*Xử lý định dạng date*/
                 SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -539,12 +567,15 @@ public class AdminManagerServlet extends HttpServlet {
                     e.printStackTrace();
                 }
 
+                Customer customer=customerServiceImpl.getCustomer(customerID);
+                DiscountCard discountCard=discountCardServiceImpl.getDiscountCard(discountCardID);
+
                 ItemOrder order=new ItemOrder();
                 order.setId(id);
-                order.setCustomer_id(customerID);
+                order.setCustomer(customer);
                 order.setTotal(total);
                 order.setDate_purchase(datePurchaseFormatted);
-                order.setDiscount_card_id(discountCardID);
+                order.setDiscountCard(discountCard);
 
                 if (orderServiceImpl.create(order)) {
                     response.getWriter().println("<script>alert('Cập nhật hóa đơn thành công!');</script>");
@@ -573,11 +604,14 @@ public class AdminManagerServlet extends HttpServlet {
                 String itemSize=request.getParameter("add_orderDetailItemSize");
                 double total=Double.parseDouble(request.getParameter("add_orderDetailTotal"));
 
+                Item item=itemServiceImpl.getItem(itemID);
+                ItemOrder order=orderServiceImpl.getOrder(orderID);
+
                 OrderDetail orderDetail=new OrderDetail();
                 orderDetail.setTotal(total);
-                orderDetail.setItem_id(itemID);
+                orderDetail.setItem(item);
                 orderDetail.setAmount(amount);
-                orderDetail.setOrder_id(orderID);
+                orderDetail.setOrder(order);
                 orderDetail.setItem_color(itemColor);
                 orderDetail.setItem_size(itemSize);
 
@@ -590,20 +624,23 @@ public class AdminManagerServlet extends HttpServlet {
                 request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "orderDetail_btnUpdate"->{
-                int orderDetailID=Integer.parseInt(request.getParameter("add_orderDetailID"));
-                int orderID=Integer.parseInt(request.getParameter("add_orderDetailOrderID"));
-                int itemID=Integer.parseInt(request.getParameter("add_orderDetailItemID"));
-                int amount=Integer.parseInt(request.getParameter("add_orderDetailAmount"));
-                String itemColor=request.getParameter("add_orderDetailItemColor");
-                String itemSize=request.getParameter("add_orderDetailItemSize");
-                double total=Double.parseDouble(request.getParameter("add_orderDetailTotal"));
+                int orderDetailID=Integer.parseInt(request.getParameter("update_orderDetailID"));
+                int orderID=Integer.parseInt(request.getParameter("update_orderDetailOrderID"));
+                int itemID=Integer.parseInt(request.getParameter("update_orderDetailItemID"));
+                int amount=Integer.parseInt(request.getParameter("update_orderDetailAmount"));
+                String itemColor=request.getParameter("update_orderDetailItemColor");
+                String itemSize=request.getParameter("update_orderDetailItemSize");
+                double total=Double.parseDouble(request.getParameter("update_orderDetailTotal"));
+
+                Item item=itemServiceImpl.getItem(itemID);
+                ItemOrder order=orderServiceImpl.getOrder(orderID);
 
                 OrderDetail orderDetail=new OrderDetail();
                 orderDetail.setId(orderDetailID);
                 orderDetail.setTotal(total);
-                orderDetail.setItem_id(itemID);
+                orderDetail.setItem(item);
                 orderDetail.setAmount(amount);
-                orderDetail.setOrder_id(orderID);
+                orderDetail.setOrder(order);
                 orderDetail.setItem_color(itemColor);
                 orderDetail.setItem_size(itemSize);
 
@@ -716,10 +753,12 @@ public class AdminManagerServlet extends HttpServlet {
                 int onSale=Integer.parseInt(request.getParameter("add_saleOnSale"));
                 int salePercentage=Integer.parseInt(request.getParameter("add_salePercentage"));
 
+                Item item=itemServiceImpl.getItem(itemId);
+
                 Sale sale=new Sale();
                 sale.setSale_percentage(salePercentage);
                 sale.setOn_sale(onSale);
-                sale.setItem_id(itemId);
+                sale.setItem(item);
                 sale.setName(name);
 
                 if (saleServiceImpl.create(sale)) {
@@ -737,11 +776,13 @@ public class AdminManagerServlet extends HttpServlet {
                 int onSale=Integer.parseInt(request.getParameter("update_saleOnSale"));
                 int salePercentage=Integer.parseInt(request.getParameter("update_salePercentage"));
 
+                Item item=itemServiceImpl.getItem(itemId);
+
                 Sale sale=new Sale();
                 sale.setId(id);
                 sale.setSale_percentage(salePercentage);
                 sale.setOn_sale(onSale);
-                sale.setItem_id(itemId);
+                sale.setItem(item);
                 sale.setName(name);
 
                 if (saleServiceImpl.create(sale)) {
@@ -769,11 +810,13 @@ public class AdminManagerServlet extends HttpServlet {
                 String size=request.getParameter("add_stockItemSize");
                 int amount=Integer.parseInt(request.getParameter("add_stockItemAmount"));
 
+                Item item=itemServiceImpl.getItem(itemId);
+
                 StockItem stockItem=new StockItem();
                 stockItem.setAmount(amount);
                 stockItem.setSize(size);
                 stockItem.setColor(color);
-                stockItem.setItem_id(itemId);
+                stockItem.setItem(item);
 
                 if (stockItemServiceImpl.create(stockItem)) {
                     response.getWriter().println("<script>alert('Thêm hàng hóa sản phẩm thành công!');</script>");
@@ -784,18 +827,20 @@ public class AdminManagerServlet extends HttpServlet {
                 request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
             }
             case "stockItem_btnUpdate"->{
-                int id=Integer.parseInt(request.getParameter("add_stockItemID"));
-                int itemId=Integer.parseInt(request.getParameter("add_stockItemItemID"));
-                String color=request.getParameter("add_stockItemColor");
-                String size=request.getParameter("add_stockItemSize");
-                int amount=Integer.parseInt(request.getParameter("add_stockItemAmount"));
+                int id=Integer.parseInt(request.getParameter("update_stockItemID"));
+                int itemId=Integer.parseInt(request.getParameter("update_stockItemItemID"));
+                String color=request.getParameter("update_stockItemColor");
+                String size=request.getParameter("update_stockItemSize");
+                int amount=Integer.parseInt(request.getParameter("update_stockItemAmount"));
+
+                Item item=itemServiceImpl.getItem(itemId);
 
                 StockItem stockItem=new StockItem();
                 stockItem.setId(id);
                 stockItem.setAmount(amount);
                 stockItem.setSize(size);
                 stockItem.setColor(color);
-                stockItem.setItem_id(itemId);
+                stockItem.setItem(item);
 
                 if (stockItemServiceImpl.create(stockItem)) {
                     response.getWriter().println("<script>alert('Cập nhật hàng hóa sản phẩm thành công!');</script>");
@@ -816,7 +861,6 @@ public class AdminManagerServlet extends HttpServlet {
             }
 
             default -> System.out.println("Khong ton tai action trong AdminManagerServlet");
-
 
         }
 
