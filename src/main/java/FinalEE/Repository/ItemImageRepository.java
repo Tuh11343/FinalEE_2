@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ItemImageRepository extends JpaRepository<ItemImage, Integer>{
 
-    @Query("SELECT i FROM ItemImage i WHERE i.item_id = ?1")
+    @Query("SELECT i FROM ItemImage i WHERE i.item.id = ?1")
     List<ItemImage> findByItemId(int itemID);
 
 }

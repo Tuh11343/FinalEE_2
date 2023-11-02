@@ -52,7 +52,8 @@ public class StockItemServiceImpl implements StockItemService{
 
     @Override
     public StockItem getStockItem(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Optional<StockItem> stockItem=stockItemRepository.findById(id);
+        return stockItem.orElse(null);
     }
 
     @Override

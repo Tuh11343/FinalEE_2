@@ -40,8 +40,8 @@
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/dest/vinh_index.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/dest/vinh_setup.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/Admin/vinh_index.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/Admin/vinh_setup.css"/>
 </head>
 
 <body class="homepage">
@@ -300,20 +300,20 @@
                 <c:forEach items="${accountList}" var="account">
                     <tr>
                         <td>${account.id}</td>
-                        <td>${account.permission_id}</td>
-                        <td>${account.customer_id}</td>
+                        <td>${account.getPermission().id}</td>
+                        <td>${account.getCustomer().id}</td>
                         <td>${account.name}</td>
                         <td>${account.password}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="accountID" value="${account.id}"/>
                                     <input type="hidden" name="action" value="account_btnDelete"/>
                                 </form>
                                 <button class="btnHD btnUpdateUser" id="account_updateTrigger"
-                                        data-customerID="${account.customer_id}"
-                                        data-permissionID="${account.permission_id}"
+                                        data-customerID="${account.getCustomer().id}"
+                                        data-permissionID="${account.getPermission().id}"
                                         data-accountName="${account.name}" data-accountPassword="${account.password}"
                                 >Sửa
                                 </button>
@@ -328,7 +328,7 @@
             <!--Update Account-->
             <div id="update-user" class="updatemodal flex-center">
                 <div class="update-modal">
-                    <form class="form__update" action="/AdminManagerServlet" method="post">
+                    <form class="form__update" action="${pageContext.request.contextPath}/AdminManagerServlet" method="post">
                         <span class="close">&times;</span>
                         <h2 class="text-center" style="padding: 16px 0">CẬP NHẬT NGƯỜI DÙNG</h2>
 
@@ -382,7 +382,7 @@
             <!--Add Account-->
             <div id="modal-add-account" class="addmodal flex-center">
                 <div class="add-modal">
-                    <form class="form__add" action="/AdminManagerServlet" method="post">
+                    <form class="form__add" action="${pageContext.request.contextPath}/AdminManagerServlet" method="post">
                         <span class="close clsadduser">&times;</span>
                         <h2 class="text-center" style="padding: 16px 0">THÊM NGƯỜI DÙNG</h2>
 
@@ -469,9 +469,9 @@
                     <tr>
                         <td>${item.id}</td>
                         <td>${item.name}</td>
-                        <td>${item.item_type_id}</td>
-                        <td>${item.item_collection_id}</td>
-                        <td>${item.item_material_id}</td>
+                        <td>${item.getItemType().id}</td>
+                        <td>${item.getItemCollection().id}</td>
+                        <td>${item.getItemMaterial().id}</td>
 
                         <c:choose>
                             <c:when test="${item.is_new==1}">
@@ -495,16 +495,16 @@
                         <td>${item.year_produce}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="itemID" value="${item.id}"/>
                                     <input type="hidden" name="action" value="item_btnDelete"/>
                                 </form>
                                 <button class="btnHD btnUpdateItem"
                                         data-itemID="${item.id}" data-itemName="${item.name}"
-                                        data-itemTypeID="${item.item_type_id}"
-                                        data-itemCollectionID="${item.item_collection_id}"
-                                        data-itemMaterialID="${item.item_material_id}" data-itemIsNew="${item.is_new}"
+                                        data-itemTypeID="${item.getItemType().id}"
+                                        data-itemCollectionID="${item.getItemCollection().id}"
+                                        data-itemMaterialID="${item.getItemMaterial().id}" data-itemIsNew="${item.is_new}"
                                         data-itemIsHot="${item.is_hot}" data-itemPrice="${item.price}"
                                         data-itemYearProduce="${item.year_produce}"
                                 >Sửa
@@ -715,7 +715,7 @@
                         <td>${customer.address}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="customerID" value="${customer.id}"/>
                                     <input type="hidden" name="action" value="customer_btnDelete"/>
@@ -858,19 +858,19 @@
                 <tbody><c:forEach items="${discountCardList}" var="discountCard">
                     <tr>
                         <td>${discountCard.id}</td>
-                        <td>${discountCard.customer_id}</td>
+                        <td>${discountCard.getCustomer().id}</td>
                         <td>${discountCard.name}</td>
                         <td>${discountCard.discount_percentage}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="discountCardID" value="${discountCard.id}"/>
                                     <input type="hidden" name="action" value="discountCard_btnDelete"/>
                                 </form>
                                 <button class="btnHD btnUpdateDiscountCard"
                                         data-discountCardID="${discountCard.id}"
-                                        data-discountCardCustomerID="${discountCard.customer_id}"
+                                        data-discountCardCustomerID="${discountCard.getCustomer().id}"
                                         data-discountCardName="${discountCard.name}"
                                         data-discountCardPercentage="${discountCard.discount_percentage}"
                                 >Sửa
@@ -996,7 +996,7 @@
                         <td>${itemCollection.name}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="itemCollectionID" value="${itemCollection.id}"/>
                                     <input type="hidden" name="action" value="itemCollection_btnDelete"/>
@@ -1090,17 +1090,17 @@
                 <c:forEach items="${itemImageList}" var="itemImage">
                     <tr>
                         <td>${itemImage.id}</td>
-                        <td>${itemImage.item_id}</td>
+                        <td>${itemImage.getItem().id}</td>
                         <td>${itemImage.image_url}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="itemImageID" value="${itemImage.id}"/>
                                     <input type="hidden" name="action" value="itemImage_btnDelete"/>
                                 </form>
                                 <button class="btnHD btnUpdateItemImage"
-                                        data-itemImageID="${itemImage.id}" data-itemImageItemID="${itemImage.item_id}"
+                                        data-itemImageID="${itemImage.id}" data-itemImageItemID="${itemImage.getItem().id}"
                                         data-itemImageURL="${itemImage.image_url}"
                                 >Sửa
                                 </button>
@@ -1211,7 +1211,7 @@
                         <td>${itemMaterial.name}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="itemMaterialID" value="${itemMaterial.id}"/>
                                     <input type="hidden" name="action" value="itemMaterial_btnDelete"/>
@@ -1297,9 +1297,12 @@
                 <tr>
                     <th>ID</th>
                     <th>ID Khách Hàng</th>
+                    <th>ID Thẻ Khuyến Mãi</th>
                     <th>Tổng Tiền</th>
                     <th>Ngày Mua</th>
-                    <th>ID Thẻ Khuyến Mãi</th>
+                    <th>Tình Trạng Đơn Hàng</th>
+                    <th>Địa Chỉ</th>
+                    <th>Ghi Chú</th>
                     <th>Action</th>
                 </tr>
 
@@ -1309,13 +1312,16 @@
                 <c:forEach items="${orderList}" var="order">
                     <tr>
                         <td>${order.id}</td>
-                        <td>${order.customer_id}</td>
+                        <td>${order.getCustomer().id}</td>
+                        <td>${order.getDiscountCard().id}</td>
                         <td>${order.total}</td>
                         <td>${order.date_purchase}</td>
-                        <td>${order.discount_card_id}</td>
+                        <td>${order.order_status}</td>
+                        <td>${order.address}</td>
+                        <td>${order.note}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="orderID" value="${order.id}"/>
                                     <input type="hidden" name="action" value="order_btnDelete"/>
@@ -1323,7 +1329,8 @@
                                 <button class="btnHD btnUpdateOrder"
                                         data-orderID="${order.id}" data-orderCustomerID="${order.customer_id}"
                                         data-orderTotal="${order.total}" data-orderDatePurchase="${order.date_purchase}"
-                                        data-orderDiscountCardID="${order.discount_card_id}"
+                                        data-orderDiscountCardID="${order.discount_card_id}" data-orderStatus="${order.order_status}"
+                                        data-orderAddress="${order.address}" data-orderNote="${order.note}"
                                 >Sửa
                                 </button>
                                 <input type="hidden" name="orderID" value="${order.id}"/>
@@ -1356,7 +1363,7 @@
                         <!--Order Discount Card ID-->
                         <div class="form-grp">
                             <label for="update_orderDiscountCardID">Thẻ Khuyến Mãi:</label>
-                            <select id="update_orderDiscountCardID" name="update_update_orderDiscountCardID">
+                            <select id="update_orderDiscountCardID" name="update_orderDiscountCardID">
                                 <c:forEach items="${discountCardList}" var="discountCard">
                                     <option value="${discountCard.id}">${discountCard.id}
                                         : ${discountCard.name}</option>
@@ -1380,6 +1387,34 @@
                                    placeholder="Nhập vào ngày mua"/>
                         </div>
 
+                        <!--Order Status-->
+                        <div class="form-grp">
+                            <label for="update_orderStatus">Tình trạng đơn hàng:</label>
+                            <select id="update_orderStatus" name="update_orderStatus">
+                                <option value="${0}"> 0 : Đã đặt đơn</option>
+                                <option value="${1}"> 1 : Đang chuẩn bị hàng</option>
+                                <option value="${2}"> 2 : Đơn hàng đã hủy</option>
+                                <option value="${3}"> 3 : Đang giao hàng</option>
+                                <option value="${4}"> 4 : Đơn hàng thành công</option>
+                            </select>
+                        </div>
+
+                        <!--Order Address-->
+                        <div class="form-grp">
+                            <label for="update_orderAddress">Địa chỉ đặt hàng:</label>
+                            <input type="text" maxlength="100" id="update_orderAddress"
+                                   name="update_orderAddress" value=""
+                                   placeholder="Nhập vào địa chỉ giao hàng"/>
+                        </div>
+
+                        <!--Order Note-->
+                        <div class="form-grp">
+                            <label for="update_orderNote">Ngày Mua:</label>
+                            <input type="date" maxlength="100" id="update_orderNote"
+                                   name="update_orderNote" value=""
+                                   placeholder="Nhập vào ghi chú"/>
+                        </div>
+
                         <div class="flex-center">
                             <input type="hidden" name="action" value="order_btnUpdate"/>
                             <button type="submit">Cập Nhật</button>
@@ -1389,12 +1424,12 @@
                 </div>
             </div>
 
-            <!--Add Item Image Modal-->
+            <!--Add Order Modal-->
             <div id="add-order" class="modal-add flex-center modal__addOrder">
                 <div class="add-modal">
                     <form class="form__add" action="#" method="post">
                         <span class="close clsAddOrder">&times;</span>
-                        <h2 class="text-center" style="padding: 16px 0">Thêm Vật Liệu Sản Phẩm</h2>
+                        <h2 class="text-center" style="padding: 16px 0">Thêm Hóa Đơn</h2>
 
                         <!--Order Customer ID-->
                         <div class="form-grp">
@@ -1431,6 +1466,34 @@
                             <input type="date" maxlength="100" id="add_orderDatePurchase"
                                    name="add_orderDatePurchase" value=""
                                    placeholder="Nhập vào ngày mua"/>
+                        </div>
+
+                        <!--Order Status-->
+                        <div class="form-grp">
+                            <label for="add_orderStatus">Tình trạng đơn hàng:</label>
+                            <select id="add_orderStatus" name="add_orderStatus">
+                                <option value="${0}"> 0 : Đã đặt đơn</option>
+                                <option value="${1}"> 1 : Đang chuẩn bị hàng</option>
+                                <option value="${2}"> 2 : Đơn hàng đã hủy</option>
+                                <option value="${3}"> 3 : Đang giao hàng</option>
+                                <option value="${4}"> 4 : Đơn hàng thành công</option>
+                            </select>
+                        </div>
+
+                        <!--Order Address-->
+                        <div class="form-grp">
+                            <label for="add_orderAddress">Địa chỉ đặt hàng:</label>
+                            <input type="text" maxlength="100" id="add_orderAddress"
+                                   name="add_orderAddress" value=""
+                                   placeholder="Nhập vào địa chỉ giao hàng"/>
+                        </div>
+
+                        <!--Order Note-->
+                        <div class="form-grp">
+                            <label for="add_orderNote">Ngày Mua:</label>
+                            <input type="date" maxlength="100" id="add_orderNote"
+                                   name="add_orderNote" value=""
+                                   placeholder="Nhập vào ghi chú"/>
                         </div>
 
                         <div class="flex-center">
@@ -1473,23 +1536,23 @@
                 <c:forEach items="${orderDetailList}" var="orderDetail">
                     <tr>
                         <td>${orderDetail.id}</td>
-                        <td>${orderDetail.order_id}</td>
-                        <td>${orderDetail.item_id}</td>
+                        <td>${orderDetail.getOrder().id}</td>
+                        <td>${orderDetail.getItem().id}</td>
                         <td>${orderDetail.amount}</td>
                         <td>${orderDetail.item_color}</td>
                         <td>${orderDetail.item_size}</td>
                         <td>${orderDetail.total}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="orderDetailID" value="${orderDetail.id}"/>
                                     <input type="hidden" name="action" value="orderDetail_btnDelete"/>
                                 </form>
                                 <button class="btnHD btnUpdateOrderDetail"
                                         data-orderDetailID="${orderDetail.id}"
-                                        data-orderDetailOrderID="${orderDetail.order_id}"
-                                        data-orderDetailItemID="${orderDetail.item_id}"
+                                        data-orderDetailOrderID="${orderDetail.getOrder().id}"
+                                        data-orderDetailItemID="${orderDetail.getItem().id}"
                                         data-orderDetailAmount="${orderDetail.amount}"
                                         data-orderDetailItemColor="${orderDetail.item_color}"
                                         data-orderDetailItemSize="${orderDetail.item_size}"
@@ -1517,8 +1580,8 @@
                         <div class="form-grp">
                             <label for="update_orderDetailOrderID">Hóa Đơn:</label>
                             <select id="update_orderDetailOrderID" name="update_orderDetailOrderID">
-                                <c:forEach items="${orderDetailList}" var="orderDetail">
-                                    <option value="${orderDetail.oder_id}">${orderDetail.order_id}</option>
+                                <c:forEach items="${orderList}" var="order">
+                                    <option value="${order.id}">${order.id}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -1589,8 +1652,8 @@
                         <div class="form-grp">
                             <label for="add_orderDetailOrderID">Hóa Đơn:</label>
                             <select id="add_orderDetailOrderID" name="add_orderDetailOrderID">
-                                <c:forEach items="${orderDetailList}" var="orderDetail">
-                                    <option value="${orderDetail.oder_id}">${orderDetail.order_id}</option>
+                                <c:forEach items="${orderList}" var="order">
+                                    <option value="${order.id}">${order.id}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -1679,7 +1742,7 @@
                         <td>${itemType.name}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="itemTypeID" value="${itemType.id}"/>
                                     <input type="hidden" name="action" value="itemType_btnDelete"/>
@@ -1777,7 +1840,7 @@
                         <td>${permission.level}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="permissionID" value="${permission.id}"/>
                                     <input type="hidden" name="action" value="permission_btnDelete"/>
@@ -1891,19 +1954,19 @@
                 <c:forEach items="${saleList}" var="sale">
                     <tr>
                         <td>${sale.id}</td>
-                        <td>${sale.item_id}</td>
+                        <td>${sale.getItem().id}</td>
                         <td>${sale.name}</td>
                         <td>${sale.on_sale}</td>
                         <td>${sale.sale_percentage}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="saleID" value="${sale.id}"/>
                                     <input type="hidden" name="action" value="sale_btnDelete"/>
                                 </form>
                                 <button class="btnHD btnUpdateSale"
-                                        data-saleID="${sale.id}" data-saleItemID="${sale.item_id}"
+                                        data-saleID="${sale.id}" data-saleItemID="${sale.getItem().id}"
                                         data-saleName="${sale.name}" data-saleOnSale="${sale.on_sale}"
                                         data-salePercentage="${sale.sale_percentage}"
                                 >Sửa
@@ -2047,19 +2110,19 @@
                 <c:forEach items="${stockItemList}" var="stockItem">
                     <tr>
                         <td>${stockItem.id}</td>
-                        <td>${stockItem.item_id}</td>
+                        <td>${stockItem.getItem().id}</td>
                         <td>${stockItem.color}</td>
                         <td>${stockItem.size}</td>
                         <td>${stockItem.amount}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="stockItemID" value="${stockItem.id}"/>
                                     <input type="hidden" name="action" value="stockItem_btnDelete"/>
                                 </form>
                                 <button class="btnHD btnUpdateStockItem"
-                                        data-stockItemID="${stockItem.id}" data-stockItemItemID="${stockItem.item_id}"
+                                        data-stockItemID="${stockItem.id}" data-stockItemItemID="${stockItem.getItem().id}"
                                         data-stockItemColor="${stockItem.color}" data-stockItemSize="${stockItem.size}"
                                         data-stockItemAmount="${stockItem.amount}"
                                 >Sửa
@@ -2190,7 +2253,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-<script src="${pageContext.request.contextPath}/Views/dest/vinh_main.js"></script>
+<script src="${pageContext.request.contextPath}/Views/Admin/vinh_main.js"></script>
 
 </body>
 </html>

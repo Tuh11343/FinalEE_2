@@ -4,23 +4,15 @@ import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
 import java.util.List;
 
-@Controller
-@WebServlet(name = "ItemDetailServlet",urlPatterns = "/ItemDetailServlet")
-public class ItemDetailServlet extends HttpServlet {
+public class ItemSearchServlet extends HttpServlet {
 
     private AccountServiceImpl accountServiceImpl;
     private CustomerServiceImpl customerServiceImpl;
@@ -37,52 +29,10 @@ public class ItemDetailServlet extends HttpServlet {
     private StockItemServiceImpl stockItemServiceImpl;
     private CartServiceImpl cartServiceImpl;
 
-
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        HttpSession session=req.getSession();
-        String requestedWith = req.getHeader("X-Requested-With");
-        if (requestedWith != null && requestedWith.equals("XMLHttpRequest")) {
-            int stockItemID=Integer.parseInt(req.getParameter("stockItemID"));
-            Integer customerID=null;
-            if(session.getAttribute("logInCustomerID")!=null)
-            {
-                customerID=Integer.parseInt((String) session.getAttribute("loginCustomerID"));
-            }
-
-            StockItem stockItem=stockItemServiceImpl.getStockItem(stockItemID);
-
-            Cart cart=new Cart();
-            cart.setStockItem(stockItem);
-            cart.setAmount(1);
-            if(customerID!=null)
-            {
-                Customer customer=customerServiceImpl.getCustomer(customerID);
-                cart.setCustomer(customer);
-            }else {
-                cart.setCustomer(null);
-            }
-            cartServiceImpl.create(cart);
-        }else{
-            String action=req.getParameter("action");
-            switch (action){
-                default -> {
-
-                }
-            }
-        }
-
-
-
-
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
         ServletContext servletContext=getServletContext();
+        HttpSession session=req.getSession();
 
         accountServiceImpl = (AccountServiceImpl) servletContext.getAttribute("accountServiceImpl");
         cartServiceImpl = (CartServiceImpl) servletContext.getAttribute("cartServiceImpl");
@@ -98,7 +48,6 @@ public class ItemDetailServlet extends HttpServlet {
         permissionServiceImpl = (PermissionServiceImpl) servletContext.getAttribute("permissionServiceImpl");
         saleServiceImpl = (SaleServiceImpl) servletContext.getAttribute("saleServiceImpl");
         stockItemServiceImpl = (StockItemServiceImpl) servletContext.getAttribute("stockItemServiceImpl");
-        req.setAttribute("cartServiceImpl",cartServiceImpl);
 
         List<Account> accountList = accountServiceImpl.getAllAccount();
         List<Customer> customerList = customerServiceImpl.getAllCustomer();
@@ -129,7 +78,11 @@ public class ItemDetailServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
 
-        req.getRequestDispatcher("/Views/User/ItemDetail.jsp").forward(req,resp);
+        req.getRequestDispatcher("/Views/User/Home2.jsp").forward(req,resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     }
 }

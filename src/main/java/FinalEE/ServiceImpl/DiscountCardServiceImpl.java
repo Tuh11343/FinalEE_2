@@ -33,6 +33,11 @@ public class DiscountCardServiceImpl implements DiscountCardService{
     }
 
     @Override
+    public List<DiscountCard> findByCustomerID(Integer customerID) {
+        return discountCardRepository.findByCustomerID(customerID);
+    }
+
+    @Override
     public boolean create(DiscountCard discountCard) {
         try {
             // Kiểm tra xem discountCard có tồn tại trong database hay không

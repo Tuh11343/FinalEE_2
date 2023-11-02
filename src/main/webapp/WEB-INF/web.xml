@@ -13,6 +13,16 @@
         <servlet-name>ItemDetailServlet</servlet-name>
         <servlet-class>FinalEE.Controller.ItemDetailServlet</servlet-class>
     </servlet>
+    
+    <servlet>
+        <servlet-name>CartServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.CartServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>ItemSearchServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.ItemSearchServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>AdminManagerServlet</servlet-name>
@@ -27,6 +37,16 @@
     <servlet-mapping>
         <servlet-name>ItemDetailServlet</servlet-name>
         <url-pattern>/ItemDetailServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>CartServlet</servlet-name>
+        <url-pattern>/CartServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>ItemSearchServlet</servlet-name>
+        <url-pattern>/ItemSearchServlet</url-pattern>
     </servlet-mapping>
 
 </web-app>

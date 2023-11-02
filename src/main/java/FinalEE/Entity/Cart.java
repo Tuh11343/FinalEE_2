@@ -17,10 +17,15 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "customer_id")
-    private Integer customer_id;
-    @Column(name = "stock_item_id")
-    private int stock_item_id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "stock_item_id",nullable = false)
+    private StockItem stockItem;
+
     @Column(name = "amount")
     private int amount;
 

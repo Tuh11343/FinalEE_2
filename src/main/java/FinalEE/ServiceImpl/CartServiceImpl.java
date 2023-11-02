@@ -26,21 +26,25 @@ public class CartServiceImpl implements CartService {
     @Override
     public boolean create(Cart cart) {
         try {
-            Cart existingCart=cartRepository.findByItemIDAndCustomerID(cart.getStock_item_id(),cart.getCustomer_id());
-            if(existingCart==null){
+            Cart existingCart;
+            Integer customerId = cart.getCustomer() != null ? cart.getCustomer().getId() : null;
+            existingCart = cartRepository.findByItemIDAndCustomerID(cart.getStockItem().getId(), customerId);
+
+            if (existingCart == null) {
                 cartRepository.save(cart);
-                System.out.println("Them thanh cong cart:"+cart.getId());
-            }
-            else{
-                existingCart.setAmount(existingCart.getAmount()+1);
+                System.out.println("Them thanh cong cart:" + cart.getId());
+            } else {
+                existingCart.setAmount(existingCart.getAmount() + 1);
                 cartRepository.save(existingCart);
                 System.out.println("Cap nhat thanh cong cart:" + existingCart.getId());
             }
-            if(stockItemRepository.findById(cart.getStock_item_id()).isPresent()){
-                StockItem stockItem=stockItemRepository.findById(cart.getStock_item_id()).get();
-                stockItem.setAmount(stockItem.getAmount()-1);
+
+            /*Decrease Stock Item Amount*/
+            if (stockItemRepository.findById(cart.getStockItem().getId()).isPresent()) {
+                StockItem stockItem = stockItemRepository.findById(cart.getStockItem().getId()).get();
+                stockItem.setAmount(stockItem.getAmount() - 1);
                 stockItemRepository.save(stockItem);
-                System.out.println("Giam so luong thanh cong stockItem:"+stockItem.getId());
+                System.out.println("Giam so luong thanh cong stockItem:" + stockItem.getId());
             }
 
             return true;
@@ -63,6 +67,12 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public boolean deleteAllByCustomerID(Integer customerID) {
+        cartRepository.deleteAllByCustomerID(customerID);
+        return cartRepository.findByCustomerID(customerID).isEmpty();
+    }
+
+    @Override
     public Cart getCart(int id) {
         try {
             Optional<Cart> cart = cartRepository.findById(id);
@@ -76,8 +86,13 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart findCartByItemIDAndCustomerID(int itemID,Integer customerID) {
-        return cartRepository.findByItemIDAndCustomerID(itemID,customerID);
+    public Cart findCartByItemIDAndCustomerID(int itemID, Integer customerID) {
+        return cartRepository.findByItemIDAndCustomerID(itemID, customerID);
+    }
+
+    @Override
+    public List<Cart> findByCustomerID(Integer customerID) {
+        return cartRepository.findByCustomerID(customerID);
     }
 
     @Override
