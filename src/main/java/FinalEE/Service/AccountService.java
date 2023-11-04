@@ -10,5 +10,7 @@ public interface AccountService {
     boolean deleteByID(int accountID);
     Account getAccount(int id);
     List<Account> getAllAccount();
+
+    Account findByNameAndPassword(String name,String password);
     
 }

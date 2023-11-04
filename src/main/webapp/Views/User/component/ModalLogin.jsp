@@ -17,52 +17,97 @@ To change this template use File | Settings | File Templates.
                 <span class="tab-item" data-type="form-register">Register</span>
             </div>
             <div class="from-content">
-                <form class="form-pane login-from active"  data-type="login-from">
+
+                <%--Log In--%>
+                <form class="form-pane login-from active" action="${pageContext.request.contextPath}/HeaderServlet"
+                      method="post" data-type="login-from">
                     <div class="form-gr">
                         <span class="label" for="email">Email</span>
-                        <input class="input-form" type="email" id="email" placeholder="Nhập email" required>
+                        <input class="input-form" type="email" id="email" placeholder="Nhập email"
+                               name="signInName" required>
                         <p class="message-error">Please wrong format</p>
                     </div>
                     <div class="form-gr">
                         <span class="label" for="password">password</span>
-                        <input class="input-form" type="password" id="password" placeholder="Nhập mật khẩu" required>
+                        <input class="input-form" type="password" id="password" placeholder="Nhập mật khẩu"
+                               name="signInPassword" required>
                         <p class="message-error">Please wrong format</p>
                     </div>
-                    <button type="submit" class="btn btn-submit">Đăng nhập</button>
+                    <button type="submit" class="btn btn-submit" onclick="sendAjaxRequest()">Đăng nhập</button>
+                    <input type="hidden" name="action" value="signInClick">
+
+                    <script>
+                        function sendAjaxRequest() {
+                            var email = document.getElementById("email").value;
+                            var password = document.getElementById("password").value;
+                            $.ajax({
+                                type: "POST",
+                                url: "${pageContext.request.contextPath}/HeaderServlet",
+                                data: {
+                                    signInName:email,
+                                    signInPassword:password,
+                                },
+                                headers: {
+                                    "X-Requested-With": "XMLHttpRequest"
+                                },
+                                success: function (data) {
+                                    console.log(1);
+                                    if(data.success==1){
+                                        console.log(data.accountID);
+                                    }else if(data.success==0){
+
+                                    }
+                                },
+
+                            });
+                        }
+                    </script>
                 </form>
-                <form  onsubmit="return validate()" class="form-pane register-from" data-type="form-register">
+
+                <%--Sign Up--%>
+                <form onsubmit="return validate()" class="form-pane register-from" data-type="form-register"
+                      action="${pageContext.request.contextPath}/HeaderServlet" method="post">
+
                     <div class="form-gr">
                         <span class="label" for="name-regis">Họ và tên</span>
-                        <input class="input-form" type="text" name="name-regis" id="name-regis" placeholder="Nhập Họ và tên" >
+                        <input class="input-form" type="text" name="signUpName" id="name-regis"
+                               placeholder="Nhập Họ và tên">
                         <p class="message-error error-name"></p>
                     </div>
                     <div class="form-gr">
                         <span class="label" for="email-regis">Email</span>
-                        <input class="input-form" type="email" id="email-regis"  placeholder="Nhập email" >
+                        <input class="input-form" type="email" id="email-regis" name="signUpEmail"
+                               placeholder="Nhập email">
                         <p class="message-error error-email"></p>
                     </div>
                     <div class="form-gr">
                         <span class="label" for="phone-regis">Số điện thoại</span>
-                        <input class="input-form" type="phone" id="phone-regis" placeholder="Nhập Số điện thoại" >
+                        <input class="input-form" type="phone" id="phone-regis" name="signUpPhoneNumber"
+                               placeholder="Nhập Số điện thoại">
                         <p class="message-error error-phone"></p>
                     </div>
                     <div class="form-gr">
                         <span class="label" for="address-regis">Địa chỉ</span>
-                        <input class="input-form" type="text" id="address-regis" placeholder="Nhập Địa chỉ" >
+                        <input class="input-form" type="text" id="address-regis" name="signUpAddress"
+                               placeholder="Nhập Địa chỉ">
                         <p class="message-error error-address"></p>
                     </div>
                     <div class="form-gr">
                         <span class="label" for="password-resgis">Mật khẩu</span>
-                        <input class="input-form" type="password" id="password-regis"  placeholder="Nhập mật khẩu" >
+                        <input class="input-form" type="password" id="password-regis" name="signUpPassword"
+                               placeholder="Nhập mật khẩu">
                         <p class="message-error error-password"></p>
                     </div>
                     <div class="form-gr">
                         <span class="label" for="re-password">Nhập lại mật khẩu</span>
-                        <input class="input-form "  type="password" id="re-password" placeholder="Nhập lại mật khẩu" >
+                        <input class="input-form " type="password" id="re-password" name="signUpRePassword"
+                               placeholder="Nhập lại mật khẩu">
                         <p class="message-error error-repassword"></p>
                     </div>
-                    <button type="submit"  class="btn btn-submit">Đăng ký</button>
+                    <button type="submit" class="btn btn-submit">Đăng ký</button>
+                    <input type="hidden" name="action" value="signUpClick">
                 </form>
+
             </div>
         </div>
     </div>
@@ -72,177 +117,195 @@ To change this template use File | Settings | File Templates.
 
 <style>
     .modal {
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  z-index: 955;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  visibility: hidden;
-  pointer-events: none;
-  transition: var(--t);
-  -webkit-transition: var(--t);
-  -moz-transition: var(--t);
-  -ms-transition: var(--t);
-  -o-transition: var(--t);
-  opacity: 0;
-}
-.modal.show {
-  visibility: visible;
-  pointer-events: auto;
-  opacity: 1;
-  transition: var(--t);
-  -webkit-transition: var(--t);
-  -moz-transition: var(--t);
-  -ms-transition: var(--t);
-  -o-transition: var(--t);
-}
-.modal.show .modal-dialog {
-  margin-top: 0px;
-  transition: var(--t);
-  -webkit-transition: var(--t);
-  -moz-transition: var(--t);
-  -ms-transition: var(--t);
-  -o-transition: var(--t);
-  visibility: visible;
-  pointer-events: auto;
-  opacity: 1;
-}
-.modal .overlay {
-  background: rgba(0, 0, 0, 0.9);
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  cursor: pointer;
-}
-.modal .modal-dialog {
-  min-width: 500px;
-  background: var(--white-cl);
-  border-radius: var(--brus);
-  overflow: hidden;
-  padding: 40px 30px;
-  position: relative;
-  z-index: 998;
-  margin-top: -50px;
-  visibility: hidden;
-  pointer-events: none;
-  opacity: 0;
-  transition: var(--t);
-  -webkit-transition: var(--t);
-  -moz-transition: var(--t);
-  -ms-transition: var(--t);
-  -o-transition: var(--t);
-}
-.modal .modal-dialog .btn-close {
-  background: var(--main-cl);
-  border-radius: 1px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 5px;
-  cursor: pointer;
-  transition: var(--t);
-  -webkit-transition: var(--t);
-  -moz-transition: var(--t);
-  -ms-transition: var(--t);
-  -o-transition: var(--t);
-}
-.modal .modal-dialog .btn-close:hover {
-  background: var(--grayop-cl);
-  transition: var(--t);
-  -webkit-transition: var(--t);
-  -moz-transition: var(--t);
-  -ms-transition: var(--t);
-  -o-transition: var(--t);
-  color: var(--white-cl);
-}
-.modal .modal-dialog .form-box .form-tab {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid #27272732;
-}
-.modal .modal-dialog .form-box .form-tab .tab-item {
-  font-family: pb;
-  font-size: var(--fs-h5);
-  line-height: var(--lh-h5);
-  color: #000;
-  text-transform: capitalize;
-  width: 50%;
-  text-align: center;
-  padding-bottom: 5px;
-  cursor: pointer;
-  transition: var(--t);
-  -webkit-transition: var(--t);
-  -moz-transition: var(--t);
-  -ms-transition: var(--t);
-  -o-transition: var(--t);
-}
-.modal .modal-dialog .form-box .form-tab .tab-item:hover {
-  opacity: 0.7;
-}
-.modal .modal-dialog .form-box .form-tab .tab-item.active {
-  transition: var(--t);
-  -webkit-transition: var(--t);
-  -moz-transition: var(--t);
-  -ms-transition: var(--t);
-  -o-transition: var(--t);
-  color: var(--yellow-cl);
-  border-bottom: 1px solid var(--yellow-cl);
-}
-.modal .modal-dialog .form-box .from-content {
-  padding-top: 20px;
-}
-.modal .modal-dialog .form-box .from-content .form-pane {
-  display: none;
-  transition: var(--t);
-  -webkit-transition: var(--t);
-  -moz-transition: var(--t);
-  -ms-transition: var(--t);
-  -o-transition: var(--t);
-}
-.modal .modal-dialog .form-box .from-content .form-pane.active {
-  display: block;
-  transition: var(--t);
-  -webkit-transition: var(--t);
-  -moz-transition: var(--t);
-  -ms-transition: var(--t);
-  -o-transition: var(--t);
-}
-.modal .modal-dialog .form-box .from-content .form-pane .form-gr {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  margin-bottom: 17px;
-  position: relative;
-}
-.modal .modal-dialog .form-box .from-content .form-pane .form-gr .label {
-  text-transform: capitalize;
-  margin-bottom: 15px;
-}
-.modal .modal-dialog .form-box .from-content .form-pane .form-gr input {
-  width: 100%;
-  border-radius: 3px;
-  border: 1px solid var(--grayop-cl);
-  padding: 5px;
-  outline: none;
-}
-.modal .modal-dialog .form-box .from-content .form-pane .form-gr input.error {
-  border: 1px solid red;
-}
-.modal .modal-dialog .form-box .from-content .form-pane .form-gr .message-error {
-  position: absolute;
-  right: 0;
-  font-size: 12px;
-  color: red;
-  bottom: -18px;
-}
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        z-index: 955;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        visibility: hidden;
+        pointer-events: none;
+        transition: var(--t);
+        -webkit-transition: var(--t);
+        -moz-transition: var(--t);
+        -ms-transition: var(--t);
+        -o-transition: var(--t);
+        opacity: 0;
+    }
+
+    .modal.show {
+        visibility: visible;
+        pointer-events: auto;
+        opacity: 1;
+        transition: var(--t);
+        -webkit-transition: var(--t);
+        -moz-transition: var(--t);
+        -ms-transition: var(--t);
+        -o-transition: var(--t);
+    }
+
+    .modal.show .modal-dialog {
+        margin-top: 0px;
+        transition: var(--t);
+        -webkit-transition: var(--t);
+        -moz-transition: var(--t);
+        -ms-transition: var(--t);
+        -o-transition: var(--t);
+        visibility: visible;
+        pointer-events: auto;
+        opacity: 1;
+    }
+
+    .modal .overlay {
+        background: rgba(0, 0, 0, 0.9);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+    }
+
+    .modal .modal-dialog {
+        min-width: 500px;
+        background: var(--white-cl);
+        border-radius: var(--brus);
+        overflow: hidden;
+        padding: 40px 30px;
+        position: relative;
+        z-index: 998;
+        margin-top: -50px;
+        visibility: hidden;
+        pointer-events: none;
+        opacity: 0;
+        transition: var(--t);
+        -webkit-transition: var(--t);
+        -moz-transition: var(--t);
+        -ms-transition: var(--t);
+        -o-transition: var(--t);
+    }
+
+    .modal .modal-dialog .btn-close {
+        background: var(--main-cl);
+        border-radius: 1px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 5px;
+        cursor: pointer;
+        transition: var(--t);
+        -webkit-transition: var(--t);
+        -moz-transition: var(--t);
+        -ms-transition: var(--t);
+        -o-transition: var(--t);
+    }
+
+    .modal .modal-dialog .btn-close:hover {
+        background: var(--grayop-cl);
+        transition: var(--t);
+        -webkit-transition: var(--t);
+        -moz-transition: var(--t);
+        -ms-transition: var(--t);
+        -o-transition: var(--t);
+        color: var(--white-cl);
+    }
+
+    .modal .modal-dialog .form-box .form-tab {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #27272732;
+    }
+
+    .modal .modal-dialog .form-box .form-tab .tab-item {
+        font-family: pb;
+        font-size: var(--fs-h5);
+        line-height: var(--lh-h5);
+        color: #000;
+        text-transform: capitalize;
+        width: 50%;
+        text-align: center;
+        padding-bottom: 5px;
+        cursor: pointer;
+        transition: var(--t);
+        -webkit-transition: var(--t);
+        -moz-transition: var(--t);
+        -ms-transition: var(--t);
+        -o-transition: var(--t);
+    }
+
+    .modal .modal-dialog .form-box .form-tab .tab-item:hover {
+        opacity: 0.7;
+    }
+
+    .modal .modal-dialog .form-box .form-tab .tab-item.active {
+        transition: var(--t);
+        -webkit-transition: var(--t);
+        -moz-transition: var(--t);
+        -ms-transition: var(--t);
+        -o-transition: var(--t);
+        color: var(--yellow-cl);
+        border-bottom: 1px solid var(--yellow-cl);
+    }
+
+    .modal .modal-dialog .form-box .from-content {
+        padding-top: 20px;
+    }
+
+    .modal .modal-dialog .form-box .from-content .form-pane {
+        display: none;
+        transition: var(--t);
+        -webkit-transition: var(--t);
+        -moz-transition: var(--t);
+        -ms-transition: var(--t);
+        -o-transition: var(--t);
+    }
+
+    .modal .modal-dialog .form-box .from-content .form-pane.active {
+        display: block;
+        transition: var(--t);
+        -webkit-transition: var(--t);
+        -moz-transition: var(--t);
+        -ms-transition: var(--t);
+        -o-transition: var(--t);
+    }
+
+    .modal .modal-dialog .form-box .from-content .form-pane .form-gr {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        margin-bottom: 17px;
+        position: relative;
+    }
+
+    .modal .modal-dialog .form-box .from-content .form-pane .form-gr .label {
+        text-transform: capitalize;
+        margin-bottom: 15px;
+    }
+
+    .modal .modal-dialog .form-box .from-content .form-pane .form-gr input {
+        width: 100%;
+        border-radius: 3px;
+        border: 1px solid var(--grayop-cl);
+        padding: 5px;
+        outline: none;
+    }
+
+    .modal .modal-dialog .form-box .from-content .form-pane .form-gr input.error {
+        border: 1px solid red;
+    }
+
+    .modal .modal-dialog .form-box .from-content .form-pane .form-gr .message-error {
+        position: absolute;
+        right: 0;
+        font-size: 12px;
+        color: red;
+        bottom: -18px;
+    }
 </style>
 
-<script src="${pageContext.request.contextPath}/Views/User/js/validate.js" ></script>
+<script src="${pageContext.request.contextPath}/Views/User/js/validate.js"></script>
