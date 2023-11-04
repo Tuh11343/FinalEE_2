@@ -129,6 +129,12 @@ public class ItemDetailServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
 
+        int itemClickID=-1;
+        if(req.getParameter("itemClickID")!=null){
+            itemClickID=Integer.parseInt(req.getParameter("itemClickID"));
+        }
+        req.setAttribute("itemClickID",itemClickID);
+
         req.getRequestDispatcher("/Views/User/ItemDetail.jsp").forward(req,resp);
 
     }

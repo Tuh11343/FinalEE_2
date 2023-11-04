@@ -116,7 +116,7 @@ public class ItemServiceImpl implements ItemService {
     public int getTotalPagesByName(String name) {
         int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
         Pageable pageable = PageRequest.of(0, pageSize); // Bắt đầu từ trang đầu tiên
-        Page<Item> items = itemRepository.findAllByName(name,pageable);
+        Page<Item> items = itemRepository.findAllByNameContains(name,pageable);
         return items.getTotalPages();
     }
 
@@ -148,7 +148,7 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getItemsByNameAndPageNumber(int pageNumber, String name) {
         int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize); // Trừ 1 vì số trang bắt đầu từ 0
-        Page<Item> itemPage=itemRepository.findAllByName(name,pageable);
+        Page<Item> itemPage=itemRepository.findAllByNameContains(name,pageable);
         return itemPage.getContent();
     }
 

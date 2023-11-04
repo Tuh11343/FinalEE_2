@@ -132,6 +132,17 @@ public class ItemSearchServlet extends HttpServlet {
                 pageList.add(String.valueOf(i + 1));
             }
 
+        }else if(req.getParameter("searchInput")!=null){
+            String searchInput =req.getParameter("searchInput");
+            req.setAttribute("searchInput",searchInput);
+
+            itemSearchList = itemServiceImpl.getItemsByNameAndPageNumber(currentPage,searchInput);
+
+            totalPage = itemServiceImpl.getTotalPagesByName(searchInput);
+            for (int i = 0; i < totalPage; i++) {
+                pageList.add(String.valueOf(i + 1));
+            }
+
         }else{
             itemSearchList = itemServiceImpl.getItemsByPageNumber(currentPage);
 
@@ -152,18 +163,29 @@ public class ItemSearchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        int currentPage = Integer.parseInt(req.getParameter("currentPage"));
+        int currentPage = 1;
+        if(req.getParameter("currentPage")!=null){
+            currentPage=Integer.parseInt(req.getParameter("currentPage"));
+        }
         if(req.getParameter("itemCollectionID")!=null){
             int itemCollectionID=Integer.parseInt(req.getParameter("itemCollectionID"));
             req.setAttribute("itemCollectionID",itemCollectionID);
-            req.setAttribute("currentPage",currentPage);
-            doGet(req,resp);
-        }
-        else{
-            System.out.println("WTF");
+        }else if(req.getParameter("itemTypeID")!=null){
+            int itemTypeID=Integer.parseInt(req.getParameter("itemTypeID"));
+            req.setAttribute("itemTypeID",itemTypeID);
+        }else if(req.getParameter("itemMaterialID")!=null){
+            int itemMaterialID=Integer.parseInt(req.getParameter("itemMaterialID"));
+            req.setAttribute("itemMaterialID",itemMaterialID);
+        }else if(req.getParameter("itemName")!=null){
+            String itemName=req.getParameter("itemName");
+            req.setAttribute("itemName",itemName);
+        }else if(req.getParameter("searchInput")!=null){
+            String searchInput=req.getParameter("searchInput");
+            req.setAttribute("searchInput",searchInput);
         }
 
-
+        req.setAttribute("currentPage",currentPage);
+        doGet(req,resp);
 
     }
 }
