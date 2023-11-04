@@ -19,6 +19,7 @@ import lombok.Setter;
 public class ItemImage {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)

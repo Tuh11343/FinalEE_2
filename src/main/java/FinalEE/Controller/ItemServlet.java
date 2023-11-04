@@ -115,22 +115,6 @@ public class ItemServlet extends HttpServlet {
         String action=request.getParameter("action");
         HttpSession session=request.getSession();
         switch(action){
-            case "itemCollectionClick" -> {
-                System.out.println("Ban da click itemCollection"+request.getParameter("itemType"));
-                request.getRequestDispatcher("Views/User/Test_Home.jsp").forward(request, response);
-
-            }
-
-            case "itemTypeClick"->{
-                System.out.println("Ban da click itemType"+request.getParameter("itemType"));
-                request.getRequestDispatcher("Views/User/Test_Home.jsp").forward(request, response);
-            }
-
-            case "btnSearchClick" -> {
-                System.out.println("Ban da search:"+request.getParameter("btnSearch_data"));
-                request.getRequestDispatcher("Views/User/Test_Home.jsp").forward(request, response);
-            }
-
             case "itemClick"->{
                 session.setAttribute("itemClickID",request.getParameter("itemClickID"));
                 response.sendRedirect("/FinalEE/ItemDetailServlet");

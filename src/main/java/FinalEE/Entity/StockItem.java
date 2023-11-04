@@ -13,8 +13,9 @@ import lombok.Setter;
 @Setter
 @Table(name = "stockitem")
 public class StockItem {
-    
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne(fetch = FetchType.EAGER)

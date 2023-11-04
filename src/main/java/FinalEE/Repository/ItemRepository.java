@@ -3,8 +3,14 @@ package FinalEE.Repository;
 
 import FinalEE.Entity.Item;
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.NonNullApi;
 import org.springframework.stereotype.Repository;
 
 
@@ -19,4 +25,19 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
     
     @Query("SELECT i FROM Item i WHERE i.itemMaterial.id = ?1")
     List<Item> findByItemMaterialId(int itemMaterialId);
+
+    @Query("SELECT i FROM Item i WHERE i.name = ?1")
+    List<Item> findByItemName(String name);
+
+    Page<Item> findAllByItemCollectionId(int itemCollectionID, Pageable pageable);
+
+    Page<Item> findAllByItemTypeId(int itemTypeID, Pageable pageable);
+
+    Page<Item> findAllByItemMaterialId(int itemMaterialID, Pageable pageable);
+
+    Page<Item> findAllByName(String name, Pageable pageable);
+
+    @NonNull
+    Page<Item> findAll(Pageable pageable);
+
 }

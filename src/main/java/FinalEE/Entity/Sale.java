@@ -19,6 +19,7 @@ import lombok.Setter;
 @Table(name = "sale")
 public class Sale {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToOne(fetch = FetchType.LAZY)
