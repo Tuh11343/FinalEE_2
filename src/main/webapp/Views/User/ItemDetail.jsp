@@ -55,15 +55,15 @@
                 <div class="productImage">
 
                     <c:set var="itemIndex" value="-1"/>
-                    <c:forEach items="${itemList}" var="item" varStatus="status">
-                        <c:if test="${item.id eq sessionScope.itemClickID}">
+                    <c:forEach items="${requestScope.itemList}" var="item" varStatus="status">
+                        <c:if test="${item.id eq requestScope.itemClickID}">
                             <c:set var="itemIndex" value="${status.index}"/>
                         </c:if>
                     </c:forEach>
 
                     <c:set var="itemImageCount" value="0"/>
-                    <c:forEach items="${imageList}" var="image">
-                        <c:if test="${image.getItem().id == itemList[itemIndex].id && itemImageCount < 1}">
+                    <c:forEach items="${requestScope.itemList.get(itemIndex).imageList}" var="image">
+                        <c:if test="${itemImageCount < 1}">
                             <a href="#" class="img"><img src="${image.image_url}" alt="ao-thun"/></a>
                             <c:set var="itemImageCount" value="${itemImageCount+1}"/>
                         </c:if>
@@ -72,27 +72,28 @@
                 </div>
                 <div class="productInfo">
                     <h3 class="productName --h4">
-                        ${itemList[itemIndex].name}
+                        ${requestScope.itemList[itemIndex].name}
                     </h3>
                     <p class="productID">
-                        Mã số: ${sessionScope.itemClickID}
+                        Mã số: ${requestScope.itemClickID}
                     </p>
                     <c:set var="isSale" value="false"/>
-                    <c:forEach items="${saleList}" var="sale">
-                        <c:if test="${sessionScope.itemClickID eq sale.getItem().id && sale.on_sale eq 1}">
-                            <h5 class="sale">
-                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAADsAAAA7AF5KHG9AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAA8xJREFUWIXFl11oHGUUhp8zM7sbo2kTijbBakqMRYlooYYEBUWKZhPTdLO4UEVbEBWpBQsFIVrtNjZgrJbSitSfChWpaKm5iEEbL2wF0SsllILoTSuktqakTUzs7szsHC82aSbZnexuUuK5+n7O977PzJxvvhlYZDht8Ycm2hLVC11vLMbcjsYbPU8HI55b/78AINoDRByRs0sOoImEqcojAOJx55IDMDZWBlgAIrpLk8kFaS0YQAYHJ4FzAAIPp38e+kBBlgwAQISea214zmmNHygVYlEAoab7DgucnO6r6jY7Gu+ZZ8niAOzHYuvS0c5vpvuSTHoZdM/sLO2yW+LPXHcATSRuUEO+QFjlHy9LXTmVkyv6nrYmbr6uAM545gngDpQ6v7hTvnxdnvRlNu4LxehaxQKoaPtUs9z23MF0NPa2CJXqyet585VHgYL1UDQAKrWIZtvCWpCjqsHpAnXFyJZQhLqs+FwAMtONVGusNdXWuaYkAE0kTH9fhIslAozMiMlrkpHeogHS0fib6fHMwVlAMFySvRJSkIn1HSsFmhBtn2yJ1xQEyJ7t+oqgT+r6zhUzF8E/JQEIa+2Wzl9CIesnsrVmWWQPL3/kFKGlmU1AGCFsW/KxdnRstlNmLUqsJIApCJipVBG9HzjqT8m5A6La5OvEbNscx+A0UA0gt9ZgNDdCeXmuYTiMrK4N5FHRlXPH8tSAVgUJGA80ETr4DubTmwgd2o9ULp+ZjESwundibnw8EABPcrTzAMhk0Hoz1o576BOcbTvQs38iDzbPmO9+FRwb9/2PggGEscIAyh9B6/XSKMa99yB3rUFuXwUXR3zmDm53LzhOsL9ozk7KBTDk1yCBzOEjUFWJ1bUD7/sf8E6fKdocAM8YyoGaO6AbNpTbjnUBqJhXrIQrnwo3bNq3yMDAZf9g7i7o7/9XVT4r2nzPXqytzxPu/5LQ/l6kOqfQs6Hy9VzzvAAAjmoS5UpB8+5ejOZGpOFunBdfxvvtd8xn836LZEB25pvIC1Ax2Pe3CNsLmeM4cNON6Ohl9PwFGD6f//0A+yInjp8pGgAg/G3fEWCvf8zavhWupnB3v3XtmXunfkRWVBH69EPMLU/hHeubKzUQrrC6gnzm/YJVEDsa3wX6BiBSU42OjICbmZ0YCiH1dejwXzA+7p/pC6eszXLy2MSCAKYj3RqLoXIAuK2YfGBCVZKRE1/tE/9hsFAAyG7PtGO9JLAFaAhIOwd8Hg6570p//6VidEv+kwFItXTUC2aDoqsNg6uKMaquDJV9dzzwLRoU/wGxqGF2wiMubwAAAABJRU5ErkJggg=="
-                                     alt=""/>
-                                SALE DỌN KHO LÊN HÀNG MỚI
-                            </h5>
-                            <c:set var="isSale" value="true"/>
-                        </c:if>
-                    </c:forEach>
+                    <c:if test="${requestScope.itemList.get(itemIndex).sale.on_sale eq 1}">
+                        <h5 class="sale">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAADsAAAA7AF5KHG9AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAA8xJREFUWIXFl11oHGUUhp8zM7sbo2kTijbBakqMRYlooYYEBUWKZhPTdLO4UEVbEBWpBQsFIVrtNjZgrJbSitSfChWpaKm5iEEbL2wF0SsllILoTSuktqakTUzs7szsHC82aSbZnexuUuK5+n7O977PzJxvvhlYZDht8Ycm2hLVC11vLMbcjsYbPU8HI55b/78AINoDRByRs0sOoImEqcojAOJx55IDMDZWBlgAIrpLk8kFaS0YQAYHJ4FzAAIPp38e+kBBlgwAQISea214zmmNHygVYlEAoab7DgucnO6r6jY7Gu+ZZ8niAOzHYuvS0c5vpvuSTHoZdM/sLO2yW+LPXHcATSRuUEO+QFjlHy9LXTmVkyv6nrYmbr6uAM545gngDpQ6v7hTvnxdnvRlNu4LxehaxQKoaPtUs9z23MF0NPa2CJXqyet585VHgYL1UDQAKrWIZtvCWpCjqsHpAnXFyJZQhLqs+FwAMtONVGusNdXWuaYkAE0kTH9fhIslAozMiMlrkpHeogHS0fib6fHMwVlAMFySvRJSkIn1HSsFmhBtn2yJ1xQEyJ7t+oqgT+r6zhUzF8E/JQEIa+2Wzl9CIesnsrVmWWQPL3/kFKGlmU1AGCFsW/KxdnRstlNmLUqsJIApCJipVBG9HzjqT8m5A6La5OvEbNscx+A0UA0gt9ZgNDdCeXmuYTiMrK4N5FHRlXPH8tSAVgUJGA80ETr4DubTmwgd2o9ULp+ZjESwundibnw8EABPcrTzAMhk0Hoz1o576BOcbTvQs38iDzbPmO9+FRwb9/2PggGEscIAyh9B6/XSKMa99yB3rUFuXwUXR3zmDm53LzhOsL9ozk7KBTDk1yCBzOEjUFWJ1bUD7/sf8E6fKdocAM8YyoGaO6AbNpTbjnUBqJhXrIQrnwo3bNq3yMDAZf9g7i7o7/9XVT4r2nzPXqytzxPu/5LQ/l6kOqfQs6Hy9VzzvAAAjmoS5UpB8+5ejOZGpOFunBdfxvvtd8xn836LZEB25pvIC1Ax2Pe3CNsLmeM4cNON6Ohl9PwFGD6f//0A+yInjp8pGgAg/G3fEWCvf8zavhWupnB3v3XtmXunfkRWVBH69EPMLU/hHeubKzUQrrC6gnzm/YJVEDsa3wX6BiBSU42OjICbmZ0YCiH1dejwXzA+7p/pC6eszXLy2MSCAKYj3RqLoXIAuK2YfGBCVZKRE1/tE/9hsFAAyG7PtGO9JLAFaAhIOwd8Hg6570p//6VidEv+kwFItXTUC2aDoqsNg6uKMaquDJV9dzzwLRoU/wGxqGF2wiMubwAAAABJRU5ErkJggg=="
+                                 alt=""/>
+                            SALE DỌN KHO LÊN HÀNG MỚI
+                        </h5>
+                        <c:set var="isSale" value="true"/>
+                    </c:if>
 
                     <c:if test="${isSale eq true}">
-                        <fmt:formatNumber value="${itemList[itemIndex].price}" pattern="#,###" var="formattedNumber"/>
-                        <fmt:formatNumber value="${itemList[itemIndex].price * 0.8}" pattern="#,###" var="salePrice"/>
-                        <fmt:formatNumber value="${itemList[itemIndex].price * 0.2}" pattern="#,###" var="savedAmount"/>
+                        <fmt:formatNumber value="${requestScope.itemList[itemIndex].price}" pattern="#,###"
+                                          var="formattedNumber"/>
+                        <fmt:formatNumber value="${requestScope.itemList[itemIndex].price * 0.8}" pattern="#,###"
+                                          var="salePrice"/>
+                        <fmt:formatNumber value="${requestScope.itemList[itemIndex].price * 0.2}" pattern="#,###"
+                                          var="savedAmount"/>
                         <h6 class="price">Giá gốc: <span>${formattedNumber}</span> đ</h6>
                         <h5 class="salePrice"> Giá Sale:
                             <span>${salePrice}</span>
@@ -101,7 +102,8 @@
                     </c:if>
 
                     <c:if test="${isSale eq false}">
-                        <fmt:formatNumber value="${itemList[itemIndex].price}" pattern="#,###" var="formattedNumber"/>
+                        <fmt:formatNumber value="${requestScope.itemList[itemIndex].price}" pattern="#,###"
+                                          var="formattedNumber"/>
                         <h6 class="salePrice">Giá: <span>${formattedNumber}</span> đ</h6>
                     </c:if>
 
@@ -112,41 +114,38 @@
                     </div>
                     <table class="productVariants">
                         <tbody>
-                        <c:forEach items="${stockItemList}" var="stockItem">
+                        <c:forEach items="${requestScope.itemList.get(itemIndex).stockItemList}" var="stockItem">
 
-                            <c:if test="${stockItem.getItem().id eq sessionScope.itemClickID}">
-                                <tr>
-                                    <td>${stockItem.color}, ${stockItem.size}</td>
-                                    <td class="needHover" style="text-align: right"><b>${stockItem.amount}</b> CH còn
-                                    </td>
-                                    <td style="text-align: right">
-                                        <a class=" select-buy" id="select-buy-${stockItem.id}"
-                                           onclick="sendAjaxRequest('${stockItem.id}')">Chọn mua
-                                            <i class="fa fa-plus-circle"></i>
-                                            <script>
-                                                function sendAjaxRequest(stockItemID) {
-                                                    $.ajax({
-                                                        type: "POST",
-                                                        url: "${pageContext.request.contextPath}/ItemDetailServlet",
-                                                        data: {
-                                                            stockItemID: stockItemID
-                                                        },
-                                                        headers: {
-                                                            "X-Requested-With": "XMLHttpRequest"
-                                                        },
-                                                        success: function () {
-                                                            console.log(1);
-                                                        }
-                                                    });
-                                                }
-                                            </script>
-                                        </a>
+                            <tr>
+                                <td>${stockItem.color}, ${stockItem.size}</td>
+                                <td class="needHover" style="text-align: right"><b>${stockItem.amount}</b> CH còn
+                                </td>
+                                <td style="text-align: right">
+                                    <a class=" select-buy" id="select-buy-${stockItem.id}"
+                                       onclick="sendAjaxRequest('${stockItem.id}')">Chọn mua
+                                        <i class="fa fa-plus-circle"></i>
+                                        <script>
+                                            function sendAjaxRequest(stockItemID) {
+                                                $.ajax({
+                                                    type: "POST",
+                                                    url: "${pageContext.request.contextPath}/ItemDetailServlet",
+                                                    data: {
+                                                        stockItemID: stockItemID
+                                                    },
+                                                    headers: {
+                                                        "X-Requested-With": "XMLHttpRequest"
+                                                    },
+                                                    success: function () {
+                                                        console.log(1);
+                                                    }
+                                                });
+                                            }
+                                        </script>
+                                    </a>
 
 
-                                    </td>
-                                </tr>
-                            </c:if>
-
+                                </td>
+                            </tr>
                         </c:forEach>
                         </tbody>
                     </table>
@@ -166,37 +165,27 @@
                             </div>
 
                         </div>
+
+                        <%--Item Description--%>
                         <div id="btnShowDes" class="Description" style="display: none;">
-                            <h5>Mô tả sản phẩm</h5>
-                            Giày Tây Lười Nguyên Bản A4 2022
-                            <br>
-                            - Chất liệu: Da bò 100% + lót da heo
-                            <br>
-                            - Mảnh thun co giãn kéo dài từ cổ giày xuống dưới mắt cá nhưng không dài đến đế giày
-                            <br>
-                            - Đế cao su 100%
-                            <br>
-                            - May đế
+                            <h6 style="font-weight: bold;margin-bottom: 10px;">Mô tả sản phẩm</h6>
+                            ${requestScope.itemList.get(itemIndex).description}
                         </div>
+
                     </div>
 
                 </div>
             </div>
+
             <div class="productInfoImage">
-                <div class="itemImage">
-                    <img src="assets/1.jpg" alt=""/>
-                </div>
-                <div class="itemImage">
-                    <img src="assets/2.jpg" alt=""/>
-                </div>
-                <div class="itemImage">
-                    <img src="assets/3.jpg" alt=""/>
-                </div>
-                <div class="itemImage">
-                    <img src="assets/4.jpg" alt=""/>
-                </div>
-                <div class="itemImage"><img src="assets/5.jpg" alt=""/></div>
-                <div class="itemImage"><img src="assets/6.jpg" alt=""/></div>
+                <c:forEach items="${requestScope.itemList[itemIndex].imageList}" var="image" varStatus="status">
+                    <c:if test="${status.index ne 0}">
+                        <div class="itemImage">
+                            <img src="${image.image_url}" alt=""/>
+                        </div>
+                    </c:if>
+
+                </c:forEach>
             </div>
         </div>
     </section>

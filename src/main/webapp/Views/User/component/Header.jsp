@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <header class="header">
@@ -72,6 +72,7 @@
                 <form class="header__search--form search--product" action="${pageContext.request.contextPath}/HeaderServlet" method="post">
                     <div class="form_group">
                         <input type="text" placeholder="Nhập sản phẩm bạn cần tìm!!" class="inputfeild" name="searchInput"/>
+                        <button type="submit" class="btn productsearch__form--btn">Tìm kiếm</button>
                     </div>
                     <button class="btn__search">
                         <svg class="icon icon_search" xmlns="http://www.w3.org/2000/svg" height="1em"

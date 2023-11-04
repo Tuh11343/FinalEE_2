@@ -35,7 +35,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
 
     Page<Item> findAllByItemMaterialId(int itemMaterialID, Pageable pageable);
 
-    Page<Item> findAllByName(String name, Pageable pageable);
+    Page<Item> findAllByNameContains(String name, Pageable pageable);
 
     @NonNull
     Page<Item> findAll(Pageable pageable);

@@ -65,7 +65,7 @@ public class HeaderServlet extends HttpServlet {
             }
             case "btnSearchClick"->{
                 String searchInput=req.getParameter("searchInput");
-                resp.sendRedirect("/FinalEE/ItemSearchServlet?itemName=" + searchInput);
+                resp.sendRedirect("/FinalEE/ItemSearchServlet?searchInput=" + searchInput);
             }
             default -> {
 

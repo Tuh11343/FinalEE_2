@@ -53,7 +53,7 @@ public class Item {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<ItemImage> imageList;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<StockItem> stockItemList;
 
 

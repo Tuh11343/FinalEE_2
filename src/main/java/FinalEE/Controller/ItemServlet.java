@@ -116,8 +116,8 @@ public class ItemServlet extends HttpServlet {
         HttpSession session=request.getSession();
         switch(action){
             case "itemClick"->{
-                session.setAttribute("itemClickID",request.getParameter("itemClickID"));
-                response.sendRedirect("/FinalEE/ItemDetailServlet");
+                int itemClickID=Integer.parseInt(request.getParameter("itemClickID"));
+                response.sendRedirect("/FinalEE/ItemDetailServlet?itemClickID="+itemClickID);
             }
 
             default -> {
