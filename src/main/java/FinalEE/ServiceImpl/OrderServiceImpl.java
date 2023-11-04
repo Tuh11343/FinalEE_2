@@ -2,6 +2,7 @@ package FinalEE.ServiceImpl;
 
 
 
+import FinalEE.Entity.Cart;
 import FinalEE.Entity.ItemOrder;
 import FinalEE.Repository.OrderRepository;
 import FinalEE.Service.OrderService;
@@ -25,12 +26,13 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public boolean create(ItemOrder order) {
         try {
-            // Kiểm tra xem order có tồn tại trong database hay không
-            Optional<ItemOrder> existingOrder = orderRepository.findById(order.getId());
+            ItemOrder existingOrder;
+            Integer orderID = order.getId() != null ? order.getId() : null;
+            existingOrder = orderRepository.findByID(orderID);
 
             // Lưu order và kiểm tra kết quả
             orderRepository.save(order);
-            if (existingOrder.isPresent()) {
+            if (existingOrder!=null) {
                 System.out.println("Cap nhat thanh cong order:" + order.getId());
             } else {
                 System.out.println("Them thanh cong order:" + order.getId());

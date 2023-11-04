@@ -82,3 +82,28 @@ $(document).ready(function () {
 });
 
 
+function HideShowSize() {
+    var divSize = document.getElementById('btnShowSize');
+    var divDes = document.getElementById('btnShowDes');
+    var display = 0;
+    if(divSize.style.display == 'none')
+    {
+        divSize.style.display = 'flex';
+    }
+    else {
+        divSize.style.display = 'none';
+    }
+}
+function HideShowDes() {
+    var divSize = document.getElementById('btnShowSize');
+    var divDes = document.getElementById('btnShowDes');
+    var display = 0;
+    if(divDes.style.display == 'none')
+    {
+        divDes.style.display = 'block';
+    }
+    else {
+        divDes.style.display = 'none';
+    }
+}
+

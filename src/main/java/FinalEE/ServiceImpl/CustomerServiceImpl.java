@@ -19,9 +19,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomer(int id) {
-        Optional<Customer> customer = customerRepository.findById(id);
-        return customer.orElse(null);
+    public Customer getCustomer(Integer id) {
+        try{
+            return customerRepository.findByID(id);
+        }catch (Exception er){
+            System.out.println(er.toString());
+        }
+        return null;
     }
 
     @Override

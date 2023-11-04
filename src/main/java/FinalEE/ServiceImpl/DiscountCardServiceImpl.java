@@ -22,9 +22,13 @@ public class DiscountCardServiceImpl implements DiscountCardService{
     
     
     @Override
-    public DiscountCard getDiscountCard(int id) {
-        Optional<DiscountCard> discountCard = discountCardRepository.findById(id);
-        return discountCard.orElse(null);
+    public DiscountCard getDiscountCard(Integer id) {
+        try{
+            return discountCardRepository.findByID(id);
+        }catch (Exception er){
+            System.out.println(er.toString());
+        }
+        return null;
     }
 
     @Override

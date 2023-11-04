@@ -41,6 +41,7 @@ public class CartServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
         String action = req.getParameter("action");
+
         switch (action) {
             case "orderClick" -> {
                 System.out.println("Ban da dat hang");
@@ -59,6 +60,13 @@ public class CartServlet extends HttpServlet {
                 Customer customer=customerServiceImpl.getCustomer(customerID);
                 DiscountCard discountCard=discountCardServiceImpl.getDiscountCard(discountCardID);
 
+                if(customer==null){
+                    customer=new Customer();
+                    customer.setName(req.getParameter("orderCustomerName"));
+                    customer.setPhone_number(req.getParameter("orderCustomerPhoneNumber"));
+                    customerServiceImpl.create(customer);
+                }
+
                 /*Create Oder*/
                 ItemOrder order=new ItemOrder();
                 order.setCustomer(customer);
@@ -67,7 +75,7 @@ public class CartServlet extends HttpServlet {
                 order.setDiscountCard(discountCard);
                 order.setNote(req.getParameter("orderNote"));
                 order.setOrder_status(0);
-                order.setAddress(req.getParameter("address"));
+                order.setAddress(req.getParameter("orderAddress"));
                 orderServiceImpl.create(order);
 
                 if(order.getId()==null){
@@ -87,10 +95,18 @@ public class CartServlet extends HttpServlet {
                     orderDetail.setItem(cart.getStockItem().getItem());
 
                     orderDetailServiceImpl.create(orderDetail);
+
+                    orderTotal+=orderDetail.getTotal();
                 }
 
-                /*Remove Cart*/
+                //Update Order Total
+                order.setTotal(orderTotal);
+                orderServiceImpl.create(order);
 
+                /*Remove Cart*/
+                cartServiceImpl.deleteAllByCustomerID(customerID);
+
+                req.getRequestDispatcher("Views/User/Cart.jsp").forward(req,resp);
 
             }
             case "itemDeleteClick" -> {
@@ -111,7 +127,7 @@ public class CartServlet extends HttpServlet {
                 resp.sendRedirect("/FinalEE/ItemServlet");
             }
             default -> {
-
+                System.out.println("WTF:"+action);
             }
         }
 

@@ -8,7 +8,7 @@ public interface DiscountCardService {
     
     boolean create(DiscountCard discountCard);
     boolean deleteByID(int id);
-    DiscountCard getDiscountCard(int id);
+    DiscountCard getDiscountCard(Integer id);
     List<DiscountCard> getAllDiscountCard();
     List<DiscountCard> findByCustomerID(Integer customerID);
     

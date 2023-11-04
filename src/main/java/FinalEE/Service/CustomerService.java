@@ -7,7 +7,7 @@ public interface CustomerService {
 
     boolean create(Customer customer);
     boolean deleteByID(int id);
-    Customer getCustomer(int id);
+    Customer getCustomer(Integer id);
     List<Customer> getAllCustomer();
 
 }

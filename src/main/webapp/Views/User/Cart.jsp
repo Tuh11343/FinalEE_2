@@ -41,7 +41,10 @@
 </head>
 
 <body class="cartpage">
+
 <jsp:include page="component/Header.jsp"/>
+<jsp:include page="component/ModalLogin.jsp"/>
+
 <main class="main">
     <section class="sclocation">
         <div class="container">
@@ -143,7 +146,8 @@
                                     </c:if>
 
                                     <c:if test="${isSale eq false}">
-                                        <c:set var="itemTotal" value="${cart.getStockItem().getItem().price * cart.amount}"/>
+                                        <c:set var="itemTotal"
+                                               value="${cart.getStockItem().getItem().price * cart.amount}"/>
                                         <fmt:formatNumber value="${itemTotal}" pattern="#,###"
                                                           var="formattedItemTotal"/>
                                         <span>= ${formattedItemTotal} VNĐ</span>
@@ -170,24 +174,24 @@
                     <c:set value="${customerList[requestScope.customerIndex].name}" var="customerName"/>
                     <c:set value="${customerList[requestScope.customerIndex].phone_number}" var="customerPhoneNumber"/>
                 </c:if>
-                <h2 class="title --h5">Người nhân / Mua hàng</h2>
-                <form class="cart__formgr--form">
+                <h2 class="title --h5">Người nhận / Mua hàng</h2>
+                <form class="cart__formgr--form" action="${pageContext.request.contextPath}/CartServlet" method="post">
                     <div class="form-gr">
                         <label for="fullname">Họ và Tên</label>
-                        <input type="text" name="fullname" id="fullname" placeholder="Họ Tên" value="${customerName}">
+                        <input type="text" name="orderCustomerName" id="fullname" placeholder="Họ Tên" value="${customerName}">
                     </div>
                     <div class="form-gr">
                         <label for="phone">Điện thoại liên lạc</label>
-                        <input type="text" name="phone" id="phone" placeholder="Số điện thoại"
-                               value="${customerPhoneNumber}">
+                        <input type="number" name="orderCustomerPhoneNumber" id="phone" placeholder="Số điện thoại"
+                               value="${customerPhoneNumber}" required>
                     </div>
                     <div class="form-gr">
                         <label for="address">Nhân hàng tại nhà/ công ty/ bưu điện</label>
-                        <input type="text" name="address" id="address" placeholder="Điạ chỉ nhận hàng">
+                        <input type="text" name="orderAddress" id="address" placeholder="Điạ chỉ nhận hàng" required>
                     </div>
                     <div class="form-gr">
                         <label for="note">Ghi chú</label>
-                        <textarea type="text" name="note" id="note" placeholder="Ghi chú"></textarea>
+                        <textarea name="orderNote" id="note" placeholder="Ghi chú"></textarea>
                     </div>
                     <div class="form-gr">
                         <label for="note">Giảm giá </label>
@@ -199,17 +203,15 @@
                         </select>
                     </div>
 
-                    <%--Order Button--%>
-                    <form action="${pageContext.request.contextPath}/CartServlet" method="post">
-                        <button class="btn ">Đặt hàng</button>
-                        <input type="hidden" name="action" value="orderClick">
-                    </form>
+                    <button class="btn ">Đặt hàng</button>
+                    <input type="hidden" name="action" value="orderClick">
+
 
                 </form>
 
                 <%--Add More Item Button--%>
                 <form action="${pageContext.request.contextPath}/CartServlet" method="post">
-                    <button class="btn btn-gray cart__formgr--btnadd">Thêm sản phẩm khác</button>
+                    <button type="submit" class="btn btn-gray cart__formgr--btnadd">Thêm sản phẩm khác</button>
                     <input type="hidden" name="action" value="addMoreItem">
                 </form>
 
@@ -267,8 +269,6 @@
         </div>
     </div>
 </footer>
-
-<jsp:include page="component/ModalLogin.jsp"/>
 
 <!-- Javascript -->
 <script src="${pageContext.request.contextPath}/Views/User/dest/jsmain.min.js"></script>
