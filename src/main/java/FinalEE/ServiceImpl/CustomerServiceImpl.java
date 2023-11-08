@@ -37,11 +37,11 @@ public class CustomerServiceImpl implements CustomerService {
     public boolean create(Customer customer) {
         try {
             // Kiểm tra xem customer có tồn tại trong database hay không
-            Optional<Customer> existingCustomer = customerRepository.findById(customer.getId());
+            Customer existingCustomer=getCustomer(customer.getId());
 
             // Lưu customer và kiểm tra kết quả
             customerRepository.save(customer);
-            if (existingCustomer.isPresent()) {
+            if (existingCustomer!=null) {
                 System.out.println("Cap nhat thanh cong customer:" + customer.getId());
             } else {
                 System.out.println("Them thanh cong customer:" + customer.getId());

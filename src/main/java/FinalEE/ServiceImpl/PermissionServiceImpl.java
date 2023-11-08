@@ -61,7 +61,11 @@ public class PermissionServiceImpl implements PermissionService{
     public List<Permission> getAllPermission() {
         return permissionRepository.findAll();
     }
-    
-    
-    
+
+    @Override
+    public Permission findByLevel(int level) {
+        return permissionRepository.findByLevel(level);
+    }
+
+
 }
