@@ -1,6 +1,7 @@
 package FinalEE.Controller;
 
 import FinalEE.Entity.Account;
+import FinalEE.Entity.Customer;
 import FinalEE.ServiceImpl.*;
 import jakarta.json.JsonObject;
 import jakarta.servlet.ServletContext;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -56,28 +58,27 @@ public class HeaderServlet extends HttpServlet {
 
             String requestedWith = req.getHeader("X-Requested-With");
             if (requestedWith != null && requestedWith.equals("XMLHttpRequest")){
+                String action=req.getParameter("action");
 
                 resp.setContentType("application/json");
                 PrintWriter out = resp.getWriter();
                 JSONObject jsonResponse=new JSONObject();
+                switch (action){
 
-                String name=req.getParameter("signInName");
-                String password=req.getParameter("signInPassword");
+                    case "signIn"->{
+                        signInHandle(req, jsonResponse, out);
+                    }
+                    case "signUp"->{
+                        signUpHandle(req, jsonResponse, out);
 
-                System.out.println("Name:"+name+",password:"+password);
+                    }
+                    default -> {
 
-                Account account=accountServiceImpl.findByNameAndPassword(name,password);
-                if(account!=null){
-                    System.out.println("Found Account");
-                    jsonResponse.put("success",1);
-                    jsonResponse.put("accountID",account.getId());
-                }else{
-                    jsonResponse.put("success",0);
+                    }
                 }
-                out.print(jsonResponse.toString());
-                out.flush();
-                out.close();
+
             }else{
+                System.out.println("Action");
                 String action=req.getParameter("action");
                 switch (action){
                     case "homeClick"->{
@@ -109,5 +110,62 @@ public class HeaderServlet extends HttpServlet {
 
 
 
+    }
+
+    private void signUpHandle(HttpServletRequest req, JSONObject jsonResponse, PrintWriter out) throws JSONException {
+        String name= req.getParameter("customerName");
+        String phoneNumber= req.getParameter("phoneNumber");
+        String email= req.getParameter("email");
+        String address= req.getParameter("address");
+        String password= req.getParameter("password");
+        String rePassword= req.getParameter("rePassword");
+
+        System.out.println("Name:"+name);
+
+        /*Create Customer*/
+        Customer customer=new Customer();
+        customer.setPhone_number(phoneNumber);
+        customer.setName(name);
+        customer.setAddress(address);
+        customer.setEmail(email);
+        customerServiceImpl.create(customer);
+
+        if(customer.getId()!=null){
+            Account account=new Account();
+            account.setPermission(permissionServiceImpl.findByLevel(0));
+            account.setCustomer(customer);
+            account.setName(email);
+            if(password.equals(rePassword)){
+                account.setPassword(password);
+                accountServiceImpl.create(account);
+                jsonResponse.put("success",1);
+            }else{
+                System.out.println("Password not correct");
+                jsonResponse.put("passwordIncorrect",1);
+            }
+        }else{
+            System.out.println("There is no customer to create Account");
+            jsonResponse.put("systemError",1);
+        }
+        out.print(jsonResponse);
+        out.flush();
+        out.close();
+    }
+
+    private void signInHandle(HttpServletRequest req, JSONObject jsonResponse, PrintWriter out) throws JSONException {
+        String name= req.getParameter("signInName");
+        String password= req.getParameter("signInPassword");
+
+        Account account=accountServiceImpl.findByNameAndPassword(name,password);
+        if(account!=null){
+            System.out.println("Found Account");
+            jsonResponse.put("success",1);
+            jsonResponse.put("accountID",account.getId());
+        }else{
+            jsonResponse.put("success",0);
+        }
+        out.print(jsonResponse);
+        out.flush();
+        out.close();
     }
 }

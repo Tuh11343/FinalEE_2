@@ -11,6 +11,7 @@ public interface AccountService {
     Account getAccount(int id);
     List<Account> getAllAccount();
 
+    Account findByID(Integer accountID);
     Account findByNameAndPassword(String name,String password);
     
 }

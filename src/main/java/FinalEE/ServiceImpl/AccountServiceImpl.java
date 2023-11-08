@@ -1,6 +1,7 @@
 package FinalEE.ServiceImpl;
 
 import FinalEE.Entity.Account;
+import FinalEE.Entity.Customer;
 import FinalEE.Repository.AccountRepository;
 import FinalEE.Service.AccountService;
 import java.util.List;
@@ -22,11 +23,11 @@ public class AccountServiceImpl implements AccountService {
     public boolean create(Account account) {
         try {
             // Kiểm tra xem account có tồn tại trong database hay không
-            Optional<Account> existingAccount = accountRepository.findById(account.getId());
+            Account existingAccount=findByID(account.getId());
 
             // Lưu account và kiểm tra kết quả
             accountRepository.save(account);
-            if (existingAccount.isPresent()) {
+            if (existingAccount!=null) {
                 System.out.println("Cap nhat thanh cong account:" + account.getId());
             } else {
                 System.out.println("Them thanh cong account:" + account.getId());
@@ -66,6 +67,16 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<Account> getAllAccount() {
         return accountRepository.findAll();
+    }
+
+    @Override
+    public Account findByID(Integer accountID) {
+        try{
+            return accountRepository.findByID(accountID);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override

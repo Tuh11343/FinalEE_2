@@ -19,8 +19,7 @@ To change this template use File | Settings | File Templates.
             <div class="from-content">
 
                 <%--Log In--%>
-                <form class="form-pane login-from active" action="${pageContext.request.contextPath}/HeaderServlet"
-                      method="post" data-type="login-from">
+                <form class="form-pane login-from active" data-type="login-from">
                     <div class="form-gr">
                         <span class="label" for="email">Email</span>
                         <input class="input-form" type="email" id="email" placeholder="Nhập email"
@@ -33,40 +32,14 @@ To change this template use File | Settings | File Templates.
                                name="signInPassword" required>
                         <p class="message-error">Please wrong format</p>
                     </div>
-                    <button type="submit" class="btn btn-submit" onclick="sendAjaxRequest()">Đăng nhập</button>
+                    <%--<button class="btn btn-submit" onclick="logInAjaxRequest()">Đăng nhập</button>--%>
+                    <a class="btn btn-submit" onclick="logInAjaxRequest()">Đăng nhập</a>
                     <input type="hidden" name="action" value="signInClick">
 
-                    <script>
-                        function sendAjaxRequest() {
-                            var email = document.getElementById("email").value;
-                            var password = document.getElementById("password").value;
-                            $.ajax({
-                                type: "POST",
-                                url: "${pageContext.request.contextPath}/HeaderServlet",
-                                data: {
-                                    signInName:email,
-                                    signInPassword:password,
-                                },
-                                headers: {
-                                    "X-Requested-With": "XMLHttpRequest"
-                                },
-                                success: function (data) {
-                                    console.log(1);
-                                    if(data.success==1){
-                                        console.log(data.accountID);
-                                    }else if(data.success==0){
-
-                                    }
-                                },
-
-                            });
-                        }
-                    </script>
                 </form>
 
                 <%--Sign Up--%>
-                <form onsubmit="return validate()" class="form-pane register-from" data-type="form-register"
-                      action="${pageContext.request.contextPath}/HeaderServlet" method="post">
+                <form onsubmit="return validate()" class="form-pane register-from" data-type="form-register">
 
                     <div class="form-gr">
                         <span class="label" for="name-regis">Họ và tên</span>
@@ -104,8 +77,7 @@ To change this template use File | Settings | File Templates.
                                placeholder="Nhập lại mật khẩu">
                         <p class="message-error error-repassword"></p>
                     </div>
-                    <button type="submit" class="btn btn-submit">Đăng ký</button>
-                    <input type="hidden" name="action" value="signUpClick">
+                    <a type="submit" class="btn btn-submit" onclick="signUpAjaxRequest()">Đăng ký</a>
                 </form>
 
             </div>
@@ -308,4 +280,8 @@ To change this template use File | Settings | File Templates.
     }
 </style>
 
+<script>
+    const contextPath = '${pageContext.request.contextPath}';
+</script>
 <script src="${pageContext.request.contextPath}/Views/User/js/validate.js"></script>
+<script src="${pageContext.request.contextPath}/Views/User/dest/tuh.js"></script>

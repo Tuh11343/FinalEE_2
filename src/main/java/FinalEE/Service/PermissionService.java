@@ -10,5 +10,7 @@ public interface PermissionService {
     boolean deleteByID(int id);
     Permission getPermission(int id);
     List<Permission> getAllPermission();
+
+    Permission findByLevel(int level);
     
 }
