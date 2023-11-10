@@ -539,6 +539,9 @@ sup {
 .btn-gray {
     background: var(--gray-cl);
 }
+.btn-yellow {
+  background: var(--yellow-cl);
+}
 
 .location-path {
     background: var(--gray-cl);
@@ -1304,6 +1307,178 @@ https://flickity.metafizzy.co
     margin-top: 12px;
 }
 
+.profilepage .warp {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.profilepage .warp .container {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+.profilepage .warp__order {
+  width: 65%;
+}
+.profilepage .warp__order .title {
+  padding-left: 10px;
+  border-bottom: 1px solid var(--gray-cl);
+}
+.profilepage .warp__order--list .order--item {
+  min-height: 50px;
+}
+.profilepage .warp__order--list .order--item:not(:last-child) .btns {
+  border-bottom: 1px solid var(--grayop-cl);
+}
+.profilepage .warp__order--list .order--item .btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  padding-left: 10px;
+  transition: var(--t);
+  -webkit-transition: var(--t);
+  -moz-transition: var(--t);
+  -ms-transition: var(--t);
+  -o-transition: var(--t);
+  cursor: pointer;
+}
+.profilepage .warp__order--list .order--item .btns .iconarrow {
+  transition: var(--t);
+  -webkit-transition: var(--t);
+  -moz-transition: var(--t);
+  -ms-transition: var(--t);
+  -o-transition: var(--t);
+}
+.profilepage .warp__order--list .order--item .btns .order__info {
+  display: flex;
+  gap: 35px;
+}
+.profilepage .warp__order--list .order--item .btns .order__info p span {
+  color: var(--blue-cl);
+}
+.profilepage .warp__order--list .order--item .btns:hover {
+  opacity: 0.9;
+  transition: var(--t);
+  -webkit-transition: var(--t);
+  -moz-transition: var(--t);
+  -ms-transition: var(--t);
+  -o-transition: var(--t);
+  background: #e4e3e3;
+}
+.profilepage .warp__order--list .order--item .btns.active {
+  background: #e4e3e3;
+  transition: var(--t);
+  -webkit-transition: var(--t);
+  -moz-transition: var(--t);
+  -ms-transition: var(--t);
+  -o-transition: var(--t);
+}
+.profilepage .warp__order--list .order--item .btns.active .iconarrow {
+  transform: rotate(540deg);
+  transition: var(--t);
+  -webkit-transition: var(--t);
+  -moz-transition: var(--t);
+  -ms-transition: var(--t);
+  -o-transition: var(--t);
+}
+.profilepage .warp__order--list .order--item .order--products {
+  padding-left: 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: var(--t);
+  -webkit-transition: var(--t);
+  -moz-transition: var(--t);
+  -ms-transition: var(--t);
+  -o-transition: var(--t);
+}
+.profilepage .warp__order--list .order--item .order--products .products--item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 5px;
+}
+.profilepage
+  .warp__order--list
+  .order--item
+  .order--products
+  .products--item:not(:last-child) {
+  border-bottom: 1px solid var(--grayop-cl);
+}
+.profilepage
+  .warp__order--list
+  .order--item
+  .order--products
+  .products--item
+  .number__product {
+  width: 5%;
+}
+.profilepage
+  .warp__order--list
+  .order--item
+  .order--products
+  .products--item
+  .name__product {
+  display: -webkit-inline-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.profilepage .warp__order--list .order--item .order--products .products--item img {
+  width: 10%;
+  height: 60px;
+}
+.profilepage .warp__order--list .order--item .order--products .products--item p {
+  width: 18%;
+}
+.profilepage
+  .warp__order--list
+  .order--item
+  .order--products
+  .products--item
+  .price__product {
+  width: 23%;
+}
+.profilepage
+  .warp__order--list
+  .order--item
+  .order--products
+  .products--item
+  .name__product {
+  width: 25%;
+}
+.profilepage .warp__profile {
+  width: 35%;
+}
+.profilepage .warp__profile--form .box-form {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+.profilepage .warp__profile--form .box-form .form-gr {
+  width: 50%;
+}
+.profilepage .warp__profile--form .form-gr {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-bottom: 17px;
+  position: relative;
+}
+.profilepage .warp__profile--form .form-gr span {
+  text-transform: capitalize;
+  margin-bottom: 10px;
+}
+.profilepage .warp__profile--form .form-gr input {
+  border: 1px solid var(--grayop-cl);
+  border-radius: 3px;
+  outline: none;
+  padding: 5px;
+  width: 100%;
+}
+.profilepage .warp__profile--form .btn {
+  width: 100%;
+}
 /*Prouduct detail*/
 .productItem {
     display: flex;

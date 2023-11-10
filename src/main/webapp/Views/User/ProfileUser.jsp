@@ -33,99 +33,133 @@
     <meta name="twitter:description" content=""/>
     <meta name="twitter:image" content=""/>
 
-    <style>
-        /* CSS Loading Here */
-    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 
-    <link rel="stylesheet" href="../dest/style.min.css"/>
-    <link rel="stylesheet" href="../dest/fonts.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/User/dest/style.min.css/"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/User/dest/fonts.css"/>
 </head>
 
-<body class="homepage">
-<header class="header">
-    <div class="container">
-        <div class="header__left">
-            <div class="header__logo">
-                <a href="#"><img class="img" src="../img/logo.png" alt="img-logo"/></a>
-            </div>
-            <nav class="hedaer__navbar">
-                <ul class="header__navbar-sitemenu">
-                    <li class="item">
-                        <a href="#" class="nameitem">Trang chủ</a>
-                    </li>
-                    <li class="item">
-                        <a href="#" class="nameitem">Bộ Sưu Tập
+<body class="profilepage">
 
-                            <svg class="arrow" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                                <path
-                                        d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/>
-                            </svg>
-                        </a>
-                        <ul class="dropmenu">
-                            <li><a href="productlist.html">Giày dép</a></li>
-                            <li><a href="productlist.html">Quần Áo</a></li>
-                            <li><a href="productlist.html">Phụ Kiện</a></li>
-                            <li><a href="productlist.html">Balo</a></li>
-                            <li><a href="productlist.html">Mắt Kính</a></li>
-                        </ul>
-                    </li>
-                    <li class="item">
-                        <a href="#" class="nameitem">Giới thiệu
-                        </a>
-                    </li>
-                    <li class="item">
-                        <a href="#" class="nameitem">Contact
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+<jsp:include page="component/Header.jsp"/>
+<jsp:include page="component/ModalLogin.jsp"/>
 
-
-        <div class="header__right">
-            <div class="header__right--search">
-                <form class="header__search--form search--product">
-                    <div class="form_group">
-                        <input type="text" placeholder="Nhập sản phẩm bạn cần tìm!!" class="inputfeild"/>
+<main class="main">
+    <section class="warp">
+        <div class="container">
+            <div class="warp__order">
+                <h3 class="title --h4">Đơn hàng đã mua</h3>
+                <div class="warp__order--list">
+                    <div class="order--item">
+                        <div class="btns ">
+                            <div class="order__info">
+                                <span class="order__id">1</span>
+                                <p class="order__number">Tổng số sản phẩm: <span>1</span></p>
+                                <p class="order__date">Ngày đặt hàng: <span>11/01/2002</span></p>
+                                <p class="order__totalprice">Tổng tiền: <span>100.000VND</span></p>
+                            </div>
+                            <div class="iconarrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                    <path
+                                            d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="order--products">
+                            <div class="products--item">
+                                <span class="number__product">1</span>
+                                <img src="./img/ao/ao-1-a.jpg" alt="ao-yame">
+                                <p class="name__product">Tên: <span>ao thun mau do ba le asd</span></p>
+                                <p class="color__product">Màu: <span>Trắng đỏ</span></p>
+                                <p class="price__product">Giá: <span>25.000VND</span></p>
+                                <p>Số lượng: <span>4</span></p>
+                            </div>
+                            <div class="products--item">
+                                <span class="number__product">2</span>
+                                <img src="./img/ao/ao-1-a.jpg" alt="ao-yame">
+                                <p class="name__product">Tên: <span>ao thun mau do ba le asd</span></p>
+                                <p class="color__product">Màu: <span>Trắng đỏ</span></p>
+                                <p class="price__product">Giá: <span>300.000VND</span></p>
+                                <p>Số lượng: <span>4</span></p>
+                            </div>
+                        </div>
                     </div>
-                    <button class="btn__search">
-                        <svg class="icon icon_search" xmlns="http://www.w3.org/2000/svg" height="1em"
-                             viewBox="0 0 512 512">
-                            <path
-                                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
-                        </svg>
-                    </button>
+                    <div class="order--item">
+                        <div class="btns">
+                            <div class="order__info">
+                                <span class="order__id">1</span>
+                                <p class="order__number">Tổng số sản phẩm: <span>1</span></p>
+                                <p class="order__date">Ngày đặt hàng: <span>11/01/2002</span></p>
+                                <p class="order__totalprice">Tổng tiền: <span>100.000VND</span></p>
+                            </div>
+                            <div class="iconarrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                    <path
+                                            d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="order--products">
+                            <div class="products--item">
+                                <span class="number__product">1</span>
+                                <img src="./img/ao/ao-1-a.jpg" alt="ao-yame">
+                                <p class="name__product">Tên: <span>ao thun mau do ba le asd</span></p>
+                                <p class="color__product">Màu: <span>Trắng đỏ</span></p>
+                                <p class="price__product">Giá: <span>25.000VND</span></p>
+                                <p>Số lượng: <span>4</span></p>
+                            </div>
+                            <div class="products--item">
+                                <span class="number__product">2</span>
+                                <img src="./img/ao/ao-1-a.jpg" alt="ao-yame">
+                                <p class="name__product">Tên: <span>ao thun mau do ba le asd</span></p>
+                                <p class="color__product">Màu: <span>Trắng đỏ</span></p>
+                                <p class="price__product">Giá: <span>300.000VND</span></p>
+                                <p>Số lượng: <span>4</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="warp__profile">
+                <h3 class="title --h4">Thông tin tài khoản</h3>
+                <form action="" class="warp__profile--form">
+                    <div class="box-form">
+                        <div class="form-gr">
+                            <span class="label" for="name-regis">Họ và tên</span>
+                            <input class="input-form" type="text" name="name" id="name-regis"
+                                   placeholder="Nhập Họ và tên" value="Đỗ Ngọc Lương Tuấn">
+                            <p class="message-error error-name"></p>
+                        </div>
+                        <div class="form-gr">
+                            <span class="label" for="phone-regis">Số điện thoại</span>
+                            <input class="input-form" type="text" name="phone" id="phone-regis"
+                                   placeholder="Nhập số điện thoại" value="0908773513">
+                            <p class="message-error error-name"></p>
+                        </div>
+                    </div>
+                    <div class="form-gr">
+                        <span class="label" for="email-regis">Email</span>
+                        <input class="input-form" type="text" name="email" id="email-regis"
+                               placeholder="Nhập Email" value="dotuan2k2@gmail.com">
+                        <p class="message-error error-name"></p>
+                    </div>
+                    <div class="form-gr">
+                        <span class="label" for="address-regis">Địa chỉ</span>
+                        <input class="input-form" type="text" name="address" id="address-regis"
+                               placeholder="Nhập địa chỉ" value="266/108/27 P8 Tôn Đản Q4">
+                        <p class="message-error error-name"></p>
+                    </div>
+                    <div class="form-gr">
+                        <span class="label" for="password-regis">Mật khẩu</span>
+                        <input class="input-form" type="password" name="password" id="password-regis"
+                               placeholder="Nhập địa chỉ" value="">
+                        <p class="message-error error-name"></p>
+                    </div>
+                    <button type="submit" class="btn btn-yellow">Cập Nhật </button>
                 </form>
             </div>
-            <a href="#" class="header__right--icon btnshow_search">
-                <svg class="icon icon_search" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                    <path
-                            d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
-                </svg>
-                <svg class="icon icon_close" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512">
-                    <path
-                            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
-                </svg>
-            </a>
-            <a href="#" class="header__right--icon">
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                    <path
-                            d="M256 288A144 144 0 1 0 256 0a144 144 0 1 0 0 288zm-94.7 32C72.2 320 0 392.2 0 481.3c0 17 13.8 30.7 30.7 30.7H481.3c17 0 30.7-13.8 30.7-30.7C512 392.2 439.8 320 350.7 320H161.3z"/>
-                </svg>
-            </a>
-            <a href="#" class="header__right--icon">
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                    <path
-                            d="M160 112c0-35.3 28.7-64 64-64s64 28.7 64 64v48H160V112zm-48 48H48c-26.5 0-48 21.5-48 48V416c0 53 43 96 96 96H352c53 0 96-43 96-96V208c0-26.5-21.5-48-48-48H336V112C336 50.1 285.9 0 224 0S112 50.1 112 112v48zm24 48a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm152 24a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"/>
-                </svg>
-                <span class="number">1</span>
-            </a>
         </div>
-    </div>
-</header>
-<main class="main">
-    <!--    push test cái viết tiếp-->
+    </section>
 </main>
 <footer class="footer">
     <div class="container">
@@ -178,8 +212,8 @@
 </footer>
 
 <!-- Javascript -->
-<script type="text/javascript" src="../dest/jsmain.min.js"></script>
-<script type="text/javascript" src="../dest/main.js"></script>
+<script src="${pageContext.request.contextPath}/Views/User/dest/jsmain.min.js"></script>
+<script src="${pageContext.request.contextPath}/Views/User/dest/main.js"></script>
 </body>
 
 </html>
