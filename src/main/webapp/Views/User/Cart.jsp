@@ -69,7 +69,7 @@
             <div class="cart__detail">
 
                 <div class="cart__detail--top">
-                    <fmt:formatNumber value="${orderTotal}" pattern="#,###"
+                    <fmt:formatNumber value="${requestScope.orderTotal}" pattern="#,###"
                                       var="formattedOrderTotal"/>
 
                     <h2 class="title --h4">chi tiết đơn hàng</h2>
@@ -79,25 +79,25 @@
                 <%--Cart Detail List--%>
                 <div class="cart__detail--list">
 
-                    <c:forEach items="${cartList}" var="cart">
+                    <c:forEach items="${requestScope.cartList}" var="cart">
 
                         <c:set var="isSale" value="false"/>
-                        <c:set var="salePercentage" value="${cart.getStockItem().getItem().getSale().sale_percentage}"/>
+                        <c:set var="salePercentage" value="${cart.stockItem.item.sale.sale_percentage}"/>
 
                         <%--Check If Sale--%>
-                        <c:if test="${sale != null}">
+                        <c:if test="${cart.stockItem.item.sale.on_sale eq 1}">
                             <c:set var="isSale" value="true"/>
                         </c:if>
 
                         <%--Number Format--%>
-                        <fmt:formatNumber value="${itemList[itemIndex].price}" pattern="#,###"
+                        <fmt:formatNumber value="${cart.stockItem.item.price}" pattern="#,###"
                                           var="formattedPrice"/>
 
                         <c:if test="${isSale eq true}">
                             <c:set var="salePrice"
-                                   value="${cart.getStockItem().getItem().price * (1 - (salePercentage/100))}"/>
+                                   value="${cart.stockItem.item.price * (1 - (salePercentage/100))}"/>
                             <c:set var="saveAmount"
-                                   value="${cart.getStockItem().getItem().price * (salePercentage/100)}"/>
+                                   value="${cart.stockItem.item.price * (salePercentage/100)}"/>
                             <fmt:formatNumber value="${salePrice}" pattern="#,###"
                                               var="formattedSalePrice"/>
                             <fmt:formatNumber value="${saveAmount}" pattern="#,###"
@@ -110,7 +110,7 @@
 
                                         <%--Find 2 Image Of Item--%>
                                     <c:set var="counter" value="0"/>
-                                    <c:forEach items="${cart.getStockItem().getItem().getImageList()}" var="image">
+                                    <c:forEach items="${cart.stockItem.item.imageList}" var="image">
                                         <c:if test="${counter < 1}">
                                             <img src="${image.image_url}" alt="">
                                             <c:set var="counter" value="${counter+1}"/>
@@ -118,12 +118,18 @@
                                     </c:forEach>
 
                                 </div>
-                                <button class="btn btn-del">Xóa</button>
+                                <form action="${pageContext.request.contextPath}/CartServlet" method="post">
+
+                                    <button class="btn btn-del">Xóa</button>
+                                    <input type="hidden" value="itemDeleteClick" name="action">
+
+                                </form>
+
                             </div>
 
                             <div class="gr--info">
                                 <div class="info-top">
-                                    <h4 class="name">${cart.getStockItem().getItem().name}</h4>
+                                    <h4 class="name">${cart.stockItem.item.name}</h4>
                                     <p class="qty">
                                         <c:if test="${isSale eq true}">
                                             <span>Số lượng <strong> ${cart.amount} </strong> * ${formattedSalePrice}</span>
@@ -147,7 +153,7 @@
 
                                     <c:if test="${isSale eq false}">
                                         <c:set var="itemTotal"
-                                               value="${cart.getStockItem().getItem().price * cart.amount}"/>
+                                               value="${cart.stockItem.item.price * cart.amount}"/>
                                         <fmt:formatNumber value="${itemTotal}" pattern="#,###"
                                                           var="formattedItemTotal"/>
                                         <span>= ${formattedItemTotal} VNĐ</span>
@@ -166,24 +172,19 @@
                 </div>
 
             </div>
+
             <div class="cart__formgr">
-                <c:set var="logInCustomerID" value="${requestScope.logInCustomerID}"/>
-                <c:set var="customerName" value=""/>
-                <c:set var="customerPhoneNumber" value=""/>
-                <c:if test="${not empty logInCustomerID}">
-                    <c:set value="${customerList[requestScope.customerIndex].name}" var="customerName"/>
-                    <c:set value="${customerList[requestScope.customerIndex].phone_number}" var="customerPhoneNumber"/>
-                </c:if>
                 <h2 class="title --h5">Người nhận / Mua hàng</h2>
                 <form class="cart__formgr--form" action="${pageContext.request.contextPath}/CartServlet" method="post">
                     <div class="form-gr">
                         <label for="fullname">Họ và Tên</label>
-                        <input type="text" name="orderCustomerName" id="fullname" placeholder="Họ Tên" value="${customerName}">
+                        <input type="text" name="orderCustomerName" id="fullname" placeholder="Họ Tên"
+                               value="${requestScope.signInCustomer.name}">
                     </div>
                     <div class="form-gr">
                         <label for="phone">Điện thoại liên lạc</label>
                         <input type="number" name="orderCustomerPhoneNumber" id="phone" placeholder="Số điện thoại"
-                               value="${customerPhoneNumber}" required>
+                               value="${requestScope.signInCustomer.phone_number}" required>
                     </div>
                     <div class="form-gr">
                         <label for="address">Nhân hàng tại nhà/ công ty/ bưu điện</label>
@@ -196,7 +197,7 @@
                     <div class="form-gr">
                         <label for="note">Giảm giá </label>
                         <select name="discount-code" id="discount-code">
-                            <c:forEach items="${customerDiscountCardList}" var="discountCard">
+                            <c:forEach items="${requestScope.customerDiscountCardList}" var="discountCard">
                                 <option value="${discountCard.discount_percentage}">${discountCard.discount_percentage}
                                     : ${discountCard.name}</option>
                             </c:forEach>

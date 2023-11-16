@@ -54,15 +54,9 @@
             <div class="productItem">
                 <div class="productImage">
 
-                    <c:set var="itemIndex" value="-1"/>
-                    <c:forEach items="${requestScope.itemList}" var="item" varStatus="status">
-                        <c:if test="${item.id eq requestScope.itemClickID}">
-                            <c:set var="itemIndex" value="${status.index}"/>
-                        </c:if>
-                    </c:forEach>
 
                     <c:set var="itemImageCount" value="0"/>
-                    <c:forEach items="${requestScope.itemList.get(itemIndex).imageList}" var="image">
+                    <c:forEach items="${requestScope.itemClick.imageList}" var="image">
                         <c:if test="${itemImageCount < 1}">
                             <a href="#" class="img"><img src="${image.image_url}" alt="ao-thun"/></a>
                             <c:set var="itemImageCount" value="${itemImageCount+1}"/>
@@ -72,13 +66,13 @@
                 </div>
                 <div class="productInfo">
                     <h3 class="productName --h4">
-                        ${requestScope.itemList[itemIndex].name}
+                        ${requestScope.itemClick.name}
                     </h3>
                     <p class="productID">
-                        Mã số: ${requestScope.itemClickID}
+                        Mã số: ${requestScope.itemClick.id}
                     </p>
                     <c:set var="isSale" value="false"/>
-                    <c:if test="${requestScope.itemList.get(itemIndex).sale.on_sale eq 1}">
+                    <c:if test="${requestScope.itemClick.sale.on_sale eq 1}">
                         <h5 class="sale">
                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAADsAAAA7AF5KHG9AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAA8xJREFUWIXFl11oHGUUhp8zM7sbo2kTijbBakqMRYlooYYEBUWKZhPTdLO4UEVbEBWpBQsFIVrtNjZgrJbSitSfChWpaKm5iEEbL2wF0SsllILoTSuktqakTUzs7szsHC82aSbZnexuUuK5+n7O977PzJxvvhlYZDht8Ycm2hLVC11vLMbcjsYbPU8HI55b/78AINoDRByRs0sOoImEqcojAOJx55IDMDZWBlgAIrpLk8kFaS0YQAYHJ4FzAAIPp38e+kBBlgwAQISea214zmmNHygVYlEAoab7DgucnO6r6jY7Gu+ZZ8niAOzHYuvS0c5vpvuSTHoZdM/sLO2yW+LPXHcATSRuUEO+QFjlHy9LXTmVkyv6nrYmbr6uAM545gngDpQ6v7hTvnxdnvRlNu4LxehaxQKoaPtUs9z23MF0NPa2CJXqyet585VHgYL1UDQAKrWIZtvCWpCjqsHpAnXFyJZQhLqs+FwAMtONVGusNdXWuaYkAE0kTH9fhIslAozMiMlrkpHeogHS0fib6fHMwVlAMFySvRJSkIn1HSsFmhBtn2yJ1xQEyJ7t+oqgT+r6zhUzF8E/JQEIa+2Wzl9CIesnsrVmWWQPL3/kFKGlmU1AGCFsW/KxdnRstlNmLUqsJIApCJipVBG9HzjqT8m5A6La5OvEbNscx+A0UA0gt9ZgNDdCeXmuYTiMrK4N5FHRlXPH8tSAVgUJGA80ETr4DubTmwgd2o9ULp+ZjESwundibnw8EABPcrTzAMhk0Hoz1o576BOcbTvQs38iDzbPmO9+FRwb9/2PggGEscIAyh9B6/XSKMa99yB3rUFuXwUXR3zmDm53LzhOsL9ozk7KBTDk1yCBzOEjUFWJ1bUD7/sf8E6fKdocAM8YyoGaO6AbNpTbjnUBqJhXrIQrnwo3bNq3yMDAZf9g7i7o7/9XVT4r2nzPXqytzxPu/5LQ/l6kOqfQs6Hy9VzzvAAAjmoS5UpB8+5ejOZGpOFunBdfxvvtd8xn836LZEB25pvIC1Ax2Pe3CNsLmeM4cNON6Ohl9PwFGD6f//0A+yInjp8pGgAg/G3fEWCvf8zavhWupnB3v3XtmXunfkRWVBH69EPMLU/hHeubKzUQrrC6gnzm/YJVEDsa3wX6BiBSU42OjICbmZ0YCiH1dejwXzA+7p/pC6eszXLy2MSCAKYj3RqLoXIAuK2YfGBCVZKRE1/tE/9hsFAAyG7PtGO9JLAFaAhIOwd8Hg6570p//6VidEv+kwFItXTUC2aDoqsNg6uKMaquDJV9dzzwLRoU/wGxqGF2wiMubwAAAABJRU5ErkJggg=="
                                  alt=""/>
@@ -88,11 +82,14 @@
                     </c:if>
 
                     <c:if test="${isSale eq true}">
-                        <fmt:formatNumber value="${requestScope.itemList[itemIndex].price}" pattern="#,###"
+                        <c:set var="salePercentage" value="${requestScope.itemClick.sale.sale_percentage}"/>
+                        <fmt:formatNumber value="${requestScope.itemClick.price}" pattern="#,###"
                                           var="formattedNumber"/>
-                        <fmt:formatNumber value="${requestScope.itemList[itemIndex].price * 0.8}" pattern="#,###"
-                                          var="salePrice"/>
-                        <fmt:formatNumber value="${requestScope.itemList[itemIndex].price * 0.2}" pattern="#,###"
+                        <fmt:formatNumber
+                                value="${requestScope.itemClick.price * (1 - (salePercentage/100))}"
+                                pattern="#,###"
+                                var="salePrice"/>
+                        <fmt:formatNumber value="${requestScope.itemClick.price * (salePercentage/100)}" pattern="#,###"
                                           var="savedAmount"/>
                         <h6 class="price">Giá gốc: <span>${formattedNumber}</span> đ</h6>
                         <h5 class="salePrice"> Giá Sale:
@@ -102,7 +99,7 @@
                     </c:if>
 
                     <c:if test="${isSale eq false}">
-                        <fmt:formatNumber value="${requestScope.itemList[itemIndex].price}" pattern="#,###"
+                        <fmt:formatNumber value="${requestScope.itemClick.price}" pattern="#,###"
                                           var="formattedNumber"/>
                         <h6 class="salePrice">Giá: <span>${formattedNumber}</span> đ</h6>
                     </c:if>
@@ -114,7 +111,7 @@
                     </div>
                     <table class="productVariants">
                         <tbody>
-                        <c:forEach items="${requestScope.itemList.get(itemIndex).stockItemList}" var="stockItem">
+                        <c:forEach items="${requestScope.itemClick.stockItemList}" var="stockItem">
 
                             <tr>
                                 <td>${stockItem.color}, ${stockItem.size}</td>
@@ -169,7 +166,7 @@
                         <%--Item Description--%>
                         <div id="btnShowDes" class="Description" style="display: none;">
                             <h6 style="font-weight: bold;margin-bottom: 10px;">Mô tả sản phẩm</h6>
-                            ${requestScope.itemList.get(itemIndex).description}
+                            ${requestScope.itemClick.description}
                         </div>
 
                     </div>
@@ -178,7 +175,7 @@
             </div>
 
             <div class="productInfoImage">
-                <c:forEach items="${requestScope.itemList[itemIndex].imageList}" var="image" varStatus="status">
+                <c:forEach items="${requestScope.itemClick.imageList}" var="image" varStatus="status">
                     <c:if test="${status.index ne 0}">
                         <div class="itemImage">
                             <img src="${image.image_url}" alt=""/>
@@ -190,7 +187,6 @@
         </div>
     </section>
 </main>
-
 
 <!-- Footer -->
 <footer class="footer">

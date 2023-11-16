@@ -47,7 +47,7 @@ public class Item {
     @Column(name = "year_produce")
     private int year_produce;
 
-    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Sale sale;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL,fetch = FetchType.EAGER)

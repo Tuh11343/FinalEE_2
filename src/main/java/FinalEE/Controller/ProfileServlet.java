@@ -4,21 +4,15 @@ import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
 import java.util.List;
 
-@Controller
-@WebServlet(name = "ItemDetailServlet",urlPatterns = "/ItemDetailServlet")
-public class ItemDetailServlet extends HttpServlet {
-
+public class ProfileServlet extends HttpServlet {
     private AccountServiceImpl accountServiceImpl;
     private CustomerServiceImpl customerServiceImpl;
     private DiscountCardServiceImpl discountCardServiceImpl;
@@ -34,56 +28,8 @@ public class ItemDetailServlet extends HttpServlet {
     private StockItemServiceImpl stockItemServiceImpl;
     private CartServiceImpl cartServiceImpl;
 
-
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        HttpSession session=req.getSession();
-        String requestedWith = req.getHeader("X-Requested-With");
-        if (requestedWith != null && requestedWith.equals("XMLHttpRequest")) {
-            int stockItemID=Integer.parseInt(req.getParameter("stockItemID"));
-            Integer customerID=null;
-            Integer signInAccountID=null;
-
-            List<Cookie> cookieList= List.of(req.getCookies());
-            for(Cookie cookie: cookieList){
-                if(cookie.getName().equals("signInAccountID")){
-                    signInAccountID=Integer.parseInt(cookie.getValue());
-                    customerID=accountServiceImpl.findByID(signInAccountID).getCustomer().getId();
-                }
-            }
-
-            StockItem stockItem=stockItemServiceImpl.getStockItem(stockItemID);
-
-            Cart cart=new Cart();
-            cart.setStockItem(stockItem);
-            cart.setAmount(1);
-            if(customerID!=null)
-            {
-                Customer customer=customerServiceImpl.getCustomer(customerID);
-                cart.setCustomer(customer);
-            }else {
-                cart.setCustomer(null);
-            }
-            cartServiceImpl.create(cart);
-        }else{
-            String action=req.getParameter("action");
-            switch (action){
-                default -> {
-
-                }
-            }
-        }
-
-
-
-
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
         ServletContext servletContext=getServletContext();
 
         accountServiceImpl = (AccountServiceImpl) servletContext.getAttribute("accountServiceImpl");
@@ -131,14 +77,39 @@ public class ItemDetailServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
 
-        int itemClickID=-1;
-        if(req.getParameter("itemClickID")!=null){
-            itemClickID=Integer.parseInt(req.getParameter("itemClickID"));
-        }
-        Item itemClick=itemServiceImpl.getItem(itemClickID);
-        req.setAttribute("itemClick",itemClick);
+        Integer signInAccountID=null;
 
-        req.getRequestDispatcher("/Views/User/ItemDetail.jsp").forward(req,resp);
+        List<Cookie> cookieList= List.of(req.getCookies());
+        for(Cookie cookie: cookieList){
+            if(cookie.getName().equals("signInAccountID")){
+                signInAccountID=Integer.parseInt(cookie.getValue());
+            }
+        }
+
+        Account account=accountServiceImpl.findByID(signInAccountID);
+        if(account!=null){
+
+            Customer customer=account.getCustomer();
+            req.setAttribute("customerName",customer.getName());
+            req.setAttribute("customerEmail",customer.getEmail());
+            req.setAttribute("customerAddress",customer.getAddress());
+            req.setAttribute("customerPhoneNumber",customer.getPhone_number());
+            req.setAttribute("accountPassword",account.getPassword());
+
+            List<ItemOrder> customerOrderList=orderServiceImpl.findByCustomerID(customer.getId());
+            req.setAttribute("customerOrderList",customerOrderList);
+
+
+        }
+
+
+        req.getRequestDispatcher("/Views/User/ProfileUser.jsp").forward(req,resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
 
     }
 }

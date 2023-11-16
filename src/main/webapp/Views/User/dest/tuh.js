@@ -10,7 +10,7 @@ function logInAjaxRequest() {
         type: "POST",
         url: contextPath + "/HeaderServlet",
         data: {
-            action: "logIn",
+            action: "signIn",
             signInName: email,
             signInPassword: password,
         },
@@ -20,7 +20,7 @@ function logInAjaxRequest() {
         success: function (data) {
             console.log(1);
             if (data.success === 1) {
-                localStorage.setItem('logInAccountID', data.accountID);
+                document.cookie = "signInAccountID=" + data.accountID + "; path=/"
                 location.reload();
             } else if (data.success === 0) {
 

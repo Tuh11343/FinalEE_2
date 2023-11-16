@@ -1645,7 +1645,7 @@ https://flickity.metafizzy.co
     margin: auto;
     text-align: center !important;
     max-width: 100%;
-    height: auto;
+    height: 100%;
     vertical-align: middle;
     border-style: none;
     overflow-clip-margin: content-box;
