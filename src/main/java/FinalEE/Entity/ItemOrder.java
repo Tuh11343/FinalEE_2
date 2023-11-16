@@ -40,7 +40,15 @@ public class ItemOrder {
     @Column(name = "note")
     private String note;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<OrderDetail> orderDetailList;
+
+    public int totalItemAmount(){
+        int total=0;
+        for(OrderDetail orderDetail:orderDetailList){
+            total+=orderDetail.getAmount();
+        }
+        return total;
+    }
 
 }

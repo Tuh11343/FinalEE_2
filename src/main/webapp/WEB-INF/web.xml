@@ -28,6 +28,11 @@
         <servlet-name>HeaderServlet</servlet-name>
         <servlet-class>FinalEE.Controller.HeaderServlet</servlet-class>
     </servlet>
+    
+    <servlet>
+        <servlet-name>ProfileUserServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.ProfileServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>AdminManagerServlet</servlet-name>
@@ -57,6 +62,11 @@
     <servlet-mapping>
         <servlet-name>HeaderServlet</servlet-name>
         <url-pattern>/HeaderServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>ProfileUserServlet</servlet-name>
+        <url-pattern>/ProfileUserServlet</url-pattern>
     </servlet-mapping>
 
 </web-app>

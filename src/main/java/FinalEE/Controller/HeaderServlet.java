@@ -162,6 +162,7 @@ public class HeaderServlet extends HttpServlet {
             jsonResponse.put("success",1);
             jsonResponse.put("accountID",account.getId());
         }else{
+            System.out.println("No account founded");
             jsonResponse.put("success",0);
         }
         out.print(jsonResponse);

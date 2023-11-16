@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -49,75 +50,65 @@
         <div class="container">
             <div class="warp__order">
                 <h3 class="title --h4">Đơn hàng đã mua</h3>
+
                 <div class="warp__order--list">
-                    <div class="order--item">
-                        <div class="btns ">
-                            <div class="order__info">
-                                <span class="order__id">1</span>
-                                <p class="order__number">Tổng số sản phẩm: <span>1</span></p>
-                                <p class="order__date">Ngày đặt hàng: <span>11/01/2002</span></p>
-                                <p class="order__totalprice">Tổng tiền: <span>100.000VND</span></p>
+
+                    <c:forEach var="order" items="${requestScope.customerOrderList}" varStatus="status">
+
+                        <div class="order--item">
+                            <div class="btns ">
+
+                                <div class="order__info">
+                                    <span class="order__id">1</span>
+                                    <p class="order__number">Tổng số sản phẩm: <span>${order.totalItemAmount()}</span>
+                                    </p>
+                                    <p class="order__date">Ngày đặt hàng: <span>${order.date_purchase}</span></p>
+                                    <p class="order__totalprice">Tổng tiền: <span>${order.total}</span></p>
+                                </div>
+
+                                <div class="iconarrow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                        <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/>
+                                    </svg>
+                                </div>
                             </div>
-                            <div class="iconarrow">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                                    <path
-                                            d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
-                                </svg>
+                            <div class="order--products">
+                                <c:forEach items="${order.orderDetailList}" var="orderDetail" varStatus="status">
+
+                                    <c:set var="isSale" value="false"/>
+                                    <c:if test="${orderDetail.item.sale.on_sale eq 1}">
+                                        <c:set var="isSale" value="true"/>
+                                    </c:if>
+
+
+                                    <div class="products--item">
+                                        <span class="number__product">${status.index+1}</span>
+                                        <img src="${orderDetail.item.imageList.get(5).image_url}" alt="ao-yame">
+                                        <p class="name__product">Tên: <span>${orderDetail.item.name}</span></p>
+                                        <p class="color__product">Màu: <span>${orderDetail.item_color}</span></p>
+
+                                        <c:if test="${isSale eq true}">
+                                            <fmt:formatNumber value="${orderDetail.item.price * 0.8}" pattern="#,###"
+                                                              var="salePrice"/>
+                                            <p class="price__product">Giá: <span>${salePrice}</span></p>
+                                        </c:if>
+                                        <c:if test="${isSale eq false}">
+                                            <fmt:formatNumber value="${orderDetail.item.price}" pattern="#,###"
+                                                              var="formattedNumber"/>
+                                            <p class="price__product">Giá: <span>${formattedNumber}</span></p>
+                                        </c:if>
+
+                                        <p>Số lượng: <span>${orderDetail.amount}</span></p>
+                                    </div>
+
+
+                                </c:forEach>
                             </div>
+
                         </div>
-                        <div class="order--products">
-                            <div class="products--item">
-                                <span class="number__product">1</span>
-                                <img src="./img/ao/ao-1-a.jpg" alt="ao-yame">
-                                <p class="name__product">Tên: <span>ao thun mau do ba le asd</span></p>
-                                <p class="color__product">Màu: <span>Trắng đỏ</span></p>
-                                <p class="price__product">Giá: <span>25.000VND</span></p>
-                                <p>Số lượng: <span>4</span></p>
-                            </div>
-                            <div class="products--item">
-                                <span class="number__product">2</span>
-                                <img src="./img/ao/ao-1-a.jpg" alt="ao-yame">
-                                <p class="name__product">Tên: <span>ao thun mau do ba le asd</span></p>
-                                <p class="color__product">Màu: <span>Trắng đỏ</span></p>
-                                <p class="price__product">Giá: <span>300.000VND</span></p>
-                                <p>Số lượng: <span>4</span></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="order--item">
-                        <div class="btns">
-                            <div class="order__info">
-                                <span class="order__id">1</span>
-                                <p class="order__number">Tổng số sản phẩm: <span>1</span></p>
-                                <p class="order__date">Ngày đặt hàng: <span>11/01/2002</span></p>
-                                <p class="order__totalprice">Tổng tiền: <span>100.000VND</span></p>
-                            </div>
-                            <div class="iconarrow">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                                    <path
-                                            d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="order--products">
-                            <div class="products--item">
-                                <span class="number__product">1</span>
-                                <img src="./img/ao/ao-1-a.jpg" alt="ao-yame">
-                                <p class="name__product">Tên: <span>ao thun mau do ba le asd</span></p>
-                                <p class="color__product">Màu: <span>Trắng đỏ</span></p>
-                                <p class="price__product">Giá: <span>25.000VND</span></p>
-                                <p>Số lượng: <span>4</span></p>
-                            </div>
-                            <div class="products--item">
-                                <span class="number__product">2</span>
-                                <img src="./img/ao/ao-1-a.jpg" alt="ao-yame">
-                                <p class="name__product">Tên: <span>ao thun mau do ba le asd</span></p>
-                                <p class="color__product">Màu: <span>Trắng đỏ</span></p>
-                                <p class="price__product">Giá: <span>300.000VND</span></p>
-                                <p>Số lượng: <span>4</span></p>
-                            </div>
-                        </div>
-                    </div>
+
+                    </c:forEach>
+
                 </div>
             </div>
             <div class="warp__profile">
@@ -127,35 +118,35 @@
                         <div class="form-gr">
                             <span class="label" for="name-regis">Họ và tên</span>
                             <input class="input-form" type="text" name="name" id="name-regis"
-                                   placeholder="Nhập Họ và tên" value="Đỗ Ngọc Lương Tuấn">
+                                   placeholder="Nhập Họ và tên" value="${requestScope.customerName}">
                             <p class="message-error error-name"></p>
                         </div>
                         <div class="form-gr">
                             <span class="label" for="phone-regis">Số điện thoại</span>
                             <input class="input-form" type="text" name="phone" id="phone-regis"
-                                   placeholder="Nhập số điện thoại" value="0908773513">
+                                   placeholder="Nhập số điện thoại" value="${requestScope.customerPhoneNumber}">
                             <p class="message-error error-name"></p>
                         </div>
                     </div>
                     <div class="form-gr">
                         <span class="label" for="email-regis">Email</span>
                         <input class="input-form" type="text" name="email" id="email-regis"
-                               placeholder="Nhập Email" value="dotuan2k2@gmail.com">
+                               placeholder="Nhập Email" value="${requestScope.customerEmail}">
                         <p class="message-error error-name"></p>
                     </div>
                     <div class="form-gr">
                         <span class="label" for="address-regis">Địa chỉ</span>
                         <input class="input-form" type="text" name="address" id="address-regis"
-                               placeholder="Nhập địa chỉ" value="266/108/27 P8 Tôn Đản Q4">
+                               placeholder="Nhập địa chỉ" value="${requestScope.customerAddress}">
                         <p class="message-error error-name"></p>
                     </div>
                     <div class="form-gr">
                         <span class="label" for="password-regis">Mật khẩu</span>
                         <input class="input-form" type="password" name="password" id="password-regis"
-                               placeholder="Nhập địa chỉ" value="">
+                               placeholder="Nhập mật khẩu" value="${requestScope.accountPassword}">
                         <p class="message-error error-name"></p>
                     </div>
-                    <button type="submit" class="btn btn-yellow">Cập Nhật </button>
+                    <button type="submit" class="btn btn-yellow">Cập Nhật</button>
                 </form>
             </div>
         </div>

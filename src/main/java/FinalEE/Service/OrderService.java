@@ -10,5 +10,7 @@ public interface OrderService {
     boolean deleteByID(int id);
     ItemOrder getOrder(int id);
     List<ItemOrder> getAllOrder();
+
+    List<ItemOrder> findByCustomerID(Integer customerID);
     
 }
