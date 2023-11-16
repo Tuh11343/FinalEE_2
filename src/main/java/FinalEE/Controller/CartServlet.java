@@ -36,7 +36,6 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        HttpSession session = req.getSession();
         String action = req.getParameter("action");
 
         switch (action) {
@@ -115,14 +114,9 @@ public class CartServlet extends HttpServlet {
             case "itemDeleteClick" -> {
                 System.out.println("Ban da nhan vao nut xoa vat pham");
                 //Remove Item From Cart
-
-
-                //Calculate order Total again
-                List<Cart> cartList = cartServiceImpl.getAllCart();
-                List<Item> itemList = itemServiceImpl.getAllItem();
-                List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
-                List<Sale> saleList = saleServiceImpl.getAllSale();
-                calculateOrderTotal(cartList, req);
+                Integer deleteCartID=null;
+                deleteCartID=Integer.parseInt(req.getParameter("deleteCartID"));
+                cartServiceImpl.deleteByID(deleteCartID);
 
                 req.getRequestDispatcher("Views/User/Cart.jsp").forward(req, resp);
             }
@@ -133,7 +127,6 @@ public class CartServlet extends HttpServlet {
                 System.out.println("WTF:"+action);
             }
         }
-
 
     }
 

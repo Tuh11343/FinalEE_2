@@ -44,23 +44,6 @@ public class AdminManagerServlet extends HttpServlet {
     private StockItemServiceImpl stockItemServiceImpl;
     private CartServiceImpl cartServiceImpl;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AdminManager</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AdminManager at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -96,8 +79,6 @@ public class AdminManagerServlet extends HttpServlet {
         List<Permission> permissionList = permissionServiceImpl.getAllPermission();
         List<Sale> saleList = saleServiceImpl.getAllSale();
         List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
-
-
 
         /*Set Data List*/
         req.setAttribute("accountList", accountList);

@@ -122,6 +122,7 @@
 
                                     <button class="btn btn-del">Xóa</button>
                                     <input type="hidden" value="itemDeleteClick" name="action">
+                                    <input type="hidden" name="deleteCartID" value="${cart.id}">
 
                                 </form>
 
