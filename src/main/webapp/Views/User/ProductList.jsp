@@ -71,7 +71,20 @@
     </section>
     <section class="scproduct pb">
         <div class="container">
-            <div class="heading --h4">Các sản phẩm bạn tìm</div>
+            <div class="scproduct__top ">
+                <h4 class="heading --h4">Sản phẩm các bạn tìm</h4>
+                <div class="scproduct__top--sort">
+                    <form action="">
+                        <label for="sort">Sắp xếp:</label>
+                        <select id="sort" name="sort" class="sortinp">
+                            <option value="">chữ cái A-Z</option>
+                            <option value="">chữ cái Z-A</option>
+                            <option value="">theo giá tăng</option>
+                            <option value="">theo giá giảm</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
             ${requestScope.searchInput}
             <div class="scproduct__list listproduct">
                 <!-- 1 san pham -->
