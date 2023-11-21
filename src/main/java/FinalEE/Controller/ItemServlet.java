@@ -38,6 +38,7 @@ public class ItemServlet extends HttpServlet {
     private SaleServiceImpl saleServiceImpl;
     private StockItemServiceImpl stockItemServiceImpl;
     private CartServiceImpl cartServiceImpl;
+    private StatisticServiceImpl statisticServiceImpl;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -58,6 +59,7 @@ public class ItemServlet extends HttpServlet {
         saleServiceImpl = webApplicationContext.getBean(SaleServiceImpl.class);
         stockItemServiceImpl = webApplicationContext.getBean(StockItemServiceImpl.class);
         cartServiceImpl=webApplicationContext.getBean(CartServiceImpl.class);
+        statisticServiceImpl=webApplicationContext.getBean(StatisticServiceImpl.class);
 
         ServletContext servletContext=getServletContext();
         servletContext.setAttribute("accountServiceImpl",accountServiceImpl);
@@ -74,6 +76,7 @@ public class ItemServlet extends HttpServlet {
         servletContext.setAttribute("saleServiceImpl",saleServiceImpl);
         servletContext.setAttribute("stockItemServiceImpl",stockItemServiceImpl);
         servletContext.setAttribute("cartServiceImpl",cartServiceImpl);
+        servletContext.setAttribute("statisticServiceImpl",statisticServiceImpl);
 
         List<Account> accountList = accountServiceImpl.getAllAccount();
         List<Customer> customerList = customerServiceImpl.getAllCustomer();

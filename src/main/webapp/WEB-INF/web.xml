@@ -33,6 +33,11 @@
         <servlet-name>ProfileUserServlet</servlet-name>
         <servlet-class>FinalEE.Controller.ProfileServlet</servlet-class>
     </servlet>
+    
+    <servlet>
+        <servlet-name>StatisticServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.StatisticServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>AdminManagerServlet</servlet-name>
@@ -69,4 +74,9 @@
         <url-pattern>/ProfileUserServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>StatisticServlet</servlet-name>
+        <url-pattern>/StatisticServlet</url-pattern>
+    </servlet-mapping>
+    
 </web-app>

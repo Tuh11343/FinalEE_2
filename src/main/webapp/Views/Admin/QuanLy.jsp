@@ -273,6 +273,35 @@
     <!--Center-->
     <div class="center">
 
+        <div class="product-data table-data" data-type="statistics">
+            <h2>Thống kê sản phẩm</h2>
+            <div class="form-grp">
+                <label for="type-select">Loại sản phẩm:</label>
+                <select id="type-select" name="typestatistics" onchange="test22()">
+                    <option value="">Chọn hình thức</option>
+                    <option value="aokhoac">Áo khoác</option>
+                    <option value="aothun">Áo thun</option>
+                    <option value="aobalo">Áo ba lỗ</option>
+                    <option value="quandai">Quần dài</option>
+                    <option value="quanngan">Quần ngắn</option>
+                    <option value="khac">Khác</option>
+                </select>
+            </div>
+
+            <table id="statsTable" class="product-table bang">
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Số lượng đã bán</th>
+                </tr>
+            </table>
+            <canvas id="productChart"></canvas>
+
+
+        </div>
+
+
+
+
         <!--Account-->
         <div class="account-data table-data" data-type="accountList">
             <h2 style="font-size:30px">Quản lý tài khoản</h2>
@@ -2241,7 +2270,6 @@
         </div>
 
     </div>
-
 </main>
 
 <footer class="footer">
@@ -2254,6 +2282,70 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 <script src="${pageContext.request.contextPath}/Views/Admin/vinh_main.js"></script>
+
+<script>
+    function test(){
+        $.ajax({
+            type: "POST",
+            url: contextPath + "/StatisticServlet",
+            data: {
+                action: "test",
+            },
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            success: function (data) {
+                console.log(1);
+                if (data.success === 1) {
+                    for (var i = 0; i < data.length; i++) {
+                        console.log(data[0][0]);
+                    }
+                    const productData = [
+                        {product: 'Áo thun xanh dương', sales: 100},
+                        {product: 'Áo ba lỗ trắng', sales: 200},
+                        {product: 'Áo khoác dù chống nước', sales: 150},
+                    ];
+                    // Populate table
+                    const table = document.getElementById('statsTable');
+                    productData.forEach(data => {
+                        const row = table.insertRow(-1);
+                        const cell1 = row.insertCell(0);
+                        const cell2 = row.insertCell(1);
+                        cell1.textContent = data.product;
+                        cell2.textContent = data.sales;
+                    });
+                    // Create chart
+                    const ctx = document.getElementById('productChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: productData.map(data => data.product),
+                            datasets: [{
+                                label: 'Sales',
+                                data: productData.map(data => data.sales),
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                } else if (data.success === 0) {
+
+                }
+            },
+        });
+
+    }
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </body>
 </html>
