@@ -122,6 +122,12 @@ public class ItemServlet extends HttpServlet {
                 int itemClickID=Integer.parseInt(request.getParameter("itemClickID"));
                 response.sendRedirect("/FinalEE/ItemDetailServlet?itemClickID="+itemClickID);
             }
+            case "sortChange"->{
+                String value=request.getParameter("sort");
+                switch (value){
+
+                }
+            }
 
             default -> {
                 System.out.println(action);

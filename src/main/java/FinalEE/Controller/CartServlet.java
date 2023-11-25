@@ -187,8 +187,13 @@ public class CartServlet extends HttpServlet {
             List<DiscountCard> customerDiscountCardList = discountCardServiceImpl.findByCustomerID(signInCustomer.getId());
             req.setAttribute("customerDiscountCardList", customerDiscountCardList);
         }
-        List<Cart> cartList = cartServiceImpl.findByCustomerID(signInCustomer.getId());
-
+        List<Cart> cartList;
+        if(signInCustomer==null)
+        {
+            cartList = cartServiceImpl.findByCustomerID(null);
+        }else{
+            cartList=cartServiceImpl.findByCustomerID(signInCustomer.getId());
+        }
         /*Set Order Total*/
         calculateOrderTotal(cartList, req);
 

@@ -273,13 +273,14 @@
     <!--Center-->
     <div class="center">
 
+        <%--Thống kê--%>
         <div class="product-data table-data" data-type="statistics">
             <h2>Thống kê sản phẩm</h2>
             <div class="form-grp">
                 <label for="type-select">Loại sản phẩm:</label>
-                <select id="type-select" name="typestatistics" onchange="test22()">
+                <select id="type-select" name="typestatistics" onchange="selectTedtable()">
                     <option value="">Chọn hình thức</option>
-                    <option value="aokhoac">Áo khoác</option>
+                    <option value="productsSoldByMonth">Sản phẩm bán chạy nhất tháng</option>
                     <option value="aothun">Áo thun</option>
                     <option value="aobalo">Áo ba lỗ</option>
                     <option value="quandai">Quần dài</option>
@@ -288,13 +289,52 @@
                 </select>
             </div>
 
-            <table id="statsTable" class="product-table bang">
+            <div id="table-container">
+                <div id="productsSoldByMonthTable" style="display: none" class="typetable" data-type="productsSoldByMonth">
+                    <!-- Table for productsSoldByMonth data -->
+                    <table border="1">
+                        <tr>
+                            <th>Tháng</th>
+                            <th>Số lượng sản phẩm</th>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                            <th>1948y</th>
+                        </tr>
+                        <!-- Add rows dynamically based on data -->
+                    </table>
+                </div>
+
+                <div id="aothunTable" class="typetable" style="display: none" data-type="aothun">
+                    <!-- Table for aothun data -->
+                    <table border="1">
+                        <tr>
+                            <th>Chiều dài</th>
+                            <th>Chiều rộng</th>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                            <th>asdfasdf</th>
+                        </tr>
+                        <!-- Add rows dynamically based on data -->
+                    </table>
+                </div>
+
+
+            </div>
+
+            <div id="chart-container" class="hidden">
+                <!-- Chart will be displayed here -->
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <%--<table id="statsTable" class="product-table bang">
                 <tr>
                     <th>Sản phẩm</th>
                     <th>Số lượng đã bán</th>
                 </tr>
             </table>
-            <canvas id="productChart"></canvas>
+            <canvas id="productChart"></canvas>--%>
 
 
         </div>
@@ -2346,6 +2386,7 @@
 
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="${pageContext.request.contextPath}/Views/User/dest/tuh.js"></script>
 
 </body>
 </html>

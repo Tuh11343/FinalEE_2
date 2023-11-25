@@ -758,7 +758,7 @@ function handleUpdateStockItem() {
 handleUpdateStockItem();
 
 
-const productData = [
+/*const productData = [
    {product: 'Áo thun xanh dương', sales: 100},
    {product: 'Áo ba lỗ trắng', sales: 200},
    {product: 'Áo khoác dù chống nước', sales: 150},
@@ -793,40 +793,12 @@ new Chart(ctx, {
            }
        }
    }
-});
-
-function test22(){
-    var typeSelect=document.getElementById("type-select");
-    typeSelect.addEventListener("change", function () {
-        var selectedType = typeSelect.value;
-        console.log(1);
-
-        // Xóa dữ liệu cũ trong bảng và biểu đồ
-        var statsTable=document.getElementById("");
-
-        clearTable(statsTable);
-        clearChart(productChart);
-
-        // Hiển thị dữ liệu mới
-        if (selectedType !== "") {
-            displayStatistics(selectedType);
-        }
-    });
-}
+});*/
 
 
 
-function clearTable(table) {
-    var rowCount = table.rows.length;
-    for (var i = rowCount - 1; i > 0; i--) {
-        table.deleteRow(i);
-    }
-}
 
-// Hàm xóa dữ liệu trong biểu đồ
-function clearChart(chart) {
-    chart.getContext("2d").clearRect(0, 0, chart.width, chart.height);
-}
+
 
 
 

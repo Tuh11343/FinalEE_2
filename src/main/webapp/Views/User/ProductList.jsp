@@ -74,14 +74,15 @@
             <div class="scproduct__top ">
                 <h4 class="heading --h4">Sản phẩm các bạn tìm</h4>
                 <div class="scproduct__top--sort">
-                    <form action="">
+                    <form action="${pageContext.request.contextPath}/ItemSearchServlet" method="get" class="formSort">
                         <label for="sort">Sắp xếp:</label>
-                        <select id="sort" name="sort" class="sortinp">
-                            <option value="">chữ cái A-Z</option>
-                            <option value="">chữ cái Z-A</option>
-                            <option value="">theo giá tăng</option>
-                            <option value="">theo giá giảm</option>
+                        <select id="sort" name="sort" class="sortinp" onchange="submitSort()">
+                            <option value="az">chữ cái A-Z</option>
+                            <option value="za">chữ cái Z-A</option>
+                            <option value="priceAsc">theo giá tăng</option>
+                            <option value="priceDes">theo giá giảm</option>
                         </select>
+                        <input type="hidden" name="sortChange" value="action">
                     </form>
                 </div>
             </div>
@@ -159,7 +160,7 @@
             <div  class="scproduct__panigation">
                 <c:forEach items="${requestScope.pageList}" var="page" varStatus="status">
                     <a class="scproduct__panigation--item" onclick="submitForm('form_pageClick${page}')">${page}</a>
-                    <form id="form_pageClick${page}" action="${pageContext.request.contextPath}/ItemSearchServlet?currentPage=${page}" method="post">
+                    <form id="form_pageClick${page}" action="${pageContext.request.contextPath}/ItemSearchServlet?currentPage=${page}" method="get">
                         <input type="hidden" name="currentPage" value="${page}">
                         <input type="hidden" name="itemCollectionID" value="${requestScope.itemCollectionID}"/>
                         <input type="hidden" name="itemTypeID" value="${requestScope.itemTypeID}"/>
@@ -229,6 +230,7 @@
 <!--                <script type="text/javascript" src="./dest/main.js"></script>-->
 <script src="${pageContext.request.contextPath}/Views/User/dest/jsmain.min.js"></script>
 <script src="${pageContext.request.contextPath}/Views/User/dest/main.js"></script>
+
 
 
 </body>

@@ -6,10 +6,7 @@ import FinalEE.ServiceImpl.*;
 import jakarta.json.JsonObject;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -99,6 +96,33 @@ public class HeaderServlet extends HttpServlet {
                         String searchInput=req.getParameter("searchInput");
                         resp.sendRedirect("/FinalEE/ItemSearchServlet?searchInput=" + searchInput);
                     }
+                    case "accountClick"->{
+                        resp.sendRedirect("/FinalEE/ProfileUserServlet");
+                    }
+                    case "orderClick"->{
+                        resp.sendRedirect("/FinalEE/CartServlet");
+                    }
+                    case "signOutClick"->{
+                        Cookie[] cookies = req.getCookies();
+                        Cookie signInAccountIDCookie = null;
+                        for (Cookie cookie : cookies) {
+                            if (cookie.getName().equals("signInAccountID")) {
+                                signInAccountIDCookie = cookie;
+                                break;
+                            }
+                        }
+
+                        // Đặt thời hạn tồn tại của cookie thành 0
+                        if (signInAccountIDCookie != null) {
+                            signInAccountIDCookie.setMaxAge(0);
+                            signInAccountIDCookie.setPath("/");
+                            resp.addCookie(signInAccountIDCookie);
+                        }
+
+                        // Chuyển hướng người dùng đến trang chủ
+                        resp.sendRedirect("/FinalEE/ItemServlet");
+                    }
+
                     default -> {
 
                     }

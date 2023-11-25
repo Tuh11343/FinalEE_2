@@ -137,3 +137,10 @@ function HideShowDes() {
     }
 }
 
+function submitSort() {
+    const formSort = document.querySelector(".formSort"),
+        selecTed = document.querySelector(".sortinp")
+    console.log(1);
+    formSort.submit();
+
+}
