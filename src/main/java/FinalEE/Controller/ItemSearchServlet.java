@@ -8,9 +8,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.java.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ItemSearchServlet extends HttpServlet {
@@ -79,95 +81,11 @@ public class ItemSearchServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
 
-        /*Init Variable*/
-        int totalPage = 0;
-        List<String> pageList = new ArrayList<String>();
         int currentPage = 1;
         if(req.getParameter("currentPage")!=null){
             currentPage=Integer.parseInt(req.getParameter("currentPage"));
         }
-        List<Item> itemSearchList = null;
-
-        if (req.getParameter("itemCollectionID") != null) {
-            int itemCollectionID = Integer.parseInt(req.getParameter("itemCollectionID"));
-            req.setAttribute("itemCollectionID",itemCollectionID);
-
-            itemSearchList = itemServiceImpl.getItemsByItemCollectionIDAndPageNumber(currentPage,itemCollectionID);
-
-            totalPage = itemServiceImpl.getTotalPagesByItemCollectionID(itemCollectionID);
-            for (int i = 0; i < totalPage; i++) {
-                pageList.add(String.valueOf(i + 1));
-            }
-
-        } else if (req.getParameter("itemTypeID") != null) {
-            int itemTypeID = Integer.parseInt(req.getParameter("itemTypeID"));
-            req.setAttribute("itemTypeID",itemTypeID);
-
-            itemSearchList = itemServiceImpl.getItemsByItemTypeIDAndPageNumber(currentPage,itemTypeID);
-
-            totalPage = itemServiceImpl.getTotalPagesByItemTypeID(itemTypeID);
-            for (int i = 0; i < totalPage; i++) {
-                pageList.add(String.valueOf(i + 1));
-            }
-
-        }else if(req.getParameter("itemMaterialID")!=null){
-            int itemMaterialID = Integer.parseInt(req.getParameter("itemMaterialID"));
-            req.setAttribute("itemMaterialID",itemMaterialID);
-
-            itemSearchList = itemServiceImpl.getItemsByItemMaterialIDAndPageNumber(currentPage,itemMaterialID);
-
-            totalPage = itemServiceImpl.getTotalPagesByItemMaterialID(itemMaterialID);
-            for (int i = 0; i < totalPage; i++) {
-                pageList.add(String.valueOf(i + 1));
-            }
-
-        }else if(req.getParameter("itemName")!=null){
-            String itemName =req.getParameter("itemName");
-            req.setAttribute("itemName",itemName);
-
-            itemSearchList = itemServiceImpl.getItemsByNameAndPageNumber(currentPage,itemName);
-
-            totalPage = itemServiceImpl.getTotalPagesByName(itemName);
-            for (int i = 0; i < totalPage; i++) {
-                pageList.add(String.valueOf(i + 1));
-            }
-
-        }else if(req.getParameter("searchInput")!=null){
-            String searchInput =req.getParameter("searchInput");
-            req.setAttribute("searchInput",searchInput);
-
-            itemSearchList = itemServiceImpl.getItemsByNameAndPageNumber(currentPage,searchInput);
-
-            totalPage = itemServiceImpl.getTotalPagesByName(searchInput);
-            for (int i = 0; i < totalPage; i++) {
-                pageList.add(String.valueOf(i + 1));
-            }
-
-        }else{
-            itemSearchList = itemServiceImpl.getItemsByPageNumber(currentPage);
-
-            totalPage = itemServiceImpl.getTotalPages();
-            for (int i = 0; i < totalPage; i++) {
-                pageList.add(String.valueOf(i + 1));
-            }
-
-        }
-        
-        req.setAttribute("itemSearchList", itemSearchList);
-        req.setAttribute("pageList", pageList);
-
-
-        req.getRequestDispatcher("/Views/User/ProductList.jsp").forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        int currentPage = 1;
-        if(req.getParameter("currentPage")!=null){
-            currentPage=Integer.parseInt(req.getParameter("currentPage"));
-        }
-        if(req.getParameter("itemCollectionID")!=null){
+        if(req.getParameter("itemCollectionID")!=null&&!req.getParameter("itemCollectionID").isBlank()){
             int itemCollectionID=Integer.parseInt(req.getParameter("itemCollectionID"));
             req.setAttribute("itemCollectionID",itemCollectionID);
         }else if(req.getParameter("itemTypeID")!=null){
@@ -185,6 +103,191 @@ public class ItemSearchServlet extends HttpServlet {
         }
 
         req.setAttribute("currentPage",currentPage);
+
+
+        /*Init Variable*/
+        int totalPage = 0;
+        List<String> pageList = new ArrayList<String>();
+        List<Item> itemSearchList = null;
+        String value=req.getParameter("sort");
+        int sortBy=-1;
+        if(value!=null){
+            switch (value){
+                case "az"->{
+                    sortBy=0;
+                }
+                case "za"->{
+                    sortBy=1;
+                }
+                case "priceAsc"->{
+                    sortBy=2;
+                }
+                case "priceDesc"->{
+                    sortBy=3;
+                }
+            }
+        }
+
+        if (req.getParameter("itemCollectionID") != null) {
+            int itemCollectionID = Integer.parseInt(req.getParameter("itemCollectionID"));
+            req.setAttribute("itemCollectionID",itemCollectionID);
+
+            itemSearchList = itemServiceImpl.getItemsByItemCollectionIDAndPageNumber(currentPage,itemCollectionID);
+            if(sortBy!=-1&&itemSearchList!=null){
+                itemSearchList = sortListBy(sortBy, itemSearchList);
+            }
+            else if(itemSearchList!=null)
+            {
+                itemSearchList = sortListAZ(itemSearchList);
+            }
+
+            totalPage = itemServiceImpl.getTotalPagesByItemCollectionID(itemCollectionID);
+            for (int i = 0; i < totalPage; i++) {
+                pageList.add(String.valueOf(i + 1));
+            }
+
+        } else if (req.getParameter("itemTypeID") != null) {
+            int itemTypeID = Integer.parseInt(req.getParameter("itemTypeID"));
+            req.setAttribute("itemTypeID",itemTypeID);
+
+            itemSearchList = itemServiceImpl.getItemsByItemTypeIDAndPageNumber(currentPage,itemTypeID);
+            if(sortBy!=-1&&itemSearchList!=null){
+                itemSearchList = sortListBy(sortBy, itemSearchList);
+            }
+            else if(itemSearchList!=null)
+            {
+                itemSearchList = sortListAZ(itemSearchList);
+            }
+
+            totalPage = itemServiceImpl.getTotalPagesByItemTypeID(itemTypeID);
+            for (int i = 0; i < totalPage; i++) {
+                pageList.add(String.valueOf(i + 1));
+            }
+
+        }else if(req.getParameter("itemMaterialID")!=null){
+            int itemMaterialID = Integer.parseInt(req.getParameter("itemMaterialID"));
+            req.setAttribute("itemMaterialID",itemMaterialID);
+
+            itemSearchList = itemServiceImpl.getItemsByItemMaterialIDAndPageNumber(currentPage,itemMaterialID);
+            if(sortBy!=-1&&itemSearchList!=null){
+                itemSearchList = sortListBy(sortBy, itemSearchList);
+            }
+            else if(itemSearchList!=null)
+            {
+                itemSearchList = sortListAZ(itemSearchList);
+            }
+
+            totalPage = itemServiceImpl.getTotalPagesByItemMaterialID(itemMaterialID);
+            for (int i = 0; i < totalPage; i++) {
+                pageList.add(String.valueOf(i + 1));
+            }
+
+        }else if(req.getParameter("itemName")!=null){
+            String itemName =req.getParameter("itemName");
+            req.setAttribute("itemName",itemName);
+
+            itemSearchList = itemServiceImpl.getItemsByNameAndPageNumber(currentPage,itemName);
+            if(sortBy!=-1&&itemSearchList!=null){
+                itemSearchList = sortListBy(sortBy, itemSearchList);
+            }
+            else if(itemSearchList!=null)
+            {
+                itemSearchList = sortListAZ(itemSearchList);
+            }
+
+            totalPage = itemServiceImpl.getTotalPagesByName(itemName);
+            for (int i = 0; i < totalPage; i++) {
+                pageList.add(String.valueOf(i + 1));
+            }
+
+        }else if(req.getParameter("searchInput")!=null){
+            String searchInput =req.getParameter("searchInput");
+            req.setAttribute("searchInput",searchInput);
+
+            itemSearchList = itemServiceImpl.getItemsByNameAndPageNumber(currentPage,searchInput);
+            if(sortBy!=-1&&itemSearchList!=null){
+                itemSearchList = sortListBy(sortBy, itemSearchList);
+            }
+            else if(itemSearchList!=null)
+            {
+                itemSearchList = sortListAZ(itemSearchList);
+            }
+
+            totalPage = itemServiceImpl.getTotalPagesByName(searchInput);
+            for (int i = 0; i < totalPage; i++) {
+                pageList.add(String.valueOf(i + 1));
+            }
+
+        }else{
+            itemSearchList = itemServiceImpl.getItemsByPageNumber(currentPage);
+            if(sortBy!=-1&&itemSearchList!=null){
+                itemSearchList = sortListBy(sortBy, itemSearchList);
+            }
+            else if(itemSearchList!=null)
+            {
+                itemSearchList = sortListAZ(itemSearchList);
+            }
+
+            totalPage = itemServiceImpl.getTotalPages();
+            for (int i = 0; i < totalPage; i++) {
+                pageList.add(String.valueOf(i + 1));
+            }
+
+        }
+        
+        req.setAttribute("itemSearchList", itemSearchList);
+        req.setAttribute("pageList", pageList);
+
+
+        req.getRequestDispatcher("/Views/User/ProductList.jsp").forward(req, resp);
+    }
+
+    private List<Item> sortListBy(int sortBy, List<Item> itemSearchList) {
+        System.out.println("Gia tri sortBy:"+sortBy);
+        if(sortBy ==0){
+            itemSearchList =sortListAZ(itemSearchList);
+        }else if(sortBy ==1){
+            itemSearchList =sortListZA(itemSearchList);
+        }else if(sortBy ==2){
+            itemSearchList =sortListByPriceAscending(itemSearchList);
+        }else if(sortBy ==3){
+            itemSearchList =sortListByPriceDescending(itemSearchList);
+        }
+        return itemSearchList;
+    }
+
+    private List<Item> sortListAZ(List<Item> itemSearchList) {
+        List<Item> modifiableItemList = new ArrayList<>(itemSearchList);
+        modifiableItemList.sort(Comparator.comparing(Item::getName));
+        itemSearchList = modifiableItemList;
+        return itemSearchList;
+    }
+
+    private List<Item> sortListZA(List<Item> itemSearchList) {
+        List<Item> modifiableItemList = new ArrayList<>(itemSearchList);
+        modifiableItemList.sort(Comparator.comparing(Item::getName).reversed());
+        itemSearchList = modifiableItemList;
+        return itemSearchList;
+    }
+
+    private List<Item> sortListByPriceAscending(List<Item> itemSearchList) {
+        List<Item> modifiableItemList = new ArrayList<>(itemSearchList);
+        modifiableItemList.sort(Comparator.comparingDouble(Item::getPrice));
+        itemSearchList = modifiableItemList;
+        return itemSearchList;
+    }
+
+    private List<Item> sortListByPriceDescending(List<Item> itemSearchList) {
+        List<Item> modifiableItemList = new ArrayList<>(itemSearchList);
+        modifiableItemList.sort(Comparator.comparingDouble(Item::getPrice).reversed());
+        itemSearchList = modifiableItemList;
+        return itemSearchList;
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
         doGet(req,resp);
 
     }

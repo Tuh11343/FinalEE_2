@@ -273,6 +273,75 @@
     <!--Center-->
     <div class="center">
 
+        <%--Thống kê--%>
+        <div class="product-data table-data" data-type="statistics">
+            <h2>Thống kê sản phẩm</h2>
+            <div class="form-grp">
+                <label for="type-select">Loại sản phẩm:</label>
+                <select id="type-select" name="typestatistics" onchange="selectTedtable()">
+                    <option value="">Chọn hình thức</option>
+                    <option value="productsSoldByMonth">Sản phẩm bán chạy nhất tháng</option>
+                    <option value="aothun">Áo thun</option>
+                    <option value="aobalo">Áo ba lỗ</option>
+                    <option value="quandai">Quần dài</option>
+                    <option value="quanngan">Quần ngắn</option>
+                    <option value="khac">Khác</option>
+                </select>
+            </div>
+
+            <div id="table-container">
+                <div id="productsSoldByMonthTable" style="display: none" class="typetable" data-type="productsSoldByMonth">
+                    <!-- Table for productsSoldByMonth data -->
+                    <table border="1">
+                        <tr>
+                            <th>Tháng</th>
+                            <th>Số lượng sản phẩm</th>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                            <th>1948y</th>
+                        </tr>
+                        <!-- Add rows dynamically based on data -->
+                    </table>
+                </div>
+
+                <div id="aothunTable" class="typetable" style="display: none" data-type="aothun">
+                    <!-- Table for aothun data -->
+                    <table border="1">
+                        <tr>
+                            <th>Chiều dài</th>
+                            <th>Chiều rộng</th>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                            <th>asdfasdf</th>
+                        </tr>
+                        <!-- Add rows dynamically based on data -->
+                    </table>
+                </div>
+
+
+            </div>
+
+            <div id="chart-container" class="hidden">
+                <!-- Chart will be displayed here -->
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <%--<table id="statsTable" class="product-table bang">
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Số lượng đã bán</th>
+                </tr>
+            </table>
+            <canvas id="productChart"></canvas>--%>
+
+
+        </div>
+
+
+
+
         <!--Account-->
         <div class="account-data table-data" data-type="accountList">
             <h2 style="font-size:30px">Quản lý tài khoản</h2>
@@ -297,23 +366,23 @@
 
                 </thead>
                 <tbody>
-                <c:forEach items="${accountList}" var="account">
+                <c:forEach items="${requestScope.accountList}" var="account">
                     <tr>
                         <td>${account.id}</td>
-                        <td>${account.getPermission().id}</td>
-                        <td>${account.getCustomer().id}</td>
+                        <td>${account.permission.id}</td>
+                        <td>${account.customer.id}</td>
                         <td>${account.name}</td>
                         <td>${account.password}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="${pageContext.request.contextPath}${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="accountID" value="${account.id}"/>
                                     <input type="hidden" name="action" value="account_btnDelete"/>
                                 </form>
                                 <button class="btnHD btnUpdateUser" id="account_updateTrigger"
-                                        data-customerID="${account.getCustomer().id}"
-                                        data-permissionID="${account.getPermission().id}"
+                                        data-customerID="${account.customer.id}"
+                                        data-permissionID="${account.permission.id}"
                                         data-accountName="${account.name}" data-accountPassword="${account.password}"
                                 >Sửa
                                 </button>
@@ -352,7 +421,7 @@
                         <div class="form-grp">
                             <label for="update_label_permissionID">Permission:</label>
                             <select id="update_label_permissionID" name="update_accountPermissionID">
-                                <c:forEach items="${permissionList}" var="permission">
+                                <c:forEach items="${requestScope.permissionList}" var="permission">
                                     <option value="${permission.id}">${permission.name}</option>
                                 </c:forEach>
                             </select>
@@ -362,7 +431,7 @@
                         <div class="form-grp">
                             <label for="update_label_customerID">Customer:</label>
                             <select id="update_label_customerID" name="update_accountCustomerID">
-                                <c:forEach items="${customerList}" var="customer">
+                                <c:forEach items="${requestScope.customerList}" var="customer">
                                     <option value="${customer.id}">${customer.id} : ${customer.name}</option>
                                 </c:forEach>
                             </select>
@@ -406,7 +475,7 @@
                         <div class="form-grp">
                             <label for="label_permissionID">Permission:</label>
                             <select id="label_permissionID" name="add_accountPermissionID">
-                                <c:forEach items="${permissionList}" var="permission">
+                                <c:forEach items="${requestScope.permissionList}" var="permission">
                                     <option value="${permission.id}">${permission.name}</option>
                                 </c:forEach>
                             </select>
@@ -417,7 +486,7 @@
                         <div class="form-grp">
                             <label for="label_customerID">Customer:</label>
                             <select id="label_customerID" name="add_accountCustomerID">
-                                <c:forEach items="${customerList}" var="customer">
+                                <c:forEach items="${requestScope.customerList}" var="customer">
                                     <option value="${customer.id}">${customer.id} : ${customer.name}</option>
                                 </c:forEach>
                             </select>
@@ -465,13 +534,13 @@
 
                 </thead>
                 <tbody>
-                <c:forEach items="${itemList}" var="item">
+                <c:forEach items="${requestScope.itemList}" var="item">
                     <tr>
                         <td>${item.id}</td>
                         <td>${item.name}</td>
-                        <td>${item.getItemType().id}</td>
-                        <td>${item.getItemCollection().id}</td>
-                        <td>${item.getItemMaterial().id}</td>
+                        <td>${item.itemType.id}</td>
+                        <td>${item.itemCollection.id}</td>
+                        <td>${item.itemMaterial.id}</td>
 
                         <c:choose>
                             <c:when test="${item.is_new==1}">
@@ -502,9 +571,9 @@
                                 </form>
                                 <button class="btnHD btnUpdateItem"
                                         data-itemID="${item.id}" data-itemName="${item.name}"
-                                        data-itemTypeID="${item.getItemType().id}"
-                                        data-itemCollectionID="${item.getItemCollection().id}"
-                                        data-itemMaterialID="${item.getItemMaterial().id}" data-itemIsNew="${item.is_new}"
+                                        data-itemTypeID="${item.itemType.id}"
+                                        data-itemCollectionID="${item.itemCollection.id}"
+                                        data-itemMaterialID="${item.itemMaterial.id}" data-itemIsNew="${item.is_new}"
                                         data-itemIsHot="${item.is_hot}" data-itemPrice="${item.price}"
                                         data-itemYearProduce="${item.year_produce}"
                                 >Sửa
@@ -537,7 +606,7 @@
                         <div class="form-grp">
                             <label for="update_label_itemTypeID">Loại sản phẩm:</label>
                             <select id="update_label_itemTypeID" name="update_itemTypeID">
-                                <c:forEach items="${itemTypeList}" var="itemType">
+                                <c:forEach items="${requestScope.itemTypeList}" var="itemType">
                                     <option value="${itemType.id}">${itemType.name}</option>
                                 </c:forEach>
                             </select>
@@ -548,7 +617,7 @@
                             <label for="update_label_itemCollectionID">Bộ sưu tập:</label>
                             <select id="update_label_itemCollectionID" name="update_itemCollectionID">
                                 <option value="">Không</option>
-                                <c:forEach items="${itemCollectionList}" var="itemCollection">
+                                <c:forEach items="${requestScope.itemCollectionList}" var="itemCollection">
                                     <option value="${itemCollection.id}">${itemCollection.name}</option>
                                 </c:forEach>
                             </select>
@@ -558,7 +627,7 @@
                         <div class="form-grp">
                             <label for="update_label_itemMaterialID">Thành phần:</label>
                             <select id="update_label_itemMaterialID" name="update_itemMaterialID">
-                                <c:forEach items="${itemMaterialList}" var="itemMaterial">
+                                <c:forEach items="${requestScope.itemMaterialList}" var="itemMaterial">
                                     <option value="${itemMaterial.id}">${itemMaterial.id} : ${itemMaterial.name}
                                     </option>
                                 </c:forEach>
@@ -619,7 +688,7 @@
                         <div class="form-grp">
                             <label for="add_label_itemTypeID">Loại sản phẩm:</label>
                             <select id="add_label_itemTypeID" name="add_itemTypeID">
-                                <c:forEach items="${itemTypeList}" var="itemType">
+                                <c:forEach items="${requestScope.itemTypeList}" var="itemType">
                                     <option value="${itemType.id}">${itemType.name}</option>
                                 </c:forEach>
                             </select>
@@ -630,7 +699,7 @@
                             <label for="add_label_itemCollectionID">Bộ sưu tập:</label>
                             <select id="add_label_itemCollectionID" name="add_itemCollectionID">
                                 <option value="">Không</option>
-                                <c:forEach items="${itemCollectionList}" var="itemCollection">
+                                <c:forEach items="${requestScope.itemCollectionList}" var="itemCollection">
                                     <option value="${itemCollection.id}">${itemCollection.name}</option>
                                 </c:forEach>
                             </select>
@@ -640,7 +709,7 @@
                         <div class="form-grp">
                             <label for="add_label_itemMaterialID">Thành phần:</label>
                             <select id="add_label_itemMaterialID" name="add_itemMaterialID">
-                                <c:forEach items="${itemMaterialList}" var="itemMaterial">
+                                <c:forEach items="${requestScope.itemMaterialList}" var="itemMaterial">
                                     <option value="${itemMaterial.id}">${itemMaterial.id} : ${itemMaterial.name}
                                     </option>
                                 </c:forEach>
@@ -706,7 +775,7 @@
 
                 </thead>
                 <tbody>
-                <c:forEach items="${customerList}" var="customer">
+                <c:forEach items="${requestScope.customerList}" var="customer">
                     <tr>
                         <td>${customer.id}</td>
                         <td>${customer.name}</td>
@@ -855,10 +924,10 @@
 
 
                 </thead>
-                <tbody><c:forEach items="${discountCardList}" var="discountCard">
+                <tbody><c:forEach items="${requestScope.discountCardList}" var="discountCard">
                     <tr>
                         <td>${discountCard.id}</td>
-                        <td>${discountCard.getCustomer().id}</td>
+                        <td>${discountCard.customer.id}</td>
                         <td>${discountCard.name}</td>
                         <td>${discountCard.discount_percentage}</td>
                         <td>
@@ -870,7 +939,7 @@
                                 </form>
                                 <button class="btnHD btnUpdateDiscountCard"
                                         data-discountCardID="${discountCard.id}"
-                                        data-discountCardCustomerID="${discountCard.getCustomer().id}"
+                                        data-discountCardCustomerID="${discountCard.customer.id}"
                                         data-discountCardName="${discountCard.name}"
                                         data-discountCardPercentage="${discountCard.discount_percentage}"
                                 >Sửa
@@ -895,7 +964,7 @@
                         <div class="form-grp">
                             <label for="update_discountCardCustomerID">Khách Hàng:</label>
                             <select id="update_discountCardCustomerID" name="update_discountCardCustomerID">
-                                <c:forEach items="${customerList}" var="customer">
+                                <c:forEach items="${requestScope.customerList}" var="customer">
                                     <option value="${customer.id}">${customer.id} : ${customer.name}</option>
                                 </c:forEach>
                             </select>
@@ -937,7 +1006,7 @@
                         <div class="form-grp">
                             <label for="add_discountCardCustomerID">Khách Hàng:</label>
                             <select id="add_discountCardCustomerID" name="add_discountCardCustomerID">
-                                <c:forEach items="${customerList}" var="customer">
+                                <c:forEach items="${requestScope.customerList}" var="customer">
                                     <option value="${customer.id}">${customer.id} : ${customer.name}</option>
                                 </c:forEach>
                             </select>
@@ -990,7 +1059,7 @@
 
                 </thead>
                 <tbody>
-                <c:forEach items="${itemCollectionList}" var="itemCollection">
+                <c:forEach items="${requestScope.itemCollectionList}" var="itemCollection">
                     <tr>
                         <td>${itemCollection.id}</td>
                         <td>${itemCollection.name}</td>
@@ -1087,10 +1156,10 @@
 
                 </thead>
                 <tbody>
-                <c:forEach items="${itemImageList}" var="itemImage">
+                <c:forEach items="${requestScope.imageList}" var="itemImage">
                     <tr>
                         <td>${itemImage.id}</td>
-                        <td>${itemImage.getItem().id}</td>
+                        <td>${itemImage.item.id}</td>
                         <td>${itemImage.image_url}</td>
                         <td>
                             <div class="flex-center grpbtn">
@@ -1100,7 +1169,7 @@
                                     <input type="hidden" name="action" value="itemImage_btnDelete"/>
                                 </form>
                                 <button class="btnHD btnUpdateItemImage"
-                                        data-itemImageID="${itemImage.id}" data-itemImageItemID="${itemImage.getItem().id}"
+                                        data-itemImageID="${itemImage.id}" data-itemImageItemID="${itemImage.item.id}"
                                         data-itemImageURL="${itemImage.image_url}"
                                 >Sửa
                                 </button>
@@ -1125,7 +1194,7 @@
                         <div class="form-grp">
                             <label for="update_itemImageItemID">Sản Phẩm:</label>
                             <select id="update_itemImageItemID" name="update_itemImageItemID">
-                                <c:forEach items="${itemList}" var="item">
+                                <c:forEach items="${requestScope.itemList}" var="item">
                                     <option value="${item.id}">${item.id} : ${item.name}</option>
                                 </c:forEach>
                             </select>
@@ -1159,7 +1228,7 @@
                         <div class="form-grp">
                             <label for="add_itemImageItemID">Sản Phẩm:</label>
                             <select id="add_itemImageItemID" name="add_itemImageItemID">
-                                <c:forEach items="${itemList}" var="item">
+                                <c:forEach items="${requestScope.itemList}" var="item">
                                     <option value="${item.id}">${item.id} : ${item.name}</option>
                                 </c:forEach>
                             </select>
@@ -1205,7 +1274,7 @@
 
                 </thead>
                 <tbody>
-                <c:forEach items="${itemMaterialList}" var="itemMaterial">
+                <c:forEach items="${requestScope.itemMaterialList}" var="itemMaterial">
                     <tr>
                         <td>${itemMaterial.id}</td>
                         <td>${itemMaterial.name}</td>
@@ -1309,11 +1378,11 @@
 
                 </thead>
                 <tbody>
-                <c:forEach items="${orderList}" var="order">
+                <c:forEach items="${requestScope.orderList}" var="order">
                     <tr>
                         <td>${order.id}</td>
-                        <td>${order.getCustomer().id}</td>
-                        <td>${order.getDiscountCard().id}</td>
+                        <td>${order.customer.id}</td>
+                        <td>${order.discountCard.id}</td>
                         <td>${order.total}</td>
                         <td>${order.date_purchase}</td>
                         <td>${order.order_status}</td>
@@ -1327,9 +1396,9 @@
                                     <input type="hidden" name="action" value="order_btnDelete"/>
                                 </form>
                                 <button class="btnHD btnUpdateOrder"
-                                        data-orderID="${order.id}" data-orderCustomerID="${order.customer_id}"
+                                        data-orderID="${order.id}" data-orderCustomerID="${order.customer.id}"
                                         data-orderTotal="${order.total}" data-orderDatePurchase="${order.date_purchase}"
-                                        data-orderDiscountCardID="${order.discount_card_id}" data-orderStatus="${order.order_status}"
+                                        data-orderDiscountCardID="${order.discountCard.id}" data-orderStatus="${order.order_status}"
                                         data-orderAddress="${order.address}" data-orderNote="${order.note}"
                                 >Sửa
                                 </button>
@@ -1354,7 +1423,7 @@
                         <div class="form-grp">
                             <label for="update_orderCustomerID">Khách Hàng:</label>
                             <select id="update_orderCustomerID" name="update_orderCustomerID">
-                                <c:forEach items="${customerList}" var="customer">
+                                <c:forEach items="${requestScope.customerList}" var="customer">
                                     <option value="${customer.id}">${customer.id} : ${customer.name}</option>
                                 </c:forEach>
                             </select>
@@ -1364,7 +1433,7 @@
                         <div class="form-grp">
                             <label for="update_orderDiscountCardID">Thẻ Khuyến Mãi:</label>
                             <select id="update_orderDiscountCardID" name="update_orderDiscountCardID">
-                                <c:forEach items="${discountCardList}" var="discountCard">
+                                <c:forEach items="${requestScope.discountCardList}" var="discountCard">
                                     <option value="${discountCard.id}">${discountCard.id}
                                         : ${discountCard.name}</option>
                                 </c:forEach>
@@ -1435,7 +1504,7 @@
                         <div class="form-grp">
                             <label for="add_orderCustomerID">Khách Hàng:</label>
                             <select id="add_orderCustomerID" name="add_orderCustomerID">
-                                <c:forEach items="${customerList}" var="customer">
+                                <c:forEach items="${requestScope.customerList}" var="customer">
                                     <option value="${customer.id}">${customer.id} : ${customer.name}</option>
                                 </c:forEach>
                             </select>
@@ -1445,7 +1514,7 @@
                         <div class="form-grp">
                             <label for="add_orderDiscountCardID">Thẻ Khuyến Mãi:</label>
                             <select id="add_orderDiscountCardID" name="add_add_orderDiscountCardID">
-                                <c:forEach items="${discountCardList}" var="discountCard">
+                                <c:forEach items="${requestScope.discountCardList}" var="discountCard">
                                     <option value="${discountCard.id}">${discountCard.id}
                                         : ${discountCard.name}</option>
                                 </c:forEach>
@@ -1533,11 +1602,11 @@
 
                 </thead>
                 <tbody>
-                <c:forEach items="${orderDetailList}" var="orderDetail">
+                <c:forEach items="${requestScope.orderDetailList}" var="orderDetail">
                     <tr>
                         <td>${orderDetail.id}</td>
-                        <td>${orderDetail.getOrder().id}</td>
-                        <td>${orderDetail.getItem().id}</td>
+                        <td>${orderDetail.order.id}</td>
+                        <td>${orderDetail.item.id}</td>
                         <td>${orderDetail.amount}</td>
                         <td>${orderDetail.item_color}</td>
                         <td>${orderDetail.item_size}</td>
@@ -1551,8 +1620,8 @@
                                 </form>
                                 <button class="btnHD btnUpdateOrderDetail"
                                         data-orderDetailID="${orderDetail.id}"
-                                        data-orderDetailOrderID="${orderDetail.getOrder().id}"
-                                        data-orderDetailItemID="${orderDetail.getItem().id}"
+                                        data-orderDetailOrderID="${orderDetail.order.id}"
+                                        data-orderDetailItemID="${orderDetail.item.id}"
                                         data-orderDetailAmount="${orderDetail.amount}"
                                         data-orderDetailItemColor="${orderDetail.item_color}"
                                         data-orderDetailItemSize="${orderDetail.item_size}"
@@ -1580,7 +1649,7 @@
                         <div class="form-grp">
                             <label for="update_orderDetailOrderID">Hóa Đơn:</label>
                             <select id="update_orderDetailOrderID" name="update_orderDetailOrderID">
-                                <c:forEach items="${orderList}" var="order">
+                                <c:forEach items="${requestScope.orderList}" var="order">
                                     <option value="${order.id}">${order.id}</option>
                                 </c:forEach>
                             </select>
@@ -1590,7 +1659,7 @@
                         <div class="form-grp">
                             <label for="update_orderDetailItemID">Sản Phẩm:</label>
                             <select id="update_orderDetailItemID" name="update_update_orderDetailItemID">
-                                <c:forEach items="${itemList}" var="item">
+                                <c:forEach items="${requestScope.itemList}" var="item">
                                     <option value="${item.id}">${item.id} : ${item.name}</option>
                                 </c:forEach>
                             </select>
@@ -1608,7 +1677,7 @@
                         <div class="form-grp">
                             <label for="update_orderDetailItemColor">Màu:</label>
                             <select id="update_orderDetailItemColor" name="update_orderDetailItemColor">
-                                <c:forEach items="${stockItemList}" var="stockItem">
+                                <c:forEach items="${requestScope.stockItemList}" var="stockItem">
                                     <option value="${stockItem.color}">${stockItem.color}</option>
                                 </c:forEach>
                             </select>
@@ -1618,7 +1687,7 @@
                         <div class="form-grp">
                             <label for="update_orderDetailItemSize">Màu:</label>
                             <select id="update_orderDetailItemSize" name="update_orderDetailItemSize">
-                                <c:forEach items="${stockItemList}" var="stockItem">
+                                <c:forEach items="${requestScope.stockItemList}" var="stockItem">
                                     <option value="${stockItem.size}">${stockItem.size}</option>
                                 </c:forEach>
                             </select>
@@ -1652,7 +1721,7 @@
                         <div class="form-grp">
                             <label for="add_orderDetailOrderID">Hóa Đơn:</label>
                             <select id="add_orderDetailOrderID" name="add_orderDetailOrderID">
-                                <c:forEach items="${orderList}" var="order">
+                                <c:forEach items="${requestScope.orderList}" var="order">
                                     <option value="${order.id}">${order.id}</option>
                                 </c:forEach>
                             </select>
@@ -1662,7 +1731,7 @@
                         <div class="form-grp">
                             <label for="add_orderDetailItemID">Sản Phẩm:</label>
                             <select id="add_orderDetailItemID" name="add_add_orderDetailItemID">
-                                <c:forEach items="${itemList}" var="item">
+                                <c:forEach items="${requestScope.itemList}" var="item">
                                     <option value="${item.id}">${item.id} : ${item.name}</option>
                                 </c:forEach>
                             </select>
@@ -1680,7 +1749,7 @@
                         <div class="form-grp">
                             <label for="add_orderDetailItemColor">Màu:</label>
                             <select id="add_orderDetailItemColor" name="add_orderDetailItemColor">
-                                <c:forEach items="${stockItemList}" var="stockItem">
+                                <c:forEach items="${requestScope.stockItemList}" var="stockItem">
                                     <option value="${stockItem.color}">${stockItem.color}</option>
                                 </c:forEach>
                             </select>
@@ -1690,7 +1759,7 @@
                         <div class="form-grp">
                             <label for="add_orderDetailItemSize">Màu:</label>
                             <select id="add_orderDetailItemSize" name="add_orderDetailItemSize">
-                                <c:forEach items="${stockItemList}" var="stockItem">
+                                <c:forEach items="${requestScope.stockItemList}" var="stockItem">
                                     <option value="${stockItem.size}">${stockItem.size}</option>
                                 </c:forEach>
                             </select>
@@ -1736,7 +1805,7 @@
 
                 </thead>
                 <tbody>
-                <c:forEach items="${itemTypeList}" var="itemType">
+                <c:forEach items="${requestScope.itemTypeList}" var="itemType">
                     <tr>
                         <td>${itemType.id}</td>
                         <td>${itemType.name}</td>
@@ -1833,7 +1902,7 @@
 
                 </thead>
                 <tbody>
-                <c:forEach items="${permissionList}" var="permission">
+                <c:forEach items="${requestScope.permissionList}" var="permission">
                     <tr>
                         <td>${permission.id}</td>
                         <td>${permission.name}</td>
@@ -1951,10 +2020,10 @@
 
                 </thead>
                 <tbody>
-                <c:forEach items="${saleList}" var="sale">
+                <c:forEach items="${requestScope.saleList}" var="sale">
                     <tr>
                         <td>${sale.id}</td>
-                        <td>${sale.getItem().id}</td>
+                        <td>${sale.item.id}</td>
                         <td>${sale.name}</td>
                         <td>${sale.on_sale}</td>
                         <td>${sale.sale_percentage}</td>
@@ -1966,7 +2035,7 @@
                                     <input type="hidden" name="action" value="sale_btnDelete"/>
                                 </form>
                                 <button class="btnHD btnUpdateSale"
-                                        data-saleID="${sale.id}" data-saleItemID="${sale.getItem().id}"
+                                        data-saleID="${sale.id}" data-saleItemID="${sale.item.id}"
                                         data-saleName="${sale.name}" data-saleOnSale="${sale.on_sale}"
                                         data-salePercentage="${sale.sale_percentage}"
                                 >Sửa
@@ -1992,7 +2061,7 @@
                         <div class="form-grp">
                             <label for="update_saleItemID">Sản Phẩm:</label>
                             <select id="update_saleItemID" name="update_saleItemID">
-                                <c:forEach items="${itemList}" var="item">
+                                <c:forEach items="${requestScope.itemList}" var="item">
                                     <option value="${item.id}">${item.id} : ${item.name}</option>
                                 </c:forEach>
                             </select>
@@ -2042,7 +2111,7 @@
                         <div class="form-grp">
                             <label for="add_saleItemID">Sản Phẩm:</label>
                             <select id="add_saleItemID" name="add_saleItemID">
-                                <c:forEach items="${itemList}" var="item">
+                                <c:forEach items="${requestScope.itemList}" var="item">
                                     <option value="${item.id}">${item.id} : ${item.name}</option>
                                 </c:forEach>
                             </select>
@@ -2107,10 +2176,10 @@
 
                 </thead>
                 <tbody>
-                <c:forEach items="${stockItemList}" var="stockItem">
+                <c:forEach items="${requestScope.stockItemList}" var="stockItem">
                     <tr>
                         <td>${stockItem.id}</td>
-                        <td>${stockItem.getItem().id}</td>
+                        <td>${stockItem.item.id}</td>
                         <td>${stockItem.color}</td>
                         <td>${stockItem.size}</td>
                         <td>${stockItem.amount}</td>
@@ -2122,7 +2191,7 @@
                                     <input type="hidden" name="action" value="stockItem_btnDelete"/>
                                 </form>
                                 <button class="btnHD btnUpdateStockItem"
-                                        data-stockItemID="${stockItem.id}" data-stockItemItemID="${stockItem.getItem().id}"
+                                        data-stockItemID="${stockItem.id}" data-stockItemItemID="${stockItem.item.id}"
                                         data-stockItemColor="${stockItem.color}" data-stockItemSize="${stockItem.size}"
                                         data-stockItemAmount="${stockItem.amount}"
                                 >Sửa
@@ -2149,7 +2218,7 @@
                         <div class="form-grp">
                             <label for="update_stockItemItemID">Sản Phẩm:</label>
                             <select id="update_stockItemItemID" name="update_stockItemItemID">
-                                <c:forEach items="${itemList}" var="item">
+                                <c:forEach items="${requestScope.itemList}" var="item">
                                     <option value="${item.id}">${item.id} : ${item.name}</option>
                                 </c:forEach>
                             </select>
@@ -2199,7 +2268,7 @@
                         <div class="form-grp">
                             <label for="add_stockItemItemID">Sản Phẩm:</label>
                             <select id="add_stockItemItemID" name="add_stockItemItemID">
-                                <c:forEach items="${itemList}" var="item">
+                                <c:forEach items="${requestScope.itemList}" var="item">
                                     <option value="${item.id}">${item.id} : ${item.name}</option>
                                 </c:forEach>
                             </select>
@@ -2241,7 +2310,6 @@
         </div>
 
     </div>
-
 </main>
 
 <footer class="footer">
@@ -2254,6 +2322,71 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 <script src="${pageContext.request.contextPath}/Views/Admin/vinh_main.js"></script>
+
+<script>
+    function test(){
+        $.ajax({
+            type: "POST",
+            url: contextPath + "/StatisticServlet",
+            data: {
+                action: "test",
+            },
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            success: function (data) {
+                console.log(1);
+                if (data.success === 1) {
+                    for (var i = 0; i < data.length; i++) {
+                        console.log(data[0][0]);
+                    }
+                    const productData = [
+                        {product: 'Áo thun xanh dương', sales: 100},
+                        {product: 'Áo ba lỗ trắng', sales: 200},
+                        {product: 'Áo khoác dù chống nước', sales: 150},
+                    ];
+                    // Populate table
+                    const table = document.getElementById('statsTable');
+                    productData.forEach(data => {
+                        const row = table.insertRow(-1);
+                        const cell1 = row.insertCell(0);
+                        const cell2 = row.insertCell(1);
+                        cell1.textContent = data.product;
+                        cell2.textContent = data.sales;
+                    });
+                    // Create chart
+                    const ctx = document.getElementById('productChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: productData.map(data => data.product),
+                            datasets: [{
+                                label: 'Sales',
+                                data: productData.map(data => data.sales),
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                } else if (data.success === 0) {
+
+                }
+            },
+        });
+
+    }
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="${pageContext.request.contextPath}/Views/User/dest/tuh.js"></script>
 
 </body>
 </html>

@@ -757,41 +757,48 @@ function handleUpdateStockItem() {
 }
 handleUpdateStockItem();
 
-//
-//const productData = [
-//    {product: 'Áo thun xanh dương', sales: 100},
-//    {product: 'Áo ba lỗ trắng', sales: 200},
-//    {product: 'Áo khoác dù chống nước', sales: 150},
-//];
-//// Populate table
-//const table = document.getElementById('statsTable');
-//productData.forEach(data => {
-//    const row = table.insertRow(-1);
-//    const cell1 = row.insertCell(0);
-//    const cell2 = row.insertCell(1);
-//    cell1.textContent = data.product;
-//    cell2.textContent = data.sales;
-//});
-//// Create chart
-//const ctx = document.getElementById('productChart').getContext('2d');
-//new Chart(ctx, {
-//    type: 'bar',
-//    data: {
-//        labels: productData.map(data => data.product),
-//        datasets: [{
-//                label: 'Sales',
-//                data: productData.map(data => data.sales),
-//                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-//                borderColor: 'rgba(75, 192, 192, 1)',
-//                borderWidth: 1
-//            }]
-//    },
-//    options: {
-//        scales: {
-//            y: {
-//                beginAtZero: true
-//            }
-//        }
-//    }
-//});
+
+/*const productData = [
+   {product: 'Áo thun xanh dương', sales: 100},
+   {product: 'Áo ba lỗ trắng', sales: 200},
+   {product: 'Áo khoác dù chống nước', sales: 150},
+];
+// Populate table
+const table = document.getElementById('statsTable');
+productData.forEach(data => {
+   const row = table.insertRow(-1);
+   const cell1 = row.insertCell(0);
+   const cell2 = row.insertCell(1);
+   cell1.textContent = data.product;
+   cell2.textContent = data.sales;
+});
+// Create chart
+const ctx = document.getElementById('productChart').getContext('2d');
+new Chart(ctx, {
+   type: 'bar',
+   data: {
+       labels: productData.map(data => data.product),
+       datasets: [{
+               label: 'Sales',
+               data: productData.map(data => data.sales),
+               backgroundColor: 'rgba(75, 192, 192, 0.2)',
+               borderColor: 'rgba(75, 192, 192, 1)',
+               borderWidth: 1
+           }]
+   },
+   options: {
+       scales: {
+           y: {
+               beginAtZero: true
+           }
+       }
+   }
+});*/
+
+
+
+
+
+
+
 

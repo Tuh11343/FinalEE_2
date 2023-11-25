@@ -64,3 +64,22 @@ function signUpAjaxRequest() {
         },
     });
 }
+
+
+function selectTedtable() {
+    const selectIndex= document.getElementById("type-select"),
+        tableType = document.querySelectorAll('.typetable');
+    console.log(selectIndex.value);
+tableType.forEach(function (item){
+
+    let  itemtable = item.getAttribute(`data-type`);
+    if (selectIndex.value === itemtable){
+        tableType.forEach(function (item){
+            item.style.display='none';
+        })
+        item.style.display = 'block';
+    }
+})
+}
+
+
