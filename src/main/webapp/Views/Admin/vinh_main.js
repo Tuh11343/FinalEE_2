@@ -798,7 +798,19 @@ new Chart(ctx, {
 
 
 
+function scrollPageHeader(){
+let header = document.querySelector('.header'), menuleft = document.querySelector('.left .accordion');
+ let scrollY = window.scrollY;
+if (scrollY > header.clientHeight) {
+  header.classList.add('scroll');
+  menuleft.classList.add('scroll')
+  } else {
+        header.classList.remove('scroll');
+  menuleft.classList.remove('scroll')
 
 
-
-
+  }
+}
+document.addEventListener("scroll", function () {
+scrollPageHeader()
+});

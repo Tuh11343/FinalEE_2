@@ -45,12 +45,30 @@
 </head>
 
 <body class="homepage">
-
+<header class="header">
+    <div class="container-fluid">
+        <div class="header__left">
+            <div class="logo"><img src="${pageContext.request.contextPath}/Views/Admin/asset/img/logo.png" /></div>
+        </div>
+        <div class="header__center">
+            <h1 class="title --h1">Cửa hàng 3TV</h1>
+        </div>
+        <div class="header__right">
+            <div class="header__right--account">
+                <span class="nameaccount">Lương Tuấn</span>
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
+                <div class="accdopdown">
+                    <a href="#">Đăng xuất <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/></svg></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 <!--<div class="container" >-->
 <main class='main'>
-    <div class="left">
-        <div class="menu_left">
-            <div class="accordion accordion-flush" id="accordionFlushExample">
+    <aside class="left">
+
+            <div class="accordion " id="accordionFlushExample">
 
                 <!--Account-->
                 <div class="accordion-item">
@@ -265,16 +283,16 @@
 
 
             </div>
-        </div>
 
-    </div>
+
+    </aside>
 
 
     <!--Center-->
     <div class="center">
 
         <%--Thống kê--%>
-        <div class="product-data table-data" data-type="statistics">
+        <div class="product-data table-data active" data-type="statistics">
             <h2>Thống kê sản phẩm</h2>
             <div class="form-grp">
                 <label for="type-select">Loại sản phẩm:</label>
@@ -516,19 +534,19 @@
             </div>
 
             <!--Table Item-->
-            <table class="item-table bang">
+            <table class="item-table bang table">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Tên Sản Phẩm</th>
-                    <th>Loại Sản Phẩm</th>
-                    <th>Bộ Sưu Tập</th>
-                    <th>Vật Liệu</th>
-                    <th>Sản Phẩm Mới</th>
-                    <th>Sản Phẩm Hot</th>
-                    <th>Giá</th>
-                    <th>Năm Sản Xuất</th>
-                    <th>Action</th>
+                    <th  scope="col">ID</th>
+                    <th  scope="col">Tên Sản Phẩm</th>
+                    <th  scope="col">Loại Sản Phẩm</th>
+                    <th  scope="col">Bộ Sưu Tập</th>
+                    <th  scope="col">Vật Liệu</th>
+                    <th  scope="col">Sản Phẩm Mới</th>
+                    <th  scope="col">Sản Phẩm Hot</th>
+                    <th  scope="col">Giá</th>
+                    <th  scope="col">Năm Sản Xuất</th>
+                    <th  scope="col">Action</th>
                 </tr>
 
 
@@ -2162,23 +2180,21 @@
             </div>
 
             <!--Table StockItem-->
-            <table class="item-table bang">
+            <table class="item-table bang table">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>ID Sản Phẩm</th>
-                    <th>Màu</th>
-                    <th>Size</th>
-                    <th>Số Lượng</th>
-                    <th>Action</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">ID Sản Phẩm</th>
+                    <th scope="col">Màu</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Số Lượng</th>
+                    <th scope="col">Action</th>
                 </tr>
-
-
                 </thead>
                 <tbody>
                 <c:forEach items="${requestScope.stockItemList}" var="stockItem">
                     <tr>
-                        <td>${stockItem.id}</td>
+                        <td scope="row"> ${stockItem.id}</td>
                         <td>${stockItem.item.id}</td>
                         <td>${stockItem.color}</td>
                         <td>${stockItem.size}</td>
