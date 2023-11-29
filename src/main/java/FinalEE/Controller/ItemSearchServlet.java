@@ -8,11 +8,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import lombok.extern.java.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class ItemSearchServlet extends HttpServlet {
@@ -81,64 +79,23 @@ public class ItemSearchServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
 
-        int currentPage = 1;
+        int currentPage=1;
         if(req.getParameter("currentPage")!=null){
             currentPage=Integer.parseInt(req.getParameter("currentPage"));
         }
-        if(req.getParameter("itemCollectionID")!=null&&!req.getParameter("itemCollectionID").isBlank()){
-            int itemCollectionID=Integer.parseInt(req.getParameter("itemCollectionID"));
-            req.setAttribute("itemCollectionID",itemCollectionID);
-        }else if(req.getParameter("itemTypeID")!=null){
-            int itemTypeID=Integer.parseInt(req.getParameter("itemTypeID"));
-            req.setAttribute("itemTypeID",itemTypeID);
-        }else if(req.getParameter("itemMaterialID")!=null){
-            int itemMaterialID=Integer.parseInt(req.getParameter("itemMaterialID"));
-            req.setAttribute("itemMaterialID",itemMaterialID);
-        }else if(req.getParameter("itemName")!=null){
-            String itemName=req.getParameter("itemName");
-            req.setAttribute("itemName",itemName);
-        }else if(req.getParameter("searchInput")!=null){
-            String searchInput=req.getParameter("searchInput");
-            req.setAttribute("searchInput",searchInput);
-        }
-
-        req.setAttribute("currentPage",currentPage);
-
 
         /*Init Variable*/
-        int totalPage = 0;
-        List<String> pageList = new ArrayList<String>();
+        int totalPage;
+        List<String> pageList = new ArrayList<>();
         List<Item> itemSearchList = null;
-        String value=req.getParameter("sort");
-        int sortBy=-1;
-        if(value!=null){
-            switch (value){
-                case "az"->{
-                    sortBy=0;
-                }
-                case "za"->{
-                    sortBy=1;
-                }
-                case "priceAsc"->{
-                    sortBy=2;
-                }
-                case "priceDesc"->{
-                    sortBy=3;
-                }
-            }
-        }
+        String sortBy=req.getParameter("sort");
 
-        if (req.getParameter("itemCollectionID") != null) {
+        if (req.getParameter("itemCollectionID") != null && !req.getParameter("itemCollectionID").isBlank()) {
             int itemCollectionID = Integer.parseInt(req.getParameter("itemCollectionID"));
             req.setAttribute("itemCollectionID",itemCollectionID);
 
-            itemSearchList = itemServiceImpl.getItemsByItemCollectionIDAndPageNumber(currentPage,itemCollectionID);
-            if(sortBy!=-1&&itemSearchList!=null){
-                itemSearchList = sortListBy(sortBy, itemSearchList);
-            }
-            else if(itemSearchList!=null)
-            {
-                itemSearchList = sortListAZ(itemSearchList);
+            if(sortBy!=null){
+                itemSearchList=getItemsByItemCollectionID(sortBy,itemCollectionID,currentPage);
             }
 
             totalPage = itemServiceImpl.getTotalPagesByItemCollectionID(itemCollectionID);
@@ -146,17 +103,12 @@ public class ItemSearchServlet extends HttpServlet {
                 pageList.add(String.valueOf(i + 1));
             }
 
-        } else if (req.getParameter("itemTypeID") != null) {
+        } else if (req.getParameter("itemTypeID") != null && !req.getParameter("itemTypeID").isBlank()) {
             int itemTypeID = Integer.parseInt(req.getParameter("itemTypeID"));
             req.setAttribute("itemTypeID",itemTypeID);
 
-            itemSearchList = itemServiceImpl.getItemsByItemTypeIDAndPageNumber(currentPage,itemTypeID);
-            if(sortBy!=-1&&itemSearchList!=null){
-                itemSearchList = sortListBy(sortBy, itemSearchList);
-            }
-            else if(itemSearchList!=null)
-            {
-                itemSearchList = sortListAZ(itemSearchList);
+            if(sortBy!=null){
+                itemSearchList=getItemsByItemTypeID(sortBy,itemTypeID,currentPage);
             }
 
             totalPage = itemServiceImpl.getTotalPagesByItemTypeID(itemTypeID);
@@ -164,17 +116,12 @@ public class ItemSearchServlet extends HttpServlet {
                 pageList.add(String.valueOf(i + 1));
             }
 
-        }else if(req.getParameter("itemMaterialID")!=null){
+        }else if(req.getParameter("itemMaterialID")!=null && !req.getParameter("itemMaterialID").isBlank()){
             int itemMaterialID = Integer.parseInt(req.getParameter("itemMaterialID"));
             req.setAttribute("itemMaterialID",itemMaterialID);
 
-            itemSearchList = itemServiceImpl.getItemsByItemMaterialIDAndPageNumber(currentPage,itemMaterialID);
-            if(sortBy!=-1&&itemSearchList!=null){
-                itemSearchList = sortListBy(sortBy, itemSearchList);
-            }
-            else if(itemSearchList!=null)
-            {
-                itemSearchList = sortListAZ(itemSearchList);
+            if(sortBy!=null){
+                itemSearchList=getItemsByItemMaterialID(sortBy,itemMaterialID,currentPage);
             }
 
             totalPage = itemServiceImpl.getTotalPagesByItemMaterialID(itemMaterialID);
@@ -182,17 +129,12 @@ public class ItemSearchServlet extends HttpServlet {
                 pageList.add(String.valueOf(i + 1));
             }
 
-        }else if(req.getParameter("itemName")!=null){
+        }else if(req.getParameter("itemName")!=null && !req.getParameter("itemName").isBlank()){
             String itemName =req.getParameter("itemName");
             req.setAttribute("itemName",itemName);
 
-            itemSearchList = itemServiceImpl.getItemsByNameAndPageNumber(currentPage,itemName);
-            if(sortBy!=-1&&itemSearchList!=null){
-                itemSearchList = sortListBy(sortBy, itemSearchList);
-            }
-            else if(itemSearchList!=null)
-            {
-                itemSearchList = sortListAZ(itemSearchList);
+            if(sortBy!=null){
+                itemSearchList=getItemsByItemName(sortBy,itemName,currentPage);
             }
 
             totalPage = itemServiceImpl.getTotalPagesByName(itemName);
@@ -204,13 +146,8 @@ public class ItemSearchServlet extends HttpServlet {
             String searchInput =req.getParameter("searchInput");
             req.setAttribute("searchInput",searchInput);
 
-            itemSearchList = itemServiceImpl.getItemsByNameAndPageNumber(currentPage,searchInput);
-            if(sortBy!=-1&&itemSearchList!=null){
-                itemSearchList = sortListBy(sortBy, itemSearchList);
-            }
-            else if(itemSearchList!=null)
-            {
-                itemSearchList = sortListAZ(itemSearchList);
+            if(sortBy!=null){
+                itemSearchList=getItemsByItemName(sortBy,searchInput,currentPage);
             }
 
             totalPage = itemServiceImpl.getTotalPagesByName(searchInput);
@@ -219,13 +156,8 @@ public class ItemSearchServlet extends HttpServlet {
             }
 
         }else{
-            itemSearchList = itemServiceImpl.getItemsByPageNumber(currentPage);
-            if(sortBy!=-1&&itemSearchList!=null){
-                itemSearchList = sortListBy(sortBy, itemSearchList);
-            }
-            else if(itemSearchList!=null)
-            {
-                itemSearchList = sortListAZ(itemSearchList);
+            if(sortBy!=null){
+                itemSearchList=getItems(sortBy,currentPage);
             }
 
             totalPage = itemServiceImpl.getTotalPages();
@@ -234,61 +166,90 @@ public class ItemSearchServlet extends HttpServlet {
             }
 
         }
-        
+
+        req.setAttribute("sort",sortBy);
         req.setAttribute("itemSearchList", itemSearchList);
         req.setAttribute("pageList", pageList);
-
+        req.setAttribute("currentPage",currentPage);
 
         req.getRequestDispatcher("/Views/User/ProductList.jsp").forward(req, resp);
     }
 
-    private List<Item> sortListBy(int sortBy, List<Item> itemSearchList) {
+    private List<Item> getItemsByItemCollectionID(String sortBy,int itemCollectionID,int currentPage) {
         System.out.println("Gia tri sortBy:"+sortBy);
-        if(sortBy ==0){
-            itemSearchList =sortListAZ(itemSearchList);
-        }else if(sortBy ==1){
-            itemSearchList =sortListZA(itemSearchList);
-        }else if(sortBy ==2){
-            itemSearchList =sortListByPriceAscending(itemSearchList);
-        }else if(sortBy ==3){
-            itemSearchList =sortListByPriceDescending(itemSearchList);
+        List<Item> itemList=null;
+        if(sortBy.equalsIgnoreCase("az")){
+            itemList=itemServiceImpl.getItemsByItemCollectionIDAndPageNumber(currentPage,itemCollectionID,"name", ItemServiceImpl.SortOrder.ASC);
+        }else if(sortBy.equalsIgnoreCase("za")){
+            itemList=itemServiceImpl.getItemsByItemCollectionIDAndPageNumber(currentPage,itemCollectionID,"name", ItemServiceImpl.SortOrder.DESC);
+        }else if(sortBy.equalsIgnoreCase("priceAsc")){
+            itemList=itemServiceImpl.getItemsByItemCollectionIDAndPageNumber(currentPage,itemCollectionID,"price", ItemServiceImpl.SortOrder.ASC);
+        }else if(sortBy.equalsIgnoreCase("priceDes")){
+            itemList=itemServiceImpl.getItemsByItemCollectionIDAndPageNumber(currentPage,itemCollectionID,"price", ItemServiceImpl.SortOrder.DESC);
         }
-        return itemSearchList;
+        return itemList;
     }
 
-    private List<Item> sortListAZ(List<Item> itemSearchList) {
-        List<Item> modifiableItemList = new ArrayList<>(itemSearchList);
-        modifiableItemList.sort(Comparator.comparing(Item::getName));
-        itemSearchList = modifiableItemList;
-        return itemSearchList;
+    private List<Item> getItemsByItemTypeID(String sortBy,int itemTypeID,int currentPage) {
+        System.out.println("Gia tri sortBy:"+sortBy);
+        List<Item> itemList=null;
+        if(sortBy.equalsIgnoreCase("az")){
+            itemList=itemServiceImpl.getItemsByItemTypeIDAndPageNumber(currentPage,itemTypeID,"name", ItemServiceImpl.SortOrder.ASC);
+        }else if(sortBy.equalsIgnoreCase("za")){
+            itemList=itemServiceImpl.getItemsByItemTypeIDAndPageNumber(currentPage,itemTypeID,"name", ItemServiceImpl.SortOrder.DESC);
+        }else if(sortBy.equalsIgnoreCase("priceAsc")){
+            itemList=itemServiceImpl.getItemsByItemTypeIDAndPageNumber(currentPage,itemTypeID,"price", ItemServiceImpl.SortOrder.ASC);
+        }else if(sortBy.equalsIgnoreCase("priceDes")){
+            itemList=itemServiceImpl.getItemsByItemTypeIDAndPageNumber(currentPage,itemTypeID,"price", ItemServiceImpl.SortOrder.DESC);
+        }
+        return itemList;
     }
 
-    private List<Item> sortListZA(List<Item> itemSearchList) {
-        List<Item> modifiableItemList = new ArrayList<>(itemSearchList);
-        modifiableItemList.sort(Comparator.comparing(Item::getName).reversed());
-        itemSearchList = modifiableItemList;
-        return itemSearchList;
+    private List<Item> getItemsByItemMaterialID(String sortBy,int itemMaterialID,int currentPage) {
+        System.out.println("Gia tri sortBy:"+sortBy);
+        List<Item> itemList=null;
+        if(sortBy.equalsIgnoreCase("az")){
+            itemList=itemServiceImpl.getItemsByItemMaterialIDAndPageNumber(currentPage,itemMaterialID,"name", ItemServiceImpl.SortOrder.ASC);
+        }else if(sortBy.equalsIgnoreCase("za")){
+            itemList=itemServiceImpl.getItemsByItemMaterialIDAndPageNumber(currentPage,itemMaterialID,"name", ItemServiceImpl.SortOrder.DESC);
+        }else if(sortBy.equalsIgnoreCase("priceAsc")){
+            itemList=itemServiceImpl.getItemsByItemMaterialIDAndPageNumber(currentPage,itemMaterialID,"price", ItemServiceImpl.SortOrder.ASC);
+        }else if(sortBy.equalsIgnoreCase("priceDes")){
+            itemList=itemServiceImpl.getItemsByItemMaterialIDAndPageNumber(currentPage,itemMaterialID,"price", ItemServiceImpl.SortOrder.DESC);
+        }
+        return itemList;
     }
 
-    private List<Item> sortListByPriceAscending(List<Item> itemSearchList) {
-        List<Item> modifiableItemList = new ArrayList<>(itemSearchList);
-        modifiableItemList.sort(Comparator.comparingDouble(Item::getPrice));
-        itemSearchList = modifiableItemList;
-        return itemSearchList;
+    private List<Item> getItemsByItemName(String sortBy,String itemName,int currentPage) {
+        System.out.println("Gia tri sortBy:"+sortBy);
+        List<Item> itemList=null;
+        if(sortBy.equalsIgnoreCase("az")){
+            itemList=itemServiceImpl.getItemsByNameAndPageNumber(currentPage,itemName,"name", ItemServiceImpl.SortOrder.ASC);
+        }else if(sortBy.equalsIgnoreCase("za")){
+            itemList=itemServiceImpl.getItemsByNameAndPageNumber(currentPage,itemName,"name", ItemServiceImpl.SortOrder.DESC);
+        }else if(sortBy.equalsIgnoreCase("priceAsc")){
+            itemList=itemServiceImpl.getItemsByNameAndPageNumber(currentPage,itemName,"price", ItemServiceImpl.SortOrder.ASC);
+        }else if(sortBy.equalsIgnoreCase("priceDes")){
+            itemList=itemServiceImpl.getItemsByNameAndPageNumber(currentPage,itemName,"price", ItemServiceImpl.SortOrder.DESC);
+        }
+        return itemList;
     }
 
-    private List<Item> sortListByPriceDescending(List<Item> itemSearchList) {
-        List<Item> modifiableItemList = new ArrayList<>(itemSearchList);
-        modifiableItemList.sort(Comparator.comparingDouble(Item::getPrice).reversed());
-        itemSearchList = modifiableItemList;
-        return itemSearchList;
+
+    private List<Item> getItems(String sortBy,int currentPage) {
+        System.out.println("Gia tri sortBy:"+sortBy);
+        List<Item> itemList=null;
+        if(sortBy.equalsIgnoreCase("az")){
+            itemList=itemServiceImpl.getItemsByPageNumber(currentPage,"name", ItemServiceImpl.SortOrder.ASC);
+        }else if(sortBy.equalsIgnoreCase("za")){
+            itemList=itemServiceImpl.getItemsByPageNumber(currentPage,"name", ItemServiceImpl.SortOrder.DESC);
+        }else if(sortBy.equalsIgnoreCase("priceAsc")){
+            itemList=itemServiceImpl.getItemsByPageNumber(currentPage,"price", ItemServiceImpl.SortOrder.ASC);
+        }else if(sortBy.equalsIgnoreCase("priceDes")){
+            itemList=itemServiceImpl.getItemsByPageNumber(currentPage,"price", ItemServiceImpl.SortOrder.DESC);
+        }
+        return itemList;
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
-        doGet(req,resp);
-
-    }
 }

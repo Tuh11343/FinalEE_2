@@ -21,7 +21,12 @@ function logInAjaxRequest() {
             console.log(1);
             if (data.success === 1) {
                 document.cookie = "signInAccountID=" + data.accountID + "; path=/"
-                location.reload();
+                if (data.accountPermission === 1) {
+                    window.location.href=contextPath+"/AdminManagerServlet";
+                }else{
+                    location.reload();
+                }
+
             } else if (data.success === 0) {
 
             }
@@ -65,21 +70,100 @@ function signUpAjaxRequest() {
     });
 }
 
+function productsSoldByMonthAjaxRequest(selectedDateID, action, tableID) {
+    var selectedDate = document.getElementById(selectedDateID).value;
+
+    // Tạo đối tượng Date từ giá trị ngày
+    var date = new Date(selectedDate);
+
+    // Lấy tháng và năm
+    var month = date.getMonth() + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+    var year = date.getFullYear();
+
+    console.log("Month" + month + " " + "year:" + year);
+
+    $.ajax({
+        type: "POST",
+        url: adminManagerContextPath + "/AdminManagerServlet",
+        data: {
+            action: action,
+            month: month,
+            year: year,
+        },
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        },
+        success: function (data) {
+            $("#" + tableID).find("tr:gt(0)").remove();
+
+            switch (tableID) {
+                case 'productsTable': {
+                    for (var i = 0; i < data.length; i++) {
+                        var row = "<tr><td>" + data[i].itemID + "</td><td>" + data[i].productsSold + "</td></tr>";
+                        $("#" + tableID).append(row);
+                    }
+                    break;
+                }
+                case 'productsSoldByYearTable': {
+                    for (var i = 0; i < data.length; i++) {
+                        var row = "<tr><td>" + data[i].itemID + "</td><td>" + data[i].productsSold + "</td></tr>";
+                        $("#" + tableID).append(row);
+                    }
+                    break;
+                }
+                case 'totalProductsSoldByMonthTable': {
+                    for (var i = 0; i < data.length; i++) {
+                        var row = "<tr><td>" + data[i].itemID + "</td><td>" + data[i].productsSold + "</td></tr>";
+                        $("#" + tableID).append(row);
+                    }
+                    break;
+                }
+                case 'totalProductsSoldByYearTable': {
+                    for (var i = 0; i < data.length; i++) {
+                        var row = "<tr><td>" + data[i].itemID + "</td><td>" + data[i].productsSold + "</td></tr>";
+                        $("#" + tableID).append(row);
+                    }
+                    break;
+                }
+                case 'recentFiveMonthRevenueTable': {
+                    for (var i = 0; i < data.length; i++) {
+                        var row = "<tr><td>" + data[i].month + "</td><td>" + data[i].revenue + "</td></tr>";
+                        $("#" + tableID).append(row);
+                    }
+                    break;
+                }
+                case 'monthRevenueTable': {
+                    for (var i = 0; i < data.length; i++) {
+                        var row = "<tr><td>" + data[i].month + "</td><td>" + data[i].revenue + "</td></tr>";
+                        $("#" + tableID).append(row);
+                    }
+                    break;
+                }
+            }
+
+
+        },
+        error: function (error) {
+            console.log("error:" + error);
+        }
+    });
+}
+
 
 function selectTedtable() {
-    const selectIndex= document.getElementById("type-select"),
+    const selectIndex = document.getElementById("type-select"),
         tableType = document.querySelectorAll('.typetable');
     console.log(selectIndex.value);
-tableType.forEach(function (item){
+    tableType.forEach(function (item) {
 
-    let  itemtable = item.getAttribute(`data-type`);
-    if (selectIndex.value === itemtable){
-        tableType.forEach(function (item){
-            item.style.display='none';
-        })
-        item.style.display = 'block';
-    }
-})
+        let itemtable = item.getAttribute(`data-type`);
+        if (selectIndex.value === itemtable) {
+            tableType.forEach(function (item) {
+                item.style.display = 'none';
+            })
+            item.style.display = 'block';
+        }
+    })
 }
 
 
