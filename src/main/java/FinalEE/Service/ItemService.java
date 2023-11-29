@@ -2,6 +2,8 @@
 package FinalEE.Service;
 
 import FinalEE.Entity.Item;
+import FinalEE.ServiceImpl.ItemServiceImpl;
+
 import java.util.List;
 
 public interface ItemService {
@@ -21,11 +23,11 @@ public interface ItemService {
     int getTotalPagesByName(String name);
     int getTotalPages();
 
-    public List<Item> getItemsByItemCollectionIDAndPageNumber(int pageNumber,int itemCollectionID);
-    public List<Item> getItemsByItemTypeIDAndPageNumber(int pageNumber,int itemTypeID);
-    public List<Item> getItemsByItemMaterialIDAndPageNumber(int pageNumber,int itemMaterialID);
-    public List<Item> getItemsByNameAndPageNumber(int pageNumber,String name);
-    public List<Item> getItemsByPageNumber(int pageNumber);
+    public List<Item> getItemsByItemCollectionIDAndPageNumber(int pageNumber, int itemCollectionID, String sort, ItemServiceImpl.SortOrder sortOrder);
+    public List<Item> getItemsByItemTypeIDAndPageNumber(int pageNumber,int itemTypeID,String sort,ItemServiceImpl.SortOrder sortOrder);
+    public List<Item> getItemsByItemMaterialIDAndPageNumber(int pageNumber,int itemMaterialID,String sort,ItemServiceImpl.SortOrder sortOrder);
+    public List<Item> getItemsByNameAndPageNumber(int pageNumber,String name,String sort,ItemServiceImpl.SortOrder sortOrder);
+    public List<Item> getItemsByPageNumber(int pageNumber,String sort,ItemServiceImpl.SortOrder sortOrder);
 
     
 }

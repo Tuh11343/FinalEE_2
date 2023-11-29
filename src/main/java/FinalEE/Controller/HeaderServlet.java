@@ -75,7 +75,6 @@ public class HeaderServlet extends HttpServlet {
                 }
 
             }else{
-                System.out.println("Action");
                 String action=req.getParameter("action");
                 switch (action){
                     case "homeClick"->{
@@ -83,18 +82,18 @@ public class HeaderServlet extends HttpServlet {
                     }
                     case "itemCollectionClick"->{
                         int itemCollectionID=Integer.parseInt(req.getParameter("itemCollectionID"));
-                        resp.sendRedirect("/FinalEE/ItemSearchServlet?itemCollectionID=" + itemCollectionID+"&currentPage="+1);
+                        resp.sendRedirect("/FinalEE/ItemSearchServlet?itemCollectionID=" + itemCollectionID+"&currentPage="+1+"&sort=az");
                     }
                     case "itemTypeClick"->{
                         int itemTypeID=Integer.parseInt(req.getParameter("itemTypeID"));
-                        resp.sendRedirect("/FinalEE/ItemSearchServlet?itemTypeID=" + itemTypeID);
+                        resp.sendRedirect("/FinalEE/ItemSearchServlet?itemTypeID=" + itemTypeID+"&sort=az");
                     }
                     case "cartClick"->{
                         resp.sendRedirect("/FinalEE/CartServlet");
                     }
                     case "btnSearchClick"->{
                         String searchInput=req.getParameter("searchInput");
-                        resp.sendRedirect("/FinalEE/ItemSearchServlet?searchInput=" + searchInput);
+                        resp.sendRedirect("/FinalEE/ItemSearchServlet?searchInput=" + searchInput+"&sort=az");
                     }
                     case "accountClick"->{
                         resp.sendRedirect("/FinalEE/ProfileUserServlet");
@@ -185,6 +184,7 @@ public class HeaderServlet extends HttpServlet {
             System.out.println("Found Account");
             jsonResponse.put("success",1);
             jsonResponse.put("accountID",account.getId());
+            jsonResponse.put("accountPermission",account.getPermission().getLevel());
         }else{
             System.out.println("No account founded");
             jsonResponse.put("success",0);

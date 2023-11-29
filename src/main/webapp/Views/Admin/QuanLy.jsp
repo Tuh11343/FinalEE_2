@@ -48,17 +48,36 @@
 <header class="header">
     <div class="container-fluid">
         <div class="header__left">
-            <div class="logo"><img src="${pageContext.request.contextPath}/Views/Admin/asset/img/logo.png" /></div>
+            <div class="logo"><img src="${pageContext.request.contextPath}/Views/Admin/asset/img/logo.png"/></div>
         </div>
         <div class="header__center">
             <h1 class="title --h1">Cửa hàng 3TV</h1>
         </div>
         <div class="header__right">
             <div class="header__right--account">
-                <span class="nameaccount">Lương Tuấn</span>
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
+                <c:set value="-1" var="accountIndex"/>
+                <c:forEach items="${requestScope.accountList}" var="account" varStatus="status">
+                    <c:if test="${account.id eq cookie.signInAccountID.value}">
+                        <c:set var="accountIndex" value="${status.index}"/>
+                    </c:if>
+                </c:forEach>
+                <span class="nameaccount">${requestScope.accountList[accountIndex].name}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+                </svg>
                 <div class="accdopdown">
-                    <a href="#">Đăng xuất <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/></svg></a>
+                    <form id="form-signOut" action="${pageContext.request.contextPath}/HeaderServlet" method="post">
+
+                        <a href="#" onclick="submitForm('form-signOut')">Đăng xuất
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/>
+                            </svg>
+                        </a>
+                        <input type="hidden" name="action" value="signOutClick">
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -68,221 +87,221 @@
 <main class='main'>
     <aside class="left">
 
-            <div class="accordion " id="accordionFlushExample">
+        <div class="accordion " id="accordionFlushExample">
 
-                <!--Account-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed text" data-type="accountList" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                aria-controls="flush-collapseOne">
-                            Quản lý tài khoản
-                        </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
-                         data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Đây là nơi quản lý <code>tài khoản</code></div>
-                    </div>
+            <!--Account-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed text" data-type="accountList" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
+                            aria-controls="flush-collapseOne">
+                        Quản lý tài khoản
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                     data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Đây là nơi quản lý <code>tài khoản</code></div>
                 </div>
-
-                <!--Item-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingTwo">
-                        <button class="accordion-button collapsed text" data-type="itemList" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false"
-                                aria-controls="flush-collapseTwo">
-                            Quản lý sản phẩm
-                        </button>
-                    </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
-                         data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Đây là nơi quản lý <code>sản phẩm</code></div>
-                    </div>
-                </div>
-
-                <!--Statistic-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingThree">
-                        <button class="accordion-button collapsed text" data-type="statistics" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                aria-controls="flush-collapseThree">
-                            Quản lý thống kê
-                        </button>
-                    </h2>
-                    <div id="flush-collapseThree" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Đây là nơi quản lý <code>thống kê</code></div>
-                    </div>
-                </div>
-
-                <!--Customer-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingFour">
-                        <button class="accordion-button collapsed text" data-type="customerList" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false"
-                                aria-controls="flush-collapseFour">
-                            Quản lý khách hàng
-                        </button>
-                    </h2>
-                    <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour"
-                         data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Đây là nơi quản lý <code>khách hàng</code></div>
-                    </div>
-                </div>
-
-                <!--Coupon-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingFive">
-                        <button class="accordion-button collapsed text" data-type="discountCardList" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false"
-                                aria-controls="flush-collapseFive">
-                            Quản lý mã giảm giá
-                        </button>
-                    </h2>
-                    <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive"
-                         data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Đây là nơi quản lý <code>mã giảm giá</code></div>
-                    </div>
-                </div>
-
-                <!--Item collection-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingSix">
-                        <button class="accordion-button collapsed text" data-type="itemCollectionList" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false"
-                                aria-controls="flush-collapseSix">
-                            Quản lý bộ sưu tập
-                        </button>
-                    </h2>
-                    <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix"
-                         data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Đây là nơi quản lý <code>bộ sưu tập</code></div>
-                    </div>
-                </div>
-
-                <!--Item image-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingSeven">
-                        <button class="accordion-button collapsed text" data-type="itemImageList" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false"
-                                aria-controls="flush-collapseSeven">
-                            Quản lý hình ảnh
-                        </button>
-                    </h2>
-                    <div id="flush-collapseSeven" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Đây là nơi quản lý <code> hình ảnh của sản phẩm</code></div>
-                    </div>
-                </div>
-
-                <!--Item Material-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingEight">
-                        <button class="accordion-button collapsed text" data-type="itemMaterialList" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseEight" aria-expanded="false"
-                                aria-controls="flush-collapseEight">
-                            Quản lý nguyên liệu
-                        </button>
-                    </h2>
-                    <div id="flush-collapseEight" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingEight" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Đây là nơi quản lý <code> nguyên liệu của sản phẩm</code></div>
-                    </div>
-                </div>
-
-                <!--Item Order-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingNine">
-                        <button class="accordion-button collapsed text" data-type="orderList" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseNine" aria-expanded="false"
-                                aria-controls="flush-collapseNine">
-                            Quản lý hóa đơn
-                        </button>
-                    </h2>
-                    <div id="flush-collapseNine" class="accordion-collapse collapse" aria-labelledby="flush-headingNine"
-                         data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Đây là nơi quản lý <code> hóa đơn</code></div>
-                    </div>
-                </div>
-
-                <!--Item Order Detail-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingTen">
-                        <button class="accordion-button collapsed text" data-type="orderDetailList" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseTen" aria-expanded="false"
-                                aria-controls="flush-collapseTen">
-                            Quản lý chi tiết hóa đơn
-                        </button>
-                    </h2>
-                    <div id="flush-collapseTen" class="accordion-collapse collapse" aria-labelledby="flush-headingTen"
-                         data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Đây là nơi quản lý <code> chi tiết hóa đơn</code></div>
-                    </div>
-                </div>
-
-                <!--Item Type-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingEleven">
-                        <button class="accordion-button collapsed text" data-type="itemTypeList" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseEleven" aria-expanded="false"
-                                aria-controls="flush-collapseEleven">
-                            Quản lý kiểu sản phẩm
-                        </button>
-                    </h2>
-                    <div id="flush-collapseEleven" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingEleven" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Đây là nơi quản lý <code> loại sản phẩm</code></div>
-                    </div>
-                </div>
-
-                <!--Permission-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingTwelve">
-                        <button class="accordion-button collapsed text" data-type="permissionList" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseTwelve" aria-expanded="false"
-                                aria-controls="flush-collapseTwelve">
-                            Quản lý phân quyền
-                        </button>
-                    </h2>
-                    <div id="flush-collapseTwelve" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingTwelve" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Đây là nơi quản lý <code> phân quyền</code></div>
-                    </div>
-                </div>
-
-                <!--Sale-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingThirdteen">
-                        <button class="accordion-button collapsed text" data-type="saleList" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseThirdteen"
-                                aria-expanded="false" aria-controls="flush-collapseThirdteen">
-                            Quản lý giảm giá
-                        </button>
-                    </h2>
-                    <div id="flush-collapseThirdteen" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingThirdteen" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Đây là nơi quản lý <code> giảm giá</code></div>
-                    </div>
-                </div>
-
-                <!--Stock item-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingFourteen">
-                        <button class="accordion-button collapsed text" data-type="stockItemList" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseFourteen" aria-expanded="false"
-                                aria-controls="flush-collapseFourteen">
-                            Quản lý màu sắc kích cỡ + số lượng
-                        </button>
-                    </h2>
-                    <div id="flush-collapseFourteen" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingFourteen" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Đây là nơi quản lý <code> các kiểu màu sắc , kích cỡ,số lượng sản
-                            phẩm</code></div>
-                    </div>
-                </div>
-
-
             </div>
+
+            <!--Item-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed text" data-type="itemList" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                            aria-controls="flush-collapseTwo">
+                        Quản lý sản phẩm
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                     data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Đây là nơi quản lý <code>sản phẩm</code></div>
+                </div>
+            </div>
+
+            <!--Statistic-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                    <button class="accordion-button collapsed text" data-type="statistics" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false"
+                            aria-controls="flush-collapseThree">
+                        Quản lý thống kê
+                    </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse"
+                     aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Đây là nơi quản lý <code>thống kê</code></div>
+                </div>
+            </div>
+
+            <!--Customer-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFour">
+                    <button class="accordion-button collapsed text" data-type="customerList" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false"
+                            aria-controls="flush-collapseFour">
+                        Quản lý khách hàng
+                    </button>
+                </h2>
+                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour"
+                     data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Đây là nơi quản lý <code>khách hàng</code></div>
+                </div>
+            </div>
+
+            <!--Coupon-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFive">
+                    <button class="accordion-button collapsed text" data-type="discountCardList" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false"
+                            aria-controls="flush-collapseFive">
+                        Quản lý mã giảm giá
+                    </button>
+                </h2>
+                <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive"
+                     data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Đây là nơi quản lý <code>mã giảm giá</code></div>
+                </div>
+            </div>
+
+            <!--Item collection-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingSix">
+                    <button class="accordion-button collapsed text" data-type="itemCollectionList" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false"
+                            aria-controls="flush-collapseSix">
+                        Quản lý bộ sưu tập
+                    </button>
+                </h2>
+                <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix"
+                     data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Đây là nơi quản lý <code>bộ sưu tập</code></div>
+                </div>
+            </div>
+
+            <!--Item image-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingSeven">
+                    <button class="accordion-button collapsed text" data-type="itemImageList" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false"
+                            aria-controls="flush-collapseSeven">
+                        Quản lý hình ảnh
+                    </button>
+                </h2>
+                <div id="flush-collapseSeven" class="accordion-collapse collapse"
+                     aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Đây là nơi quản lý <code> hình ảnh của sản phẩm</code></div>
+                </div>
+            </div>
+
+            <!--Item Material-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingEight">
+                    <button class="accordion-button collapsed text" data-type="itemMaterialList" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseEight" aria-expanded="false"
+                            aria-controls="flush-collapseEight">
+                        Quản lý nguyên liệu
+                    </button>
+                </h2>
+                <div id="flush-collapseEight" class="accordion-collapse collapse"
+                     aria-labelledby="flush-headingEight" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Đây là nơi quản lý <code> nguyên liệu của sản phẩm</code></div>
+                </div>
+            </div>
+
+            <!--Item Order-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingNine">
+                    <button class="accordion-button collapsed text" data-type="orderList" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseNine" aria-expanded="false"
+                            aria-controls="flush-collapseNine">
+                        Quản lý hóa đơn
+                    </button>
+                </h2>
+                <div id="flush-collapseNine" class="accordion-collapse collapse" aria-labelledby="flush-headingNine"
+                     data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Đây là nơi quản lý <code> hóa đơn</code></div>
+                </div>
+            </div>
+
+            <!--Item Order Detail-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTen">
+                    <button class="accordion-button collapsed text" data-type="orderDetailList" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseTen" aria-expanded="false"
+                            aria-controls="flush-collapseTen">
+                        Quản lý chi tiết hóa đơn
+                    </button>
+                </h2>
+                <div id="flush-collapseTen" class="accordion-collapse collapse" aria-labelledby="flush-headingTen"
+                     data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Đây là nơi quản lý <code> chi tiết hóa đơn</code></div>
+                </div>
+            </div>
+
+            <!--Item Type-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingEleven">
+                    <button class="accordion-button collapsed text" data-type="itemTypeList" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseEleven" aria-expanded="false"
+                            aria-controls="flush-collapseEleven">
+                        Quản lý kiểu sản phẩm
+                    </button>
+                </h2>
+                <div id="flush-collapseEleven" class="accordion-collapse collapse"
+                     aria-labelledby="flush-headingEleven" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Đây là nơi quản lý <code> loại sản phẩm</code></div>
+                </div>
+            </div>
+
+            <!--Permission-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwelve">
+                    <button class="accordion-button collapsed text" data-type="permissionList" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseTwelve" aria-expanded="false"
+                            aria-controls="flush-collapseTwelve">
+                        Quản lý phân quyền
+                    </button>
+                </h2>
+                <div id="flush-collapseTwelve" class="accordion-collapse collapse"
+                     aria-labelledby="flush-headingTwelve" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Đây là nơi quản lý <code> phân quyền</code></div>
+                </div>
+            </div>
+
+            <!--Sale-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThirdteen">
+                    <button class="accordion-button collapsed text" data-type="saleList" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseThirdteen"
+                            aria-expanded="false" aria-controls="flush-collapseThirdteen">
+                        Quản lý giảm giá
+                    </button>
+                </h2>
+                <div id="flush-collapseThirdteen" class="accordion-collapse collapse"
+                     aria-labelledby="flush-headingThirdteen" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Đây là nơi quản lý <code> giảm giá</code></div>
+                </div>
+            </div>
+
+            <!--Stock item-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFourteen">
+                    <button class="accordion-button collapsed text" data-type="stockItemList" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseFourteen" aria-expanded="false"
+                            aria-controls="flush-collapseFourteen">
+                        Quản lý màu sắc kích cỡ + số lượng
+                    </button>
+                </h2>
+                <div id="flush-collapseFourteen" class="accordion-collapse collapse"
+                     aria-labelledby="flush-headingFourteen" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Đây là nơi quản lý <code> các kiểu màu sắc , kích cỡ,số lượng sản
+                        phẩm</code></div>
+                </div>
+            </div>
+
+
+        </div>
 
 
     </aside>
@@ -298,43 +317,111 @@
                 <label for="type-select">Loại sản phẩm:</label>
                 <select id="type-select" name="typestatistics" onchange="selectTedtable()">
                     <option value="">Chọn hình thức</option>
-                    <option value="productsSoldByMonth">Sản phẩm bán chạy nhất tháng</option>
-                    <option value="aothun">Áo thun</option>
-                    <option value="aobalo">Áo ba lỗ</option>
-                    <option value="quandai">Quần dài</option>
-                    <option value="quanngan">Quần ngắn</option>
-                    <option value="khac">Khác</option>
+                    <option value="productsSoldByMonth">5 Sản phẩm bán chạy nhất tháng</option>
+                    <option value="productsSoldByYear">5 Sản phẩm bán chạy nhất năm</option>
+                    <option value="totalProductsSoldByMonth">Các sản phẩm bán chạy nhất tháng</option>
+                    <option value="totalProductsSoldByYear">Các sản phẩm bán chạy nhất năm</option>
+                    <option value="recentFiveMonthRevenue">Doanh thu 5 tháng gần nhất</option>
+                    <option value="monthRevenue">Doanh thu theo tháng</option>
                 </select>
             </div>
 
             <div id="table-container">
-                <div id="productsSoldByMonthTable" style="display: none" class="typetable" data-type="productsSoldByMonth">
+
+                <%--5 sản phẩm bán chạy nhất tháng--%>
+                <div id="productsSoldByMonthTable" style="display: none" class="typetable"
+                     data-type="productsSoldByMonth">
                     <!-- Table for productsSoldByMonth data -->
-                    <table border="1">
+                    <label for="soldByMonth">Chọn tháng:</label>
+                    <input id="soldByMonth" type="date" value=""
+                           onchange="productsSoldByMonthAjaxRequest('soldByMonth','productsSoldByMonth','productsTable')"/>
+
+                    <table id="productsTable" border="1">
                         <tr>
-                            <th>Tháng</th>
+                            <th>ID Sản Phẩm</th>
                             <th>Số lượng sản phẩm</th>
                         </tr>
+
+                        <!-- Add rows dynamically based on data -->
+                    </table>
+                </div>
+
+                <%--5 sản phẩm bán chạy nhất năm--%>
+                <div class="typetable" style="display: none" data-type="productsSoldByYear">
+                    <!-- Table for aothun data -->
+
+                    <label for="soldByYear">Chọn tháng:</label>
+                    <input id="soldByYear" type="date"
+                           onchange="productsSoldByMonthAjaxRequest('soldByYear','productsSoldByYear','productsSoldByYearTable')"/>
+
+                    <table id="productsSoldByYearTable" border="1">
                         <tr>
-                            <th>2</th>
-                            <th>1948y</th>
+                            <th>ID Sản Phẩm</th>
+                            <th>Số lượng sản phẩm</th>
                         </tr>
                         <!-- Add rows dynamically based on data -->
                     </table>
                 </div>
 
-                <div id="aothunTable" class="typetable" style="display: none" data-type="aothun">
-                    <!-- Table for aothun data -->
-                    <table border="1">
+                <%--Tổng sản phẩm bán ra theo tháng--%>
+                <div class="typetable" style="display: none" data-type="totalProductsSoldByMonth">
+
+                    <label for="thirdDatePicker">Chọn tháng:</label>
+                    <input id="thirdDatePicker" type="date"
+                           onchange="productsSoldByMonthAjaxRequest('threeDatePicker','totalProductsSoldByMonth','totalProductsSoldByMonthTable')"/>
+
+                    <table id="totalProductsSoldByMonthTable" border="1">
                         <tr>
-                            <th>Chiều dài</th>
-                            <th>Chiều rộng</th>
+                            <th>ID Sản Phẩm</th>
+                            <th>Số lượng sản phẩm</th>
                         </tr>
+
+                    </table>
+                </div>
+
+                <%--Tổng sản phẩm bán ra theo năm--%>
+                <div class="typetable" style="display: none" data-type="totalProductsSoldByYear">
+
+                    <label for="fourthDatePicker">Chọn tháng:</label>
+                    <input id="fourthDatePicker" type="date"
+                           onchange="productsSoldByMonthAjaxRequest('fourthDatePicker','totalProductsSoldByYear','totalProductsSoldByYearTable')"/>
+
+                    <table id="totalProductsSoldByYearTable" border="1">
                         <tr>
-                            <th>2</th>
-                            <th>asdfasdf</th>
+                            <th>ID Sản Phẩm</th>
+                            <th>Số lượng sản phẩm</th>
                         </tr>
-                        <!-- Add rows dynamically based on data -->
+
+                    </table>
+                </div>
+
+                <%--Tổng doanh thu 5 tháng gần nhất--%>
+                <div class="typetable" style="display: none" data-type="recentFiveMonthRevenue">
+
+                    <label for="fifthDatePicker">Chọn tháng:</label>
+                    <input id="fifthDatePicker" type="date"
+                           onchange="productsSoldByMonthAjaxRequest('fifthDatePicker','recentFiveMonthRevenue','recentFiveMonthRevenueTable')"/>
+
+                    <table id="recentFiveMonthRevenueTable" border="1">
+                        <tr>
+                            <th>Tháng</th>
+                            <th>Doanh thu</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <%--Doanh thu theo tháng--%>
+                <div class="typetable" style="display: none" data-type="monthRevenue">
+
+                    <label for="sixthDatePicker">Chọn tháng:</label>
+                    <input id="sixthDatePicker" type="date"
+                           onchange="productsSoldByMonthAjaxRequest('sixthDatePicker','monthRevenue','monthRevenueTable')"/>
+
+                    <table id="monthRevenueTable" border="1">
+                        <tr>
+                            <th>Tháng</th>
+                            <th>Doanh thu</th>
+                        </tr>
                     </table>
                 </div>
 
@@ -356,8 +443,6 @@
 
 
         </div>
-
-
 
 
         <!--Account-->
@@ -393,7 +478,8 @@
                         <td>${account.password}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post"
+                                      onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="accountID" value="${account.id}"/>
                                     <input type="hidden" name="action" value="account_btnDelete"/>
@@ -415,7 +501,8 @@
             <!--Update Account-->
             <div id="update-user" class="updatemodal flex-center">
                 <div class="update-modal">
-                    <form class="form__update" action="${pageContext.request.contextPath}/AdminManagerServlet" method="post">
+                    <form class="form__update" action="${pageContext.request.contextPath}/AdminManagerServlet"
+                          method="post">
                         <span class="close">&times;</span>
                         <h2 class="text-center" style="padding: 16px 0">CẬP NHẬT NGƯỜI DÙNG</h2>
 
@@ -469,7 +556,8 @@
             <!--Add Account-->
             <div id="modal-add-account" class="addmodal flex-center">
                 <div class="add-modal">
-                    <form class="form__add" action="${pageContext.request.contextPath}/AdminManagerServlet" method="post">
+                    <form class="form__add" action="${pageContext.request.contextPath}/AdminManagerServlet"
+                          method="post">
                         <span class="close clsadduser">&times;</span>
                         <h2 class="text-center" style="padding: 16px 0">THÊM NGƯỜI DÙNG</h2>
 
@@ -537,16 +625,16 @@
             <table class="item-table bang table">
                 <thead>
                 <tr>
-                    <th  scope="col">ID</th>
-                    <th  scope="col">Tên Sản Phẩm</th>
-                    <th  scope="col">Loại Sản Phẩm</th>
-                    <th  scope="col">Bộ Sưu Tập</th>
-                    <th  scope="col">Vật Liệu</th>
-                    <th  scope="col">Sản Phẩm Mới</th>
-                    <th  scope="col">Sản Phẩm Hot</th>
-                    <th  scope="col">Giá</th>
-                    <th  scope="col">Năm Sản Xuất</th>
-                    <th  scope="col">Action</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Tên Sản Phẩm</th>
+                    <th scope="col">Loại Sản Phẩm</th>
+                    <th scope="col">Bộ Sưu Tập</th>
+                    <th scope="col">Vật Liệu</th>
+                    <th scope="col">Sản Phẩm Mới</th>
+                    <th scope="col">Sản Phẩm Hot</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Năm Sản Xuất</th>
+                    <th scope="col">Action</th>
                 </tr>
 
 
@@ -582,7 +670,8 @@
                         <td>${item.year_produce}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post"
+                                      onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="itemID" value="${item.id}"/>
                                     <input type="hidden" name="action" value="item_btnDelete"/>
@@ -802,7 +891,8 @@
                         <td>${customer.address}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post"
+                                      onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="customerID" value="${customer.id}"/>
                                     <input type="hidden" name="action" value="customer_btnDelete"/>
@@ -950,7 +1040,8 @@
                         <td>${discountCard.discount_percentage}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post"
+                                      onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="discountCardID" value="${discountCard.id}"/>
                                     <input type="hidden" name="action" value="discountCard_btnDelete"/>
@@ -1083,7 +1174,8 @@
                         <td>${itemCollection.name}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post"
+                                      onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="itemCollectionID" value="${itemCollection.id}"/>
                                     <input type="hidden" name="action" value="itemCollection_btnDelete"/>
@@ -1181,7 +1273,8 @@
                         <td>${itemImage.image_url}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post"
+                                      onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="itemImageID" value="${itemImage.id}"/>
                                     <input type="hidden" name="action" value="itemImage_btnDelete"/>
@@ -1298,7 +1391,8 @@
                         <td>${itemMaterial.name}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post"
+                                      onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="itemMaterialID" value="${itemMaterial.id}"/>
                                     <input type="hidden" name="action" value="itemMaterial_btnDelete"/>
@@ -1408,7 +1502,8 @@
                         <td>${order.note}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post"
+                                      onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="orderID" value="${order.id}"/>
                                     <input type="hidden" name="action" value="order_btnDelete"/>
@@ -1416,7 +1511,8 @@
                                 <button class="btnHD btnUpdateOrder"
                                         data-orderID="${order.id}" data-orderCustomerID="${order.customer.id}"
                                         data-orderTotal="${order.total}" data-orderDatePurchase="${order.date_purchase}"
-                                        data-orderDiscountCardID="${order.discountCard.id}" data-orderStatus="${order.order_status}"
+                                        data-orderDiscountCardID="${order.discountCard.id}"
+                                        data-orderStatus="${order.order_status}"
                                         data-orderAddress="${order.address}" data-orderNote="${order.note}"
                                 >Sửa
                                 </button>
@@ -1631,7 +1727,8 @@
                         <td>${orderDetail.total}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post"
+                                      onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="orderDetailID" value="${orderDetail.id}"/>
                                     <input type="hidden" name="action" value="orderDetail_btnDelete"/>
@@ -1829,7 +1926,8 @@
                         <td>${itemType.name}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post"
+                                      onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="itemTypeID" value="${itemType.id}"/>
                                     <input type="hidden" name="action" value="itemType_btnDelete"/>
@@ -1927,7 +2025,8 @@
                         <td>${permission.level}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post"
+                                      onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="permissionID" value="${permission.id}"/>
                                     <input type="hidden" name="action" value="permission_btnDelete"/>
@@ -2047,7 +2146,8 @@
                         <td>${sale.sale_percentage}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post"
+                                      onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="saleID" value="${sale.id}"/>
                                     <input type="hidden" name="action" value="sale_btnDelete"/>
@@ -2201,7 +2301,8 @@
                         <td>${stockItem.amount}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">
+                                <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post"
+                                      onsubmit="handleDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" name="stockItemID" value="${stockItem.id}"/>
                                     <input type="hidden" name="action" value="stockItem_btnDelete"/>
@@ -2340,7 +2441,7 @@
 <script src="${pageContext.request.contextPath}/Views/Admin/vinh_main.js"></script>
 
 <script>
-    function test(){
+    function test() {
         $.ajax({
             type: "POST",
             url: contextPath + "/StatisticServlet",
@@ -2401,8 +2502,14 @@
     }
 
 </script>
+
+<script>
+    const adminManagerContextPath = '${pageContext.request.contextPath}';
+</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="${pageContext.request.contextPath}/Views/User/dest/tuh.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 </body>
 </html>

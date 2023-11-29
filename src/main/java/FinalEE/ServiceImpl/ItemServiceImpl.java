@@ -4,6 +4,7 @@ import FinalEE.Entity.Item;
 import FinalEE.Repository.ItemRepository;
 import FinalEE.Service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,9 +20,14 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private ItemRepository itemRepository;
+    public static enum SortOrder {
+        ASC, DESC
+    }
 
     public ItemServiceImpl() {
     }
+
+
 
     @Override
     public boolean create(Item item) {
@@ -121,42 +127,98 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getItemsByItemCollectionIDAndPageNumber(int pageNumber,int itemCollectionID){
-        int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize); // Trừ 1 vì số trang bắt đầu từ 0
-        Page<Item> itemPage=itemRepository.findAllByItemCollectionId(itemCollectionID, pageable);
-        return itemPage.getContent();
+    public List<Item> getItemsByItemCollectionIDAndPageNumber(int pageNumber,int itemCollectionID,String sort,SortOrder sortOrder){
+        try{
+            Sort sortBy;
+            if(sortOrder==SortOrder.DESC){
+                sortBy=Sort.by(sort).descending();
+            }else{
+                sortBy=Sort.by(sort).ascending();
+            }
+            int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize,sortBy); // Trừ 1 vì số trang bắt đầu từ 0
+            Page<Item> itemPage=itemRepository.findAllByItemCollectionId(itemCollectionID, pageable);
+            return itemPage.getContent();
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override
-    public List<Item> getItemsByItemTypeIDAndPageNumber(int pageNumber, int itemTypeID) {
-        int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize); // Trừ 1 vì số trang bắt đầu từ 0
-        Page<Item> itemPage=itemRepository.findAllByItemTypeId(itemTypeID,pageable);
-        return itemPage.getContent();
+    public List<Item> getItemsByItemTypeIDAndPageNumber(int pageNumber, int itemTypeID,String sort,SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if(sortOrder==SortOrder.DESC){
+                sortBy=Sort.by(sort).descending();
+            }else{
+                sortBy=Sort.by(sort).ascending();
+            }
+            int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize,sortBy); // Trừ 1 vì số trang bắt đầu từ 0
+            Page<Item> itemPage=itemRepository.findAllByItemTypeId(itemTypeID,pageable);
+            return itemPage.getContent();
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override
-    public List<Item> getItemsByItemMaterialIDAndPageNumber(int pageNumber, int itemMaterialID) {
-        int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize); // Trừ 1 vì số trang bắt đầu từ 0
-        Page<Item> itemPage=itemRepository.findAllByItemMaterialId(itemMaterialID,pageable);
-        return itemPage.getContent();
+    public List<Item> getItemsByItemMaterialIDAndPageNumber(int pageNumber, int itemMaterialID,String sort,SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if(sortOrder==SortOrder.DESC){
+                sortBy=Sort.by(sort).descending();
+            }else{
+                sortBy=Sort.by(sort).ascending();
+            }
+            int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize,sortBy); // Trừ 1 vì số trang bắt đầu từ 0
+            Page<Item> itemPage=itemRepository.findAllByItemMaterialId(itemMaterialID,pageable);
+            return itemPage.getContent();
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override
-    public List<Item> getItemsByNameAndPageNumber(int pageNumber, String name) {
-        int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize); // Trừ 1 vì số trang bắt đầu từ 0
-        Page<Item> itemPage=itemRepository.findAllByNameContains(name,pageable);
-        return itemPage.getContent();
+    public List<Item> getItemsByNameAndPageNumber(int pageNumber, String name,String sort,SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if(sortOrder==SortOrder.DESC){
+                sortBy=Sort.by(sort).descending();
+            }else{
+                sortBy=Sort.by(sort).ascending();
+            }
+
+            int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize,sortBy); // Trừ 1 vì số trang bắt đầu từ 0
+            Page<Item> itemPage=itemRepository.findAllByNameContains(name,pageable);
+            return itemPage.getContent();
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
-    public List<Item> getItemsByPageNumber(int pageNumber){
-        int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
-        Page<Item> itemPage=itemRepository.findAll(pageable);
-        return itemPage.getContent();
+    public List<Item> getItemsByPageNumber(int pageNumber,String sort,SortOrder sortOrder){
+        try{
+            Sort sortBy;
+            if(sortOrder==SortOrder.DESC){
+                sortBy=Sort.by(sort).descending();
+            }else{
+                sortBy=Sort.by(sort).ascending();
+            }
+            int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize,sortBy);
+            Page<Item> itemPage=itemRepository.findAll(pageable);
+            return itemPage.getContent();
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
 }

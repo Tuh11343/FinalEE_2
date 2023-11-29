@@ -283,5 +283,6 @@ To change this template use File | Settings | File Templates.
 <script>
     const contextPath = '${pageContext.request.contextPath}';
 </script>
+
 <script src="${pageContext.request.contextPath}/Views/User/js/validate.js"></script>
 <script src="${pageContext.request.contextPath}/Views/User/dest/tuh.js"></script>
