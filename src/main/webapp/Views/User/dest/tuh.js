@@ -63,6 +63,7 @@ function signUpAjaxRequest() {
             } else if (data.success === 1) {
                 //Announce
                 location.reload();
+                //hiển thị thông báo
             } else if (data.passwordIncorrect === 1) {
                 console.log("Password not correct");
             }

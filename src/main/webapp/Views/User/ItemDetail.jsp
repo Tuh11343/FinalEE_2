@@ -130,7 +130,8 @@
                                                         "X-Requested-With": "XMLHttpRequest"
                                                     },
                                                     success: function () {
-                                                        console.log(1);
+                                                        alert("thêm thành công");
+
                                                     }
                                                 });
                                             }
