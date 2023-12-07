@@ -96,6 +96,8 @@ function validate() {
   if (Object.keys(errObj).length > 0) {
     return false;
   } else {
-    return true;
+    signUpAjaxRequest();
+
+    return false;
   }
 }
