@@ -33,10 +33,10 @@
         <servlet-name>ProfileUserServlet</servlet-name>
         <servlet-class>FinalEE.Controller.ProfileServlet</servlet-class>
     </servlet>
-    
+
     <servlet>
-        <servlet-name>StatisticServlet</servlet-name>
-        <servlet-class>FinalEE.Controller.StatisticServlet</servlet-class>
+        <servlet-name>MailTest</servlet-name>
+        <servlet-class>FinalEE.Controller.MailTest</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -75,8 +75,9 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>StatisticServlet</servlet-name>
-        <url-pattern>/StatisticServlet</url-pattern>
+        <servlet-name>MailTest</servlet-name>
+        <url-pattern>/MailTest</url-pattern>
     </servlet-mapping>
+
     
 </web-app>

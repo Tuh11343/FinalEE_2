@@ -114,31 +114,42 @@
                                 <td>${stockItem.color}, ${stockItem.size}</td>
                                 <td class="needHover" style="text-align: right"><b>${stockItem.amount}</b> CH còn
                                 </td>
-                                <td style="text-align: right">
-                                    <a class=" select-buy" id="select-buy-${stockItem.id}"
-                                       onclick="sendAjaxRequest('${stockItem.id}')">Chọn mua
-                                        <i class="fa fa-plus-circle"></i>
-                                        <script>
-                                            function sendAjaxRequest(stockItemID) {
-                                                $.ajax({
-                                                    type: "POST",
-                                                    url: "${pageContext.request.contextPath}/ItemDetailServlet",
-                                                    data: {
-                                                        stockItemID: stockItemID
-                                                    },
-                                                    headers: {
-                                                        "X-Requested-With": "XMLHttpRequest"
-                                                    },
-                                                    success: function () {
-                                                        console.log(1);
-                                                    }
-                                                });
-                                            }
-                                        </script>
-                                    </a>
+                                <c:if test="${stockItem.amount > 0}">
+                                    <td style="text-align: right">
+                                        <a class=" select-buy" id="select-buy-${stockItem.id}"
+                                           onclick="sendAjaxRequest('${stockItem.id}')">Chọn mua
+                                            <i class="fa fa-plus-circle"></i>
+                                            <script>
+                                                function sendAjaxRequest(stockItemID) {
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "${pageContext.request.contextPath}/ItemDetailServlet",
+                                                        data: {
+                                                            stockItemID: stockItemID
+                                                        },
+                                                        headers: {
+                                                            "X-Requested-With": "XMLHttpRequest"
+                                                        },
+                                                        success: function () {
+                                                            console.log(1);
+                                                        }
+                                                    });
+                                                }
+                                            </script>
+                                        </a>
+                                    </td>
+                                </c:if>
 
+                                <c:if test="${stockItem.amount <= 0}">
 
-                                </td>
+                                    <td style="text-align: right">
+                                        <a class=" select-buy" id="select-buy-${stockItem.id}">Hết hàng
+                                            <i style="visibility: hidden" class="fa fa-plus-circle"></i>
+                                        </a>
+                                    </td>
+
+                                </c:if>
+
                             </tr>
                         </c:forEach>
                         </tbody>
