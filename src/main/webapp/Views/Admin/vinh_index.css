@@ -1,11 +1,11 @@
 * {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-    box-sizing: border-box
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
 }
 
 article,
@@ -19,102 +19,102 @@ hgroup,
 menu,
 nav,
 section {
-    display: block
+  display: block;
 }
 
 body {
-    line-height: 1
+  line-height: 1;
 }
 
 ol,
 ul {
-    list-style: none
+  list-style: none;
 }
 
 blockquote,
 q {
-    quotes: none
+  quotes: none;
 }
 
 blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-    content: "";
-    content: none
+  content: "";
+  content: none;
 }
 
 table {
-    border-collapse: collapse;
-    border-spacing: 0
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 :root {
-    --gap: 30px;
-    --max-width-page: 2560px;
-    --max-width-container-fluid: 1920px;
-    --max-width-container: calc(1400px + calc(var(--gap) * 2));
-    --main-cl: #ee4266;
-    --yellow-cl: #f9f6ee;
-    --white-cl: #ffffff;
-    --black-cl: #141414;
-    --gray-cl: #888;
-    --fs-h1: 6.4rem;
-    --lh1-h1: 5.4rem;
-    --fs-h2: 5.6rem;
-    --lh1-h2: 4.5rem;
-    --fs-body: 1.8rem;
-    --lh-body: 2rem;
-    --height-header: 88px;
-    --height-button: 42px;
-    --pd-section: 120px;
-    --t: 0.4s;
-    --cubic: cubic-bezier(0.59, 0.29, 0.15, 0.93)
+  --gap: 30px;
+  --max-width-page: 2560px;
+  --max-width-container-fluid: 1920px;
+  --max-width-container: calc(1400px + calc(var(--gap) * 2));
+  --main-cl: #ee4266;
+  --yellow-cl: #f9f6ee;
+  --white-cl: #ffffff;
+  --black-cl: #141414;
+  --gray-cl: #888;
+  --fs-h1: 6.4rem;
+  --lh1-h1: 5.4rem;
+  --fs-h2: 5.6rem;
+  --lh1-h2: 4.5rem;
+  --fs-body: 1.8rem;
+  --lh-body: 2rem;
+  --height-header: 88px;
+  --height-button: 42px;
+  --pd-section: 120px;
+  --t: 0.4s;
+  --cubic: cubic-bezier(0.59, 0.29, 0.15, 0.93);
 }
 
 @media screen and (max-width: 1199.98px) {
-    :root {
-        --container-max-width: 1140px
-    }
+  :root {
+    --container-max-width: 1140px;
+  }
 }
 
 @media screen and (max-width: 991.98px) {
-    :root {
-        --container-max-width: 960px
-    }
+  :root {
+    --container-max-width: 960px;
+  }
 }
 
 @media screen and (max-width: 767.98px) {
-    :root {
-        --container-max-width: 720px;
-        --gap: 16px;
-        --fs-h1: 6rem;
-        --lh1-h1: 6.8rem;
-        --fs-h2: 5.5rem;
-        --lh1-h2: 6.2rem;
-        --fs-body: 1.7rem;
-        --lh-body: 1.9rem
-    }
+  :root {
+    --container-max-width: 720px;
+    --gap: 16px;
+    --fs-h1: 6rem;
+    --lh1-h1: 6.8rem;
+    --fs-h2: 5.5rem;
+    --lh1-h2: 6.2rem;
+    --fs-body: 1.7rem;
+    --lh-body: 1.9rem;
+  }
 }
 
 @media screen and (max-width: 575.98px) {
-    :root {
-        --container-max-width: 100%
-    }
+  :root {
+    --container-max-width: 100%;
+  }
 }
 
 html {
-    font-size: 62.5%
+  font-size: 62.5%;
 }
 
 body {
-    width: 100%;
-    max-width: var(--max-width-page);
-    margin: auto;
-    scroll-behavior: smooth;
-    font-family: pr;
-    font-size: var(--fs-body);
-    line-height: var(--lh-body)
+  width: 100%;
+  max-width: var(--max-width-page);
+  margin: auto;
+  scroll-behavior: smooth;
+  font-family: pr;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
 }
 /*
 body.--disable-scroll {
@@ -123,56 +123,53 @@ body.--disable-scroll {
 }*/
 
 body .container-fluid {
-    width: 100%;
-    max-width: var(--max-width-container-fluid);
-    padding-right: var(--gap);
-    padding-left: var(--gap);
-    margin-right: auto;
-    margin-left: auto;
-    position: relative
+  width: 100%;
+  max-width: var(--max-width-container-fluid);
+  padding-right: var(--gap);
+  padding-left: var(--gap);
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
 }
 
 body .container {
-    width: 100%;
-    max-width: var(--max-width-container);
-    padding-right: var(--gap);
-    padding-left: var(--gap);
-    margin-right: auto;
-    margin-left: auto;
-    position: relative
+  width: 100%;
+  max-width: var(--max-width-container);
+  padding-right: var(--gap);
+  padding-left: var(--gap);
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
 }
 
 body .main {
-    position: relative
-
+  position: relative;
 }
 
 body .main section {
-    padding: var(--pd-section) 0
+  padding: var(--pd-section) 0;
 }
 ::-webkit-scrollbar {
-    width: 5px;
+  width: 5px;
 }
 ::-webkit-scrollbar-track {
-    background-color: var(--gray-cl);
+  background-color: var(--gray-cl);
 }
 ::-webkit-scrollbar-thumb {
-       background-color: var(--main-cl);
-
+  background-color: var(--main-cl);
 }
 
-
 img {
-    max-width: 100%;
-    height: auto;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-    display: block;
-    outline: 0;
-    object-fit: contain
+  max-width: 100%;
+  height: auto;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  display: block;
+  outline: 0;
+  object-fit: contain;
 }
 /*
 img.--center {
@@ -181,12 +178,12 @@ img.--center {
 }*/
 
 a {
-    text-decoration: none;
-    outline: 0
+  text-decoration: none;
+  outline: 0;
 }
 
 strong {
-    font-family: ab
+  font-family: ab;
 }
 /*
 .--hidden {
@@ -194,345 +191,355 @@ strong {
 }*/
 
 sub {
-    vertical-align: sub;
-    font-size: smaller
+  vertical-align: sub;
+  font-size: smaller;
 }
 
 sup {
-    vertical-align: super;
-    font-size: smaller
+  vertical-align: super;
+  font-size: smaller;
 }
 
 /*! Flickity v2.3.0
 https://flickity.metafizzy.co
 ---------------------------------------------- */
 .flickity-enabled {
-    position: relative
+  position: relative;
 }
 
 .flickity-enabled:focus {
-    outline: none
+  outline: none;
 }
 
 .flickity-viewport {
-    overflow: hidden;
-    position: relative;
-    height: 100%
+  overflow: hidden;
+  position: relative;
+  height: 100%;
 }
 
 .flickity-slider {
-    position: absolute;
-    width: 100%;
-    height: 100%
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .flickity-enabled.is-draggable {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .flickity-enabled.is-draggable .flickity-viewport {
-    cursor: move;
-    cursor: -webkit-grab;
-    cursor: grab
+  cursor: move;
+  cursor: -webkit-grab;
+  cursor: grab;
 }
 
 .flickity-enabled.is-draggable .flickity-viewport.is-pointer-down {
-    cursor: -webkit-grabbing;
-    cursor: grabbing
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
 }
 
 .flickity-button {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.75);
-    border: none;
-    color: #333
+  position: absolute;
+  background: rgba(255, 255, 255, 0.75);
+  border: none;
+  color: #333;
 }
 
 .flickity-button:hover {
-    background: white;
-    cursor: pointer
+  background: white;
+  cursor: pointer;
 }
 
 .flickity-button:focus {
-    outline: none;
-    box-shadow: 0 0 0 5px #19f
+  outline: none;
+  box-shadow: 0 0 0 5px #19f;
 }
 
 .flickity-button:active {
-    opacity: 0.6
+  opacity: 0.6;
 }
 
 .flickity-button:disabled {
-    opacity: 0.3;
-    cursor: auto;
-    pointer-events: none
+  opacity: 0.3;
+  cursor: auto;
+  pointer-events: none;
 }
 
 .flickity-button-icon {
-    fill: currentColor
+  fill: currentColor;
 }
 
 .flickity-prev-next-button {
-    top: 50%;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    transform: translateY(-50%)
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  transform: translateY(-50%);
 }
 
 .flickity-prev-next-button.previous {
-    left: 10px
+  left: 10px;
 }
 
 .flickity-prev-next-button.next {
-    right: 10px
+  right: 10px;
 }
 
 .flickity-rtl .flickity-prev-next-button.previous {
-    left: auto;
-    right: 10px
+  left: auto;
+  right: 10px;
 }
 
 .flickity-rtl .flickity-prev-next-button.next {
-    right: auto;
-    left: 10px
+  right: auto;
+  left: 10px;
 }
 
 .flickity-prev-next-button .flickity-button-icon {
-    position: absolute;
-    left: 20%;
-    top: 20%;
-    width: 60%;
-    height: 60%
+  position: absolute;
+  left: 20%;
+  top: 20%;
+  width: 60%;
+  height: 60%;
 }
 
 .flickity-page-dots {
-    position: absolute;
-    width: 100%;
-    bottom: -25px;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    text-align: center;
-    line-height: 1
+  position: absolute;
+  width: 100%;
+  bottom: -25px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+  line-height: 1;
 }
 
 .flickity-rtl .flickity-page-dots {
-    direction: rtl
+  direction: rtl;
 }
 
 .flickity-page-dots .dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin: 0 8px;
-    background: #333;
-    border-radius: 50%;
-    opacity: 0.25;
-    cursor: pointer
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 8px;
+  background: #333;
+  border-radius: 50%;
+  opacity: 0.25;
+  cursor: pointer;
 }
 
 .flickity-page-dots .dot.is-selected {
-    opacity: 1
+  opacity: 1;
 }
 
 .header {
-    height: 70px;
-    background: white   ;
-    border-bottom:1px solid #a5a5a5ad;
-    position:relative;
-    z-index:50;
+  height: 70px;
+  background: white;
+  border-bottom: 1px solid #a5a5a5ad;
+  position: relative;
+  z-index: 50;
 }
-.header.scroll{
-        height: 40px;
-        position: sticky;
-        top: 0;
-        left: 0;
-
+.header.scroll {
+  height: 40px;
+  position: sticky;
+  top: 0;
+  left: 0;
 }
 .header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%
-
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
 }
-.header .container-fluid{
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
-        height: 100%;
-        position:relative;
+.header .container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  position: relative;
 }
-.header__left{
-height:100%
+.header__left {
+  height: 100%;
 }
-.header__left .logo{
-    height:100%;
+.header__left .logo {
+  height: 100%;
 }
-.header__left .logo img{
-height:100%;
+.header__left .logo img {
+  height: 100%;
 }
-.header__center{
-position:absolute;
-left: 50%;
-transform:translateX(-50%)
+.header__center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
-.header__center .title{
-color: var(--main-cl);
-text-transform:uppercase;
+.header__center .title {
+  color: var(--main-cl);
+  text-transform: uppercase;
 }
-.header__right{
-height:100%;}
-.header__right--account{
-height:100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    position: relative;
-    }
-.header__right--account    .accdopdown{
-       position: absolute;
-       left: 0;
-       bottom  :-20px;
-       width: 100%;
-       background: #a7a6a673;
-       padding: 7px  5px;
-     opacity: 0;
-         visibility: hidden;
-         pointer-events: none;
-           transition: var(--t);
-             -webkit-transition: var(--t);
-             -moz-transition: var(--t);
-             -ms-transition: var(--t);
-             -o-transition: var(--t);
-       margin-bottom: 10px;
-
+.header__right {
+  height: 100%;
 }
-.header__right--account:hover    .accdopdown{
-opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: var(--t);
-    -webkit-transition: var(--t);
-    -moz-transition: var(--t);
-    -ms-transition: var(--t);
-    -o-transition: var(--t);
-    margin-bottom   : 0;
-    border-radius:2px;
-
-
-
+.header__right--account {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
 }
-.header__right--account    .accdopdown a:hover{
-color: var(--main-cl);
-transition: var(--t);
-    -webkit-transition: var(--t);
-    -moz-transition: var(--t);
-    -ms-transition: var(--t);
-    -o-transition: var(--t);
+.header__right--account .accdopdown {
+  position: absolute;
+  left: 0;
+  bottom: -20px;
+  width: 100%;
+  background: #a7a6a673;
+  padding: 7px 5px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: var(--t);
+  -webkit-transition: var(--t);
+  -moz-transition: var(--t);
+  -ms-transition: var(--t);
+  -o-transition: var(--t);
+  margin-bottom: 10px;
 }
-.header__right--account    .accdopdown a:hover svg{
-fill: var(--main-cl);
-transition: var(--t);
-    -webkit-transition: var(--t);
-    -moz-transition: var(--t);
-    -ms-transition: var(--t);
-    -o-transition: var(--t);
+.header__right--account:hover .accdopdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: var(--t);
+  -webkit-transition: var(--t);
+  -moz-transition: var(--t);
+  -ms-transition: var(--t);
+  -o-transition: var(--t);
+  margin-bottom: 0;
+  border-radius: 2px;
+}
+.header__right--account .accdopdown a:hover {
+  color: var(--main-cl);
+  transition: var(--t);
+  -webkit-transition: var(--t);
+  -moz-transition: var(--t);
+  -ms-transition: var(--t);
+  -o-transition: var(--t);
+}
+.header__right--account .accdopdown a:hover svg {
+  fill: var(--main-cl);
+  transition: var(--t);
+  -webkit-transition: var(--t);
+  -moz-transition: var(--t);
+  -ms-transition: var(--t);
+  -o-transition: var(--t);
 }
 /*# sourceMappingURL=style.min.css.map */
-#add_itemImageItemID,#update_itemImageItemID,
-#update_orderDetailItemID,#add_orderDetailItemID,
-#update_saleItemID,#add_saleItemID,
-#update_stockItemItemID,#add_stockItemItemID{
-    max-width: 100px;
+#add_itemImageItemID,
+#update_itemImageItemID,
+#update_orderDetailItemID,
+#add_orderDetailItemID,
+#update_saleItemID,
+#add_saleItemID,
+#update_stockItemItemID,
+#add_stockItemItemID {
+  max-width: 100px;
   text-overflow: ellipsis;
-
 }
 .accordion-body {
+}
+.text {
+  font-size: 20px;
+}
+.accordion-item {
+  margin-bottom: 6px;
+}
+.main {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
 
+.left {
+  position: relative;
+  width: 17%;
+  border-right: 1px solid #000;
+  display: block;
 }
-.text{
-    font-size: 20px;
+.left .accordion {
+  width: 100%;
+  position: sticky;
+  top: 40px;
+  left: 0;
+  background-color: #f2f2f2;
+  text-align: left;
+  display: block;
+  overflow-y: auto;
+  height: calc(100vh - 70px);
 }
-.accordion-item{
-    margin-bottom: 6px;
+.left .accordion.scroll {
+  height: calc(100vh - 40px);
 }
-.main{
-    display:flex;
-    flex-direction: row;
-    width:100%;
+.center {
+  width: calc(100% - 17%);
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  flex: 1;
 }
+.bang {
+  width: 100%;
+  max-height: 100vh;
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+.table-data {
+  display: none;
+  width: 100%;
+}
+.table-data .header-table {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 49px;
+  position: relative;
+  background: #fff;
+}
+.table-data .header-table.scroll {
+  position: sticky;
+  top: 40px;
 
-.left{
-    position:relative;
-    width:17%;
-    border-right: 1px solid #000;
-    display:block;
-
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.36);
+  -webkit-box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.36);
+  -moz-box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.36);
 }
-.left  .accordion{
-    width:100%;
-    position: sticky;
-    top: 40px;
-    left: 0;
-    background-color: #f2f2f2;
-    text-align: left;
-     display: block;
-    overflow-y: auto;
-    height: calc(100vh - 70px);
-
-}
-.left  .accordion.scroll{
-    height: calc(100vh - 40px);
-}
-.center{
-    width:calc(100% - 17%);
-    flex:1;
-    padding:24px;
-    display: flex;
-    justify-content: center;
-    flex:1;
-
-}
-.bang{
-    width: 100%;
-    max-height: 100vh;
-    overflow-x: scroll;
-    overflow-y: scroll;
-}
-.table-data{
-    display:none;
-    width: 100%;
-}
-.table-data>h2{
-    text-align: center;
+.table-data > h2 {
+  text-align: center;
 }
 /*.account-table,
 .report-table{
     display:none;
 }*/
-th{
-    text-align: left;
-    padding:10px;
+th {
+  text-align: left;
+  padding: 10px;
 }
 .bang th,
 .bang td {
-    border: 1px solid black;
-    padding: 5px;
-    text-align:center   ;
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
 }
-.table-data.active{
-    display:block;
+.table-data.active {
+  display: block;
 }
 .bang tr td {
-    text-align: center;
+  text-align: center;
 }
 /*.bang thead tr th:nth-child(1) {
     width: 20%;
@@ -558,170 +565,166 @@ th{
   padding: 10px;
   cursor: pointer;
 }
-.btnHD{
-    width: 100px;
-    max-height: 100px;
-    padding:10px 5px;
-    border-radius: 15px;
-    color: #fff;
-    transition: 0.2s;
+.btnHD {
+  width: 100px;
+  max-height: 100px;
+  padding: 10px 5px;
+  border-radius: 15px;
+  color: #fff;
+  transition: 0.2s;
 }
-.grpbtn{
-    gap:5px;
-    display:flex;
+.grpbtn {
+  gap: 5px;
+  display: flex;
 }
-.btnAdd{
-    background-color:green;
+.btnAdd {
+  background-color: green;
 }
-.btnDel{
-    background-color:red;
+.btnDel {
+  background-color: red;
 }
-.btnUpdateUser,.btnUpdateItem,.btnUpdateCustomer,.btnUpdateDiscountCard,
-.btnUpdateItemCollection,.btnUpdateItemImage,.btnUpdateItemMaterial,
-.btnUpdateOrder,.btnUpdateOrderDetail,.btnUpdateItemType,
-.btnUpdatePermission,.btnUpdateSale,.btnUpdateStockItem{
-    background-color:aquamarine;
+.btnUpdateUser,
+.btnUpdateItem,
+.btnUpdateCustomer,
+.btnUpdateDiscountCard,
+.btnUpdateItemCollection,
+.btnUpdateItemImage,
+.btnUpdateItemMaterial,
+.btnUpdateOrder,
+.btnUpdateOrderDetail,
+.btnUpdateItemType,
+.btnUpdatePermission,
+.btnUpdateSale,
+.btnUpdateStockItem {
+  background-color: aquamarine;
 }
 
-button:hover{
-    cursor: pointer;
-    color:#514e62;
+button:hover {
+  cursor: pointer;
+  color: #514e62;
 }
-
-
-
-
 
 /*Add user*/
 #modal-add-account {
-    display:none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
-#modal-add-account.active{
-    display:block;
+#modal-add-account.active {
+  display: block;
 }
 
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
 }
-.form__add{
-    margin:16px;
+.form__add {
+  margin: 16px;
 }
 #modal-add-account input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #modal-add-account button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #modal-add-account button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #modal-add-account > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
-
 
 /*Update user*/
 
 #update-user {
-    display:none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
 }
-.form__update{
-    margin:16px;
+.form__update {
+  margin: 16px;
 }
 #update-user input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #update-user button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #update-user button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #update-user > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
-
-
-
-
-
-.form-grp{
-    padding:16px;
+.form-grp {
+  padding: 16px;
 }
-
-
-
 
 /*Update products modal*/
-.update-modal{
-    background-color: var(--bg-color);
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #888;
-    height: 615px;
-    max-width: 600px;
+.update-modal {
+  background-color: var(--bg-color);
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #888;
+  height: 615px;
+  max-width: 600px;
 }
-#update-products{
-    /*    display:none;
+#update-products {
+  /*    display:none;
         position:fixed;
         z-index: 1;
         left: 0;
@@ -731,117 +734,114 @@ button:hover{
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.4);*/
 
-    display:none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 #update-products input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
-    
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #update-products button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #update-products button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #update-products > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 /*Add products modal*/
-.form__add{
-    margin:16px;
+.form__add {
+  margin: 16px;
 }
 #add-products {
-    display:block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
-#add-products.active{
-    display:block;
+#add-products.active {
+  display: block;
 }
 
 #add-products input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #add-products button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #add-products button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #add-products > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 .add-modal {
-    background-color: var(--bg-color);
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #888;
-    height: 615px;
-    max-width: 600px; /* Giới hạn chiều rộng tối đa */
+  background-color: var(--bg-color);
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #888;
+  height: 615px;
+  max-width: 600px; /* Giới hạn chiều rộng tối đa */
 }
-.modal__addproduct{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: 0.4s;
+.modal__addproduct {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.4s;
 }
-.modal__addproduct.active{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: 0.4;
-
+.modal__addproduct.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: 0.4;
 }
 
 /*Update customer*/
-#update-customers{
-    /*    display:none;
+#update-customers {
+  /*    display:none;
         position:fixed;
         z-index: 1;
         left: 0;
@@ -851,107 +851,103 @@ button:hover{
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.4);*/
 
-    display:none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 #update-customers input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
-    width: 300px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
+  width: 300px;
 }
 #update-customers button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #update-customers button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #update-customers > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
-
 
 /*Add customer*/
 #add-customer {
-    display:block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
-#add-customer.active{
-    display:block;
+#add-customer.active {
+  display: block;
 }
 #add-customer input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #add-customer button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #add-customer button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #add-customer > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
-.modal__addCustomer{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: 0.4s;
+.modal__addCustomer {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.4s;
 }
-.modal__addCustomer.active{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: 0.4;
-
+.modal__addCustomer.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: 0.4;
 }
-
 
 /*Update discount*/
-#update-discountCard{
-    /*    display:none;
+#update-discountCard {
+  /*    display:none;
         position:fixed;
         z-index: 1;
         left: 0;
@@ -961,105 +957,103 @@ button:hover{
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.4);*/
 
-    display:none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 #update-discountCard input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
-    width: 300px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
+  width: 300px;
 }
 #update-discountCard button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #update-discountCard button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #update-discountCard > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 /*Add discount*/
 #add-discountCard {
-    display:block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
-#add-discountCard.active{
-    display:block;
+#add-discountCard.active {
+  display: block;
 }
 #add-discountCard input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #add-discountCard button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #add-discountCard button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #add-discountCard > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
-.modal__addDiscountCard{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: 0.4s;
+.modal__addDiscountCard {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.4s;
 }
-.modal__addDiscountCard.active{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: 0.4;
-
+.modal__addDiscountCard.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: 0.4;
 }
 
 /*Update ItemCollection*/
-#update-itemCollection{
-    /*    display:none;
+#update-itemCollection {
+  /*    display:none;
         position:fixed;
         z-index: 1;
         left: 0;
@@ -1069,106 +1063,103 @@ button:hover{
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.4);*/
 
-    display:none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 #update-itemCollection input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
-    width: 300px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
+  width: 300px;
 }
 #update-itemCollection button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #update-itemCollection button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #update-itemCollection > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 /*Add ItemCollection*/
 #add-itemCollection {
-    display:block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
-#add-itemCollection.active{
-    display:block;
+#add-itemCollection.active {
+  display: block;
 }
 #add-itemCollection input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #add-itemCollection button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #add-itemCollection button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #add-itemCollection > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
-.modal__addItemCollection{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: 0.4s;
+.modal__addItemCollection {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.4s;
 }
-.modal__addItemCollection.active{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: 0.4;
-
+.modal__addItemCollection.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: 0.4;
 }
-
 
 /*Update Image*/
-#update-itemImage{
-    /*    display:none;
+#update-itemImage {
+  /*    display:none;
         position:fixed;
         z-index: 1;
         left: 0;
@@ -1178,104 +1169,102 @@ button:hover{
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.4);*/
 
-    display:none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 #update-itemImage input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
-    width: 300px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
+  width: 300px;
 }
 #update-itemImage button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #update-itemImage button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #update-itemImage > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 /*Add Image*/
 #add-itemImage {
-    display:block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
-#add-itemImage.active{
-    display:block;
+#add-itemImage.active {
+  display: block;
 }
 #add-itemImage input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #add-itemImage button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #add-itemImage button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #add-itemImage > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
-.modal__addItemImage{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: 0.4s;
+.modal__addItemImage {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.4s;
 }
-.modal__addItemImage.active{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: 0.4;
-
+.modal__addItemImage.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: 0.4;
 }
 
 /*Update Material*/
-#update-itemMaterial{
-    /*    display:none;
+#update-itemMaterial {
+  /*    display:none;
         position:fixed;
         z-index: 1;
         left: 0;
@@ -1285,104 +1274,102 @@ button:hover{
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.4);*/
 
-    display:none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 #update-itemMaterial input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
-    width: 300px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
+  width: 300px;
 }
 #update-itemMaterial button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #update-itemMaterial button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #update-itemMaterial > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 /*Add Material*/
 #add-itemMaterial {
-    display:block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
-#add-itemMaterial.active{
-    display:block;
+#add-itemMaterial.active {
+  display: block;
 }
 #add-itemMaterial input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #add-itemMaterial button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #add-itemMaterial button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #add-itemMaterial > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
-.modal__addItemMaterial{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: 0.4s;
+.modal__addItemMaterial {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.4s;
 }
-.modal__addItemMaterial.active{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: 0.4;
-
+.modal__addItemMaterial.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: 0.4;
 }
 
 /*Update Order*/
-#update-order{
-    /*    display:none;
+#update-order {
+  /*    display:none;
         position:fixed;
         z-index: 1;
         left: 0;
@@ -1392,105 +1379,102 @@ button:hover{
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.4);*/
 
-    display:none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 #update-order input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
-    width: 300px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
+  width: 300px;
 }
 #update-order button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #update-order button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #update-order > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 /*Add Order*/
 #add-order {
-    display:block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
-#add-order.active{
-    display:block;
+#add-order.active {
+  display: block;
 }
 #add-order input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #add-order button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #add-order button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #add-order > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
-.modal__addOrder{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: 0.4s;
+.modal__addOrder {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.4s;
 }
-.modal__addOrder.active{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: 0.4;
-
+.modal__addOrder.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: 0.4;
 }
-
 
 /*Update OrderDetail*/
-#update-orderDetail{
-    /*    display:none;
+#update-orderDetail {
+  /*    display:none;
         position:fixed;
         z-index: 1;
         left: 0;
@@ -1500,104 +1484,102 @@ button:hover{
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.4);*/
 
-    display:none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 #update-orderDetail input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
-    width: 300px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
+  width: 300px;
 }
 #update-orderDetail button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #update-orderl button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #update-orderDetail > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 /*Add OrderDetail*/
 #add-orderDetail {
-    display:block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
-#add-orderDetail.active{
-    display:block;
+#add-orderDetail.active {
+  display: block;
 }
 #add-orderDetail input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #add-orderDetail button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #add-orderDetail button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #add-orderDetail > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
-.modal__addOrderDetail{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: 0.4s;
+.modal__addOrderDetail {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.4s;
 }
-.modal__addOrderDetail.active{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: 0.4;
-
+.modal__addOrderDetail.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: 0.4;
 }
 
 /*Update ItemType*/
-#update-itemType{
-    /*    display:none;
+#update-itemType {
+  /*    display:none;
         position:fixed;
         z-index: 1;
         left: 0;
@@ -1607,104 +1589,102 @@ button:hover{
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.4);*/
 
-    display:none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 #update-itemType input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
-    width: 300px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
+  width: 300px;
 }
 #update-itemType button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #update-itemType button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #update-itemType > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 /*Add ItemType*/
 #add-itemType {
-    display:block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
-#add-itemType.active{
-    display:block;
+#add-itemType.active {
+  display: block;
 }
 #add-itemType input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #add-itemType button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #add-itemType button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #add-itemType > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
-.modal__addItemType{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: 0.4s;
+.modal__addItemType {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.4s;
 }
-.modal__addItemType.active{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: 0.4;
-
+.modal__addItemType.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: 0.4;
 }
 
 /*Update Permission*/
-#update-permission{
-    /*    display:none;
+#update-permission {
+  /*    display:none;
         position:fixed;
         z-index: 1;
         left: 0;
@@ -1714,104 +1694,102 @@ button:hover{
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.4);*/
 
-    display:none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 #update-permission input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
-    width: 300px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
+  width: 300px;
 }
 #update-permission button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #update-permission button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #update-permission > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 /*Add Permission*/
 #add-permission {
-    display:block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
-#add-permission.active{
-    display:block;
+#add-permission.active {
+  display: block;
 }
 #add-permission input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #add-permission button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #add-permission button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #add-permission > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
-.modal__addPermission{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: 0.4s;
+.modal__addPermission {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.4s;
 }
-.modal__addPermission.active{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: 0.4;
-
+.modal__addPermission.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: 0.4;
 }
 
 /*Update Sale*/
-#update-sale{
-    /*    display:none;
+#update-sale {
+  /*    display:none;
         position:fixed;
         z-index: 1;
         left: 0;
@@ -1821,104 +1799,101 @@ button:hover{
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.4);*/
 
-    display:none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 #update-sale input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
-   
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #update-sale button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #update-sale button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #update-sale > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 /*Add Sale*/
 #add-sale {
-    display:block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
-#add-sale.active{
-    display:block;
+#add-sale.active {
+  display: block;
 }
 #add-sale input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #add-sale button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #add-sale button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #add-sale > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
-.modal__addSale{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: 0.4s;
+.modal__addSale {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.4s;
 }
-.modal__addSale.active{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: 0.4;
-
+.modal__addSale.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: 0.4;
 }
 
 /*Update Stock Item*/
-#update-stockItem{
-    /*    display:none;
+#update-stockItem {
+  /*    display:none;
         position:fixed;
         z-index: 1;
         left: 0;
@@ -1928,99 +1903,95 @@ button:hover{
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.4);*/
 
-    display:none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 #update-stockItem input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
-    width: 300px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
+  width: 300px;
 }
 #update-stockItem button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #update-stockItem button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #update-stockItem > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 /*Add Sale*/
 #add-stockItem {
-    display:block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
-#add-stockItem.active{
-    display:block;
+#add-stockItem.active {
+  display: block;
 }
 #add-stockItem input {
-    border-bottom: 1px solid var(--title-color);
-    background: transparent;
-    height: 100%;
-    padding: 0 5px;
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
 }
 #add-stockItem button {
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: var(--submit-color);
-    align-items: center;
-    margin: 16px;
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
 }
 #add-stockItem button:hover {
-    background: #ccc;
-    color: #000000;
+  background: #ccc;
+  color: #000000;
 }
 #add-stockItem > label {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
 }
-.modal__addStockItem{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: 0.4s;
+.modal__addStockItem {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.4s;
 }
-.modal__addStockItem.active{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: 0.4;
-
+.modal__addStockItem.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: 0.4;
 }
-
-
