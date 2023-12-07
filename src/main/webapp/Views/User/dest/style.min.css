@@ -931,6 +931,7 @@ https://flickity.metafizzy.co
   -ms-transition: var(--t);
   -o-transition: var(--t);
   margin-top: -20px;
+  min-width: 140px;
 }
 .header__right--icon .user-dropdown .dropmenu--item {
   color: var(--white-cl);
