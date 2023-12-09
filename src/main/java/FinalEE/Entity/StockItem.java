@@ -1,5 +1,7 @@
 package FinalEE.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,10 +20,10 @@ public class StockItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")
     private Item item;
-
 
     @Column(name = "color")
     private String color;

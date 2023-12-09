@@ -2,10 +2,17 @@ package FinalEE.Controller;
 
 import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import org.hibernate.Hibernate;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -13,10 +20,12 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
-@WebServlet(name = "ItemDetailServlet",urlPatterns = "/ItemDetailServlet")
+@WebServlet(name = "ItemDetailServlet", urlPatterns = "/ItemDetailServlet")
 public class ItemDetailServlet extends HttpServlet {
 
     private AccountServiceImpl accountServiceImpl;
@@ -35,56 +44,64 @@ public class ItemDetailServlet extends HttpServlet {
     private CartServiceImpl cartServiceImpl;
 
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        HttpSession session=req.getSession();
-        String requestedWith = req.getHeader("X-Requested-With");
-        if (requestedWith != null && requestedWith.equals("XMLHttpRequest")) {
-            int stockItemID=Integer.parseInt(req.getParameter("stockItemID"));
-            Integer customerID=null;
-            Integer signInAccountID=null;
+        try {
+            String requestedWith = req.getHeader("X-Requested-With");
+            if (requestedWith != null && requestedWith.equals("XMLHttpRequest")) {
+                int stockItemID = Integer.parseInt(req.getParameter("stockItemID"));
+                boolean isLogIn = false;
+                Integer customerID = null;
+                Integer signInAccountID = null;
 
-            List<Cookie> cookieList= List.of(req.getCookies());
-            for(Cookie cookie: cookieList){
-                if(cookie.getName().equals("signInAccountID")){
-                    signInAccountID=Integer.parseInt(cookie.getValue());
-                    customerID=accountServiceImpl.findByID(signInAccountID).getCustomer().getId();
+                List<Cookie> cookieList = List.of(req.getCookies());
+                for (Cookie cookie : cookieList) {
+                    if (cookie.getName().equals("signInAccountID")) {
+                        signInAccountID = Integer.parseInt(cookie.getValue());
+                        customerID = accountServiceImpl.findByID(signInAccountID).getCustomer().getId();
+                        isLogIn = true;
+                    }
                 }
-            }
 
-            StockItem stockItem=stockItemServiceImpl.getStockItem(stockItemID);
+                StockItem stockItem = stockItemServiceImpl.getStockItem(stockItemID);
 
-            Cart cart=new Cart();
-            cart.setStockItem(stockItem);
-            cart.setAmount(1);
-            if(customerID!=null)
-            {
-                Customer customer=customerServiceImpl.getCustomer(customerID);
-                cart.setCustomer(customer);
-            }else {
-                cart.setCustomer(null);
-            }
-            cartServiceImpl.create(cart);
-        }else{
-            String action=req.getParameter("action");
-            switch (action){
-                default -> {
+                Cart cart = new Cart();
+                cart.setStockItem(stockItem);
+                cart.setAmount(1);
+
+                if (isLogIn) {
+                    Customer customer = customerServiceImpl.getCustomer(customerID);
+                    cart.setCustomer(customer);
+                    cartServiceImpl.create(cart);
+                } else {
+                    cart.setCustomer(null);
+
+                    Map<String, Object> responseData = new HashMap<>();
+                    responseData.put("cart", cart);
+                    responseData.put("logIn", false);
+
+                    // Convert the map to JSON
+                    ObjectMapper mapper = new ObjectMapper();
+                    String json = mapper.writeValueAsString(responseData);
+
+                    resp.setContentType("application/json");
+                    resp.setCharacterEncoding("UTF-8");
+                    resp.getWriter().write(json);
 
                 }
+
             }
+        } catch (Exception er) {
+            er.printStackTrace();
         }
-
-
-
 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
-        ServletContext servletContext=getServletContext();
+        ServletContext servletContext = getServletContext();
 
         accountServiceImpl = (AccountServiceImpl) servletContext.getAttribute("accountServiceImpl");
         cartServiceImpl = (CartServiceImpl) servletContext.getAttribute("cartServiceImpl");
@@ -100,7 +117,7 @@ public class ItemDetailServlet extends HttpServlet {
         permissionServiceImpl = (PermissionServiceImpl) servletContext.getAttribute("permissionServiceImpl");
         saleServiceImpl = (SaleServiceImpl) servletContext.getAttribute("saleServiceImpl");
         stockItemServiceImpl = (StockItemServiceImpl) servletContext.getAttribute("stockItemServiceImpl");
-        req.setAttribute("cartServiceImpl",cartServiceImpl);
+        req.setAttribute("cartServiceImpl", cartServiceImpl);
 
         List<Account> accountList = accountServiceImpl.getAllAccount();
         List<Customer> customerList = customerServiceImpl.getAllCustomer();
@@ -131,14 +148,14 @@ public class ItemDetailServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
 
-        int itemClickID=-1;
-        if(req.getParameter("itemClickID")!=null){
-            itemClickID=Integer.parseInt(req.getParameter("itemClickID"));
+        int itemClickID = -1;
+        if (req.getParameter("itemClickID") != null) {
+            itemClickID = Integer.parseInt(req.getParameter("itemClickID"));
         }
-        Item itemClick=itemServiceImpl.getItem(itemClickID);
-        req.setAttribute("itemClick",itemClick);
+        Item itemClick = itemServiceImpl.getItem(itemClickID);
+        req.setAttribute("itemClick", itemClick);
 
-        req.getRequestDispatcher("/Views/User/ItemDetail.jsp").forward(req,resp);
+        req.getRequestDispatcher("/Views/User/ItemDetail.jsp").forward(req, resp);
 
     }
 }

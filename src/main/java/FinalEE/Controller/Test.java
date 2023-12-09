@@ -37,7 +37,7 @@ public class Test {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
             Map<String,Object> keyValue=new HashMap<>();
-            keyValue.put("phoneNumber",113);
+            keyValue.put("phoneNumber","113");
             keyValue.put("name","User Name");
             keyValue.put("address","Dia Chi");
             keyValue.put("email","useremail@gmail.com");

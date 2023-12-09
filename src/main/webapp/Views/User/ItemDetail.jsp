@@ -1,40 +1,42 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %> <%@ taglib
-        uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%@ taglib prefix="fmt"
-                                                                         uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib
+        uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt"
+           uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0 , maximum-scale=1.0, user-scalable=0"
     />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>Bán Giày</title>
 
-    <meta name="title" content="Kiet Rider" />
-    <meta name="description" content="" />
-    <meta name="keyword" content="" />
+    <meta name="title" content="Kiet Rider"/>
+    <meta name="description" content=""/>
+    <meta name="keyword" content=""/>
 
-    <link rel="canonical" href="https://cfdcircle.vn" />
-    <link rel="icon" href="favicon.ico" />
+    <link rel="canonical" href="https://cfdcircle.vn"/>
+    <link rel="icon" href="favicon.ico"/>
 
     <!-- Meta Tag Facebook -->
-    <meta property="og:locale" content="en" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="Kiet Rider" />
-    <meta property="og:description" content="" />
-    <meta property="og:url" content="" />
-    <meta property="og:site_name" content="Kiet Rider" />
-    <meta property="og:image" content="" />
+    <meta property="og:locale" content="en"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Kiet Rider"/>
+    <meta property="og:description" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content="Kiet Rider"/>
+    <meta property="og:image" content=""/>
 
     <!-- Meta Tag Twitter -->
-    <meta name="twitter:card" content="" />
-    <meta name="twitter:site" content="" />
-    <meta name="twitter:title" content="" />
-    <meta name="twitter:description" content="" />
-    <meta name="twitter:image" content="" />
+    <meta name="twitter:card" content=""/>
+    <meta name="twitter:site" content=""/>
+    <meta name="twitter:title" content=""/>
+    <meta name="twitter:description" content=""/>
+    <meta name="twitter:image" content=""/>
 
     <title>Document</title>
     <link
@@ -50,8 +52,8 @@
             href="${pageContext.request.contextPath}/Views/User/dest/fonts.css"
     />
 </head>
-<jsp:include page="component/Header.jsp" />
-<jsp:include page="component/ModalLogin.jsp" />
+<jsp:include page="component/Header.jsp"/>
+<jsp:include page="component/ModalLogin.jsp"/>
 
 <body>
 <!-- ------Container------ -->
@@ -60,20 +62,20 @@
         <div class="container">
             <div class="productItem">
                 <div class="productImage">
-                    <c:set var="itemImageCount" value="0" />
+                    <c:set var="itemImageCount" value="0"/>
                     <c:forEach items="${requestScope.itemClick.imageList}" var="image">
                         <c:if test="${itemImageCount < 1}">
                             <a href="#" class="img"
                             ><img src="${image.image_url}" alt="ao-thun"
                             /></a>
-                            <c:set var="itemImageCount" value="${itemImageCount+1}" />
+                            <c:set var="itemImageCount" value="${itemImageCount+1}"/>
                         </c:if>
                     </c:forEach>
                 </div>
                 <div class="productInfo">
                     <h3 class="productName --h4">${requestScope.itemClick.name}</h3>
                     <p class="productID">Mã số: ${requestScope.itemClick.id}</p>
-                    <c:set var="isSale" value="false" />
+                    <c:set var="isSale" value="false"/>
                     <c:if test="${requestScope.itemClick.sale.on_sale eq 1}">
                         <h5 class="sale">
                             <img
@@ -82,7 +84,7 @@
                             />
                             SALE DỌN KHO LÊN HÀNG MỚI
                         </h5>
-                        <c:set var="isSale" value="true" />
+                        <c:set var="isSale" value="true"/>
                     </c:if>
 
                     <c:if test="${isSale eq true}">
@@ -128,45 +130,99 @@
                         <div class="remainAmount">60%</div>
                     </div>
                     <table class="productVariants">
+                        <button onclick="initData()">Click me</button>
                         <tbody>
                         <c:forEach
                                 items="${requestScope.itemClick.stockItemList}"
                                 var="stockItem"
                         >
                             <tr>
+                                <script>
+                                    // Lấy dữ liệu từ LocalStorage và chuyển đổi thành đối tượng JavaScript
+                                    var cartData = JSON.parse(localStorage.getItem('cart'));
+                                </script>
+
                                 <td>${stockItem.color}, ${stockItem.size}</td>
                                 <td class="needHover" style="text-align: right">
-                                    <b>${stockItem.amount}</b> CH còn
+                                    <b>${stockItem.amount}</b> CH còn ${cart}
                                 </td>
+
+
                                 <td style="text-align: right">
-                                    <a
-                                            class="select-buy"
-                                            id="select-buy-${stockItem.id}"
-                                            onclick="sendAjaxRequest('${stockItem.id}')"
-                                    >Chọn mua
-                                        <i class="fa fa-plus-circle"></i>
-                                        <script>
-                                            function sendAjaxRequest(stockItemID) {
-                                                $.ajax({
-                                                    type: "POST",
-                                                    url: "${pageContext.request.contextPath}/ItemDetailServlet",
-                                                    data: {
-                                                        stockItemID: stockItemID,
-                                                    },
-                                                    headers: {
-                                                        "X-Requested-With": "XMLHttpRequest",
-                                                    },
-                                                    success: function () {
-                                                        alert("thêm thành công"); //bao them thanh cong
-                                                    },
-                                                });
-                                            }
-                                        </script>
-                                    </a>
+                                    <c:if test="${stockItem.amount > 0}">
+
+                                        <a class="select-buy" id="select-buy-${stockItem.id}"
+                                           onclick="sendAjaxRequest('${stockItem.id}')">Chọn mua
+                                            <i class="fa fa-plus-circle"></i>
+                                        </a>
+
+                                    </c:if>
+
+                                    <c:if test="${stockItem.amount <=0}">
+
+                                        <a class="select-buy">Hết hàng
+                                            <i class="fa fa-plus-circle" style="visibility: hidden"></i>
+                                        </a>
+
+                                    </c:if>
+
                                 </td>
                             </tr>
                         </c:forEach>
                         </tbody>
+                        <script>
+                            function sendAjaxRequest(stockItemID) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "${pageContext.request.contextPath}/ItemDetailServlet",
+                                    data: {
+                                        stockItemID: stockItemID,
+                                    },
+                                    headers: {
+                                        "X-Requested-With": "XMLHttpRequest",
+                                    },
+                                    success: function (data) {
+                                        // Check for the boolean property
+                                        console.log(data);
+                                        if (data.logIn === false) {
+
+                                            let cart = data.cart;
+                                            console.log("cart" + JSON.parse(cart));
+                                            let cartList = JSON.parse(localStorage.getItem("YOUR_CART"));
+                                            if (cartList != null) {
+                                                console.log("Ok Not Null");
+                                                let index = cartList.findIndex(item => {
+                                                    console.log(item.stockItem.id === cart.stockItem.id);
+                                                    return item.stockItem.id === cart.stockItem.id;
+                                                });
+                                                if (index !== -1) {
+                                                    console.log("Tang so luong");
+                                                    cartList[index].amount += 1;
+                                                } else {
+
+                                                    cartList.push(cart);
+                                                }
+                                                localStorage.setItem("YOUR_CART", JSON.stringify(cartList));
+                                            } else {
+                                                console.log("Create new CartList");
+                                                cartList = [];
+                                                cartList.push(cart);
+                                                localStorage.setItem("YOUR_CART", JSON.stringify(cartList));
+                                            }
+
+                                        } else {
+                                            // Handle the case where 'notLogIn' is false
+                                            alert("Logged in");
+                                        }
+                                        alert("thêm thành công"); //bao them thanh cong
+                                    },
+                                    error: function (error) {
+                                        console.log(error);
+                                    }
+
+                                });
+                            }
+                        </script>
                     </table>
                     <div class="tutorials">
                         <!-- <button onclick="HideShowSize()">Hướng dẫn chọn size</button> -->
@@ -210,7 +266,7 @@
                 >
                     <c:if test="${status.index ne 0}">
                         <div class="itemImage">
-                            <img src="${image.image_url}" alt="" />
+                            <img src="${image.image_url}" alt=""/>
                         </div>
                     </c:if>
                 </c:forEach>
@@ -220,7 +276,7 @@
 </main>
 
 <!-- Footer -->
-<jsp:include page="component/Footer.jsp" />
+<jsp:include page="component/Footer.jsp"/>
 
 <script src="${pageContext.request.contextPath}/Views/User/dest/jsmain.min.js"></script>
 <script src="${pageContext.request.contextPath}/Views/User/dest/main.js"></script>

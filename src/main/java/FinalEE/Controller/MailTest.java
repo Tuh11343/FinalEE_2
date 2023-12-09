@@ -11,13 +11,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Map;
-import java.util.Properties;
 
 
 public class MailTest extends HttpServlet {
@@ -58,37 +55,6 @@ public class MailTest extends HttpServlet {
         saleServiceImpl = (SaleServiceImpl) servletContext.getAttribute("saleServiceImpl");
         stockItemServiceImpl = (StockItemServiceImpl) servletContext.getAttribute("stockItemServiceImpl");
 
-
-
-        /*Create Customer*//*
-        Customer customer=new Customer();
-        customer.setPhone_number(phoneNumber);
-        customer.setName(name);
-        customer.setAddress(address);
-        customer.setEmail(email);
-        customerServiceImpl.create(customer);
-
-        if(customer.getId()!=null){
-            Account account=new Account();
-            account.setPermission(permissionServiceImpl.findByLevel(0));
-            account.setCustomer(customer);
-            account.setName(email);
-            if(password.equals(rePassword)){
-                account.setPassword(password);
-                accountServiceImpl.create(account);
-                jsonResponse.put("success",1);
-            }else{
-                System.out.println("Password not correct");
-                jsonResponse.put("passwordIncorrect",1);
-            }
-        }else{
-            System.out.println("There is no customer to create Account");
-            jsonResponse.put("systemError",1);
-        }
-        out.print(jsonResponse);
-        out.flush();
-        out.close();*/
-
         String encodedData = req.getParameter("data");
 
         // Kiểm tra xem tham số có tồn tại hay không
@@ -99,7 +65,29 @@ public class MailTest extends HttpServlet {
             // Sử dụng dữ liệu theo yêu cầu của bạn
             // Ví dụ: In ra Console
             keyValueData.forEach((key, value) -> System.out.println(key + ": " + value));
+            String phoneNumber= keyValueData.get("phoneNumber").toString();
+            String customerName=keyValueData.get("name").toString();
+            String address=keyValueData.get("address").toString();
+            String email=keyValueData.get("email").toString();
+            String accountName=keyValueData.get("accountName").toString();
+            String accountPassword=keyValueData.get("accountPassword").toString();
 
+            Customer customer=new Customer();
+            customer.setEmail(email);
+            customer.setName(customerName);
+            customer.setAddress(address);
+            customer.setPhone_number(phoneNumber);
+
+            Account account=new Account();
+            account.setPassword(accountPassword);
+            account.setName(accountName);
+            account.setPermission(permissionServiceImpl.findByLevel(0));
+            account.setCustomer(customer);
+
+            customerServiceImpl.create(customer);
+            accountServiceImpl.create(account);
+
+            resp.sendRedirect("/FinalEE/ItemServlet");
 
         } else {
             System.out.println("Loi");

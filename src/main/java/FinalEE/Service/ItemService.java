@@ -29,5 +29,7 @@ public interface ItemService {
     public List<Item> getItemsByNameAndPageNumber(int pageNumber,String name,String sort,ItemServiceImpl.SortOrder sortOrder);
     public List<Item> getItemsByPageNumber(int pageNumber,String sort,ItemServiceImpl.SortOrder sortOrder);
 
+    public List<Item> getItemsByPriceBetween(int pageNumber, double min,double max,String sort,ItemServiceImpl.SortOrder sortOrder);
+
     
 }

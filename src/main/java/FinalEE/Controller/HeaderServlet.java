@@ -152,13 +152,13 @@ public class HeaderServlet extends HttpServlet {
         String password = req.getParameter("password");
         String rePassword = req.getParameter("rePassword");
 
-        /*Create Customer*/Customer customer = new Customer();
+        Customer customer = new Customer();
         customer.setPhone_number(phoneNumber);
         customer.setName(name);
         customer.setAddress(address);
         customer.setEmail(email);
 
-        customerServiceImpl.create(customer);
+        /*customerServiceImpl.create(customer);*/
 
         if (customer.getId() != null) {
             Account account = new Account();
@@ -167,8 +167,9 @@ public class HeaderServlet extends HttpServlet {
             account.setName(email);
             if (password.equals(rePassword)) {
                 account.setPassword(password);
-                accountServiceImpl.create(account);
+                /*accountServiceImpl.create(account);*/
                 jsonResponse.put("success", 1);
+                sendEmail(customer,account);
             } else {
                 System.out.println("Password not correct");
                 jsonResponse.put("passwordIncorrect", 1);
@@ -180,6 +181,7 @@ public class HeaderServlet extends HttpServlet {
         out.print(jsonResponse);
         out.flush();
         out.close();
+
     }
 
     private void signInHandle(HttpServletRequest req, JSONObject jsonResponse, PrintWriter out) throws JSONException {
@@ -202,7 +204,7 @@ public class HeaderServlet extends HttpServlet {
     }
 
 
-    private void sendEmail(String userName, String password) {
+    private void sendEmail(Customer customer,Account account) {
         try {
             JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
             mailSender.setHost("smtp.gmail.com");
@@ -219,12 +221,21 @@ public class HeaderServlet extends HttpServlet {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
-            String htmlMsg = "Xin chào! Để xác thực tài khoản vui lòng nhấp vào <a href='http://localhost:9595/FinalEE/MailTest?userName="
-                    + userName + "&password="+ password+"'>đường link xác nhận</a>";
+            Map<String,Object> keyValue=new HashMap<>();
+            keyValue.put("phoneNumber",customer.getPhone_number());
+            keyValue.put("name",customer.getName());
+            keyValue.put("address",customer.getAddress());
+            keyValue.put("email",customer.getEmail());
+            keyValue.put("accountName",account.getName());
+            keyValue.put("accountPassword",account.getPassword());
+
+            String activationLink=createActivationLink(keyValue);
+
+            String htmlMsg = "Xin chào! Để xác thực tài khoản vui lòng nhấp vào <a href='"+ activationLink+"'>đường link xác nhận</a>";
             helper.setText(htmlMsg, true); // true indicates the text included is HTML
 
-            helper.setTo("dotuan2k2@gmail.com");
-            helper.setSubject("Tiêu đề email");
+            helper.setTo(account.getName());
+            helper.setSubject("Thư xác nhận tài khoản");
             helper.setFrom("tuhtest11343@gmail.com");
 
             mailSender.send(mimeMessage);
@@ -235,29 +246,27 @@ public class HeaderServlet extends HttpServlet {
 
     }
 
-    public String createActivationLink(Map<String, String> keyValueData) {
+    public static String createActivationLink(Map<String, Object> keyValueData) {
         try {
             String jsonData = mapToJson(keyValueData);
             String encodedData = Base64.getEncoder().encodeToString(jsonData.getBytes("UTF-8"));
-            return "http://localhost:9595/FinalEE/activate-account?data=" + encodedData;
+            return "http://localhost:9595/FinalEE/MailTest?data=" + encodedData;
         } catch (IOException e) {
             e.printStackTrace(); // Xử lý lỗi nếu cần
             return null;
         }
     }
 
-    private Map<String, String> jsonToMap(String jsonData) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectNode objectNode = (ObjectNode) objectMapper.readTree(jsonData);
-        Map<String, String> keyValueData = new HashMap<>();
-        objectNode.fields().forEachRemaining(entry -> keyValueData.put(entry.getKey(), entry.getValue().asText()));
-        return keyValueData;
-    }
-
-    private String mapToJson(Map<String, String> keyValueData) throws IOException {
+    private static String mapToJson(Map<String, Object> keyValueData) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode objectNode = objectMapper.createObjectNode();
-        keyValueData.forEach(objectNode::put);
+        keyValueData.forEach((key, value) -> {
+            if (value instanceof String) {
+                objectNode.put(key, (String) value);
+            } else {
+                System.out.println("Loi roi");
+            }
+        });
         return objectMapper.writeValueAsString(objectNode);
     }
 
