@@ -67,122 +67,140 @@
                         </div>
                     </section>
 
+
                     <section class="cart">
                         <div class="container">
                             <div class="cart__detail">
 
-                                <div class="cart__detail--top">
-                                    <fmt:formatNumber value="${requestScope.orderTotal}" pattern="#,###"
-                                        var="formattedOrderTotal" />
+                                <c:if test="${not empty cookie.signInAccountID}">
 
-                                    <h2 class="title --h4">chi tiết đơn hàng</h2>
-                                    <span class="total">Tổng tiền: <strong>${formattedOrderTotal} VNĐ</strong></span>
-                                </div>
+                                    <div class="cart__detail--top">
+                                        <fmt:formatNumber value="${requestScope.orderTotal}" pattern="#,###"
+                                                          var="formattedOrderTotal" />
 
-                                <%--Cart Detail List--%>
+                                        <h2 class="title --h4">chi tiết đơn hàng</h2>
+                                        <span class="total">Tổng tiền: <strong>${formattedOrderTotal} VNĐ</strong></span>
+                                    </div>
+
+
+                                    <%--Cart Detail List--%>
                                     <div class="cart__detail--list">
 
                                         <c:forEach items="${requestScope.cartList}" var="cart">
 
                                             <c:set var="isSale" value="false" />
                                             <c:set var="salePercentage"
-                                                value="${cart.stockItem.item.sale.sale_percentage}" />
+                                                   value="${cart.stockItem.item.sale.sale_percentage}" />
 
                                             <%--Check If Sale--%>
-                                                <c:if test="${cart.stockItem.item.sale.on_sale eq 1}">
-                                                    <c:set var="isSale" value="true" />
-                                                </c:if>
+                                            <c:if test="${cart.stockItem.item.sale.on_sale eq 1}">
+                                                <c:set var="isSale" value="true" />
+                                            </c:if>
 
-                                                <%--Number Format--%>
-                                                    <fmt:formatNumber value="${cart.stockItem.item.price}"
-                                                        pattern="#,###" var="formattedPrice" />
+                                            <%--Number Format--%>
+                                            <fmt:formatNumber value="${cart.stockItem.item.price}"
+                                                              pattern="#,###" var="formattedPrice"/>
 
-                                                    <c:if test="${isSale eq true}">
-                                                        <c:set var="salePrice"
-                                                            value="${cart.stockItem.item.price * (1 - (salePercentage/100))}" />
-                                                        <c:set var="saveAmount"
-                                                            value="${cart.stockItem.item.price * (salePercentage/100)}" />
-                                                        <fmt:formatNumber value="${salePrice}" pattern="#,###"
-                                                            var="formattedSalePrice" />
-                                                        <fmt:formatNumber value="${saveAmount}" pattern="#,###"
-                                                            var="formattedSavedAmount" />
-                                                    </c:if>
+                                            <c:if test="${isSale eq true}">
+                                                <c:set var="salePrice"
+                                                       value="${cart.stockItem.item.price * (1 - (salePercentage/100))}" />
+                                                <c:set var="saveAmount"
+                                                       value="${cart.stockItem.item.price * (salePercentage/100)}" />
+                                                <fmt:formatNumber value="${salePrice}" pattern="#,###"
+                                                                  var="formattedSalePrice" />
+                                                <fmt:formatNumber value="${saveAmount}" pattern="#,###"
+                                                                  var="formattedSavedAmount" />
+                                            </c:if>
 
-                                                    <div class="cart__item">
-                                                        <div class="gr--img">
-                                                            <div class="img">
+                                            <div class="cart__item">
+                                                <div class="gr--img">
+                                                    <div class="img">
 
-                                                                <%--Find 2 Image Of Item--%>
-                                                                    <c:set var="counter" value="0" />
-                                                                    <c:forEach items="${cart.stockItem.item.imageList}"
-                                                                        var="image">
-                                                                        <c:if test="${counter < 1}">
-                                                                            <img src="${image.image_url}" alt="">
-                                                                            <c:set var="counter" value="${counter+1}" />
-                                                                        </c:if>
-                                                                    </c:forEach>
-
-                                                            </div>
-                                                            <form
-                                                                action="${pageContext.request.contextPath}/CartServlet"
-                                                                method="post">
-
-                                                                <button class="btn btn-del">Xóa</button>
-                                                                <input type="hidden" value="itemDeleteClick"
-                                                                    name="action">
-                                                                <input type="hidden" name="deleteCartID"
-                                                                    value="${cart.id}">
-
-                                                            </form>
-
-                                                        </div>
-
-                                                        <div class="gr--info">
-                                                            <div class="info-top">
-                                                                <h4 class="name">${cart.stockItem.item.name}</h4>
-                                                                <p class="qty">
-                                                                    <c:if test="${isSale eq true}">
-                                                                        <span>Số lượng <strong> ${cart.amount} </strong>
-                                                                            * ${formattedSalePrice}</span>
-                                                                        <span class="discount-price">(Tiết kiệm:
-                                                                            ${formattedSavedAmount})</span>
-                                                                    </c:if>
-                                                                    <c:if test="${isSale eq false}">
-                                                                        <span>Số lượng <strong> ${cart.amount} </strong>
-                                                                            * ${formattedPrice}</span>
-                                                                    </c:if>
-                                                                </p>
-                                                                <%--<span class="discount-info">Giảm thẻ VIP:
-                                                                    5%</span>--%>
-                                                            </div>
-                                                            <%--Total--%>
-                                                                <div class="total-item">
-
-                                                                    <c:if test="${isSale eq true}">
-                                                                        <c:set var="itemTotalSale"
-                                                                            value="${salePrice * cart.amount}" />
-                                                                        <fmt:formatNumber value="${itemTotalSale}"
-                                                                            pattern="#,###"
-                                                                            var="formattedItemTotalSale" />
-                                                                        <span>= ${formattedItemTotalSale} VNĐ</span>
-                                                                    </c:if>
-
-                                                                    <c:if test="${isSale eq false}">
-                                                                        <c:set var="itemTotal"
-                                                                            value="${cart.stockItem.item.price * cart.amount}" />
-                                                                        <fmt:formatNumber value="${itemTotal}"
-                                                                            pattern="#,###" var="formattedItemTotal" />
-                                                                        <span>= ${formattedItemTotal} VNĐ</span>
-                                                                    </c:if>
-
-                                                                </div>
-                                                        </div>
+                                                            <%--Find 2 Image Of Item--%>
+                                                        <c:set var="counter" value="0" />
+                                                        <c:forEach items="${cart.stockItem.item.imageList}"
+                                                                   var="image">
+                                                            <c:if test="${counter < 1}">
+                                                                <img src="${image.image_url}" alt="">
+                                                                <c:set var="counter" value="${counter+1}" />
+                                                            </c:if>
+                                                        </c:forEach>
 
                                                     </div>
+                                                    <form
+                                                            action="${pageContext.request.contextPath}/CartServlet"
+                                                            method="post">
+
+                                                        <button class="btn btn-del">Xóa</button>
+                                                        <input type="hidden" value="itemDeleteClick"
+                                                               name="action">
+                                                        <input type="hidden" name="deleteCartID"
+                                                               value="${cart.id}">
+
+                                                    </form>
+
+                                                </div>
+
+                                                <div class="gr--info">
+                                                    <div class="info-top">
+                                                        <h4 class="name">${cart.stockItem.item.name}</h4>
+                                                        <p class="qty">
+                                                            <c:if test="${isSale eq true}">
+                                                                        <span>Số lượng <strong> ${cart.amount} </strong>
+                                                                            * ${formattedSalePrice}</span>
+                                                                <span class="discount-price">(Tiết kiệm:
+                                                                            ${formattedSavedAmount})</span>
+                                                            </c:if>
+                                                            <c:if test="${isSale eq false}">
+                                                                        <span>Số lượng <strong> ${cart.amount} </strong>
+                                                                            * ${formattedPrice}</span>
+                                                            </c:if>
+                                                        </p>
+                                                            <%--<span class="discount-info">Giảm thẻ VIP:
+                                                                5%</span>--%>
+                                                    </div>
+                                                        <%--Total--%>
+                                                    <div class="total-item">
+
+                                                        <c:if test="${isSale eq true}">
+                                                            <c:set var="itemTotalSale"
+                                                                   value="${salePrice * cart.amount}" />
+                                                            <fmt:formatNumber value="${itemTotalSale}"
+                                                                              pattern="#,###"
+                                                                              var="formattedItemTotalSale" />
+                                                            <span>= ${formattedItemTotalSale} VNĐ</span>
+                                                        </c:if>
+
+                                                        <c:if test="${isSale eq false}">
+                                                            <c:set var="itemTotal"
+                                                                   value="${cart.stockItem.item.price * cart.amount}" />
+                                                            <fmt:formatNumber value="${itemTotal}"
+                                                                              pattern="#,###" var="formattedItemTotal" />
+                                                            <span>= ${formattedItemTotal} VNĐ</span>
+                                                        </c:if>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
 
                                         </c:forEach>
 
                                     </div>
+
+                                </c:if>
+
+                                <c:if test="${empty cookie.signInAccountID}">
+
+                                    <c:if test="${empty requestScope.cartList}">
+                                        wtf
+                                    </c:if>
+                                    <button onclick="initData()"> Bbam vao toi</button>
+
+                                </c:if>
+
+
+
                                     <div class="cart__detail--shipping">
                                         <p class="text">Giao hàng: <strong> Miễn phí (-19000) </strong></p>
                                     </div>

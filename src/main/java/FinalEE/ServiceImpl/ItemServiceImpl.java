@@ -221,4 +221,23 @@ public class ItemServiceImpl implements ItemService {
         return null;
     }
 
+    @Override
+    public List<Item> getItemsByPriceBetween(int pageNumber,double min, double max,String sort,SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if(sortOrder==SortOrder.DESC){
+                sortBy=Sort.by(sort).descending();
+            }else{
+                sortBy=Sort.by(sort).ascending();
+            }
+            int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize,sortBy); // Trừ 1 vì số trang bắt đầu từ 0
+            Page<Item> itemPage=itemRepository.findAllByPriceBetween(min,max,pageable);
+            return itemPage.getContent();
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
 }

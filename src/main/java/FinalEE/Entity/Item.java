@@ -1,6 +1,9 @@
 
 package FinalEE.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,15 +27,15 @@ public class Item {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_type_id",nullable = false)
     private ItemType itemType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_collection_id")
     private ItemCollection itemCollection;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_material_id",nullable = false)
     private ItemMaterial itemMaterial;
 
@@ -47,12 +50,15 @@ public class Item {
     @Column(name = "year_produce")
     private int year_produce;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "item", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Sale sale;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<ItemImage> imageList;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<StockItem> stockItemList;
 

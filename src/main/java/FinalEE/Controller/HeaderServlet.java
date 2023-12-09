@@ -3,16 +3,26 @@ package FinalEE.Controller;
 import FinalEE.Entity.Account;
 import FinalEE.Entity.Customer;
 import FinalEE.ServiceImpl.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.json.JsonObject;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 
 public class HeaderServlet extends HttpServlet {
@@ -34,9 +44,9 @@ public class HeaderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try{
+        try {
             ServletContext servletContext = getServletContext();
-            HttpSession session=req.getSession();
+            HttpSession session = req.getSession();
 
             accountServiceImpl = (AccountServiceImpl) servletContext.getAttribute("accountServiceImpl");
             cartServiceImpl = (CartServiceImpl) servletContext.getAttribute("cartServiceImpl");
@@ -54,18 +64,18 @@ public class HeaderServlet extends HttpServlet {
             stockItemServiceImpl = (StockItemServiceImpl) servletContext.getAttribute("stockItemServiceImpl");
 
             String requestedWith = req.getHeader("X-Requested-With");
-            if (requestedWith != null && requestedWith.equals("XMLHttpRequest")){
-                String action=req.getParameter("action");
+            if (requestedWith != null && requestedWith.equals("XMLHttpRequest")) {
+                String action = req.getParameter("action");
 
                 resp.setContentType("application/json");
                 PrintWriter out = resp.getWriter();
-                JSONObject jsonResponse=new JSONObject();
-                switch (action){
+                JSONObject jsonResponse = new JSONObject();
+                switch (action) {
 
-                    case "signIn"->{
+                    case "signIn" -> {
                         signInHandle(req, jsonResponse, out);
                     }
-                    case "signUp"->{
+                    case "signUp" -> {
                         signUpHandle(req, jsonResponse, out);
 
                     }
@@ -74,34 +84,34 @@ public class HeaderServlet extends HttpServlet {
                     }
                 }
 
-            }else{
-                String action=req.getParameter("action");
-                switch (action){
-                    case "homeClick"->{
+            } else {
+                String action = req.getParameter("action");
+                switch (action) {
+                    case "homeClick" -> {
                         resp.sendRedirect("/FinalEE/ItemServlet");
                     }
-                    case "itemCollectionClick"->{
-                        int itemCollectionID=Integer.parseInt(req.getParameter("itemCollectionID"));
-                        resp.sendRedirect("/FinalEE/ItemSearchServlet?itemCollectionID=" + itemCollectionID+"&currentPage="+1+"&sort=az");
+                    case "itemCollectionClick" -> {
+                        int itemCollectionID = Integer.parseInt(req.getParameter("itemCollectionID"));
+                        resp.sendRedirect("/FinalEE/ItemSearchServlet?itemCollectionID=" + itemCollectionID + "&currentPage=" + 1 + "&sort=az");
                     }
-                    case "itemTypeClick"->{
-                        int itemTypeID=Integer.parseInt(req.getParameter("itemTypeID"));
-                        resp.sendRedirect("/FinalEE/ItemSearchServlet?itemTypeID=" + itemTypeID+"&sort=az");
+                    case "itemTypeClick" -> {
+                        int itemTypeID = Integer.parseInt(req.getParameter("itemTypeID"));
+                        resp.sendRedirect("/FinalEE/ItemSearchServlet?itemTypeID=" + itemTypeID + "&sort=az");
                     }
-                    case "cartClick"->{
+                    case "cartClick" -> {
                         resp.sendRedirect("/FinalEE/CartServlet");
                     }
-                    case "btnSearchClick"->{
-                        String searchInput=req.getParameter("searchInput");
-                        resp.sendRedirect("/FinalEE/ItemSearchServlet?searchInput=" + searchInput+"&sort=az");
+                    case "btnSearchClick" -> {
+                        String searchInput = req.getParameter("searchInput");
+                        resp.sendRedirect("/FinalEE/ItemSearchServlet?searchInput=" + searchInput + "&sort=az");
                     }
-                    case "accountClick"->{
+                    case "accountClick" -> {
                         resp.sendRedirect("/FinalEE/ProfileUserServlet");
                     }
-                    case "orderClick"->{
+                    case "orderClick" -> {
                         resp.sendRedirect("/FinalEE/CartServlet");
                     }
-                    case "signOutClick"->{
+                    case "signOutClick" -> {
                         Cookie[] cookies = req.getCookies();
                         Cookie signInAccountIDCookie = null;
                         for (Cookie cookie : cookies) {
@@ -127,70 +137,137 @@ public class HeaderServlet extends HttpServlet {
                     }
                 }
             }
-        }catch (Exception er){
+        } catch (Exception er) {
             System.out.println(er.toString());
         }
-
 
 
     }
 
     private void signUpHandle(HttpServletRequest req, JSONObject jsonResponse, PrintWriter out) throws JSONException {
-        String name= req.getParameter("customerName");
-        String phoneNumber= req.getParameter("phoneNumber");
-        String email= req.getParameter("email");
-        String address= req.getParameter("address");
-        String password= req.getParameter("password");
-        String rePassword= req.getParameter("rePassword");
+        String name = req.getParameter("customerName");
+        String phoneNumber = req.getParameter("phoneNumber");
+        String email = req.getParameter("email");
+        String address = req.getParameter("address");
+        String password = req.getParameter("password");
+        String rePassword = req.getParameter("rePassword");
 
-        System.out.println("Name:"+name);
-
-        /*Create Customer*/
-        Customer customer=new Customer();
+        Customer customer = new Customer();
         customer.setPhone_number(phoneNumber);
         customer.setName(name);
         customer.setAddress(address);
         customer.setEmail(email);
-        customerServiceImpl.create(customer);
 
-        if(customer.getId()!=null){
-            Account account=new Account();
+        /*customerServiceImpl.create(customer);*/
+
+        if (customer.getId() != null) {
+            Account account = new Account();
             account.setPermission(permissionServiceImpl.findByLevel(0));
             account.setCustomer(customer);
             account.setName(email);
-            if(password.equals(rePassword)){
+            if (password.equals(rePassword)) {
                 account.setPassword(password);
-                accountServiceImpl.create(account);
-                jsonResponse.put("success",1);
-            }else{
+                /*accountServiceImpl.create(account);*/
+                jsonResponse.put("success", 1);
+                sendEmail(customer,account);
+            } else {
                 System.out.println("Password not correct");
-                jsonResponse.put("passwordIncorrect",1);
+                jsonResponse.put("passwordIncorrect", 1);
             }
-        }else{
+        } else {
             System.out.println("There is no customer to create Account");
-            jsonResponse.put("systemError",1);
+            jsonResponse.put("systemError", 1);
         }
         out.print(jsonResponse);
         out.flush();
         out.close();
+
     }
 
     private void signInHandle(HttpServletRequest req, JSONObject jsonResponse, PrintWriter out) throws JSONException {
-        String name= req.getParameter("signInName");
-        String password= req.getParameter("signInPassword");
+        String name = req.getParameter("signInName");
+        String password = req.getParameter("signInPassword");
 
-        Account account=accountServiceImpl.findByNameAndPassword(name,password);
-        if(account!=null){
+        Account account = accountServiceImpl.findByNameAndPassword(name, password);
+        if (account != null) {
             System.out.println("Found Account");
-            jsonResponse.put("success",1);
-            jsonResponse.put("accountID",account.getId());
-            jsonResponse.put("accountPermission",account.getPermission().getLevel());
-        }else{
+            jsonResponse.put("success", 1);
+            jsonResponse.put("accountID", account.getId());
+            jsonResponse.put("accountPermission", account.getPermission().getLevel());
+        } else {
             System.out.println("No account founded");
-            jsonResponse.put("success",0);
+            jsonResponse.put("success", 0);
         }
         out.print(jsonResponse);
         out.flush();
         out.close();
     }
+
+
+    private void sendEmail(Customer customer,Account account) {
+        try {
+            JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+            mailSender.setHost("smtp.gmail.com");
+            mailSender.setPort(587);
+            mailSender.setUsername("tuhtest11343@gmail.com");
+            mailSender.setPassword("rceqgpucwzlyjmiv");
+
+            Properties props = mailSender.getJavaMailProperties();
+            props.put("mail.transport.protocol", "smtp");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.debug", "true");
+
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+            Map<String,Object> keyValue=new HashMap<>();
+            keyValue.put("phoneNumber",customer.getPhone_number());
+            keyValue.put("name",customer.getName());
+            keyValue.put("address",customer.getAddress());
+            keyValue.put("email",customer.getEmail());
+            keyValue.put("accountName",account.getName());
+            keyValue.put("accountPassword",account.getPassword());
+
+            String activationLink=createActivationLink(keyValue);
+
+            String htmlMsg = "Xin chào! Để xác thực tài khoản vui lòng nhấp vào <a href='"+ activationLink+"'>đường link xác nhận</a>";
+            helper.setText(htmlMsg, true); // true indicates the text included is HTML
+
+            helper.setTo(account.getName());
+            helper.setSubject("Thư xác nhận tài khoản");
+            helper.setFrom("tuhtest11343@gmail.com");
+
+            mailSender.send(mimeMessage);
+
+        } catch (Exception er) {
+            er.printStackTrace();
+        }
+
+    }
+
+    public static String createActivationLink(Map<String, Object> keyValueData) {
+        try {
+            String jsonData = mapToJson(keyValueData);
+            String encodedData = Base64.getEncoder().encodeToString(jsonData.getBytes("UTF-8"));
+            return "http://localhost:9595/FinalEE/MailTest?data=" + encodedData;
+        } catch (IOException e) {
+            e.printStackTrace(); // Xử lý lỗi nếu cần
+            return null;
+        }
+    }
+
+    private static String mapToJson(Map<String, Object> keyValueData) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        keyValueData.forEach((key, value) -> {
+            if (value instanceof String) {
+                objectNode.put(key, (String) value);
+            } else {
+                System.out.println("Loi roi");
+            }
+        });
+        return objectMapper.writeValueAsString(objectNode);
+    }
+
 }

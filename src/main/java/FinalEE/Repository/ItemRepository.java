@@ -37,6 +37,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
 
     Page<Item> findAllByNameContains(String name, Pageable pageable);
 
+    Page<Item> findAllByPriceBetween(double min,double max,Pageable pageable);
+
     @NonNull
     Page<Item> findAll(Pageable pageable);
 
