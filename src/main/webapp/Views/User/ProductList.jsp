@@ -81,8 +81,21 @@
                             <div class="scproduct__top ">
                                 <h4 class="heading --h4">Sản phẩm các bạn tìm</h4>
                                 <div class="scproduct__top--sort">
+                                    
                                     <form action="${pageContext.request.contextPath}/ItemSearchServlet" method="get"
                                         class="formSort">
+                                        <div class="sort-item rangeprice">
+                                            <div class="rangeprice-title">
+                                            <span>Giá</span>
+                                                <input type="hidden" id="rangefirst" value="">
+                                                <input type="hidden" id="rangeend" value="">
+                                            </div>
+                                            <div class="rangeprice-slider">
+                                                <div id="price-slider"></div>
+                                            </div>
+                                            </div>
+                                            
+                                       <div class="sort-item">
                                         <input type="hidden" value="${requestScope.currentPage}" name="currentPage">
                                         <label for="sort">Sắp xếp:</label>
                                         <select id="sort" name="sort" class="sortinp" onchange="submitSort()">
@@ -92,6 +105,8 @@
                                             <option value="priceDes">theo giá giảm</option>
                                         </select>
                                         <input type="hidden" name="sortChange" value="action">
+                                       </div>
+                                       <button class="btn btn-main">Lọc</button>
                                     </form>
                                 </div>
                             </div>
@@ -203,13 +218,50 @@
 
                 <jsp:include page="component/Footer.jsp" />
 
+                <script>
 
+        var priceSlider = document.getElementById('price-slider');
+console.log( );
+        // Check if #price-slider elem is exists if not return
+        // to prevent error logs
+        // if (priceSlider == null) return;
+
+        noUiSlider.create(priceSlider, {
+            start: [0, 750],
+            connect: true,
+            step: 50,
+            margin: 200,
+            range: {
+                'min': 0,
+                'max': 1000
+            },
+            tooltips: true,
+          
+        });
+
+        // Update Price Range
+        priceSlider.noUiSlider.on('update', function (values, handle) {
+            console.log('value :>> ', values[0]);
+            //lay gai tri tien o day
+            document.getElementById(rangefirst).values = values[0];
+            document.getElementById(rangeend).values = values[1];
+
+            
+        });
+
+        // Update Price Range
+        // priceSlider.noUiSlider.on('update', function (values, handle) {
+        //     $('#filter-price-range').text(values.join(' - '));
+        // });
+                </script>
 
                 <!--                <script type="text/javascript" src="dest/jsmain.min.js"></script>-->
                 <!--                <script type="text/javascript" src="./dest/main.js"></script>-->
                 <script src="${pageContext.request.contextPath}/Views/User/dest/jsmain.min.js"></script>
+                <script src="${pageContext.request.contextPath}/Views/User/dest/wNumb.js"></script>
+                <script src="${pageContext.request.contextPath}/Views/User/dest/nouislider.min.js"></script>
+                
                 <script src="${pageContext.request.contextPath}/Views/User/dest/main.js"></script>
-
 
             </body>
 
