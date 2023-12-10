@@ -187,7 +187,6 @@
                                         if (data.logIn === false) {
 
                                             let cart = data.cart;
-                                            console.log("cart" + JSON.parse(cart));
                                             let cartList = JSON.parse(localStorage.getItem("YOUR_CART"));
                                             if (cartList != null) {
                                                 console.log("Ok Not Null");

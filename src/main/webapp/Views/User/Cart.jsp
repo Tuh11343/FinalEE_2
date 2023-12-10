@@ -156,10 +156,7 @@
                                                                             * ${formattedPrice}</span>
                                                             </c:if>
                                                         </p>
-                                                            <%--<span class="discount-info">Giảm thẻ VIP:
-                                                                5%</span>--%>
                                                     </div>
-                                                        <%--Total--%>
                                                     <div class="total-item">
 
                                                         <c:if test="${isSale eq true}">
@@ -192,10 +189,19 @@
 
                                 <c:if test="${empty cookie.signInAccountID}">
 
-                                    <c:if test="${empty requestScope.cartList}">
-                                        wtf
-                                    </c:if>
-                                    <button onclick="initData()"> Bbam vao toi</button>
+
+                                    <button onclick="renderData()"> Bbam vao toi</button>
+                                    <div class="cart__detail--top">
+                                        <h2 class="title --h4">chi tiết đơn hàng</h2>
+                                        <span id="totalCost" class="total">Tổng tiền: <strong></strong></span>
+                                    </div>
+
+                                    <%--Cart Detail List--%>
+                                    <div id="cart_detail_list" class="cart__detail--list">
+
+
+
+                                    </div>
 
                                 </c:if>
 
