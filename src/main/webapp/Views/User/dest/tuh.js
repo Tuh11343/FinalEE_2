@@ -21,7 +21,7 @@ function logInAjaxRequest() {
             action: "signIn",
             signInName: email,
             signInPassword: password,
-            cartList: cartList,
+            cartList: JSON.stringify(cartList),
         },
         headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -29,6 +29,9 @@ function logInAjaxRequest() {
         success: function (data) {
             if (data.success === 1) {
                 document.cookie = "signInAccountID=" + data.accountID + "; path=/";
+                if(data.deleteLocalCart===true){
+                    localStorage.clear();
+                }
 
                 if (data.accountPermission === 1) {
                     window.location.href = contextPath + "/AdminManagerServlet";

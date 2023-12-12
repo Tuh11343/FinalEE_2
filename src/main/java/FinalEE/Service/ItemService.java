@@ -22,7 +22,7 @@ public interface ItemService {
     int getTotalPagesByItemTypeID(int itemTypeID,double min,double max);
     int getTotalPagesByItemMaterialID(int materialID,double min,double max);
     int getTotalPagesByName(String name,double min,double max);
-    int getTotalPages();
+    int getTotalPages(double min,double max);
 
     public List<Item> findAllByItemCollectionIdAndPriceBetween(int pageNumber, int itemCollectionID,double min,double max, String sort, ItemServiceImpl.SortOrder sortOrder);
     public List<Item> findAllByItemTypeIdAndPriceBetween(int pageNumber,int itemTypeID,double min,double max,String sort,ItemServiceImpl.SortOrder sortOrder);
