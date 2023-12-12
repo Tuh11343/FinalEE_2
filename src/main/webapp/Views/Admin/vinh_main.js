@@ -1,3 +1,14 @@
+let btnSearch = document.querySelectorAll(".btnsearchbox"),
+  boxSearch = document.querySelectorAll(".inputsearch");
+
+function removeActiveinputSearch() {
+  btnSearch.forEach((item) => {
+    item.innerHTML = "Tim kiếm";
+  });
+  boxSearch.forEach((item, index) => {
+    item.classList.remove("active");
+  });
+}
 function showtable() {
   const btntabs = document.querySelectorAll(".accordion-button"),
     tables = document.querySelectorAll(".table-data");
@@ -780,3 +791,22 @@ document.addEventListener("scroll", function () {
   scrollPageHeader();
   scrollHeaderTable();
 });
+
+function showSearchbox() {
+  console.log("boxSearch :>> ", boxSearch);
+  btnSearch.forEach((item) => {
+    item.addEventListener("click", function () {
+      var inputSearch = item.nextElementSibling;
+      if (inputSearch.classList.contains("active")) {
+        inputSearch.classList.remove("active");
+        item.innerHTML = "Tìm kiếm ";
+      } else {
+        removeActiveinputSearch();
+
+        inputSearch.classList.add("active");
+        item.innerHTML = "Đóng";
+      }
+    });
+  });
+}
+showSearchbox();
