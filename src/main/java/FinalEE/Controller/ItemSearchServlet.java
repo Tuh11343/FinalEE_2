@@ -28,16 +28,13 @@ public class ItemSearchServlet extends HttpServlet {
     private PermissionServiceImpl permissionServiceImpl;
     private SaleServiceImpl saleServiceImpl;
     private StockItemServiceImpl stockItemServiceImpl;
-    private CartServiceImpl cartServiceImpl;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try{
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp){
+        try {
             ServletContext servletContext = getServletContext();
-            HttpSession session = req.getSession();
 
             accountServiceImpl = (AccountServiceImpl) servletContext.getAttribute("accountServiceImpl");
-            cartServiceImpl = (CartServiceImpl) servletContext.getAttribute("cartServiceImpl");
             customerServiceImpl = (CustomerServiceImpl) servletContext.getAttribute("customerServiceImpl");
             discountCardServiceImpl = (DiscountCardServiceImpl) servletContext.getAttribute("discountCardServiceImpl");
             itemServiceImpl = (ItemServiceImpl) servletContext.getAttribute("itemServiceImpl");
@@ -80,88 +77,88 @@ public class ItemSearchServlet extends HttpServlet {
             req.setAttribute("saleList", saleList);
             req.setAttribute("stockItemList", stockItemList);
 
-            int currentPage=1;
-            if(req.getParameter("currentPage")!=null){
-                currentPage=Integer.parseInt(req.getParameter("currentPage"));
+            int currentPage = 1;
+            if (req.getParameter("currentPage") != null) {
+                currentPage = Integer.parseInt(req.getParameter("currentPage"));
             }
 
             /*Init Variable*/
             int totalPage;
             List<String> pageList = new ArrayList<>();
             List<Item> itemSearchList = null;
-            String sortBy=req.getParameter("sort");
-            Double rangeMin=Double.parseDouble(req.getParameter("rangeMin"));
-            Double rangeMax=Double.parseDouble(req.getParameter("rangeMax"));
+            String sortBy = req.getParameter("sort");
+            double rangeMin = Double.parseDouble(req.getParameter("rangeMin"));
+            double rangeMax = Double.parseDouble(req.getParameter("rangeMax"));
 
 
             if (req.getParameter("itemCollectionID") != null && !req.getParameter("itemCollectionID").isBlank()) {
                 int itemCollectionID = Integer.parseInt(req.getParameter("itemCollectionID"));
-                req.setAttribute("itemCollectionID",itemCollectionID);
+                req.setAttribute("itemCollectionID", itemCollectionID);
 
-                if(sortBy!=null){
-                    itemSearchList=getItemsByItemCollectionID(sortBy,itemCollectionID,currentPage);
+                if (sortBy != null) {
+                    itemSearchList = getItemsByItemCollectionID(itemCollectionID,rangeMin,rangeMax,sortBy, currentPage);
                 }
 
-                totalPage = itemServiceImpl.getTotalPagesByItemCollectionID(itemCollectionID);
+                totalPage = itemServiceImpl.getTotalPagesByItemCollectionID(itemCollectionID, rangeMin, rangeMax);
                 for (int i = 0; i < totalPage; i++) {
                     pageList.add(String.valueOf(i + 1));
                 }
 
             } else if (req.getParameter("itemTypeID") != null && !req.getParameter("itemTypeID").isBlank()) {
                 int itemTypeID = Integer.parseInt(req.getParameter("itemTypeID"));
-                req.setAttribute("itemTypeID",itemTypeID);
+                req.setAttribute("itemTypeID", itemTypeID);
 
-                if(sortBy!=null){
-                    itemSearchList=getItemsByItemTypeID(sortBy,itemTypeID,currentPage);
+                if (sortBy != null) {
+                    itemSearchList = getItemsByItemTypeID(itemTypeID,rangeMin,rangeMax,sortBy, currentPage);
                 }
 
-                totalPage = itemServiceImpl.getTotalPagesByItemTypeID(itemTypeID);
+                totalPage = itemServiceImpl.getTotalPagesByItemTypeID(itemTypeID, rangeMin, rangeMax);
                 for (int i = 0; i < totalPage; i++) {
                     pageList.add(String.valueOf(i + 1));
                 }
 
-            }else if(req.getParameter("itemMaterialID")!=null && !req.getParameter("itemMaterialID").isBlank()){
+            } else if (req.getParameter("itemMaterialID") != null && !req.getParameter("itemMaterialID").isBlank()) {
                 int itemMaterialID = Integer.parseInt(req.getParameter("itemMaterialID"));
-                req.setAttribute("itemMaterialID",itemMaterialID);
+                req.setAttribute("itemMaterialID", itemMaterialID);
 
-                if(sortBy!=null){
-                    itemSearchList=getItemsByItemMaterialID(sortBy,itemMaterialID,currentPage);
+                if (sortBy != null) {
+                    itemSearchList = getItemsByItemMaterialID(itemMaterialID,rangeMin,rangeMax,sortBy, currentPage);
                 }
 
-                totalPage = itemServiceImpl.getTotalPagesByItemMaterialID(itemMaterialID);
+                totalPage = itemServiceImpl.getTotalPagesByItemMaterialID(itemMaterialID, rangeMin, rangeMax);
                 for (int i = 0; i < totalPage; i++) {
                     pageList.add(String.valueOf(i + 1));
                 }
 
-            }else if(req.getParameter("itemName")!=null && !req.getParameter("itemName").isBlank()){
-                String itemName =req.getParameter("itemName");
-                req.setAttribute("itemName",itemName);
+            } else if (req.getParameter("itemName") != null && !req.getParameter("itemName").isBlank()) {
+                String itemName = req.getParameter("itemName");
+                req.setAttribute("itemName", itemName);
 
-                if(sortBy!=null){
-                    itemSearchList=getItemsByItemName(sortBy,itemName,currentPage);
+                if (sortBy != null) {
+                    itemSearchList = getItemsByItemName(itemName,rangeMin,rangeMax,sortBy, currentPage);
                 }
 
-                totalPage = itemServiceImpl.getTotalPagesByName(itemName);
+                totalPage = itemServiceImpl.getTotalPagesByName(itemName, rangeMin, rangeMax);
                 for (int i = 0; i < totalPage; i++) {
                     pageList.add(String.valueOf(i + 1));
                 }
 
-            }else if(req.getParameter("searchInput")!=null){
-                String searchInput =req.getParameter("searchInput");
-                req.setAttribute("searchInput",searchInput);
+            } else if (req.getParameter("searchInput") != null) {
+                String searchInput = req.getParameter("searchInput");
+                req.setAttribute("searchInput", searchInput);
 
-                if(sortBy!=null){
-                    itemSearchList=getItemsByItemName(sortBy,searchInput,currentPage);
+                if (sortBy != null) {
+                    itemSearchList = getItemsByItemName(searchInput,rangeMin,rangeMax,sortBy, currentPage);
                 }
 
-                totalPage = itemServiceImpl.getTotalPagesByName(searchInput);
+                totalPage = itemServiceImpl.getTotalPagesByName(searchInput, rangeMin, rangeMax);
                 for (int i = 0; i < totalPage; i++) {
                     pageList.add(String.valueOf(i + 1));
                 }
 
-            }else{
-                if(sortBy!=null){
-                    itemSearchList=getItems(sortBy,currentPage);
+            } else {
+                if (sortBy != null) {
+                    itemSearchList = getItems(rangeMin,rangeMax,sortBy, currentPage);
                 }
 
                 totalPage = itemServiceImpl.getTotalPages();
@@ -171,95 +168,95 @@ public class ItemSearchServlet extends HttpServlet {
 
             }
 
-            double minPrice=itemServiceImpl.getItemMinPrice();
-            double maxPrice=itemServiceImpl.getItemMaxPrice();
+            double minPrice = itemServiceImpl.getItemMinPrice();
+            double maxPrice = itemServiceImpl.getItemMaxPrice();
 
-            req.setAttribute("minPrice",minPrice);
-            req.setAttribute("maxPrice",maxPrice);
-            req.setAttribute("sort",sortBy);
+            req.setAttribute("minPrice", minPrice);
+            req.setAttribute("maxPrice", maxPrice);
+            req.setAttribute("sort", sortBy);
             req.setAttribute("itemSearchList", itemSearchList);
             req.setAttribute("pageList", pageList);
-            req.setAttribute("currentPage",currentPage);
+            req.setAttribute("currentPage", currentPage);
 
             req.getRequestDispatcher("/Views/User/ProductList.jsp").forward(req, resp);
-        }catch (Exception er){
+        } catch (Exception er) {
             er.printStackTrace();
         }
 
     }
 
-    private List<Item> getItemsByItemCollectionID(String sortBy, int itemCollectionID, int currentPage) {
-        System.out.println("Gia tri sortBy:"+sortBy);
-        List<Item> itemList=null;
-        if(sortBy.equalsIgnoreCase("az")){
-            itemList=itemServiceImpl.getItemsByItemCollectionIDAndPageNumber(currentPage,itemCollectionID,"name", ItemServiceImpl.SortOrder.ASC);
-        }else if(sortBy.equalsIgnoreCase("za")){
-            itemList=itemServiceImpl.getItemsByItemCollectionIDAndPageNumber(currentPage,itemCollectionID,"name", ItemServiceImpl.SortOrder.DESC);
-        }else if(sortBy.equalsIgnoreCase("priceAsc")){
-            itemList=itemServiceImpl.getItemsByItemCollectionIDAndPageNumber(currentPage,itemCollectionID,"price", ItemServiceImpl.SortOrder.ASC);
-        }else if(sortBy.equalsIgnoreCase("priceDes")){
-            itemList=itemServiceImpl.getItemsByItemCollectionIDAndPageNumber(currentPage,itemCollectionID,"price", ItemServiceImpl.SortOrder.DESC);
+    private List<Item> getItemsByItemCollectionID(int itemCollectionID, double min, double max, String sortBy, int currentPage) {
+        System.out.println("Gia tri sortBy:" + sortBy);
+        List<Item> itemList = null;
+        if (sortBy.equalsIgnoreCase("az")) {
+            itemList = itemServiceImpl.findAllByItemCollectionIdAndPriceBetween(currentPage, itemCollectionID, min, max, "name", ItemServiceImpl.SortOrder.ASC);
+        } else if (sortBy.equalsIgnoreCase("za")) {
+            itemList = itemServiceImpl.findAllByItemCollectionIdAndPriceBetween(currentPage, itemCollectionID, min, max, "name", ItemServiceImpl.SortOrder.DESC);
+        } else if (sortBy.equalsIgnoreCase("priceAsc")) {
+            itemList = itemServiceImpl.findAllByItemCollectionIdAndPriceBetween(currentPage, itemCollectionID, min, max, "price", ItemServiceImpl.SortOrder.ASC);
+        } else if (sortBy.equalsIgnoreCase("priceDes")) {
+            itemList = itemServiceImpl.findAllByItemCollectionIdAndPriceBetween(currentPage, itemCollectionID, min, max, "price", ItemServiceImpl.SortOrder.DESC);
         }
         return itemList;
     }
 
-    private List<Item> getItemsByItemTypeID(String sortBy,int itemTypeID,int currentPage) {
-        System.out.println("Gia tri sortBy:"+sortBy);
-        List<Item> itemList=null;
-        if(sortBy.equalsIgnoreCase("az")){
-            itemList=itemServiceImpl.getItemsByItemTypeIDAndPageNumber(currentPage,itemTypeID,"name", ItemServiceImpl.SortOrder.ASC);
-        }else if(sortBy.equalsIgnoreCase("za")){
-            itemList=itemServiceImpl.getItemsByItemTypeIDAndPageNumber(currentPage,itemTypeID,"name", ItemServiceImpl.SortOrder.DESC);
-        }else if(sortBy.equalsIgnoreCase("priceAsc")){
-            itemList=itemServiceImpl.getItemsByItemTypeIDAndPageNumber(currentPage,itemTypeID,"price", ItemServiceImpl.SortOrder.ASC);
-        }else if(sortBy.equalsIgnoreCase("priceDes")){
-            itemList=itemServiceImpl.getItemsByItemTypeIDAndPageNumber(currentPage,itemTypeID,"price", ItemServiceImpl.SortOrder.DESC);
+    private List<Item> getItemsByItemTypeID(int itemTypeID,double min,double max,String sortBy, int currentPage) {
+        System.out.println("Gia tri sortBy:" + sortBy);
+        List<Item> itemList = null;
+        if (sortBy.equalsIgnoreCase("az")) {
+            itemList = itemServiceImpl.findAllByItemTypeIdAndPriceBetween(currentPage, itemTypeID, min,max,"name", ItemServiceImpl.SortOrder.ASC);
+        } else if (sortBy.equalsIgnoreCase("za")) {
+            itemList = itemServiceImpl.findAllByItemTypeIdAndPriceBetween(currentPage, itemTypeID,min,max, "name", ItemServiceImpl.SortOrder.DESC);
+        } else if (sortBy.equalsIgnoreCase("priceAsc")) {
+            itemList = itemServiceImpl.findAllByItemTypeIdAndPriceBetween(currentPage, itemTypeID,min,max, "price", ItemServiceImpl.SortOrder.ASC);
+        } else if (sortBy.equalsIgnoreCase("priceDes")) {
+            itemList = itemServiceImpl.findAllByItemTypeIdAndPriceBetween(currentPage, itemTypeID, min,max,"price", ItemServiceImpl.SortOrder.DESC);
         }
         return itemList;
     }
 
-    private List<Item> getItemsByItemMaterialID(String sortBy,int itemMaterialID,int currentPage) {
-        System.out.println("Gia tri sortBy:"+sortBy);
-        List<Item> itemList=null;
-        if(sortBy.equalsIgnoreCase("az")){
-            itemList=itemServiceImpl.getItemsByItemMaterialIDAndPageNumber(currentPage,itemMaterialID,"name", ItemServiceImpl.SortOrder.ASC);
-        }else if(sortBy.equalsIgnoreCase("za")){
-            itemList=itemServiceImpl.getItemsByItemMaterialIDAndPageNumber(currentPage,itemMaterialID,"name", ItemServiceImpl.SortOrder.DESC);
-        }else if(sortBy.equalsIgnoreCase("priceAsc")){
-            itemList=itemServiceImpl.getItemsByItemMaterialIDAndPageNumber(currentPage,itemMaterialID,"price", ItemServiceImpl.SortOrder.ASC);
-        }else if(sortBy.equalsIgnoreCase("priceDes")){
-            itemList=itemServiceImpl.getItemsByItemMaterialIDAndPageNumber(currentPage,itemMaterialID,"price", ItemServiceImpl.SortOrder.DESC);
+    private List<Item> getItemsByItemMaterialID(int itemMaterialID,double min,double max,String sortBy, int currentPage) {
+        System.out.println("Gia tri sortBy:" + sortBy);
+        List<Item> itemList = null;
+        if (sortBy.equalsIgnoreCase("az")) {
+            itemList = itemServiceImpl.findAllByItemMaterialIdAndPriceBetween(currentPage, itemMaterialID, min,max,"name", ItemServiceImpl.SortOrder.ASC);
+        } else if (sortBy.equalsIgnoreCase("za")) {
+            itemList = itemServiceImpl.findAllByItemMaterialIdAndPriceBetween(currentPage, itemMaterialID, min,max,"name", ItemServiceImpl.SortOrder.DESC);
+        } else if (sortBy.equalsIgnoreCase("priceAsc")) {
+            itemList = itemServiceImpl.findAllByItemMaterialIdAndPriceBetween(currentPage, itemMaterialID, min,max,"price", ItemServiceImpl.SortOrder.ASC);
+        } else if (sortBy.equalsIgnoreCase("priceDes")) {
+            itemList = itemServiceImpl.findAllByItemMaterialIdAndPriceBetween(currentPage, itemMaterialID, min,max,"price", ItemServiceImpl.SortOrder.DESC);
         }
         return itemList;
     }
 
-    private List<Item> getItemsByItemName(String sortBy,String itemName,int currentPage) {
-        System.out.println("Gia tri sortBy:"+sortBy);
-        List<Item> itemList=null;
-        if(sortBy.equalsIgnoreCase("az")){
-            itemList=itemServiceImpl.getItemsByNameAndPageNumber(currentPage,itemName,"name", ItemServiceImpl.SortOrder.ASC);
-        }else if(sortBy.equalsIgnoreCase("za")){
-            itemList=itemServiceImpl.getItemsByNameAndPageNumber(currentPage,itemName,"name", ItemServiceImpl.SortOrder.DESC);
-        }else if(sortBy.equalsIgnoreCase("priceAsc")){
-            itemList=itemServiceImpl.getItemsByNameAndPageNumber(currentPage,itemName,"price", ItemServiceImpl.SortOrder.ASC);
-        }else if(sortBy.equalsIgnoreCase("priceDes")){
-            itemList=itemServiceImpl.getItemsByNameAndPageNumber(currentPage,itemName,"price", ItemServiceImpl.SortOrder.DESC);
+    private List<Item> getItemsByItemName(String itemName,double min,double max,String sortBy, int currentPage) {
+        System.out.println("Gia tri sortBy:" + sortBy);
+        List<Item> itemList = null;
+        if (sortBy.equalsIgnoreCase("az")) {
+            itemList = itemServiceImpl.findAllByNameContainsAndPriceBetween(currentPage, itemName, min,max,"name", ItemServiceImpl.SortOrder.ASC);
+        } else if (sortBy.equalsIgnoreCase("za")) {
+            itemList = itemServiceImpl.findAllByNameContainsAndPriceBetween(currentPage, itemName, min,max,"name", ItemServiceImpl.SortOrder.DESC);
+        } else if (sortBy.equalsIgnoreCase("priceAsc")) {
+            itemList = itemServiceImpl.findAllByNameContainsAndPriceBetween(currentPage, itemName,min,max, "price", ItemServiceImpl.SortOrder.ASC);
+        } else if (sortBy.equalsIgnoreCase("priceDes")) {
+            itemList = itemServiceImpl.findAllByNameContainsAndPriceBetween(currentPage, itemName,min,max, "price", ItemServiceImpl.SortOrder.DESC);
         }
         return itemList;
     }
 
 
-    private List<Item> getItems(String sortBy,int currentPage) {
-        System.out.println("Gia tri sortBy:"+sortBy);
-        List<Item> itemList=null;
-        if(sortBy.equalsIgnoreCase("az")){
-            itemList=itemServiceImpl.getItemsByPageNumber(currentPage,"name", ItemServiceImpl.SortOrder.ASC);
-        }else if(sortBy.equalsIgnoreCase("za")){
-            itemList=itemServiceImpl.getItemsByPageNumber(currentPage,"name", ItemServiceImpl.SortOrder.DESC);
-        }else if(sortBy.equalsIgnoreCase("priceAsc")){
-            itemList=itemServiceImpl.getItemsByPageNumber(currentPage,"price", ItemServiceImpl.SortOrder.ASC);
-        }else if(sortBy.equalsIgnoreCase("priceDes")){
-            itemList=itemServiceImpl.getItemsByPageNumber(currentPage,"price", ItemServiceImpl.SortOrder.DESC);
+    private List<Item> getItems(double min,double max,String sortBy, int currentPage) {
+        System.out.println("Gia tri sortBy:" + sortBy);
+        List<Item> itemList = null;
+        if (sortBy.equalsIgnoreCase("az")) {
+            itemList = itemServiceImpl.findAllByPriceBetween(currentPage,min,max, "name", ItemServiceImpl.SortOrder.ASC);
+        } else if (sortBy.equalsIgnoreCase("za")) {
+            itemList = itemServiceImpl.findAllByPriceBetween(currentPage, min,max,"name", ItemServiceImpl.SortOrder.DESC);
+        } else if (sortBy.equalsIgnoreCase("priceAsc")) {
+            itemList = itemServiceImpl.findAllByPriceBetween(currentPage,min,max, "price", ItemServiceImpl.SortOrder.ASC);
+        } else if (sortBy.equalsIgnoreCase("priceDes")) {
+            itemList = itemServiceImpl.findAllByPriceBetween(currentPage,min,max, "price", ItemServiceImpl.SortOrder.DESC);
         }
         return itemList;
     }
