@@ -26,9 +26,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
     @Query("SELECT i FROM Item i WHERE i.itemMaterial.id = ?1")
     List<Item> findByItemMaterialId(int itemMaterialId);
 
-    @Query("SELECT i FROM Item i WHERE i.name = ?1")
-    List<Item> findByItemName(String name);
-
     Page<Item> findAllByItemCollectionId(int itemCollectionID, Pageable pageable);
 
     Page<Item> findAllByItemTypeId(int itemTypeID, Pageable pageable);

@@ -239,7 +239,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getItemsByPriceBetween(int pageNumber,double min, double max,String sort,SortOrder sortOrder) {
+    public List<Item> getItemsByPriceBetweenAndPageNumber(int pageNumber,double min, double max,String sort,SortOrder sortOrder) {
         try{
             Sort sortBy;
             if(sortOrder==SortOrder.DESC){
