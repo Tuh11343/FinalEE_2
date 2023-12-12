@@ -167,6 +167,11 @@ public class ItemSearchServlet extends HttpServlet {
 
         }
 
+        double minPrice=itemServiceImpl.getItemMinPrice();
+        double maxPrice=itemServiceImpl.getItemMaxPrice();
+
+        req.setAttribute("minPrice",minPrice);
+        req.setAttribute("maxPrice",maxPrice);
         req.setAttribute("sort",sortBy);
         req.setAttribute("itemSearchList", itemSearchList);
         req.setAttribute("pageList", pageList);
@@ -175,7 +180,12 @@ public class ItemSearchServlet extends HttpServlet {
         req.getRequestDispatcher("/Views/User/ProductList.jsp").forward(req, resp);
     }
 
-    private List<Item> getItemsByItemCollectionID(String sortBy,int itemCollectionID,int currentPage) {
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
+
+    private List<Item> getItemsByItemCollectionID(String sortBy, int itemCollectionID, int currentPage) {
         System.out.println("Gia tri sortBy:"+sortBy);
         List<Item> itemList=null;
         if(sortBy.equalsIgnoreCase("az")){

@@ -12,6 +12,8 @@ function submitForm(formId) {
 function logInAjaxRequest() {
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
+    let cartList = JSON.parse(localStorage.getItem("YOUR_CART"));
+
     $.ajax({
         type: "POST",
         url: contextPath + "/HeaderServlet",
@@ -19,6 +21,7 @@ function logInAjaxRequest() {
             action: "signIn",
             signInName: email,
             signInPassword: password,
+            cartList: cartList,
         },
         headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -207,21 +210,16 @@ function renderData() {
         var totalCost = 0;
         for (let i = 0; i < cartList.length; i++) {
             var saleCost;
-            var sale = cartList[i].stockItem.item.sale
-
+            var sale = cartList[i].stockItem.item.sale;
             if (sale !== null) {
                 saleCost = cartList[i].stockItem.item.price * (1 - sale.sale_percentage / 100);
                 totalCost += saleCost * cartList[i].amount;
-
             } else {
-
                 totalCost += cartList[i].stockItem.item.price * cartList[i].amount;
-
             }
-
-
         }
         let formattedTotalCost = totalCost.toLocaleString('en-US');
+        console.log(document.getElementById("totalCost"));
         document.getElementById("totalCost").innerText = formattedTotalCost + " VNĐ";
 
         for(let i=0;i<cartList.length;i++){
@@ -252,7 +250,7 @@ function renderData() {
                                     '    <div class="img">\n' +
                                     '        <img id="image1" src="'+cartList[i].stockItem.item.imageList[0].image_url+'" alt="">\n' +
                                     '    </div>\n' +
-                                    '    <button class="btn btn-del">Xóa</button>\n' +
+                                    '    <button class="btn btn-del" onclick="deleteCart('+cartList[i].stockItem.id+')">Xóa</button>\n' +
                                     '</div>\n' +
                                     '<div class="gr--info">\n' +
                                         '    <div class="info-top">\n' +
@@ -266,13 +264,55 @@ function renderData() {
                             "</div>";
             document.getElementById("cart_detail_list").innerHTML+=table;
         }
-
-
-
-
-
-
     }
+}
+
+function order(){
+
+    let cartList = JSON.parse(localStorage.getItem("YOUR_CART"));
+    let discountCardID=document.getElementById("discount-code").value;
+    let note=document.getElementById("note").value;
+    let address=document.getElementById("address").value;
+    let email=document.getElementById("emailOrder").value;
+    console.log(email);
+
+    $.ajax({
+        type: "POST",
+        url: contextPath + "/HeaderServlet",
+        data: {
+            action: "order",
+            discountCardID: discountCardID,
+            note: note,
+            address: address,
+            email: email,
+            cartList: JSON.stringify(cartList),
+        },
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        success: function (data) {
+            if(data.success === 1)
+            {
+                console.log("Success");
+                localStorage.clear();
+                window.location.reload();
+            }
+            else
+                console.log("WTF");
+        },
+        error: function (error) {
+            console.log("error:" + error);
+        },
+    });
+}
+
+function deleteCart(stockItemID){
+    console.log(stockItemID);
+    let cartList = JSON.parse(localStorage.getItem("YOUR_CART"));
+    cartList = cartList.filter(cart => cart.stockItem.id !== stockItemID);
+    localStorage.setItem("YOUR_CART", JSON.stringify(cartList));
+    alert("Xóa sản phẩm khỏi giỏ hàng thành công");
+    window.location.reload();
 }
 
 

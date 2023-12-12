@@ -39,6 +39,12 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
 
     Page<Item> findAllByPriceBetween(double min,double max,Pageable pageable);
 
+    @Query("SELECT MIN(i.price) FROM Item i")
+    Double itemMinPrice();
+
+    @Query("SELECT MAX(i.price) FROM Item i")
+    Double itemMaxPrice();
+
     @NonNull
     Page<Item> findAll(Pageable pageable);
 

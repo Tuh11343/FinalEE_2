@@ -2,6 +2,7 @@
 package FinalEE.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -58,7 +59,7 @@ public class Item {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<ItemImage> imageList;
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<StockItem> stockItemList;
 

@@ -15,7 +15,8 @@ public interface ItemService {
     List<Item> findByItemCollectionID(int itemCollectionID);
     List<Item> findByItemMaterialID(int itemMaterialID);
     List<Item> findByItemTypeId(int typeID);
-
+    public double getItemMinPrice();
+    public double getItemMaxPrice();
 
     int getTotalPagesByItemCollectionID(int itemCollectionID);
     int getTotalPagesByItemTypeID(int itemTypeID);

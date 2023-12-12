@@ -39,6 +39,7 @@ public class ItemServlet extends HttpServlet {
     private StockItemServiceImpl stockItemServiceImpl;
     private CartServiceImpl cartServiceImpl;
     private StatisticServiceImpl statisticServiceImpl;
+    private OrderStatusServiceImpl orderStatusServiceImpl;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -60,6 +61,7 @@ public class ItemServlet extends HttpServlet {
         stockItemServiceImpl = webApplicationContext.getBean(StockItemServiceImpl.class);
         cartServiceImpl=webApplicationContext.getBean(CartServiceImpl.class);
         statisticServiceImpl=webApplicationContext.getBean(StatisticServiceImpl.class);
+        orderStatusServiceImpl = webApplicationContext.getBean(OrderStatusServiceImpl.class);
 
         ServletContext servletContext=getServletContext();
         servletContext.setAttribute("accountServiceImpl",accountServiceImpl);
@@ -77,6 +79,7 @@ public class ItemServlet extends HttpServlet {
         servletContext.setAttribute("stockItemServiceImpl",stockItemServiceImpl);
         servletContext.setAttribute("cartServiceImpl",cartServiceImpl);
         servletContext.setAttribute("statisticServiceImpl",statisticServiceImpl);
+        servletContext.setAttribute("orderStatusServiceImpl",orderStatusServiceImpl);
 
         List<Account> accountList = accountServiceImpl.getAllAccount();
         List<Customer> customerList = customerServiceImpl.getAllCustomer();
@@ -91,6 +94,7 @@ public class ItemServlet extends HttpServlet {
         List<Permission> permissionList = permissionServiceImpl.getAllPermission();
         List<Sale> saleList = saleServiceImpl.getAllSale();
         List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
+        List<OrderStatus> orderStatusList=orderStatusServiceImpl.getAllOrderStatus();
 
         /*Set Data List*/
         req.setAttribute("accountList", accountList);
@@ -106,6 +110,7 @@ public class ItemServlet extends HttpServlet {
         req.setAttribute("permissionList", permissionList);
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
+        req.setAttribute("orderStatusList",orderStatusList);
 
 
         req.getRequestDispatcher("Views/User/Test_Home.jsp").forward(req, resp);

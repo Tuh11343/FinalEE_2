@@ -28,6 +28,23 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
+    public double getItemMinPrice(){
+        try{
+            return itemRepository.itemMinPrice();
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return 0;
+    }
+
+    public double getItemMaxPrice(){
+        try{
+            return itemRepository.itemMaxPrice();
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return 0;
+    }
 
     @Override
     public boolean create(Item item) {
