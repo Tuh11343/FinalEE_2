@@ -31,73 +31,62 @@ public class CartServlet extends HttpServlet {
     private SaleServiceImpl saleServiceImpl;
     private StockItemServiceImpl stockItemServiceImpl;
     private CartServiceImpl cartServiceImpl;
+    private OrderStatusServiceImpl orderStatusServiceImpl;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String requestedWith = req.getHeader("X-Requested-With");
-        String action = req.getParameter("action");
-        if (requestedWith != null && requestedWith.equals("XMLHttpRequest")) {
-            String data = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-
-            // Chuyển đổi dữ liệu thành danh sách các đối tượng Cart
-            Gson gson = new Gson();
-            Type cartListType = new TypeToken<List<Cart>>(){}.getType();
-            List<Cart> cartList = gson.fromJson(data, cartListType);
-            req.setAttribute("cartList",cartList);
-
-        }else{
+        try{
+            String action = req.getParameter("action");
             switch (action) {
                 case "orderClick" -> {
-                    System.out.println("Ban da dat hang");
+                    double orderTotal = 0.0;
+                    Customer signInCustomer = null;
+                    Integer discountCardID = null;
+                    Integer signInAccountID = null;
 
-                    double orderTotal=0.0;
-                    Customer signInCustomer=null;
-                    Integer discountCardID=null;
-                    Integer signInAccountID=null;
-
-                    List<Cookie> cookieList= List.of(req.getCookies());
-                    for(Cookie cookie: cookieList){
-                        if(cookie.getName().equals("signInAccountID")){
-                            signInAccountID=Integer.parseInt(cookie.getValue());
-                            Account account=accountServiceImpl.findByID(signInAccountID);
-                            signInCustomer=account.getCustomer();
+                    List<Cookie> cookieList = List.of(req.getCookies());
+                    for (Cookie cookie : cookieList) {
+                        if (cookie.getName().equals("signInAccountID")) {
+                            signInAccountID = Integer.parseInt(cookie.getValue());
+                            Account account = accountServiceImpl.findByID(signInAccountID);
+                            signInCustomer = account.getCustomer();
                         }
                     }
 
-                    if(req.getParameter("customerDiscountCardID")!=null){
-                        discountCardID=Integer.parseInt(req.getParameter("customerDiscountCardID"));
+                    if (req.getParameter("customerDiscountCardID") != null) {
+                        discountCardID = Integer.parseInt(req.getParameter("customerDiscountCardID"));
                     }
 
-                    DiscountCard discountCard=discountCardServiceImpl.getDiscountCard(discountCardID);
+                    DiscountCard discountCard = discountCardServiceImpl.getDiscountCard(discountCardID);
 
-                    if(signInCustomer==null){
-                        signInCustomer=new Customer();
+                    if (signInCustomer == null) {
+                        signInCustomer = new Customer();
                         signInCustomer.setName(req.getParameter("orderCustomerName"));
                         signInCustomer.setPhone_number(req.getParameter("orderCustomerPhoneNumber"));
                         customerServiceImpl.create(signInCustomer);
                     }
 
                     /*Create Oder*/
-                    ItemOrder order=new ItemOrder();
+                    ItemOrder order = new ItemOrder();
                     order.setCustomer(signInCustomer);
                     order.setTotal(orderTotal);
                     order.setDate_purchase(new Date());
                     order.setDiscountCard(discountCard);
                     order.setNote(req.getParameter("orderNote"));
-                    order.setOrder_status(0);
+                    order.setOrder_status(orderStatusServiceImpl.defaultOrder());
                     order.setAddress(req.getParameter("orderAddress"));
                     orderServiceImpl.create(order);
 
-                    if(order.getId()==null){
+                    if (order.getId() == null) {
                         return;
                     }
 
                     /*Create Order Detail*/
                     List<Cart> cartList = cartServiceImpl.findByCustomerID(signInCustomer.getId());
-                    for (Cart cart : cartList){
+                    for (Cart cart : cartList) {
 
-                        OrderDetail orderDetail=new OrderDetail();
+                        OrderDetail orderDetail = new OrderDetail();
                         orderDetail.setOrder(order);
                         orderDetail.setItem_size(cart.getStockItem().getSize());
                         orderDetail.setItem_color(cart.getStockItem().getColor());
@@ -107,7 +96,7 @@ public class CartServlet extends HttpServlet {
 
                         orderDetailServiceImpl.create(orderDetail);
 
-                        orderTotal+=orderDetail.getTotal();
+                        orderTotal += orderDetail.getTotal();
                     }
 
                     //Update Order Total
@@ -116,15 +105,14 @@ public class CartServlet extends HttpServlet {
 
                     /*Remove Cart*/
                     cartServiceImpl.deleteAllByCustomerID(signInCustomer.getId());
-
-                    req.getRequestDispatcher("Views/User/Cart.jsp").forward(req,resp);
+                    req.getRequestDispatcher("Views/User/Cart.jsp").forward(req, resp);
 
                 }
                 case "itemDeleteClick" -> {
                     System.out.println("Ban da nhan vao nut xoa vat pham");
                     //Remove Item From Cart
-                    Integer deleteCartID=null;
-                    deleteCartID=Integer.parseInt(req.getParameter("deleteCartID"));
+                    Integer deleteCartID = null;
+                    deleteCartID = Integer.parseInt(req.getParameter("deleteCartID"));
                     cartServiceImpl.deleteByID(deleteCartID);
 
                     req.getRequestDispatcher("Views/User/Cart.jsp").forward(req, resp);
@@ -133,12 +121,12 @@ public class CartServlet extends HttpServlet {
                     resp.sendRedirect("/FinalEE/ItemServlet");
                 }
                 default -> {
-                    System.out.println("WTF:"+action);
+                    System.out.println("WTF:" + action);
                 }
             }
+        }catch (Exception er){
+            er.printStackTrace();
         }
-
-
     }
 
     @Override
@@ -161,6 +149,7 @@ public class CartServlet extends HttpServlet {
         permissionServiceImpl = (PermissionServiceImpl) servletContext.getAttribute("permissionServiceImpl");
         saleServiceImpl = (SaleServiceImpl) servletContext.getAttribute("saleServiceImpl");
         stockItemServiceImpl = (StockItemServiceImpl) servletContext.getAttribute("stockItemServiceImpl");
+        orderStatusServiceImpl = (OrderStatusServiceImpl) servletContext.getAttribute("orderStatusServiceImpl");
 
         List<Account> accountList = accountServiceImpl.getAllAccount();
         List<Customer> customerList = customerServiceImpl.getAllCustomer();
@@ -175,35 +164,7 @@ public class CartServlet extends HttpServlet {
         List<Permission> permissionList = permissionServiceImpl.getAllPermission();
         List<Sale> saleList = saleServiceImpl.getAllSale();
         List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
-
-        Integer signInAccountID=null;
-        Customer signInCustomer=null;
-
-        List<Cookie> cookieList= List.of(req.getCookies());
-        for(Cookie cookie: cookieList){
-            if(cookie.getName().equals("signInAccountID")){
-                signInAccountID=Integer.parseInt(cookie.getValue());
-                Account account=accountServiceImpl.findByID(signInAccountID);
-                signInCustomer=account.getCustomer();
-            }
-        }
-
-        if (signInAccountID!=null) {
-            req.setAttribute("signInCustomer", signInCustomer);
-
-            /*Set Customer Discount Card*/
-            List<DiscountCard> customerDiscountCardList = discountCardServiceImpl.findByCustomerID(signInCustomer.getId());
-            req.setAttribute("customerDiscountCardList", customerDiscountCardList);
-        }
-        List<Cart> cartList;
-        if(signInCustomer==null)
-        {
-            cartList = cartServiceImpl.findByCustomerID(null);
-        }else{
-            cartList=cartServiceImpl.findByCustomerID(signInCustomer.getId());
-        }
-        /*Set Order Total*/
-        calculateOrderTotal(cartList, req);
+        List<OrderStatus> orderStatusList = orderStatusServiceImpl.getAllOrderStatus();
 
         /*Set Data List*/
         req.setAttribute("accountList", accountList);
@@ -219,23 +180,56 @@ public class CartServlet extends HttpServlet {
         req.setAttribute("permissionList", permissionList);
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
-        req.setAttribute("cartList", cartList);
+        req.setAttribute("orderStatusList", orderStatusList);
 
-        req.getRequestDispatcher("/Views/User/Cart.jsp").forward(req, resp);
+        Customer signInCustomer = null;
+        List<Cart> cartList = null;
+
+        List<Cookie> cookieList = List.of(req.getCookies());
+        for (Cookie cookie : cookieList) {
+            if (cookie.getName().equals("signInAccountID")) {
+                Integer signInAccountID = Integer.parseInt(cookie.getValue());
+                Account account = accountServiceImpl.findByID(signInAccountID);
+                signInCustomer = account.getCustomer();
+            }
+        }
+
+        if (signInCustomer != null) {
+            req.setAttribute("signInCustomer", signInCustomer);
+
+            /*Set Customer Discount Card*/
+            List<DiscountCard> customerDiscountCardList = discountCardServiceImpl.findByCustomerID(signInCustomer.getId());
+            req.setAttribute("customerDiscountCardList", customerDiscountCardList);
+            cartList = cartServiceImpl.findByCustomerID(signInCustomer.getId());
+
+            /*Set Order Total*/
+            calculateOrderTotal(cartList, req);
+            req.setAttribute("cartList", cartList);
+
+            req.getRequestDispatcher("/Views/User/Cart.jsp").forward(req, resp);
+        }else{
+            req.getRequestDispatcher("/Views/User/Cart.jsp").forward(req, resp);
+        }
+
+
     }
 
     private void calculateOrderTotal(List<Cart> cartList, HttpServletRequest req) {
         double total = 0.0;
         for (Cart cart : cartList) {
-            total+=calculateOrderDetailTotal(cart);
+            total += calculateOrderDetailTotal(cart);
         }
-        System.out.println("Tong gia tien:" + total);
         req.setAttribute("orderTotal", total);
     }
 
-    private double calculateOrderDetailTotal(Cart cart){
-        double total=0.0;
-        Sale sale=cart.getStockItem().getItem().getSale();
+    private double calculateOrderTotal(double orderTotal, DiscountCard discountCard) {
+        double discountPercentage = (double) discountCard.getDiscount_percentage() / 100;
+        return orderTotal - (orderTotal * discountPercentage);
+    }
+
+    private double calculateOrderDetailTotal(Cart cart) {
+        double total = 0.0;
+        Sale sale = cart.getStockItem().getItem().getSale();
         if (sale != null) {
             total += cart.getStockItem().getItem().getPrice() * (1 - (sale.getSale_percentage() / 100)) * cart.getAmount();
         } else {

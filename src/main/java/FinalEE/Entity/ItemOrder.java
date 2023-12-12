@@ -33,12 +33,17 @@ public class ItemOrder {
     private double total;
     @Column(name = "date_purchase")
     private Date date_purchase;
-    @Column(name = "order_status")
-    private int order_status;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_status_id")
+    private OrderStatus order_status;
+
     @Column(name = "address")
     private String address;
     @Column(name = "note")
     private String note;
+    @Column(name= "email")
+    private String email;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<OrderDetail> orderDetailList;

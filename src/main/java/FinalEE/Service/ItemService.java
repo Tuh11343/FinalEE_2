@@ -15,21 +15,21 @@ public interface ItemService {
     List<Item> findByItemCollectionID(int itemCollectionID);
     List<Item> findByItemMaterialID(int itemMaterialID);
     List<Item> findByItemTypeId(int typeID);
+    public double getItemMinPrice();
+    public double getItemMaxPrice();
 
-
-    int getTotalPagesByItemCollectionID(int itemCollectionID);
-    int getTotalPagesByItemTypeID(int itemTypeID);
-    int getTotalPagesByItemMaterialID(int materialID);
-    int getTotalPagesByName(String name);
+    int getTotalPagesByItemCollectionID(int itemCollectionID,double min,double max);
+    int getTotalPagesByItemTypeID(int itemTypeID,double min,double max);
+    int getTotalPagesByItemMaterialID(int materialID,double min,double max);
+    int getTotalPagesByName(String name,double min,double max);
     int getTotalPages();
 
-    public List<Item> getItemsByItemCollectionIDAndPageNumber(int pageNumber, int itemCollectionID, String sort, ItemServiceImpl.SortOrder sortOrder);
-    public List<Item> getItemsByItemTypeIDAndPageNumber(int pageNumber,int itemTypeID,String sort,ItemServiceImpl.SortOrder sortOrder);
-    public List<Item> getItemsByItemMaterialIDAndPageNumber(int pageNumber,int itemMaterialID,String sort,ItemServiceImpl.SortOrder sortOrder);
-    public List<Item> getItemsByNameAndPageNumber(int pageNumber,String name,String sort,ItemServiceImpl.SortOrder sortOrder);
-    public List<Item> getItemsByPageNumber(int pageNumber,String sort,ItemServiceImpl.SortOrder sortOrder);
+    public List<Item> findAllByItemCollectionIdAndPriceBetween(int pageNumber, int itemCollectionID,double min,double max, String sort, ItemServiceImpl.SortOrder sortOrder);
+    public List<Item> findAllByItemTypeIdAndPriceBetween(int pageNumber,int itemTypeID,double min,double max,String sort,ItemServiceImpl.SortOrder sortOrder);
+    public List<Item> findAllByItemMaterialIdAndPriceBetween(int pageNumber,int itemMaterialID,double min,double max,String sort,ItemServiceImpl.SortOrder sortOrder);
+    public List<Item> findAllByNameContainsAndPriceBetween(int pageNumber,String name,double min,double max,String sort,ItemServiceImpl.SortOrder sortOrder);
+    public List<Item> findAllByPriceBetween(int pageNumber,double min,double max,String sort,ItemServiceImpl.SortOrder sortOrder);
 
-    public List<Item> getItemsByPriceBetween(int pageNumber, double min,double max,String sort,ItemServiceImpl.SortOrder sortOrder);
 
     
 }

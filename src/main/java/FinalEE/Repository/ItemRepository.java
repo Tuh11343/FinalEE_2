@@ -26,18 +26,20 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
     @Query("SELECT i FROM Item i WHERE i.itemMaterial.id = ?1")
     List<Item> findByItemMaterialId(int itemMaterialId);
 
-    @Query("SELECT i FROM Item i WHERE i.name = ?1")
-    List<Item> findByItemName(String name);
+    Page<Item> findAllByItemCollectionIdAndPriceBetween(int itemCollectionID,double min,double max ,Pageable pageable);
 
-    Page<Item> findAllByItemCollectionId(int itemCollectionID, Pageable pageable);
+    Page<Item> findAllByItemTypeIdAndPriceBetween(int itemTypeID,double min,double max ,Pageable pageable);
 
-    Page<Item> findAllByItemTypeId(int itemTypeID, Pageable pageable);
+    Page<Item> findAllByItemMaterialIdAndPriceBetween(int itemMaterialID,double min,double max, Pageable pageable);
 
-    Page<Item> findAllByItemMaterialId(int itemMaterialID, Pageable pageable);
+    Page<Item> findAllByNameContainsAndPriceBetween(String name,double min,double max, Pageable pageable);
 
-    Page<Item> findAllByNameContains(String name, Pageable pageable);
 
-    Page<Item> findAllByPriceBetween(double min,double max,Pageable pageable);
+    @Query("SELECT MIN(i.price) FROM Item i")
+    Double itemMinPrice();
+
+    @Query("SELECT MAX(i.price) FROM Item i")
+    Double itemMaxPrice();
 
     @NonNull
     Page<Item> findAll(Pageable pageable);

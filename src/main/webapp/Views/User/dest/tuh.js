@@ -12,6 +12,8 @@ function submitForm(formId) {
 function logInAjaxRequest() {
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
+    let cartList = JSON.parse(localStorage.getItem("YOUR_CART"));
+
     $.ajax({
         type: "POST",
         url: contextPath + "/HeaderServlet",
@@ -19,6 +21,7 @@ function logInAjaxRequest() {
             action: "signIn",
             signInName: email,
             signInPassword: password,
+            cartList: cartList,
         },
         headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -199,59 +202,118 @@ function selectTedtable() {
 }
 
 
-function initData() {
+function renderData() {
 
-    console.log(1);
     let cartList = JSON.parse(localStorage.getItem("YOUR_CART"));
-    let data = JSON.stringify(cartList);
 
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", contextPath + "/CartServlet", true);
-    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    xhr.send(data);
-
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            window.location.href = contextPath + "/CartServlet?cartList="+data;
-        } else {
-            alert("Có lỗi xảy ra: " + xhr.status);
-        }
-    };
-    /*if(cartList!==null){
-      let totalCost = 0;
-      for(let i = 0; i < cartList.length; i++) {
-        let saleCost;
-        let sale=cartList[i].stockItem.item.sale;
-
-        if(sale!==null){
-
-          saleCost=cartList[i].stockItem.item.price * (1 - sale.sale_percentage/100);
-          totalCost+=saleCost * cartList[i].amount;
-          let formattedSaleCost = saleCost.toLocaleString('en-US');
-          console.log(formattedSaleCost);
-
-        }else{
-
-          totalCost += cartList[i].stockItem.price * cartList[i].amount;
-
+    if (cartList !== null) {
+        var totalCost = 0;
+        for (let i = 0; i < cartList.length; i++) {
+            var saleCost;
+            var sale = cartList[i].stockItem.item.sale;
+            if (sale !== null) {
+                saleCost = cartList[i].stockItem.item.price * (1 - sale.sale_percentage / 100);
+                totalCost += saleCost * cartList[i].amount;
+            } else {
+                totalCost += cartList[i].stockItem.item.price * cartList[i].amount;
+            }
         }
         let formattedTotalCost = totalCost.toLocaleString('en-US');
+        console.log(document.getElementById("totalCost"));
         document.getElementById("totalCost").innerText = formattedTotalCost + " VNĐ";
 
-      }
-    }*/
+        for(let i=0;i<cartList.length;i++){
+            var qty;
+            var totalItem=0;
+            if(cartList[i].stockItem.item.sale!=null){
+                var saleTemp = cartList[i].stockItem.item.sale
+                var saleCostTemp = cartList[i].stockItem.item.price * (1 - saleTemp.sale_percentage / 100);
+                var saveAmount=cartList[i].stockItem.item.price-saleCostTemp;
+                totalItem=saleCostTemp*cartList[i].amount;
+
+                qty='<p class="qty">\n' +
+                    '<span>Số lượng <strong> '+cartList[i].amount+' </strong>\n' +
+                    '* '+saleCostTemp.toLocaleString('en-US')+'</span>\n' +
+                    '<span class="discount-price">(Tiết kiệm:\n' +
+                    ''+saveAmount.toLocaleString('en-US')+')</span>\n' +
+                    '</p>\n';
+            }else{
+                totalItem=cartList[i].stockItem.item.price*cartList[i].amount;
+                qty='<p class="qty">\n'+
+                    '<span>Số lượng <strong> '+cartList[i].amount+' </strong>\n' +
+                '* '+cartList[i].stockItem.item.price.toLocaleString('en-US')+'</span>\n'+
+                    '</p>\n';
+            }
+
+            var table='<div class="cart__item">\n' +
+                                    '<div class="gr--img">\n' +
+                                    '    <div class="img">\n' +
+                                    '        <img id="image1" src="'+cartList[i].stockItem.item.imageList[0].image_url+'" alt="">\n' +
+                                    '    </div>\n' +
+                                    '    <button class="btn btn-del" onclick="deleteCart('+cartList[i].stockItem.id+')">Xóa</button>\n' +
+                                    '</div>\n' +
+                                    '<div class="gr--info">\n' +
+                                        '    <div class="info-top">\n' +
+                                        '        <h4 class="name">'+cartList[i].stockItem.item.name+'</h4>\n'
+                                                 +qty+
+                                        '    </div>\n'+
+                                        '    <div class="total-item">\n' +
+                                        '        <span>= '+totalItem.toLocaleString('en-US')+' VNĐ</span>\n'+
+                                        '    </div>\n'+
+                                    '</div>'+
+                            "</div>";
+            document.getElementById("cart_detail_list").innerHTML+=table;
+        }
+    }
 }
 
-function renderCartNologin(){
-    let dataCart = JSON.parse(localStorage.getItem('YOUR_CART'));
-    console.log(dataCart);
+function order(){
 
-    dataCart.forEach(function (item){
-        console.log(item);
+    let cartList = JSON.parse(localStorage.getItem("YOUR_CART"));
+    let discountCardID=document.getElementById("discount-code").value;
+    let note=document.getElementById("note").value;
+    let address=document.getElementById("address").value;
+    let email=document.getElementById("emailOrder").value;
+    console.log(email);
 
-    })
-    let cartDisplay = document.querySelector('')
+    $.ajax({
+        type: "POST",
+        url: contextPath + "/HeaderServlet",
+        data: {
+            action: "order",
+            discountCardID: discountCardID,
+            note: note,
+            address: address,
+            email: email,
+            cartList: JSON.stringify(cartList),
+        },
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        success: function (data) {
+            if(data.success === 1)
+            {
+                console.log("Success");
+                localStorage.clear();
+                window.location.reload();
+            }
+            else
+                console.log("WTF");
+        },
+        error: function (error) {
+            console.log("error:" + error);
+        },
+    });
+}
+
+function deleteCart(stockItemID){
+    console.log(stockItemID);
+    let cartList = JSON.parse(localStorage.getItem("YOUR_CART"));
+    cartList = cartList.filter(cart => cart.stockItem.id !== stockItemID);
+    localStorage.setItem("YOUR_CART", JSON.stringify(cartList));
+    alert("Xóa sản phẩm khỏi giỏ hàng thành công");
+    window.location.reload();
 }
 
 
-renderCartNologin();
+

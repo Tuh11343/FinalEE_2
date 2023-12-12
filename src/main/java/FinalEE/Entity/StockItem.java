@@ -20,7 +20,6 @@ public class StockItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")
     private Item item;

@@ -1,28 +1,19 @@
 package FinalEE.Controller;
 
-import FinalEE.Entity.Account;
-import FinalEE.Entity.Customer;
+import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import jakarta.json.JsonObject;
-import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 
 public class HeaderServlet extends HttpServlet {
@@ -41,9 +32,10 @@ public class HeaderServlet extends HttpServlet {
     private SaleServiceImpl saleServiceImpl;
     private StockItemServiceImpl stockItemServiceImpl;
     private CartServiceImpl cartServiceImpl;
+    private OrderStatusServiceImpl orderStatusServiceImpl;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
         try {
             ServletContext servletContext = getServletContext();
             HttpSession session = req.getSession();
@@ -62,10 +54,11 @@ public class HeaderServlet extends HttpServlet {
             permissionServiceImpl = (PermissionServiceImpl) servletContext.getAttribute("permissionServiceImpl");
             saleServiceImpl = (SaleServiceImpl) servletContext.getAttribute("saleServiceImpl");
             stockItemServiceImpl = (StockItemServiceImpl) servletContext.getAttribute("stockItemServiceImpl");
+            orderStatusServiceImpl= (OrderStatusServiceImpl) servletContext.getAttribute("orderStatusServiceImpl");
 
             String requestedWith = req.getHeader("X-Requested-With");
+            String action = req.getParameter("action");
             if (requestedWith != null && requestedWith.equals("XMLHttpRequest")) {
-                String action = req.getParameter("action");
 
                 resp.setContentType("application/json");
                 PrintWriter out = resp.getWriter();
@@ -77,7 +70,9 @@ public class HeaderServlet extends HttpServlet {
                     }
                     case "signUp" -> {
                         signUpHandle(req, jsonResponse, out);
-
+                    }
+                    case "order" -> {
+                        orderHandle(req, jsonResponse, out);
                     }
                     default -> {
 
@@ -85,7 +80,6 @@ public class HeaderServlet extends HttpServlet {
                 }
 
             } else {
-                String action = req.getParameter("action");
                 switch (action) {
                     case "homeClick" -> {
                         resp.sendRedirect("/FinalEE/ItemServlet");
@@ -138,53 +132,121 @@ public class HeaderServlet extends HttpServlet {
                 }
             }
         } catch (Exception er) {
-            System.out.println(er.toString());
+            er.printStackTrace();
         }
 
 
     }
 
+    private void orderHandle(HttpServletRequest req, JSONObject jsonResponse, PrintWriter out) {
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            List<Cart> cartList = mapper.readValue(req.getParameter("cartList"), new TypeReference<>() {});
+            Integer discountCardID= null;
+            if(req.getParameter("discountCardID")!=null&&!req.getParameter("discountCardID").isBlank()){
+                discountCardID=Integer.parseInt(req.getParameter("discountCardID"));
+            }
+            DiscountCard discountCard=discountCardServiceImpl.getDiscountCard(discountCardID);
+
+            double orderTotal=0f;
+            /*Create Oder*/
+            ItemOrder order=new ItemOrder();
+            order.setCustomer(null);
+            order.setTotal(orderTotal);
+            order.setEmail(req.getParameter("email"));
+            order.setDate_purchase(new Date());
+            order.setDiscountCard(discountCard);
+            order.setNote(req.getParameter("note"));
+            order.setOrder_status(orderStatusServiceImpl.defaultOrder());
+            order.setAddress(req.getParameter("address"));
+            orderServiceImpl.create(order);
+
+            if(order.getId()==null){
+                System.out.println("Co loi xay ra trong viec tao order");
+                return;
+            }
+
+            /*Create Order Detail*/
+            for (Cart cart : cartList){
+
+                OrderDetail orderDetail=new OrderDetail();
+                orderDetail.setOrder(order);
+                orderDetail.setItem_size(cart.getStockItem().getSize());
+                orderDetail.setItem_color(cart.getStockItem().getColor());
+                orderDetail.setAmount(cart.getAmount());
+                orderDetail.setTotal(calculateOrderDetailTotal(cart));
+                orderDetail.setItem(cart.getStockItem().getItem());
+
+                orderDetailServiceImpl.create(orderDetail);
+
+                orderTotal+=orderDetail.getTotal();
+            }
+
+            //Update Order Total
+            if(discountCard!=null){
+                order.setTotal(calculateOrderTotal(orderTotal,discountCard));
+            }else{
+                order.setTotal(orderTotal);
+            }
+            orderServiceImpl.create(order);
+
+            sendConfirmOrderEmail(order,cartList);
+
+            jsonResponse.put("success", 1);
+            out.print(jsonResponse);
+            out.flush();
+            out.close();
+        } catch (Exception er) {
+            er.printStackTrace();
+        }
+
+    }
+
     private void signUpHandle(HttpServletRequest req, JSONObject jsonResponse, PrintWriter out) throws JSONException {
-        String name = req.getParameter("customerName");
-        String phoneNumber = req.getParameter("phoneNumber");
-        String email = req.getParameter("email");
-        String address = req.getParameter("address");
-        String password = req.getParameter("password");
-        String rePassword = req.getParameter("rePassword");
+        try {
+            String name = req.getParameter("customerName");
+            String phoneNumber = req.getParameter("phoneNumber");
+            String email = req.getParameter("email");
+            String address = req.getParameter("address");
+            String password = req.getParameter("password");
+            String rePassword = req.getParameter("rePassword");
 
-        Customer customer = new Customer();
-        customer.setPhone_number(phoneNumber);
-        customer.setName(name);
-        customer.setAddress(address);
-        customer.setEmail(email);
+            Customer customer = new Customer();
+            customer.setPhone_number(phoneNumber);
+            customer.setName(name);
+            customer.setAddress(address);
+            customer.setEmail(email);
 
-        /*customerServiceImpl.create(customer);*/
-
-        if (customer.getId() != null) {
             Account account = new Account();
             account.setPermission(permissionServiceImpl.findByLevel(0));
             account.setCustomer(customer);
             account.setName(email);
             if (password.equals(rePassword)) {
                 account.setPassword(password);
-                /*accountServiceImpl.create(account);*/
                 jsonResponse.put("success", 1);
-                sendEmail(customer,account);
+                sendAccountConfirmEmail(customer, account);
             } else {
                 System.out.println("Password not correct");
                 jsonResponse.put("passwordIncorrect", 1);
             }
-        } else {
-            System.out.println("There is no customer to create Account");
-            jsonResponse.put("systemError", 1);
+
+            out.print(jsonResponse);
+            out.flush();
+            out.close();
+        } catch (
+                Exception er) {
+            er.printStackTrace();
         }
-        out.print(jsonResponse);
-        out.flush();
-        out.close();
 
     }
 
     private void signInHandle(HttpServletRequest req, JSONObject jsonResponse, PrintWriter out) throws JSONException {
+        try{
+
+        }catch (Exception er){
+            er.printStackTrace();
+        }
         String name = req.getParameter("signInName");
         String password = req.getParameter("signInPassword");
 
@@ -204,41 +266,23 @@ public class HeaderServlet extends HttpServlet {
     }
 
 
-    private void sendEmail(Customer customer,Account account) {
+    private void sendAccountConfirmEmail(Customer customer, Account account) {
         try {
-            JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-            mailSender.setHost("smtp.gmail.com");
-            mailSender.setPort(587);
-            mailSender.setUsername("tuhtest11343@gmail.com");
-            mailSender.setPassword("rceqgpucwzlyjmiv");
 
-            Properties props = mailSender.getJavaMailProperties();
-            props.put("mail.transport.protocol", "smtp");
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.debug", "true");
+            Map<String, Object> keyValue = new HashMap<>();
+            keyValue.put("phoneNumber", customer.getPhone_number());
+            keyValue.put("name", customer.getName());
+            keyValue.put("address", customer.getAddress());
+            keyValue.put("email", customer.getEmail());
+            keyValue.put("accountName", account.getName());
+            keyValue.put("accountPassword", account.getPassword());
+            keyValue.put("action","signUp");
 
-            MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+            MailServiceImpl mailServiceImpl=new MailServiceImpl();
+            String activationLink= mailServiceImpl.mapToJSON(keyValue);
 
-            Map<String,Object> keyValue=new HashMap<>();
-            keyValue.put("phoneNumber",customer.getPhone_number());
-            keyValue.put("name",customer.getName());
-            keyValue.put("address",customer.getAddress());
-            keyValue.put("email",customer.getEmail());
-            keyValue.put("accountName",account.getName());
-            keyValue.put("accountPassword",account.getPassword());
-
-            String activationLink=createActivationLink(keyValue);
-
-            String htmlMsg = "Xin chào! Để xác thực tài khoản vui lòng nhấp vào <a href='"+ activationLink+"'>đường link xác nhận</a>";
-            helper.setText(htmlMsg, true); // true indicates the text included is HTML
-
-            helper.setTo(account.getName());
-            helper.setSubject("Thư xác nhận tài khoản");
-            helper.setFrom("tuhtest11343@gmail.com");
-
-            mailSender.send(mimeMessage);
+            String htmlMsg = "Xin chào! Để xác thực tài khoản vui lòng nhấp vào <a href='" + activationLink + "'>đường link xác nhận</a>";
+            mailServiceImpl.sendMail(keyValue,account.getName(),htmlMsg,"Thư xác nhận tài khoản");
 
         } catch (Exception er) {
             er.printStackTrace();
@@ -246,28 +290,43 @@ public class HeaderServlet extends HttpServlet {
 
     }
 
-    public static String createActivationLink(Map<String, Object> keyValueData) {
+    private void sendConfirmOrderEmail(ItemOrder order,List<Cart> cartList) {
         try {
-            String jsonData = mapToJson(keyValueData);
-            String encodedData = Base64.getEncoder().encodeToString(jsonData.getBytes("UTF-8"));
-            return "http://localhost:9595/FinalEE/MailTest?data=" + encodedData;
-        } catch (IOException e) {
-            e.printStackTrace(); // Xử lý lỗi nếu cần
-            return null;
+            Map<String, Object> keyValue = new HashMap<>();
+            keyValue.put("email", order.getEmail());
+            keyValue.put("action","orderConfirm");
+            keyValue.put("order",order);
+
+            MailServiceImpl mailServiceImpl=new MailServiceImpl();
+            String activationLink= mailServiceImpl.mapToJSON(keyValue);
+            StringBuilder htmlMsg= new StringBuilder("Đây là đơn hàng của bạn bao gồm:<br>");
+            for (Cart cart:cartList){
+                htmlMsg.append("Sản phẩm:").append(cart.getStockItem().getItem().getName()).append("    Số lượng:").append(cart.getAmount()).append("<br>");
+            }
+
+            htmlMsg.append("<br><br>Để xác thực đơn hàng vui lòng nhấp vào <a href='").append(activationLink).append("'>đường link xác nhận</a>");
+            mailServiceImpl.sendMail(keyValue,order.getEmail(),htmlMsg.toString(),"Thư xác nhận đơn hàng");
+
+        } catch (Exception er) {
+            er.printStackTrace();
         }
+
     }
 
-    private static String mapToJson(Map<String, Object> keyValueData) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectNode objectNode = objectMapper.createObjectNode();
-        keyValueData.forEach((key, value) -> {
-            if (value instanceof String) {
-                objectNode.put(key, (String) value);
-            } else {
-                System.out.println("Loi roi");
-            }
-        });
-        return objectMapper.writeValueAsString(objectNode);
+    private double calculateOrderTotal(double orderTotal,DiscountCard discountCard){
+        double discountPercentage= (double) discountCard.getDiscount_percentage() /100;
+        return orderTotal-(orderTotal*discountPercentage);
+    }
+
+    private double calculateOrderDetailTotal(Cart cart){
+        double total=0.0f;
+        Sale sale=cart.getStockItem().getItem().getSale();
+        if (sale != null) {
+            total += cart.getStockItem().getItem().getPrice() * (1 - (sale.getSale_percentage() / 100)) * cart.getAmount();
+        } else {
+            total += cart.getStockItem().getItem().getPrice() * cart.getAmount();
+        }
+        return total;
     }
 
 }
