@@ -166,6 +166,22 @@ public class CartServlet extends HttpServlet {
         List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
         List<OrderStatus> orderStatusList = orderStatusServiceImpl.getAllOrderStatus();
 
+        /*Set Data List*/
+        req.setAttribute("accountList", accountList);
+        req.setAttribute("customerList", customerList);
+        req.setAttribute("discountCardList", discountCardList);
+        req.setAttribute("itemList", itemList);
+        req.setAttribute("itemCollectionList", itemCollectionList);
+        req.setAttribute("imageList", imageList);
+        req.setAttribute("itemMaterialList", itemMaterialList);
+        req.setAttribute("orderList", orderList);
+        req.setAttribute("orderDetailList", orderDetailList);
+        req.setAttribute("itemTypeList", itemTypeList);
+        req.setAttribute("permissionList", permissionList);
+        req.setAttribute("saleList", saleList);
+        req.setAttribute("stockItemList", stockItemList);
+        req.setAttribute("orderStatusList", orderStatusList);
+
         Customer signInCustomer = null;
         List<Cart> cartList = null;
 
@@ -185,29 +201,17 @@ public class CartServlet extends HttpServlet {
             List<DiscountCard> customerDiscountCardList = discountCardServiceImpl.findByCustomerID(signInCustomer.getId());
             req.setAttribute("customerDiscountCardList", customerDiscountCardList);
             cartList = cartServiceImpl.findByCustomerID(signInCustomer.getId());
+
+            /*Set Order Total*/
+            calculateOrderTotal(cartList, req);
+            req.setAttribute("cartList", cartList);
+
+            req.getRequestDispatcher("/Views/User/Cart.jsp").forward(req, resp);
+        }else{
+            req.getRequestDispatcher("/Views/User/Cart.jsp").forward(req, resp);
         }
 
-        /*Set Order Total*/
-        calculateOrderTotal(cartList, req);
 
-        /*Set Data List*/
-        req.setAttribute("accountList", accountList);
-        req.setAttribute("customerList", customerList);
-        req.setAttribute("discountCardList", discountCardList);
-        req.setAttribute("itemList", itemList);
-        req.setAttribute("itemCollectionList", itemCollectionList);
-        req.setAttribute("imageList", imageList);
-        req.setAttribute("itemMaterialList", itemMaterialList);
-        req.setAttribute("orderList", orderList);
-        req.setAttribute("orderDetailList", orderDetailList);
-        req.setAttribute("itemTypeList", itemTypeList);
-        req.setAttribute("permissionList", permissionList);
-        req.setAttribute("saleList", saleList);
-        req.setAttribute("stockItemList", stockItemList);
-        req.setAttribute("cartList", cartList);
-        req.setAttribute("orderStatusList", orderStatusList);
-
-        req.getRequestDispatcher("/Views/User/Cart.jsp").forward(req, resp);
     }
 
     private void calculateOrderTotal(List<Cart> cartList, HttpServletRequest req) {

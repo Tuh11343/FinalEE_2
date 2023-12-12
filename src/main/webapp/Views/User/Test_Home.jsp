@@ -84,7 +84,7 @@
                                 <c:choose>
                                     <c:when test="${item.price % 1 == 0}">
                                         <fmt:formatNumber type="number" value="${item.price}"
-                                                          pattern="#"/> VNĐ
+                                                          pattern="#,###"/> VNĐ
                                     </c:when>
                                     <c:otherwise>
                                         ${item.price} VNĐ
@@ -155,7 +155,7 @@
                                 <c:choose>
                                     <c:when test="${item.price % 1 == 0}">
                                         <fmt:formatNumber type="number" value="${item.price}"
-                                                          pattern="#"/> VNĐ
+                                                          pattern="#,###"/> VNĐ
                                     </c:when>
                                     <c:otherwise>
                                         ${item.price} VNĐ

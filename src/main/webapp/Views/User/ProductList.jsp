@@ -89,8 +89,8 @@
                         <div class="sort-item rangeprice">
                             <div class="rangeprice-title">
                                 <span>Giá</span>
-                                <input type="hidden" id="rangefirst" value="">
-                                <input type="hidden" id="rangeend" value="">
+                                <input type="hidden" id="rangeMin" value="">
+                                <input type="hidden" id="rangeMax" value="">
                             </div>
                             <div class="rangeprice-slider">
                                 <div id="price-slider"></div>
@@ -105,7 +105,6 @@
                                 <option value="za">Chữ cái Z-A</option>
                                 <option value="priceAsc">Theo giá tăng</option>
                                 <option value="priceDes">Theo giá giảm</option>
-                                <option value="priceMinMax">Theo giá tiền</option>
                             </select>
                             <input type="hidden" name="sortChange" value="action">
                         </div>
@@ -194,6 +193,8 @@
                           action="${pageContext.request.contextPath}/ItemSearchServlet" method="get">
                         <input type="hidden" name="sort" value="${requestScope.sort}">
                         <input type="hidden" name="currentPage" value="${page}">
+                        <input type="hidden" name="priceMin" value="">
+                        <input type="hidden" name="priceMax" value="">
 
                         <c:if test="${not empty requestScope.itemCollectionID}">
                             <input type="hidden" name="itemCollectionID"
@@ -231,7 +232,7 @@
         start: [0, 750],
         connect: true,
         step: 10000,
-        margin: 10000,
+        margin: 20000,
         range: {
             'min': ${requestScope.minPrice},
             'max': ${requestScope.maxPrice}

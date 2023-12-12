@@ -20,6 +20,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private ItemRepository itemRepository;
+
     public static enum SortOrder {
         ASC, DESC
     }
@@ -28,19 +29,19 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
-    public double getItemMinPrice(){
-        try{
+    public double getItemMinPrice() {
+        try {
             return itemRepository.itemMinPrice();
-        }catch (Exception er){
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return 0;
     }
 
-    public double getItemMaxPrice(){
-        try{
+    public double getItemMaxPrice() {
+        try {
             return itemRepository.itemMaxPrice();
-        }catch (Exception er){
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return 0;
@@ -79,7 +80,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item getItem(int id) {
-        Optional<Item> item=itemRepository.findById(id);
+        Optional<Item> item = itemRepository.findById(id);
         return item.orElse(null);
     }
 
@@ -112,146 +113,146 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public int getTotalPagesByItemCollectionID(int itemCollectionID) {
+    public int getTotalPagesByItemCollectionID(int itemCollectionID, double min, double max) {
         int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
         Pageable pageable = PageRequest.of(0, pageSize); // Bắt đầu từ trang đầu tiên
-        Page<Item> items = itemRepository.findAllByItemCollectionId(itemCollectionID,pageable);
+        Page<Item> items = itemRepository.findAllByItemCollectionIdAndPriceBetween(itemCollectionID, min, max, pageable);
         return items.getTotalPages();
     }
 
     @Override
-    public int getTotalPagesByItemTypeID(int itemTypeID) {
+    public int getTotalPagesByItemTypeID(int itemTypeID, double min, double max) {
         int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
         Pageable pageable = PageRequest.of(0, pageSize); // Bắt đầu từ trang đầu tiên
-        Page<Item> items = itemRepository.findAllByItemTypeId(itemTypeID,pageable);
+        Page<Item> items = itemRepository.findAllByItemTypeIdAndPriceBetween(itemTypeID, min, max, pageable);
         return items.getTotalPages();
     }
 
     @Override
-    public int getTotalPagesByItemMaterialID(int itemMaterialID) {
+    public int getTotalPagesByItemMaterialID(int itemMaterialID, double min, double max) {
         int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
         Pageable pageable = PageRequest.of(0, pageSize); // Bắt đầu từ trang đầu tiên
-        Page<Item> items = itemRepository.findAllByItemMaterialId(itemMaterialID,pageable);
+        Page<Item> items = itemRepository.findAllByItemMaterialIdAndPriceBetween(itemMaterialID, min, max, pageable);
         return items.getTotalPages();
     }
 
     @Override
-    public int getTotalPagesByName(String name) {
+    public int getTotalPagesByName(String name, double min, double max) {
         int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
         Pageable pageable = PageRequest.of(0, pageSize); // Bắt đầu từ trang đầu tiên
-        Page<Item> items = itemRepository.findAllByNameContains(name,pageable);
+        Page<Item> items = itemRepository.findAllByNameContainsAndPriceBetween(name, min, max, pageable);
         return items.getTotalPages();
     }
 
     @Override
-    public List<Item> getItemsByItemCollectionIDAndPageNumber(int pageNumber,int itemCollectionID,String sort,SortOrder sortOrder){
-        try{
+    public List<Item> findAllByItemCollectionIdAndPriceBetween(int pageNumber, int itemCollectionID, double min, double max, String sort, SortOrder sortOrder) {
+        try {
             Sort sortBy;
-            if(sortOrder==SortOrder.DESC){
-                sortBy=Sort.by(sort).descending();
-            }else{
-                sortBy=Sort.by(sort).ascending();
+            if (sortOrder == SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
             }
             int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
-            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize,sortBy); // Trừ 1 vì số trang bắt đầu từ 0
-            Page<Item> itemPage=itemRepository.findAllByItemCollectionId(itemCollectionID, pageable);
+            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortBy); // Trừ 1 vì số trang bắt đầu từ 0
+            Page<Item> itemPage = itemRepository.findAllByItemCollectionIdAndPriceBetween(itemCollectionID, min, max, pageable);
             return itemPage.getContent();
-        }catch (Exception er){
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public List<Item> getItemsByItemTypeIDAndPageNumber(int pageNumber, int itemTypeID,String sort,SortOrder sortOrder) {
-        try{
+    public List<Item> findAllByItemTypeIdAndPriceBetween(int pageNumber, int itemTypeID, double min,double max,String sort, SortOrder sortOrder) {
+        try {
             Sort sortBy;
-            if(sortOrder==SortOrder.DESC){
-                sortBy=Sort.by(sort).descending();
-            }else{
-                sortBy=Sort.by(sort).ascending();
+            if (sortOrder == SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
             }
             int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
-            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize,sortBy); // Trừ 1 vì số trang bắt đầu từ 0
-            Page<Item> itemPage=itemRepository.findAllByItemTypeId(itemTypeID,pageable);
+            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortBy); // Trừ 1 vì số trang bắt đầu từ 0
+            Page<Item> itemPage = itemRepository.findAllByItemTypeIdAndPriceBetween(itemTypeID,min,max,pageable);
             return itemPage.getContent();
-        }catch (Exception er){
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public List<Item> getItemsByItemMaterialIDAndPageNumber(int pageNumber, int itemMaterialID,String sort,SortOrder sortOrder) {
-        try{
+    public List<Item> findAllByItemMaterialIdAndPriceBetween(int pageNumber, int itemMaterialID, String sort, SortOrder sortOrder) {
+        try {
             Sort sortBy;
-            if(sortOrder==SortOrder.DESC){
-                sortBy=Sort.by(sort).descending();
-            }else{
-                sortBy=Sort.by(sort).ascending();
+            if (sortOrder == SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
             }
             int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
-            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize,sortBy); // Trừ 1 vì số trang bắt đầu từ 0
-            Page<Item> itemPage=itemRepository.findAllByItemMaterialId(itemMaterialID,pageable);
+            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortBy); // Trừ 1 vì số trang bắt đầu từ 0
+            Page<Item> itemPage = itemRepository.findAllByItemMaterialId(itemMaterialID, pageable);
             return itemPage.getContent();
-        }catch (Exception er){
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public List<Item> getItemsByNameAndPageNumber(int pageNumber, String name,String sort,SortOrder sortOrder) {
-        try{
+    public List<Item> findAllByNameContainsAndPriceBetween(int pageNumber, String name, String sort, SortOrder sortOrder) {
+        try {
             Sort sortBy;
-            if(sortOrder==SortOrder.DESC){
-                sortBy=Sort.by(sort).descending();
-            }else{
-                sortBy=Sort.by(sort).ascending();
+            if (sortOrder == SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
             }
 
             int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
-            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize,sortBy); // Trừ 1 vì số trang bắt đầu từ 0
-            Page<Item> itemPage=itemRepository.findAllByNameContains(name,pageable);
+            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortBy); // Trừ 1 vì số trang bắt đầu từ 0
+            Page<Item> itemPage = itemRepository.findAllByNameContains(name, pageable);
             return itemPage.getContent();
-        }catch (Exception er){
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return null;
     }
 
-    public List<Item> getItemsByPageNumber(int pageNumber,String sort,SortOrder sortOrder){
-        try{
+    public List<Item> findAllByPriceBetween(int pageNumber, String sort, SortOrder sortOrder) {
+        try {
             Sort sortBy;
-            if(sortOrder==SortOrder.DESC){
-                sortBy=Sort.by(sort).descending();
-            }else{
-                sortBy=Sort.by(sort).ascending();
+            if (sortOrder == SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
             }
             int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
-            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize,sortBy);
-            Page<Item> itemPage=itemRepository.findAll(pageable);
+            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortBy);
+            Page<Item> itemPage = itemRepository.findAll(pageable);
             return itemPage.getContent();
-        }catch (Exception er){
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public List<Item> getItemsByPriceBetweenAndPageNumber(int pageNumber,double min, double max,String sort,SortOrder sortOrder) {
-        try{
+    public List<Item> getItemsByPriceBetweenAndPageNumber(int pageNumber, double min, double max, String sort, SortOrder sortOrder) {
+        try {
             Sort sortBy;
-            if(sortOrder==SortOrder.DESC){
-                sortBy=Sort.by(sort).descending();
-            }else{
-                sortBy=Sort.by(sort).ascending();
+            if (sortOrder == SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
             }
             int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
-            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize,sortBy); // Trừ 1 vì số trang bắt đầu từ 0
-            Page<Item> itemPage=itemRepository.findAllByPriceBetween(min,max,pageable);
+            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortBy); // Trừ 1 vì số trang bắt đầu từ 0
+            Page<Item> itemPage = itemRepository.findAllByPriceBetween(min, max, pageable);
             return itemPage.getContent();
-        }catch (Exception er){
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return null;

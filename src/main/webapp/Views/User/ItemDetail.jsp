@@ -130,7 +130,7 @@
                         <div class="remainAmount">60%</div>
                     </div>
                     <table class="productVariants">
-                        <button onclick="initData()">Click me</button>
+
                         <tbody>
                         <c:forEach
                                 items="${requestScope.itemClick.stockItemList}"

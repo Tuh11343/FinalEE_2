@@ -34,7 +34,7 @@ public class ItemOrder {
     @Column(name = "date_purchase")
     private Date date_purchase;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_status_id")
     private OrderStatus order_status;
 
