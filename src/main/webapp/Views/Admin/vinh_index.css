@@ -58,6 +58,8 @@ table {
   --yellow-cl: #f9f6ee;
   --white-cl: #ffffff;
   --black-cl: #141414;
+  --green-cl: #11bd99;
+  --blue-cl: #00aabb;
   --gray-cl: #888;
   --fs-h1: 6.4rem;
   --lh1-h1: 5.4rem;
@@ -510,6 +512,44 @@ https://flickity.metafizzy.co
   position: relative;
   background: #fff;
 }
+.table-data .header-table .sorttable {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.table-data .header-table .sorttable .sort-search {
+  position: relative;
+}
+.table-data .header-table .sorttable .sort-search .inputsearch {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  z-index: 50;
+  display: flex;
+  box-shadow: 0px 1px 6px -1px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 1px 6px -1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 1px 6px -1px rgba(0, 0, 0, 0.75);
+  border-radius: 50px;
+  overflow: hidden;
+  background: #fff;
+  margin-top: 20px;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--t);
+}
+.table-data .header-table .sorttable .sort-search .inputsearch.active {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition: var(--t);
+  margin-top: 0;
+}
+.table-data .header-table .sorttable .sort-search .inputsearch input {
+  padding: 2px 5px;
+  padding-left: 10px;
+}
 .table-data .header-table.scroll {
   position: sticky;
   top: 40px;
@@ -573,9 +613,18 @@ th {
   color: #fff;
   transition: 0.2s;
 }
+.btnHD:hover {
+  opacity: 0.9;
+}
 .grpbtn {
   gap: 5px;
   display: flex;
+}
+.btnsearch {
+  background-color: var(--main-cl);
+}
+.btngreen {
+  background-color: var(--blue-cl);
 }
 .btnAdd {
   background-color: green;

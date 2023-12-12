@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <%@page contentType="text/html" pageEncoding="UTF-8" %> <%@ taglib
 uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -504,14 +502,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
             </div>
             <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
             <div class="sorttable">
-              <label for="">Sắp xếp theo:</label>
-              <select name="" id="">
-                <option value="" selected>Z-A</option>
-                <option value="">A-Z</option>
-                <option value="">Giá tăng</option>
-                <option value="">Giá giảm</option>
-                <option value="">Mã sản phẩm</option>
-              </select>
+              <div class="sort-search">
+                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <div class="inputsearch">
+                  <input type="text" value="" />
+                  <button class="btnHD btnsearch">Tìm</button>
+                </div>
+              </div>
+              <div class="sort-box">
+                <label for="">Sắp xếp theo:</label>
+                <select name="" id="">
+                  <option value="" selected>Z-A</option>
+                  <option value="">A-Z</option>
+                  <option value="">Giá tăng</option>
+                  <option value="">Giá giảm</option>
+                  <option value="">Mã sản phẩm</option>
+                </select>
+              </div>
             </div>
           </div>
           <div class="form-grp">
@@ -688,14 +695,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
             </div>
             <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
             <div class="sorttable">
-              <label for="">Sắp xếp theo:</label>
-              <select name="" id="">
-                <option value="" selected>Z-A</option>
-                <option value="">A-Z</option>
-                <option value="">Giá tăng</option>
-                <option value="">Giá giảm</option>
-                <option value="">Mã sản phẩm</option>
-              </select>
+              <div class="sort-search">
+                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <div class="inputsearch">
+                  <input type="text" value="" />
+                  <button class="btnHD btnsearch">Tìm</button>
+                </div>
+              </div>
+              <div class="sort-box">
+                <label for="">Sắp xếp theo:</label>
+                <select name="" id="">
+                  <option value="" selected>Z-A</option>
+                  <option value="">A-Z</option>
+                  <option value="">Giá tăng</option>
+                  <option value="">Giá giảm</option>
+                  <option value="">Mã sản phẩm</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -904,14 +920,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
             </div>
             <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
             <div class="sorttable">
-              <label for="">Sắp xếp theo:</label>
-              <select name="" id="">
-                <option value="" selected>Z-A</option>
-                <option value="">A-Z</option>
-                <option value="">Giá tăng</option>
-                <option value="">Giá giảm</option>
-                <option value="">Mã sản phẩm</option>
-              </select>
+              <div class="sort-search">
+                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <div class="inputsearch">
+                  <input type="text" value="" />
+                  <button class="btnHD btnsearch">Tìm</button>
+                </div>
+              </div>
+              <div class="sort-box">
+                <label for="">Sắp xếp theo:</label>
+                <select name="" id="">
+                  <option value="" selected>Z-A</option>
+                  <option value="">A-Z</option>
+                  <option value="">Giá tăng</option>
+                  <option value="">Giá giảm</option>
+                  <option value="">Mã sản phẩm</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -1240,14 +1265,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
             </div>
             <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
             <div class="sorttable">
-              <label for="">Sắp xếp theo:</label>
-              <select name="" id="">
-                <option value="" selected>Z-A</option>
-                <option value="">A-Z</option>
-                <option value="">Giá tăng</option>
-                <option value="">Giá giảm</option>
-                <option value="">Mã sản phẩm</option>
-              </select>
+              <div class="sort-search">
+                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <div class="inputsearch">
+                  <input type="text" value="" />
+                  <button class="btnHD btnsearch">Tìm</button>
+                </div>
+              </div>
+              <div class="sort-box">
+                <label for="">Sắp xếp theo:</label>
+                <select name="" id="">
+                  <option value="" selected>Z-A</option>
+                  <option value="">A-Z</option>
+                  <option value="">Giá tăng</option>
+                  <option value="">Giá giảm</option>
+                  <option value="">Mã sản phẩm</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -1450,14 +1484,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
             </div>
             <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
             <div class="sorttable">
-              <label for="">Sắp xếp theo:</label>
-              <select name="" id="">
-                <option value="" selected>Z-A</option>
-                <option value="">A-Z</option>
-                <option value="">Giá tăng</option>
-                <option value="">Giá giảm</option>
-                <option value="">Mã sản phẩm</option>
-              </select>
+              <div class="sort-search">
+                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <div class="inputsearch">
+                  <input type="text" value="" />
+                  <button class="btnHD btnsearch">Tìm</button>
+                </div>
+              </div>
+              <div class="sort-box">
+                <label for="">Sắp xếp theo:</label>
+                <select name="" id="">
+                  <option value="" selected>Z-A</option>
+                  <option value="">A-Z</option>
+                  <option value="">Giá tăng</option>
+                  <option value="">Giá giảm</option>
+                  <option value="">Mã sản phẩm</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -1651,14 +1694,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
             </div>
             <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
             <div class="sorttable">
-              <label for="">Sắp xếp theo:</label>
-              <select name="" id="">
-                <option value="" selected>Z-A</option>
-                <option value="">A-Z</option>
-                <option value="">Giá tăng</option>
-                <option value="">Giá giảm</option>
-                <option value="">Mã sản phẩm</option>
-              </select>
+              <div class="sort-search">
+                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <div class="inputsearch">
+                  <input type="text" value="" />
+                  <button class="btnHD btnsearch">Tìm</button>
+                </div>
+              </div>
+              <div class="sort-box">
+                <label for="">Sắp xếp theo:</label>
+                <select name="" id="">
+                  <option value="" selected>Z-A</option>
+                  <option value="">A-Z</option>
+                  <option value="">Giá tăng</option>
+                  <option value="">Giá giảm</option>
+                  <option value="">Mã sản phẩm</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -1793,14 +1845,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
             </div>
             <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
             <div class="sorttable">
-              <label for="">Sắp xếp theo:</label>
-              <select name="" id="">
-                <option value="" selected>Z-A</option>
-                <option value="">A-Z</option>
-                <option value="">Giá tăng</option>
-                <option value="">Giá giảm</option>
-                <option value="">Mã sản phẩm</option>
-              </select>
+              <div class="sort-search">
+                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <div class="inputsearch">
+                  <input type="text" value="" />
+                  <button class="btnHD btnsearch">Tìm</button>
+                </div>
+              </div>
+              <div class="sort-box">
+                <label for="">Sắp xếp theo:</label>
+                <select name="" id="">
+                  <option value="" selected>Z-A</option>
+                  <option value="">A-Z</option>
+                  <option value="">Giá tăng</option>
+                  <option value="">Giá giảm</option>
+                  <option value="">Mã sản phẩm</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -1943,14 +2004,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
             </div>
             <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
             <div class="sorttable">
-              <label for="">Sắp xếp theo:</label>
-              <select name="" id="">
-                <option value="" selected>Z-A</option>
-                <option value="">A-Z</option>
-                <option value="">Giá tăng</option>
-                <option value="">Giá giảm</option>
-                <option value="">Mã sản phẩm</option>
-              </select>
+              <div class="sort-search">
+                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <div class="inputsearch">
+                  <input type="text" value="" />
+                  <button class="btnHD btnsearch">Tìm</button>
+                </div>
+              </div>
+              <div class="sort-box">
+                <label for="">Sắp xếp theo:</label>
+                <select name="" id="">
+                  <option value="" selected>Z-A</option>
+                  <option value="">A-Z</option>
+                  <option value="">Giá tăng</option>
+                  <option value="">Giá giảm</option>
+                  <option value="">Mã sản phẩm</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -2083,14 +2153,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
             </div>
             <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
             <div class="sorttable">
-              <label for="">Sắp xếp theo:</label>
-              <select name="" id="">
-                <option value="" selected>Z-A</option>
-                <option value="">A-Z</option>
-                <option value="">Giá tăng</option>
-                <option value="">Giá giảm</option>
-                <option value="">Mã sản phẩm</option>
-              </select>
+              <div class="sort-search">
+                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <div class="inputsearch">
+                  <input type="text" value="" />
+                  <button class="btnHD btnsearch">Tìm</button>
+                </div>
+              </div>
+              <div class="sort-box">
+                <label for="">Sắp xếp theo:</label>
+                <select name="" id="">
+                  <option value="" selected>Z-A</option>
+                  <option value="">A-Z</option>
+                  <option value="">Giá tăng</option>
+                  <option value="">Giá giảm</option>
+                  <option value="">Mã sản phẩm</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -2386,14 +2465,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
             </div>
             <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
             <div class="sorttable">
-              <label for="">Sắp xếp theo:</label>
-              <select name="" id="">
-                <option value="" selected>Z-A</option>
-                <option value="">A-Z</option>
-                <option value="">Giá tăng</option>
-                <option value="">Giá giảm</option>
-                <option value="">Mã sản phẩm</option>
-              </select>
+              <div class="sort-search">
+                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <div class="inputsearch">
+                  <input type="text" value="" />
+                  <button class="btnHD btnsearch">Tìm</button>
+                </div>
+              </div>
+              <div class="sort-box">
+                <label for="">Sắp xếp theo:</label>
+                <select name="" id="">
+                  <option value="" selected>Z-A</option>
+                  <option value="">A-Z</option>
+                  <option value="">Giá tăng</option>
+                  <option value="">Giá giảm</option>
+                  <option value="">Mã sản phẩm</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -2669,14 +2757,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
             <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
             <div class="sorttable">
-              <label for="">Sắp xếp theo:</label>
-              <select name="" id="">
-                <option value="" selected>Z-A</option>
-                <option value="">A-Z</option>
-                <option value="">Giá tăng</option>
-                <option value="">Giá giảm</option>
-                <option value="">Mã sản phẩm</option>
-              </select>
+              <div class="sort-search">
+                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <div class="inputsearch">
+                  <input type="text" value="" />
+                  <button class="btnHD btnsearch">Tìm</button>
+                </div>
+              </div>
+              <div class="sort-box">
+                <label for="">Sắp xếp theo:</label>
+                <select name="" id="">
+                  <option value="" selected>Z-A</option>
+                  <option value="">A-Z</option>
+                  <option value="">Giá tăng</option>
+                  <option value="">Giá giảm</option>
+                  <option value="">Mã sản phẩm</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -2794,14 +2891,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
             </div>
             <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
             <div class="sorttable">
-              <label for="">Sắp xếp theo:</label>
-              <select name="" id="">
-                <option value="" selected>Z-A</option>
-                <option value="">A-Z</option>
-                <option value="">Giá tăng</option>
-                <option value="">Giá giảm</option>
-                <option value="">Mã sản phẩm</option>
-              </select>
+              <div class="sort-search">
+                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <div class="inputsearch">
+                  <input type="text" value="" />
+                  <button class="btnHD btnsearch">Tìm</button>
+                </div>
+              </div>
+              <div class="sort-box">
+                <label for="">Sắp xếp theo:</label>
+                <select name="" id="">
+                  <option value="" selected>Z-A</option>
+                  <option value="">A-Z</option>
+                  <option value="">Giá tăng</option>
+                  <option value="">Giá giảm</option>
+                  <option value="">Mã sản phẩm</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -2952,14 +3058,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
             </div>
             <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
             <div class="sorttable">
-              <label for="">Sắp xếp theo:</label>
-              <select name="" id="">
-                <option value="" selected>Z-A</option>
-                <option value="">A-Z</option>
-                <option value="">Giá tăng</option>
-                <option value="">Giá giảm</option>
-                <option value="">Mã sản phẩm</option>
-              </select>
+              <div class="sort-search">
+                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <div class="inputsearch">
+                  <input type="text" value="" />
+                  <button class="btnHD btnsearch">Tìm</button>
+                </div>
+              </div>
+              <div class="sort-box">
+                <label for="">Sắp xếp theo:</label>
+                <select name="" id="">
+                  <option value="" selected>Z-A</option>
+                  <option value="">A-Z</option>
+                  <option value="">Giá tăng</option>
+                  <option value="">Giá giảm</option>
+                  <option value="">Mã sản phẩm</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -3158,14 +3273,23 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
             </div>
             <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
             <div class="sorttable">
-              <label for="">Sắp xếp theo:</label>
-              <select name="" id="">
-                <option value="" selected>Z-A</option>
-                <option value="">A-Z</option>
-                <option value="">Giá tăng</option>
-                <option value="">Giá giảm</option>
-                <option value="">Mã sản phẩm</option>
-              </select>
+              <div class="sort-search">
+                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <div class="inputsearch">
+                  <input type="text" value="" />
+                  <button class="btnHD btnsearch">Tìm</button>
+                </div>
+              </div>
+              <div class="sort-box">
+                <label for="">Sắp xếp theo:</label>
+                <select name="" id="">
+                  <option value="" selected>Z-A</option>
+                  <option value="">A-Z</option>
+                  <option value="">Giá tăng</option>
+                  <option value="">Giá giảm</option>
+                  <option value="">Mã sản phẩm</option>
+                </select>
+              </div>
             </div>
           </div>
 
