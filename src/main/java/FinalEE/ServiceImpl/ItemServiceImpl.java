@@ -105,10 +105,10 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findByItemTypeId(typeID);
     }
 
-    public int getTotalPages() {
+    public int getTotalPages(double min,double max) {
         int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
         Pageable pageable = PageRequest.of(0, pageSize); // Bắt đầu từ trang đầu tiên
-        Page<Item> items = itemRepository.findAll(pageable);
+        Page<Item> items = itemRepository.findAllByPriceBetween(min,max,pageable);
         return items.getTotalPages();
     }
 
@@ -231,7 +231,7 @@ public class ItemServiceImpl implements ItemService {
             }
             int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
             Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortBy);
-            Page<Item> itemPage = itemRepository.findAll(pageable);
+            Page<Item> itemPage = itemRepository.findAllByPriceBetween(min,max,pageable);
             return itemPage.getContent();
         } catch (Exception er) {
             er.printStackTrace();

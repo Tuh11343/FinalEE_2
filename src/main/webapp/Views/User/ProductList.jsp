@@ -89,8 +89,8 @@
                         <div class="sort-item rangeprice">
                             <div class="rangeprice-title">
                                 <span>Giá</span>
-                                <input type="hidden" id="rangeMin" value="">
-                                <input type="hidden" id="rangeMax" value="">
+                                <input type="hidden" id="rangeMin" name="rangeMin" value="">
+                                <input type="hidden" id="rangeMax" name="rangeMax" value="">
                             </div>
                             <div class="rangeprice-slider">
                                 <div id="price-slider"></div>
@@ -238,15 +238,15 @@
             'max': ${requestScope.maxPrice}
         },
         tooltips: true,
-
     });
 
     // Update Price Range
     priceSlider.noUiSlider.on('update', function (values, handle) {
         console.log('value :>> ', values[0]);
         //lay gai tri tien o day
-        document.getElementById(rangefirst).values = values[0];
-        document.getElementById(rangeend).values = values[1];
+
+        document.getElementById("rangeMin").value = values[0];
+        document.getElementById("rangeMax").value = values[1];
 
 
     });

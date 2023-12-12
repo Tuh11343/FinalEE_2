@@ -87,8 +87,18 @@ public class ItemSearchServlet extends HttpServlet {
             List<String> pageList = new ArrayList<>();
             List<Item> itemSearchList = null;
             String sortBy = req.getParameter("sort");
-            double rangeMin = Double.parseDouble(req.getParameter("rangeMin"));
-            double rangeMax = Double.parseDouble(req.getParameter("rangeMax"));
+            Double rangeMin;
+            Double rangeMax;
+
+            if(req.getParameter("rangeMin")!=null&&req.getParameter("rangeMax")!=null){
+                rangeMin=Double.parseDouble(req.getParameter("rangeMin"));
+                rangeMax=Double.parseDouble(req.getParameter("rangeMax"));
+                System.out.println("RangeMin:"+rangeMin+" RangeMax:"+rangeMax);
+            }else{
+                System.out.println("Test:"+req.getParameter("rangeMin"));
+                rangeMin=itemServiceImpl.getItemMinPrice();
+                rangeMax=itemServiceImpl.getItemMaxPrice();
+            }
 
 
             if (req.getParameter("itemCollectionID") != null && !req.getParameter("itemCollectionID").isBlank()) {
@@ -136,6 +146,7 @@ public class ItemSearchServlet extends HttpServlet {
 
                 if (sortBy != null) {
                     itemSearchList = getItemsByItemName(itemName,rangeMin,rangeMax,sortBy, currentPage);
+                    System.out.println(itemSearchList.size());
                 }
 
                 totalPage = itemServiceImpl.getTotalPagesByName(itemName, rangeMin, rangeMax);
@@ -161,7 +172,7 @@ public class ItemSearchServlet extends HttpServlet {
                     itemSearchList = getItems(rangeMin,rangeMax,sortBy, currentPage);
                 }
 
-                totalPage = itemServiceImpl.getTotalPages();
+                totalPage = itemServiceImpl.getTotalPages(rangeMin,rangeMax);
                 for (int i = 0; i < totalPage; i++) {
                     pageList.add(String.valueOf(i + 1));
                 }

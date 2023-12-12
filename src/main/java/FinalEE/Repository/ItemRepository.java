@@ -34,6 +34,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
 
     Page<Item> findAllByNameContainsAndPriceBetween(String name,double min,double max, Pageable pageable);
 
+    Page<Item> findAllByPriceBetween(double min,double max,Pageable pageable);
+
 
     @Query("SELECT MIN(i.price) FROM Item i")
     Double itemMinPrice();
@@ -41,7 +43,5 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
     @Query("SELECT MAX(i.price) FROM Item i")
     Double itemMaxPrice();
 
-    @NonNull
-    Page<Item> findAll(Pageable pageable);
 
 }

@@ -35,7 +35,7 @@ public class HeaderServlet extends HttpServlet {
     private OrderStatusServiceImpl orderStatusServiceImpl;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try {
             ServletContext servletContext = getServletContext();
             HttpSession session = req.getSession();
@@ -54,7 +54,7 @@ public class HeaderServlet extends HttpServlet {
             permissionServiceImpl = (PermissionServiceImpl) servletContext.getAttribute("permissionServiceImpl");
             saleServiceImpl = (SaleServiceImpl) servletContext.getAttribute("saleServiceImpl");
             stockItemServiceImpl = (StockItemServiceImpl) servletContext.getAttribute("stockItemServiceImpl");
-            orderStatusServiceImpl= (OrderStatusServiceImpl) servletContext.getAttribute("orderStatusServiceImpl");
+            orderStatusServiceImpl = (OrderStatusServiceImpl) servletContext.getAttribute("orderStatusServiceImpl");
 
             String requestedWith = req.getHeader("X-Requested-With");
             String action = req.getParameter("action");
@@ -142,16 +142,17 @@ public class HeaderServlet extends HttpServlet {
 
         try {
             ObjectMapper mapper = new ObjectMapper();
-            List<Cart> cartList = mapper.readValue(req.getParameter("cartList"), new TypeReference<>() {});
-            Integer discountCardID= null;
-            if(req.getParameter("discountCardID")!=null&&!req.getParameter("discountCardID").isBlank()){
-                discountCardID=Integer.parseInt(req.getParameter("discountCardID"));
+            List<Cart> cartList = mapper.readValue(req.getParameter("cartList"), new TypeReference<>() {
+            });
+            Integer discountCardID = null;
+            if (req.getParameter("discountCardID") != null && !req.getParameter("discountCardID").isBlank()) {
+                discountCardID = Integer.parseInt(req.getParameter("discountCardID"));
             }
-            DiscountCard discountCard=discountCardServiceImpl.getDiscountCard(discountCardID);
+            DiscountCard discountCard = discountCardServiceImpl.getDiscountCard(discountCardID);
 
-            double orderTotal=0f;
+            double orderTotal = 0f;
             /*Create Oder*/
-            ItemOrder order=new ItemOrder();
+            ItemOrder order = new ItemOrder();
             order.setCustomer(null);
             order.setTotal(orderTotal);
             order.setEmail(req.getParameter("email"));
@@ -162,15 +163,15 @@ public class HeaderServlet extends HttpServlet {
             order.setAddress(req.getParameter("address"));
             orderServiceImpl.create(order);
 
-            if(order.getId()==null){
+            if (order.getId() == null) {
                 System.out.println("Co loi xay ra trong viec tao order");
                 return;
             }
 
             /*Create Order Detail*/
-            for (Cart cart : cartList){
+            for (Cart cart : cartList) {
 
-                OrderDetail orderDetail=new OrderDetail();
+                OrderDetail orderDetail = new OrderDetail();
                 orderDetail.setOrder(order);
                 orderDetail.setItem_size(cart.getStockItem().getSize());
                 orderDetail.setItem_color(cart.getStockItem().getColor());
@@ -180,18 +181,18 @@ public class HeaderServlet extends HttpServlet {
 
                 orderDetailServiceImpl.create(orderDetail);
 
-                orderTotal+=orderDetail.getTotal();
+                orderTotal += orderDetail.getTotal();
             }
 
             //Update Order Total
-            if(discountCard!=null){
-                order.setTotal(calculateOrderTotal(orderTotal,discountCard));
-            }else{
+            if (discountCard != null) {
+                order.setTotal(calculateOrderTotal(orderTotal, discountCard));
+            } else {
                 order.setTotal(orderTotal);
             }
             orderServiceImpl.create(order);
 
-            sendConfirmOrderEmail(order,cartList);
+            sendConfirmOrderEmail(order, cartList);
 
             jsonResponse.put("success", 1);
             out.print(jsonResponse);
@@ -241,28 +242,38 @@ public class HeaderServlet extends HttpServlet {
 
     }
 
-    private void signInHandle(HttpServletRequest req, JSONObject jsonResponse, PrintWriter out) throws JSONException {
-        try{
+    private void signInHandle(HttpServletRequest req, JSONObject jsonResponse, PrintWriter out){
+        try {
+            String name = req.getParameter("signInName");
+            String password = req.getParameter("signInPassword");
 
-        }catch (Exception er){
+            Account account = accountServiceImpl.findByNameAndPassword(name, password);
+            if (account != null) {
+                ObjectMapper mapper = new ObjectMapper();
+                if (req.getParameter("cartList") != null && !req.getParameter("cartList").isBlank()) {
+                    List<Cart> cartList = mapper.readValue(req.getParameter("cartList"), new TypeReference<>() {});
+                    if(cartList!=null){
+                        for (Cart cart : cartList) {
+                            cart.setCustomer(account.getCustomer());
+                            cartServiceImpl.create(cart);
+                            jsonResponse.put("deleteLocalCart", true);
+                        }
+                    }
+                }
+
+                jsonResponse.put("success", 1);
+                jsonResponse.put("accountID", account.getId());
+                jsonResponse.put("accountPermission", account.getPermission().getLevel());
+            } else {
+                System.out.println("No account founded");
+                jsonResponse.put("success", 0);
+            }
+            out.print(jsonResponse);
+            out.flush();
+            out.close();
+        } catch (Exception er) {
             er.printStackTrace();
         }
-        String name = req.getParameter("signInName");
-        String password = req.getParameter("signInPassword");
-
-        Account account = accountServiceImpl.findByNameAndPassword(name, password);
-        if (account != null) {
-            System.out.println("Found Account");
-            jsonResponse.put("success", 1);
-            jsonResponse.put("accountID", account.getId());
-            jsonResponse.put("accountPermission", account.getPermission().getLevel());
-        } else {
-            System.out.println("No account founded");
-            jsonResponse.put("success", 0);
-        }
-        out.print(jsonResponse);
-        out.flush();
-        out.close();
     }
 
 
@@ -276,13 +287,13 @@ public class HeaderServlet extends HttpServlet {
             keyValue.put("email", customer.getEmail());
             keyValue.put("accountName", account.getName());
             keyValue.put("accountPassword", account.getPassword());
-            keyValue.put("action","signUp");
+            keyValue.put("action", "signUp");
 
-            MailServiceImpl mailServiceImpl=new MailServiceImpl();
-            String activationLink= mailServiceImpl.mapToJSON(keyValue);
+            MailServiceImpl mailServiceImpl = new MailServiceImpl();
+            String activationLink = mailServiceImpl.mapToJSON(keyValue);
 
             String htmlMsg = "Xin chào! Để xác thực tài khoản vui lòng nhấp vào <a href='" + activationLink + "'>đường link xác nhận</a>";
-            mailServiceImpl.sendMail(keyValue,account.getName(),htmlMsg,"Thư xác nhận tài khoản");
+            mailServiceImpl.sendMail(keyValue, account.getName(), htmlMsg, "Thư xác nhận tài khoản");
 
         } catch (Exception er) {
             er.printStackTrace();
@@ -290,22 +301,22 @@ public class HeaderServlet extends HttpServlet {
 
     }
 
-    private void sendConfirmOrderEmail(ItemOrder order,List<Cart> cartList) {
+    private void sendConfirmOrderEmail(ItemOrder order, List<Cart> cartList) {
         try {
             Map<String, Object> keyValue = new HashMap<>();
             keyValue.put("email", order.getEmail());
-            keyValue.put("action","orderConfirm");
-            keyValue.put("order",order);
+            keyValue.put("action", "orderConfirm");
+            keyValue.put("order", order);
 
-            MailServiceImpl mailServiceImpl=new MailServiceImpl();
-            String activationLink= mailServiceImpl.mapToJSON(keyValue);
-            StringBuilder htmlMsg= new StringBuilder("Đây là đơn hàng của bạn bao gồm:<br>");
-            for (Cart cart:cartList){
+            MailServiceImpl mailServiceImpl = new MailServiceImpl();
+            String activationLink = mailServiceImpl.mapToJSON(keyValue);
+            StringBuilder htmlMsg = new StringBuilder("Đây là đơn hàng của bạn bao gồm:<br>");
+            for (Cart cart : cartList) {
                 htmlMsg.append("Sản phẩm:").append(cart.getStockItem().getItem().getName()).append("    Số lượng:").append(cart.getAmount()).append("<br>");
             }
 
             htmlMsg.append("<br><br>Để xác thực đơn hàng vui lòng nhấp vào <a href='").append(activationLink).append("'>đường link xác nhận</a>");
-            mailServiceImpl.sendMail(keyValue,order.getEmail(),htmlMsg.toString(),"Thư xác nhận đơn hàng");
+            mailServiceImpl.sendMail(keyValue, order.getEmail(), htmlMsg.toString(), "Thư xác nhận đơn hàng");
 
         } catch (Exception er) {
             er.printStackTrace();
@@ -313,14 +324,14 @@ public class HeaderServlet extends HttpServlet {
 
     }
 
-    private double calculateOrderTotal(double orderTotal,DiscountCard discountCard){
-        double discountPercentage= (double) discountCard.getDiscount_percentage() /100;
-        return orderTotal-(orderTotal*discountPercentage);
+    private double calculateOrderTotal(double orderTotal, DiscountCard discountCard) {
+        double discountPercentage = (double) discountCard.getDiscount_percentage() / 100;
+        return orderTotal - (orderTotal * discountPercentage);
     }
 
-    private double calculateOrderDetailTotal(Cart cart){
-        double total=0.0f;
-        Sale sale=cart.getStockItem().getItem().getSale();
+    private double calculateOrderDetailTotal(Cart cart) {
+        double total = 0.0f;
+        Sale sale = cart.getStockItem().getItem().getSale();
         if (sale != null) {
             total += cart.getStockItem().getItem().getPrice() * (1 - (sale.getSale_percentage() / 100)) * cart.getAmount();
         } else {
