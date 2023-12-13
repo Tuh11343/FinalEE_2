@@ -4,6 +4,7 @@ import FinalEE.Entity.OrderStatus;
 import FinalEE.Repository.OrderStatusRepository;
 import FinalEE.Service.OrderStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -80,6 +81,38 @@ public class OrderStatusServiceImpl implements OrderStatusService {
     public OrderStatus confirmOrder() {
         try{
             return orderStatusRepository.findByID(2);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<OrderStatus> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return orderStatusRepository.findAll(sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<OrderStatus> findAllByNameSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return orderStatusRepository.findAllByNameLike(name,sortBy);
         }catch (Exception er){
             er.printStackTrace();
         }

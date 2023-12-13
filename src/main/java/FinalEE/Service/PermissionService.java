@@ -2,6 +2,9 @@
 package FinalEE.Service;
 
 import FinalEE.Entity.Permission;
+import FinalEE.ServiceImpl.ItemServiceImpl;
+import org.springframework.data.domain.Sort;
+
 import java.util.List;
 
 public interface PermissionService {
@@ -12,5 +15,8 @@ public interface PermissionService {
     List<Permission> getAllPermission();
 
     Permission findByLevel(int level);
+
+    List<Permission> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<Permission> findAllByName(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
     
 }
