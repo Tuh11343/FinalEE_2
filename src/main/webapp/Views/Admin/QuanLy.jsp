@@ -531,6 +531,7 @@
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+          
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -538,7 +539,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="">Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
@@ -718,12 +720,21 @@
           >
             Thêm
           </button>
+          <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+          >
+            Xuất Excel
+          </button>
         </div>
         <h2 style="font-size: 30px">Quản lý tài khoản</h2>
         <div class="sorttable">
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+              <select class="selecttype" name="" id="" >
+                <option value="" selected>--</option>
+                <option value="">Tên</option>
+                <option value="">Giá</option>
+              </select>
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -731,7 +742,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="" >Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
@@ -943,12 +955,21 @@
           >
             Thêm
           </button>
+          <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+          >
+            Xuất Excel
+          </button>
         </div>
         <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
         <div class="sorttable">
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+              <select class="selecttype" name="" id="" >
+                <option value="" selected>--</option>
+                <option value="">Tên</option>
+                <option value="">Giá</option>
+              </select>
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -956,7 +977,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="" >Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
@@ -1287,6 +1309,9 @@
                   style="margin-bottom: 4px"
           >
             Thêm
+          </button><button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+          >
+            Xuất Excel
           </button>
         </div>
         <h2 style="font-size: 30px">Quản lý khách hàng</h2>
@@ -1294,6 +1319,11 @@
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+              <select class="selecttype" name="" id="" >
+                <option value="" selected>--</option>
+                <option value="">Tên</option>
+                <option value="">Giá</option>
+              </select>
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -1301,7 +1331,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="" >Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
@@ -1506,6 +1537,9 @@
                   style="margin-bottom: 4px"
           >
             Thêm
+          </button><button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+          >
+            Xuất Excel
           </button>
         </div>
         <h2 style="font-size: 30px">Quản lý mã giảm giá</h2>
@@ -1513,6 +1547,11 @@
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+              <select class="selecttype" name="" id="" >
+                <option value="" selected>--</option>
+                <option value="">Tên</option>
+                <option value="">Giá</option>
+              </select>
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -1520,7 +1559,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="" >Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
@@ -1716,6 +1756,9 @@
                   style="margin-bottom: 4px"
           >
             Thêm
+          </button><button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+          >
+            Xuất Excel
           </button>
         </div>
         <h2 style="font-size: 30px">Quản lý bộ sưu tập</h2>
@@ -1723,6 +1766,11 @@
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+              <select class="selecttype" name="" id="" >
+                <option value="" selected>--</option>
+                <option value="">Tên</option>
+                <option value="">Giá</option>
+              </select>
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -1730,7 +1778,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="" >Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
@@ -1867,6 +1916,9 @@
                   style="margin-bottom: 4px"
           >
             Thêm
+          </button><button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+          >
+            Xuất Excel
           </button>
         </div>
         <h2 style="font-size: 30px">Quản lý hình ảnh</h2>
@@ -1874,6 +1926,11 @@
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+              <select class="selecttype" name="" id="" >
+                <option value="" selected>--</option>
+                <option value="">Tên</option>
+                <option value="">Giá</option>
+              </select>
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -1881,7 +1938,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="" >Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
@@ -2026,6 +2084,9 @@
                   style="margin-bottom: 4px"
           >
             Thêm
+          </button><button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+          >
+            Xuất Excel
           </button>
         </div>
         <h2 style="font-size: 30px">Quản lý nguyên liệu</h2>
@@ -2033,6 +2094,11 @@
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+              <select class="selecttype" name="" id="" >
+                <option value="" selected>--</option>
+                <option value="">Tên</option>
+                <option value="">Giá</option>
+              </select>
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -2040,7 +2106,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="" >Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
@@ -2175,6 +2242,9 @@
                   style="margin-bottom: 4px"
           >
             Thêm
+          </button><button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+          >
+            Xuất Excel
           </button>
         </div>
         <h2 style="font-size: 30px">Quản lý hóa đơn</h2>
@@ -2182,6 +2252,11 @@
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+              <select class="selecttype" name="" id="" >
+                <option value="" selected>--</option>
+                <option value="">Tên</option>
+                <option value="">Giá</option>
+              </select>
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -2189,7 +2264,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="" >Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
@@ -2487,6 +2563,9 @@
                   style="margin-bottom: 4px"
           >
             Thêm
+          </button><button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+          >
+            Xuất Excel
           </button>
         </div>
         <h2 style="font-size: 30px">Quản lý chi tiết hóa đơn</h2>
@@ -2494,6 +2573,11 @@
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+              <select class="selecttype" name="" id="" >
+                <option value="" selected>--</option>
+                <option value="">Tên</option>
+                <option value="">Giá</option>
+              </select>
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -2501,7 +2585,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="" >Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
@@ -2769,6 +2854,9 @@
                   style="margin-bottom: 4px"
           >
             Thêm
+          </button><button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+          >
+            Xuất Excel
           </button>
         </div>
 
@@ -2777,6 +2865,11 @@
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+              <select class="selecttype" name="" id="" >
+                <option value="" selected>--</option>
+                <option value="">Tên</option>
+                <option value="">Giá</option>
+              </select>
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -2784,7 +2877,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="" >Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
@@ -2904,6 +2998,9 @@
                   style="margin-bottom: 4px"
           >
             Thêm
+          </button><button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+          >
+            Xuất Excel
           </button>
         </div>
         <h2 style="font-size: 30px">Quản lý phân quyền</h2>
@@ -2911,6 +3008,11 @@
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+              <select class="selecttype" name="" id="" >
+                <option value="" selected>--</option>
+                <option value="">Tên</option>
+                <option value="">Giá</option>
+              </select>
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -2918,7 +3020,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="" >Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
@@ -3071,6 +3174,9 @@
                   style="margin-bottom: 4px"
           >
             Thêm
+          </button><button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+          >
+            Xuất Excel
           </button>
         </div>
         <h2 style="font-size: 30px">Quản lý giảm giá</h2>
@@ -3078,6 +3184,11 @@
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+              <select class="selecttype" name="" id="" >
+                <option value="" selected>--</option>
+                <option value="">Tên</option>
+                <option value="">Giá</option>
+              </select>
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -3085,7 +3196,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="" >Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
@@ -3286,6 +3398,9 @@
                   style="margin-bottom: 4px"
           >
             Thêm
+          </button><button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+          >
+            Xuất Excel
           </button>
         </div>
         <h2 style="font-size: 30px">Quản lý màu sắc kích cỡ số lượng</h2>
@@ -3293,6 +3408,11 @@
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+              <select class="selecttype" name="" id="" >
+                <option value="" selected>--</option>
+                <option value="">Tên</option>
+                <option value="">Giá</option>
+              </select>
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -3300,7 +3420,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="" >Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
@@ -3507,6 +3628,9 @@
                   style="margin-bottom: 4px"
           >
             Thêm
+          </button><button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+          >
+            Xuất Excel
           </button>
         </div>
         <h2 style="font-size: 30px">Quản lý xác nhận đơn hàng</h2>
@@ -3514,6 +3638,11 @@
           <div class="sort-search">
             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
             <div class="inputsearch">
+              <select class="selecttype" name="" id="" >
+                <option value="" selected>--</option>
+                <option value="">Tên</option>
+                <option value="">Giá</option>
+              </select>
               <input type="text" value="" />
               <button class="btnHD btnsearch">Tìm</button>
             </div>
@@ -3521,7 +3650,8 @@
           <div class="sort-box">
             <label for="">Sắp xếp theo:</label>
             <select name="" id="">
-              <option value="" selected>Z-A</option>
+              <option value="" selected>--</option>
+              <option value="" >Z-A</option>
               <option value="">A-Z</option>
               <option value="">Giá tăng</option>
               <option value="">Giá giảm</option>
