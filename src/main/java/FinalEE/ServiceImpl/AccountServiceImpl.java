@@ -7,6 +7,7 @@ import FinalEE.Service.AccountService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -72,11 +73,17 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account findByID(Integer accountID) {
         try{
+
             return accountRepository.findByID(accountID);
         }catch (Exception er){
             er.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<Account> findAllSort(Sort sort, ItemServiceImpl.SortOrder sortOrder) {
+        return accountRepository.findAll(sort);
     }
 
     @Override

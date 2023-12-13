@@ -1,5 +1,5 @@
 let btnSearch = document.querySelectorAll(".btnsearchbox"),
-  boxSearch = document.querySelectorAll(".inputsearch");
+    boxSearch = document.querySelectorAll(".inputsearch");
 
 function removeActiveinputSearch() {
   btnSearch.forEach((item) => {
@@ -11,7 +11,7 @@ function removeActiveinputSearch() {
 }
 function showtable() {
   const btntabs = document.querySelectorAll(".accordion-button"),
-    tables = document.querySelectorAll(".table-data");
+      tables = document.querySelectorAll(".table-data");
   function removeActive() {
     tables.forEach(function (item) {
       item.classList.remove("active");
@@ -80,7 +80,7 @@ function handleUpdateAccount() {
       document.getElementById("update_accountPasswordID").value = accountPass;
 
       var update_customer_selectElement = document.getElementById(
-        "update_label_customerID"
+          "update_label_customerID"
       );
       for (var i = 0; i < update_customer_selectElement.options.length; i++) {
         var option = update_customer_selectElement.options[i];
@@ -93,7 +93,7 @@ function handleUpdateAccount() {
       }
 
       var update_permission_selectElement = document.getElementById(
-        "update_label_permissionID"
+          "update_label_permissionID"
       );
       for (var i = 0; i < update_permission_selectElement.options.length; i++) {
         var option = update_permission_selectElement.options[i];
@@ -155,7 +155,7 @@ function handleUpdateItem() {
 
       //          Combobox ItemType
       var update_itemType_selectElement = document.getElementById(
-        "update_label_itemTypeID"
+          "update_label_itemTypeID"
       );
       for (var i = 0; i < update_itemType_selectElement.options.length; i++) {
         var option = update_itemType_selectElement.options[i];
@@ -169,7 +169,7 @@ function handleUpdateItem() {
 
       //          Combobox ItemCollection
       var update_itemCollection_selectElement = document.getElementById(
-        "update_label_itemCollectionID"
+          "update_label_itemCollectionID"
       );
       for (var i = 0; i < update_itemCollection_selectElement.options.length; i++) {
         var option = update_itemCollection_selectElement.options[i];
@@ -183,7 +183,7 @@ function handleUpdateItem() {
 
       //            Combobox ItemMaterial
       var update_itemMaterial_selectElement = document.getElementById(
-        "update_label_itemMaterialID"
+          "update_label_itemMaterialID"
       );
       for (var i = 0; i < update_itemMaterial_selectElement.options.length; i++) {
         var option = update_itemMaterial_selectElement.options[i];
@@ -277,7 +277,7 @@ function handleUpdateDiscountCard() {
 
       /*Combobox CustomerID*/
       var update_discountCard_selectElement = document.getElementById(
-        "update_discountCardCustomerID"
+          "update_discountCardCustomerID"
       );
       for (var i = 0; i < update_discountCard_selectElement.options.length; i++) {
         var option = update_discountCard_selectElement.options[i];
@@ -360,7 +360,7 @@ function handleUpdateItemImage() {
 
       /*Combobox CustomerID*/
       var update_itemImage_selectElement = document.getElementById(
-        "update_itemImageItemID"
+          "update_itemImageItemID"
       );
       for (var i = 0; i < update_itemImage_selectElement.options.length; i++) {
         var option = update_itemImage_selectElement.options[i];
@@ -464,7 +464,7 @@ function handleUpdateOrder() {
 
       /*Combobox DiscountCardID*/
       var update_order_selectElement = document.getElementById(
-        "update_orderDiscountCardID"
+          "update_orderDiscountCardID"
       );
       for (var i = 0; i < update_order_selectElement.options.length; i++) {
         var option = update_order_selectElement.options[i];
@@ -520,7 +520,7 @@ function handleUpdateOrderDetail() {
 
       /*Combobox CustomerID*/
       var update_orderDetail_selectElement = document.getElementById(
-        "update_orderDetailOrderID"
+          "update_orderDetailOrderID"
       );
       for (var i = 0; i < update_orderDetail_selectElement.options.length; i++) {
         var option = update_orderDetail_selectElement.options[i];
@@ -534,7 +534,7 @@ function handleUpdateOrderDetail() {
 
       /*Combobox DiscountCardID*/
       var update_orderDetail_selectElement = document.getElementById(
-        "update_orderDetailItemID"
+          "update_orderDetailItemID"
       );
       for (var i = 0; i < update_orderDetail_selectElement.options.length; i++) {
         var option = update_orderDetail_selectElement.options[i];
@@ -708,7 +708,7 @@ function handleUpdateStockItem() {
 
       /*Combobox ItemID*/
       var update_stockItem_selectElement = document.getElementById(
-        "update_stockItemItemID"
+          "update_stockItemItemID"
       );
       for (var i = 0; i < update_stockItem_selectElement.options.length; i++) {
         var option = update_stockItem_selectElement.options[i];
@@ -766,7 +766,7 @@ new Chart(ctx, {
 
 function scrollPageHeader() {
   let header = document.querySelector(".header"),
-    menuleft = document.querySelector(".left .accordion");
+      menuleft = document.querySelector(".left .accordion");
   let scrollY = window.scrollY;
   if (scrollY > header.clientHeight) {
     header.classList.add("scroll");
@@ -779,7 +779,7 @@ function scrollPageHeader() {
 
 function scrollHeaderTable() {
   let headertable = document.querySelector(".table-data.active .header-table"),
-    header = document.querySelector(".header");
+      header = document.querySelector(".header");
   let scrollY = window.scrollY;
   if (scrollY > header.clientHeight) {
     headertable.classList.add("scroll");
@@ -810,3 +810,40 @@ function showSearchbox() {
   });
 }
 showSearchbox();
+
+
+
+/*Item Material*/
+function handleAddOrderStatus() {
+  var addOrderStatus = document.getElementById("orderStatus_addTrigger");
+  var modal = document.getElementById("add-orderStatus");
+  var btnClose = document.querySelector(".clsAddOrderStatus");
+  addOrderStatus.addEventListener("click", function () {
+    modal.classList.add("active");
+    console.log(1);
+  });
+  btnClose.addEventListener("click", function () {
+    modal.classList.remove("active");
+  });
+}
+handleAddOrderStatus();
+function handleUpdateOrderStatus() {
+  var updateOrderStatus = document.querySelectorAll(".btnUpdateOrderStatus");
+  var modal = document.getElementById("update-orderStatus");
+  var btnClose = document.querySelector(".clsOrderStatus");
+
+  updateOrderStatus.forEach(function (item) {
+    item.addEventListener("click", () => {
+      modal.style.display = "block";
+
+      var name = item.getAttribute("data-orderStatusName");
+
+      document.getElementById("update_orderStatusName").value = name;
+    });
+  });
+  btnClose.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+}
+handleUpdateOrderStatus();
+

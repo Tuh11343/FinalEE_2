@@ -6,6 +6,7 @@ import FinalEE.Service.CustomerService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,6 +32,38 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> getAllCustomer() {
         return customerRepository.findAll();
+    }
+
+    @Override
+    public List<Customer> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return customerRepository.findAll(sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Customer> findAllByNameLike(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return customerRepository.findAllByNameLike(name,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override

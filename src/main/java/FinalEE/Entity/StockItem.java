@@ -18,7 +18,7 @@ public class StockItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")

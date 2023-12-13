@@ -11,12 +11,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.net.http.HttpHeaders;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.compress.utils.IOUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -112,6 +114,12 @@ public class ItemServlet extends HttpServlet {
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("orderStatusList",orderStatusList);
 
+        Sort sort= Sort.by("name").ascending();
+        List<Account> testAccount=accountServiceImpl.findAllSort(sort, ItemServiceImpl.SortOrder.ASC);
+        for (Account account:testAccount){
+            System.out.println(account.toString());
+        }
+
 
         req.getRequestDispatcher("Views/User/Test_Home.jsp").forward(req, resp);
     }
@@ -121,17 +129,23 @@ public class ItemServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String action=request.getParameter("action");
-        HttpSession session=request.getSession();
         switch(action){
             case "itemClick"->{
                 int itemClickID=Integer.parseInt(request.getParameter("itemClickID"));
                 response.sendRedirect("/FinalEE/ItemDetailServlet?itemClickID="+itemClickID);
             }
-            case "sortChange"->{
-                String value=request.getParameter("sort");
-                switch (value){
+            case "test"->{
+                ExcelServiceImpl excelService=new ExcelServiceImpl();
+                // Generate Excel data
+                ByteArrayInputStream byteArrayInputStream = excelService.exportToExcel(orderServiceImpl.getAllOrder());
 
-                }
+                // Set the content type and attachment header.
+                response.addHeader("Content-Disposition", "attachment; filename=invoice.xlsx");
+                response.setContentType("application/vnd.ms-excel");
+
+                // Copy the stream to the response's output stream.
+                IOUtils.copy(byteArrayInputStream, response.getOutputStream());
+                response.flushBuffer();
             }
 
             default -> {

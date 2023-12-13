@@ -36,5 +36,14 @@ public class Account {
     @Column(name = "password")
     private String password;
 
-
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", customer=" + customer +
+                ", permission=" + permission +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

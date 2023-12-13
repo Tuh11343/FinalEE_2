@@ -189,6 +189,7 @@
                 <c:forEach items="${requestScope.pageList}" var="page" varStatus="status">
                     <a class="scproduct__panigation--item"
                        onclick="submitForm('form_pageClick${page}')">${page}</a>
+
                     <form id="form_pageClick${page}"
                           action="${pageContext.request.contextPath}/ItemSearchServlet" method="get">
                         <input type="hidden" name="sort" value="${requestScope.sort}">
@@ -211,6 +212,7 @@
                             <input type="hidden" name="itemName" value="${requestScope.itemName}"/>
                         </c:if>
                     </form>
+
                 </c:forEach>
             </div>
         </div>

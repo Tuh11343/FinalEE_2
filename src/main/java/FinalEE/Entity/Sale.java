@@ -22,7 +22,7 @@ import lombok.Setter;
 public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)

@@ -2,6 +2,9 @@
 package FinalEE.Service;
 
 import FinalEE.Entity.ItemImage;
+import FinalEE.Entity.ItemMaterial;
+import FinalEE.ServiceImpl.ItemServiceImpl;
+
 import java.util.List;
 
 public interface ItemImageService {
