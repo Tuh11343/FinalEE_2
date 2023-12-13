@@ -976,7 +976,7 @@ button:hover {
   height: 100%;
   padding: 0 5px;
 }
-#add-customer button {
+#add-customer a {
   font-size: 1.2rem;
   color: #fff;
   background-color: var(--submit-color);
@@ -986,7 +986,7 @@ button:hover {
   width: 200px;
   border-radius: 10px;
 }
-#add-customer button:hover {
+#add-customer a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -2165,3 +2165,4 @@ button:hover {
   pointer-events: auto;
   transition: 0.4;
 }
+

@@ -3,6 +3,7 @@ package FinalEE.ServiceImpl;
 import FinalEE.Entity.StockItem;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import FinalEE.Repository.StockItemRepository;
 import FinalEE.Service.StockItemService;
@@ -60,7 +61,54 @@ public class StockItemServiceImpl implements StockItemService{
     public List<StockItem> getAllStockItem() {
         return stockItemRepository.findAll();
     }
-    
-    
-    
+
+    @Override
+    public List<StockItem> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return stockItemRepository.findAll(sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<StockItem> findAllByItemIDSort(Integer itemID, String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return stockItemRepository.findAllByItem_Id(itemID,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<StockItem> findAllByItemNameSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return stockItemRepository.findAllByItem_NameLike(name,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+
 }

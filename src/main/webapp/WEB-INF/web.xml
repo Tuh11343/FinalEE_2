@@ -39,6 +39,11 @@
         <servlet-class>FinalEE.Controller.MailTest</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.AdminServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>AdminManagerServlet</servlet-name>
         <url-pattern>/AdminManagerServlet</url-pattern>
@@ -77,6 +82,11 @@
     <servlet-mapping>
         <servlet-name>MailTest</servlet-name>
         <url-pattern>/MailTest</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/AdminServlet</url-pattern>
     </servlet-mapping>
 
     

@@ -59,7 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            return customerRepository.findAllByNameLike(name,sortBy);
+            return customerRepository.findAllByNameContains(name,sortBy);
         }catch (Exception er){
             er.printStackTrace();
         }
@@ -89,8 +89,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public boolean deleteByID(int id) {
         if (customerRepository.existsById(id)) {
-            //customerRepository.deleteById(customerID);
-            System.out.println("Ban da xoa:" + id);
+            customerRepository.deleteById(id);
             return true;
         }
         return false;

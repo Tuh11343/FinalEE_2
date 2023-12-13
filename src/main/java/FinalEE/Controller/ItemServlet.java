@@ -114,13 +114,6 @@ public class ItemServlet extends HttpServlet {
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("orderStatusList",orderStatusList);
 
-        Sort sort= Sort.by("name").ascending();
-        List<Account> testAccount=accountServiceImpl.findAllSort(sort, ItemServiceImpl.SortOrder.ASC);
-        for (Account account:testAccount){
-            System.out.println(account.toString());
-        }
-
-
         req.getRequestDispatcher("Views/User/Test_Home.jsp").forward(req, resp);
     }
 

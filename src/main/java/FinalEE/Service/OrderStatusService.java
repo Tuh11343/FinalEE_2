@@ -3,6 +3,8 @@ package FinalEE.Service;
 
 
 import FinalEE.Entity.OrderStatus;
+import FinalEE.ServiceImpl.ItemServiceImpl;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -15,5 +17,8 @@ public interface OrderStatusService {
 
     OrderStatus defaultOrder();
     OrderStatus confirmOrder();
+
+    List<OrderStatus> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<OrderStatus> findAllByNameSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
 
 }

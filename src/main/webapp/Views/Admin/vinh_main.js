@@ -35,18 +35,17 @@ function showtable() {
 }
 showtable();
 
-function handleDelete(e) {
+/*function handleDelete(e) {
   let confirmationResult = false;
   const deltabs = document.querySelectorAll(".btnDel");
 
   confirmationResult = confirm("Bạn có chắc chắn muốn xóa?");
   document.getElementById("testBtn").value = confirmationResult;
   console.log(confirmationResult);
-  console.log(1);
   if (!confirmationResult) {
     event.preventDefault(); // Ngăn chặn sự kiện submit nếu không đồng ý xóa
   }
-}
+}*/
 
 /*Account*/
 function handleAddAccount() {
@@ -226,6 +225,7 @@ function handleUpdateCustomer() {
     item.addEventListener("click", () => {
       modal.style.display = "block";
 
+      var id=item.getAttribute("data-customerID");
       var name = item.getAttribute("data-customerName");
       var phoneNumber = item.getAttribute("data-customerPhoneNumber");
       var email = item.getAttribute("data-customerEmail");
@@ -233,6 +233,7 @@ function handleUpdateCustomer() {
 
       console.log(name + phoneNumber + email + address);
 
+      document.getElementById("update_customerID").value=id;
       document.getElementById("update_customerName").value = name;
       document.getElementById("update_customerPhoneNumber").value = phoneNumber;
       document.getElementById("update_customerEmail").value = email;
