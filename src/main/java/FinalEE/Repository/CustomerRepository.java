@@ -17,7 +17,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer>{
     Customer findByID(Integer id);
 
     List<Customer> findAll(Sort sort);
-    List<Customer> findAllByNameLike(String name,Sort sort);
+    List<Customer> findAllByNameContains(String name,Sort sort);
     Customer findById(int id);
 
 }
