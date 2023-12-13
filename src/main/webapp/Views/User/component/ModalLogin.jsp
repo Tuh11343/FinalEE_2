@@ -6,8 +6,8 @@ contentType="text/html;charset=UTF-8" language="java" %>
     <button class="btn-close">X Đóng</button>
     <div class="form-box">
       <div class="form-tab">
-        <span class="tab-item active" data-type="login-from">Login</span>
-        <span class="tab-item" data-type="form-register">Register</span>
+        <span class="tab-item active" data-type="login-from">Đăng nhập</span>
+        <span class="tab-item" data-type="form-register">Đăng ký</span>
       </div>
       <div class="from-content">
         <%--Log In--%>
@@ -24,7 +24,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
             />
           </div>
           <div class="form-gr">
-            <span class="label" for="password">password</span>
+            <span class="label" for="password">Mật khẩu</span>
             <input
               class="input-form"
               type="password"
@@ -36,7 +36,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
           </div>
 
           <a class="btn btn-submit" onclick="logInAjaxRequest()">Đăng nhập</a>
-          <a href="" style="float: right">Quên mật khẩu ?</a>
+          <a href="#" style="float: right; color: var(--main-cl)">Quên mật khẩu ?</a>
           <input type="hidden" name="action" value="signInClick" />
         </form>
 

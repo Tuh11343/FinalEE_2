@@ -236,22 +236,26 @@
                         // to prevent error logs
                         // if (priceSlider == null) return;
                         noUiSlider.create(priceSlider, {
-                            start: [0, 70000],
+                            //start la gia tri bat dau va gia tri ket thuc khi moi vao trang wed, nen de min va max cua gia tri
+                            start: [0, 700000],
                             connect: true,
+                            //step la gia tri trang len moi khi keo
                             step: 1000,
+                            //margin la khoang cach giu 2 nut khi keo 
                             margin: 2000,
 
                             range: {
                                 // 'min': ${requestScope.minPrice},
                                 // 'max': ${requestScope.maxPrice},
                                 min: [20000],
-                                max: [100000]
+                                max: [1000000]
                             },
                             tooltips: true,
 
                         });
 
-                        // Update Price Range
+                        // Update Price Range - bat su kien thay doi gia tri
+
                         priceSlider.noUiSlider.on('update', function (values, handle) {
                             console.log('value :>> ', values[0]);
 
