@@ -126,6 +126,14 @@
             </div>
         </div>
     </section>
+
+    <form action="${pageContext.request.contextPath}/ItemServlet" method="post">
+
+        <button>Nhan toi</button>
+        <input type="hidden" name="action" value="test">
+
+    </form>
+
     <section class="ao pb">
         <div class="container">
             <div class="heading --h4">Các sản phẩm áo</div>

@@ -106,7 +106,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public int getTotalPages(double min,double max) {
-        int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+        int pageSize = 4; // Số lượng sản phẩm trên mỗi trang
         Pageable pageable = PageRequest.of(0, pageSize); // Bắt đầu từ trang đầu tiên
         Page<Item> items = itemRepository.findAllByPriceBetween(min,max,pageable);
         return items.getTotalPages();
@@ -114,7 +114,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public int getTotalPagesByItemCollectionID(int itemCollectionID, double min, double max) {
-        int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+        int pageSize = 4; // Số lượng sản phẩm trên mỗi trang
         Pageable pageable = PageRequest.of(0, pageSize); // Bắt đầu từ trang đầu tiên
         Page<Item> items = itemRepository.findAllByItemCollectionIdAndPriceBetween(itemCollectionID, min, max, pageable);
         return items.getTotalPages();
@@ -122,7 +122,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public int getTotalPagesByItemTypeID(int itemTypeID, double min, double max) {
-        int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+        int pageSize = 4; // Số lượng sản phẩm trên mỗi trang
         Pageable pageable = PageRequest.of(0, pageSize); // Bắt đầu từ trang đầu tiên
         Page<Item> items = itemRepository.findAllByItemTypeIdAndPriceBetween(itemTypeID, min, max, pageable);
         return items.getTotalPages();
@@ -130,7 +130,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public int getTotalPagesByItemMaterialID(int itemMaterialID, double min, double max) {
-        int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+        int pageSize = 4; // Số lượng sản phẩm trên mỗi trang
         Pageable pageable = PageRequest.of(0, pageSize); // Bắt đầu từ trang đầu tiên
         Page<Item> items = itemRepository.findAllByItemMaterialIdAndPriceBetween(itemMaterialID, min, max, pageable);
         return items.getTotalPages();
@@ -138,7 +138,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public int getTotalPagesByName(String name, double min, double max) {
-        int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+        int pageSize = 4; // Số lượng sản phẩm trên mỗi trang
         Pageable pageable = PageRequest.of(0, pageSize); // Bắt đầu từ trang đầu tiên
         Page<Item> items = itemRepository.findAllByNameContainsAndPriceBetween(name, min, max, pageable);
         return items.getTotalPages();
@@ -153,7 +153,7 @@ public class ItemServiceImpl implements ItemService {
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+            int pageSize = 4; // Số lượng sản phẩm trên mỗi trang
             Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortBy); // Trừ 1 vì số trang bắt đầu từ 0
             Page<Item> itemPage = itemRepository.findAllByItemCollectionIdAndPriceBetween(itemCollectionID, min, max, pageable);
             return itemPage.getContent();
@@ -172,7 +172,7 @@ public class ItemServiceImpl implements ItemService {
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+            int pageSize = 4; // Số lượng sản phẩm trên mỗi trang
             Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortBy); // Trừ 1 vì số trang bắt đầu từ 0
             Page<Item> itemPage = itemRepository.findAllByItemTypeIdAndPriceBetween(itemTypeID,min,max,pageable);
             return itemPage.getContent();
@@ -191,7 +191,7 @@ public class ItemServiceImpl implements ItemService {
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+            int pageSize = 4; // Số lượng sản phẩm trên mỗi trang
             Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortBy); // Trừ 1 vì số trang bắt đầu từ 0
             Page<Item> itemPage = itemRepository.findAllByItemMaterialIdAndPriceBetween(itemMaterialID, min,max,pageable);
             return itemPage.getContent();
@@ -211,7 +211,7 @@ public class ItemServiceImpl implements ItemService {
                 sortBy = Sort.by(sort).ascending();
             }
 
-            int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+            int pageSize = 4; // Số lượng sản phẩm trên mỗi trang
             Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortBy); // Trừ 1 vì số trang bắt đầu từ 0
             Page<Item> itemPage = itemRepository.findAllByNameContainsAndPriceBetween(name,min,max,pageable);
             return itemPage.getContent();
@@ -229,7 +229,7 @@ public class ItemServiceImpl implements ItemService {
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            int pageSize = 12; // Số lượng sản phẩm trên mỗi trang
+            int pageSize = 4; // Số lượng sản phẩm trên mỗi trang
             Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortBy);
             Page<Item> itemPage = itemRepository.findAllByPriceBetween(min,max,pageable);
             return itemPage.getContent();

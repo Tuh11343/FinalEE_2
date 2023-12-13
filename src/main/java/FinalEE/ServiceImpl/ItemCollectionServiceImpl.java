@@ -6,6 +6,7 @@ import FinalEE.Service.ItemCollectionService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -58,7 +59,38 @@ public class ItemCollectionServiceImpl implements ItemCollectionService{
     public List<ItemCollection> getAllItemCollection() {
         return itemCollectionRepository.findAll();
     }
-    
-    
-    
+
+    @Override
+    public List<ItemCollection> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return itemCollectionRepository.findAll(sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<ItemCollection> findAllByNameLikeSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return itemCollectionRepository.findAllByNameLike(name,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+
 }

@@ -1,12 +1,14 @@
 package FinalEE.ServiceImpl;
 
 import FinalEE.Entity.ItemImage;
+import FinalEE.Entity.ItemMaterial;
 import FinalEE.Repository.ItemImageRepository;
 import FinalEE.Service.ItemImageService;
 
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -66,6 +68,7 @@ public class ItemImageServiceImpl implements ItemImageService{
     public List<ItemImage> findByItemID(int itemID) {
         return itemImageRepository.findByItemId(itemID);
     }
+
 
 
 }

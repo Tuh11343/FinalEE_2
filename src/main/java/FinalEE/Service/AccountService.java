@@ -2,6 +2,9 @@
 package FinalEE.Service;
 
 import FinalEE.Entity.Account;
+import FinalEE.ServiceImpl.ItemServiceImpl;
+import org.springframework.data.domain.Sort;
+
 import java.util.List;
 
 public interface AccountService {
@@ -12,6 +15,7 @@ public interface AccountService {
     List<Account> getAllAccount();
 
     Account findByID(Integer accountID);
-    Account findByNameAndPassword(String name,String password);
+    Account findByNameAndPassword(String name, String password);
+    List<Account> findAllSort(Sort sort, ItemServiceImpl.SortOrder sortOrder);
     
 }

@@ -644,7 +644,8 @@ th {
 .btnUpdateItemType,
 .btnUpdatePermission,
 .btnUpdateSale,
-.btnUpdateStockItem {
+.btnUpdateStockItem,
+.btnUpdateOrderStatus{
   background-color: aquamarine;
 }
 
@@ -657,7 +658,7 @@ button:hover {
 #modal-add-account {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -712,7 +713,7 @@ button:hover {
 #update-user {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -768,6 +769,7 @@ button:hover {
   background-color: var(--bg-color);
   margin: 0 auto;
   padding: 20px;
+  margin-top:16px;
   border: 1px solid #888;
   height: 615px;
   max-width: 600px;
@@ -785,7 +787,7 @@ button:hover {
 
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -828,7 +830,7 @@ button:hover {
 #add-products {
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -870,6 +872,7 @@ button:hover {
 .add-modal {
   background-color: var(--bg-color);
   margin: 0 auto;
+  margin-top:16px;
   padding: 20px;
   border: 1px solid #888;
   height: 615px;
@@ -902,7 +905,7 @@ button:hover {
 
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -943,7 +946,7 @@ button:hover {
 #add-customer {
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1008,7 +1011,7 @@ button:hover {
 
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1049,7 +1052,7 @@ button:hover {
 #add-discountCard {
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1114,7 +1117,7 @@ button:hover {
 
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1155,7 +1158,7 @@ button:hover {
 #add-itemCollection {
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1220,7 +1223,7 @@ button:hover {
 
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1260,7 +1263,7 @@ button:hover {
 #add-itemImage {
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1325,7 +1328,7 @@ button:hover {
 
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1365,7 +1368,7 @@ button:hover {
 #add-itemMaterial {
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1430,7 +1433,7 @@ button:hover {
 
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1470,7 +1473,7 @@ button:hover {
 #add-order {
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1535,7 +1538,7 @@ button:hover {
 
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1575,7 +1578,7 @@ button:hover {
 #add-orderDetail {
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1640,7 +1643,7 @@ button:hover {
 
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1680,7 +1683,7 @@ button:hover {
 #add-itemType {
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1745,7 +1748,7 @@ button:hover {
 
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1785,7 +1788,7 @@ button:hover {
 #add-permission {
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1850,7 +1853,7 @@ button:hover {
 
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1889,7 +1892,7 @@ button:hover {
 #add-sale {
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1954,7 +1957,7 @@ button:hover {
 
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -1994,7 +1997,7 @@ button:hover {
 #add-stockItem {
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -2039,6 +2042,111 @@ button:hover {
   transition: 0.4s;
 }
 .modal__addStockItem.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: 0.4;
+}
+
+/*Update Order Status*/
+#update-orderStatus {
+  /*    display:none;
+        position:fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);*/
+
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+#update-orderStatus input {
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
+  width: 300px;
+}
+#update-orderStatus button {
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
+}
+#update-orderStatus button:hover {
+  background: #ccc;
+  color: #000000;
+}
+#update-orderStatus > label {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+/*Add Material*/
+#add-orderStatus {
+  display: block;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+#add-orderStatus.active {
+  display: block;
+}
+#add-orderStatus input {
+  border-bottom: 1px solid var(--title-color);
+  background: transparent;
+  height: 100%;
+  padding: 0 5px;
+}
+#add-orderStatus button {
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--submit-color);
+  align-items: center;
+  margin: 16px;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
+}
+#add-orderStatus button:hover {
+  background: #ccc;
+  color: #000000;
+}
+#add-orderStatus > label {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.modal__addOrderStatus {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.4s;
+}
+.modal__addOrderStatus.active {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
