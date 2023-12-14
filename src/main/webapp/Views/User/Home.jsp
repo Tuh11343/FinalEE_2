@@ -202,7 +202,7 @@
                                         nhiên. Đây là chất liệu
                                         phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                                     <div class="btnactiongr">
-                                        <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg"
+                                        <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg"
                                                 height="1em" viewBox="0 0 576 512">
 
                                                 <path
@@ -234,7 +234,7 @@
                                         nhiên. Đây là chất liệu
                                         phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                                     <div class="btnactiongr">
-                                        <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg"
+                                        <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg"
                                                 height="1em" viewBox="0 0 576 512">
 
                                                 <path
@@ -266,7 +266,7 @@
                                         nhiên. Đây là chất liệu
                                         phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                                     <div class="btnactiongr">
-                                        <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg"
+                                        <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg"
                                                 height="1em" viewBox="0 0 576 512">
 
                                                 <path
@@ -297,7 +297,7 @@
                                         nhiên. Đây là chất liệu
                                         phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                                     <div class="btnactiongr">
-                                        <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg"
+                                        <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg"
                                                 height="1em" viewBox="0 0 576 512">
 
                                                 <path
@@ -349,7 +349,7 @@
                                                 liệu
                                                 phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                                             <div class="btnactiongr">
-                                                <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                                                                           viewBox="0 0 576 512">
         
                                                     <path
@@ -378,7 +378,7 @@
                                                 liệu
                                                 phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                                             <div class="btnactiongr">
-                                                <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                                                                           viewBox="0 0 576 512">
         
                                                     <path
@@ -407,7 +407,7 @@
                                                 liệu
                                                 phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                                             <div class="btnactiongr">
-                                                <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                                                                           viewBox="0 0 576 512">
         
                                                     <path
@@ -436,7 +436,7 @@
                                                 liệu
                                                 phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                                             <div class="btnactiongr">
-                                                <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                                                                           viewBox="0 0 576 512">
         
                                                     <path
@@ -472,7 +472,7 @@
                                         <p class="desc">Vải cotton hay còn gọi là cotton 100%, được làm từ sợi bông thiên nhiên. Đây là chất liệu
                                             phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                                         <div class="btnactiongr">
-                                            <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                            <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                                                                       viewBox="0 0 576 512">
         
                                                 <path
@@ -500,7 +500,7 @@
                                         <p class="desc">Vải cotton hay còn gọi là cotton 100%, được làm từ sợi bông thiên nhiên. Đây là chất liệu
                                             phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                                         <div class="btnactiongr">
-                                            <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                            <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                                                                       viewBox="0 0 576 512">
         
                                                 <path
@@ -528,7 +528,7 @@
                                         <p class="desc">Vải cotton hay còn gọi là cotton 100%, được làm từ sợi bông thiên nhiên. Đây là chất liệu
                                             phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                                         <div class="btnactiongr">
-                                            <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                            <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                                                                       viewBox="0 0 576 512">
         
                                                 <path
@@ -556,7 +556,7 @@
                                         <p class="desc">Vải cotton hay còn gọi là cotton 100%, được làm từ sợi bông thiên nhiên. Đây là chất liệu
                                             phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                                         <div class="btnactiongr">
-                                            <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                            <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                                                                       viewBox="0 0 576 512">
         
                                                 <path
@@ -588,7 +588,7 @@
                           <p class="desc">Vải cotton hay còn gọi là cotton 100%, được làm từ sợi bông thiên nhiên. Đây là chất liệu
                             phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                           <div class="btnactiongr">
-                            <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                            <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                 viewBox="0 0 576 512">
                                 
                                 <path
@@ -617,7 +617,7 @@
                           <p class="desc">Vải cotton hay còn gọi là cotton 100%, được làm từ sợi bông thiên nhiên. Đây là chất liệu
                             phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                           <div class="btnactiongr">
-                            <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                            <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                 viewBox="0 0 576 512">
                                 
                                 <path
@@ -646,7 +646,7 @@
                           <p class="desc">Vải cotton hay còn gọi là cotton 100%, được làm từ sợi bông thiên nhiên. Đây là chất liệu
                             phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                           <div class="btnactiongr">
-                            <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                            <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                 viewBox="0 0 576 512">
                                 
                                 <path
@@ -675,7 +675,7 @@
                           <p class="desc">Vải cotton hay còn gọi là cotton 100%, được làm từ sợi bông thiên nhiên. Đây là chất liệu
                             phổ biến nhất được chọn làm áo thun bởi vì áo thun</p>
                           <div class="btnactiongr">
-                            <button class="btn addcart">Add Cart <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                            <button class="btn addcart">Chi Tiết <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                 viewBox="0 0 576 512">
                                 
                                 <path
