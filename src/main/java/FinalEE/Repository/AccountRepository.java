@@ -16,9 +16,12 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
 
 
     public List<Account> findAll(Sort sort);
-    public List<Account> findAllByNameLike(String name,Sort sort);
+    public List<Account> findAllByNameContains(String name,Sort sort);
 
     public Account findByNameAndPassword(String name, String password);
     @Query("select a from Account a where a.id=?1 or a.id IS NULL")
     Account findByID(Integer id);
+
+    Account findByCustomer_Id(Integer id);
+
 }

@@ -2,18 +2,12 @@ package FinalEE.Controller;
 
 import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.lang.reflect.Type;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CartServlet extends HttpServlet {
 
@@ -68,7 +62,7 @@ public class CartServlet extends HttpServlet {
                     }
 
                     /*Create Oder*/
-                    ItemOrder order = new ItemOrder();
+                    Order order = new Order();
                     order.setCustomer(signInCustomer);
                     order.setTotal(orderTotal);
                     order.setDate_purchase(new Date());
@@ -158,7 +152,7 @@ public class CartServlet extends HttpServlet {
         List<ItemCollection> itemCollectionList = itemCollectionServiceImpl.getAllItemCollection();
         List<ItemImage> imageList = itemImageServiceImpl.getAllItemImage();
         List<ItemMaterial> itemMaterialList = itemMaterialServiceImpl.getAllItemMaterial();
-        List<ItemOrder> orderList = orderServiceImpl.getAllOrder();
+        List<Order> orderList = orderServiceImpl.getAllOrder();
         List<OrderDetail> orderDetailList = orderDetailServiceImpl.getAllOrderDetail();
         List<ItemType> itemTypeList = itemTypeServiceImpl.getAllItemType();
         List<Permission> permissionList = permissionServiceImpl.getAllPermission();

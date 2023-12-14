@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ExcelService {
 
-    public ByteArrayInputStream exportToExcel(List<ItemOrder> orderList);
+    public ByteArrayInputStream exportToExcel(List<Order> orderList);
 
     public ByteArrayInputStream exportAccountToExcel(List<Account> accountList);
 
@@ -26,7 +26,7 @@ public interface ExcelService {
 
     public ByteArrayInputStream exportItemMaterialToExcel(List<ItemMaterial> itemMaterialList);
 
-    public ByteArrayInputStream exportItemOrderToExcel(List<ItemOrder> orderList);
+    public ByteArrayInputStream exportItemOrderToExcel(List<Order> orderList);
 
     public ByteArrayInputStream exportItemTypeToExcel(List<ItemType> itemTypeList);
 

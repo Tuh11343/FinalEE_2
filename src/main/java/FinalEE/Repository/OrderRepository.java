@@ -1,23 +1,23 @@
 
 package FinalEE.Repository;
 
-import FinalEE.Entity.ItemOrder;
+import FinalEE.Entity.Order;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.List;
 
 
 @Repository
-public interface OrderRepository extends JpaRepository<ItemOrder, Integer>{
+public interface OrderRepository extends JpaRepository<Order, Integer>{
 
-    @Query("select o from ItemOrder o where o.id=?1")
-    ItemOrder findByID(Integer id);
+    @Query("select o from Order o where o.id=?1")
+    Order findByID(Integer id);
 
-    List<ItemOrder> findAllByCustomer_Id(Integer customerID);
+    List<Order> findAllByCustomer_Id(Integer customerID);
 
 //    @Query("SELECT YEAR(io.date_purchase) as year, MONTH(io.date_purchase) as month, SUM(io.total) as revenue " +
 //            "FROM ItemOrder io " +
@@ -26,7 +26,9 @@ public interface OrderRepository extends JpaRepository<ItemOrder, Integer>{
 //            "ORDER BY YEAR DESC, month DESC")
 //    List<Object[]> findRevenueForLastFiveMonths(Date fiveMonthsAgo);
 
-    List<ItemOrder> findAll(Sort sort);
-    List<ItemOrder> findAllByCustomerNameLike(String name,Sort sort);
+    List<Order> findAll(Sort sort);
+    List<Order> findAllByCustomer_Id(Integer customerID,Sort sort);
+    List<Order> findAllByTotalIsGreaterThan(double total,Sort sort);
+    List<Order> findAllByTotalIsLessThan(double total,Sort sort);
 
 }

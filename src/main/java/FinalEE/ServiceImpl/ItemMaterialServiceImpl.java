@@ -77,7 +77,7 @@ public class ItemMaterialServiceImpl implements ItemMaterialService{
     }
 
     @Override
-    public List<ItemMaterial> findAllByNameLikeSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
+    public List<ItemMaterial> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
         try{
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
@@ -85,7 +85,7 @@ public class ItemMaterialServiceImpl implements ItemMaterialService{
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            return itemMaterialRepository.findAllByNameLike(name,sortBy);
+            return itemMaterialRepository.findAllByNameContains(name,sortBy);
         }catch (Exception er){
             er.printStackTrace();
         }

@@ -18,6 +18,6 @@ public interface ItemCollectionRepository extends JpaRepository<ItemCollection, 
     ItemCollection findByID(Integer id);
 
     List<ItemCollection> findAll(Sort sort);
-    List<ItemCollection> findAllByNameLike(String name,Sort sort);
+    List<ItemCollection> findAllByNameContains(String name,Sort sort);
     
 }

@@ -3,13 +3,10 @@ package FinalEE.Controller;
 import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
 import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +52,7 @@ public class ItemSearchServlet extends HttpServlet {
             List<ItemCollection> itemCollectionList = itemCollectionServiceImpl.getAllItemCollection();
             List<ItemImage> imageList = itemImageServiceImpl.getAllItemImage();
             List<ItemMaterial> itemMaterialList = itemMaterialServiceImpl.getAllItemMaterial();
-            List<ItemOrder> orderList = orderServiceImpl.getAllOrder();
+            List<Order> orderList = orderServiceImpl.getAllOrder();
             List<OrderDetail> orderDetailList = orderDetailServiceImpl.getAllOrderDetail();
             List<ItemType> itemTypeList = itemTypeServiceImpl.getAllItemType();
             List<Permission> permissionList = permissionServiceImpl.getAllPermission();

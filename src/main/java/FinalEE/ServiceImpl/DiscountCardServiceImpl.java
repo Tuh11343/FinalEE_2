@@ -67,7 +67,23 @@ public class DiscountCardServiceImpl implements DiscountCardService{
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            return discountCardRepository.findAllByNameLike(name,sortBy);
+            return discountCardRepository.findAllByNameContains(name,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<DiscountCard> findByCustomerID(Integer id, String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return discountCardRepository.findByCustomer_Id(id,sortBy);
         }catch (Exception er){
             er.printStackTrace();
         }

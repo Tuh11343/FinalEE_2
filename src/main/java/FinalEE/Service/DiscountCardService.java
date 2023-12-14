@@ -18,5 +18,6 @@ public interface DiscountCardService {
     List<DiscountCard> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
 
     List<DiscountCard> findAllByNameLikeSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<DiscountCard> findByCustomerID(Integer id, String sort, ItemServiceImpl.SortOrder sortOrder);
     
 }

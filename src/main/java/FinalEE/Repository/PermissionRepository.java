@@ -15,6 +15,8 @@ public interface PermissionRepository extends JpaRepository<Permission, Integer>
     Permission findByLevel(int level);
 
     List<Permission> findAll(Sort sort);
-    List<Permission> findAllByNameLike(String name,Sort sort);
+    List<Permission> findAllByNameContains(String name,Sort sort);
+
+    Permission findById(int id);
 
 }

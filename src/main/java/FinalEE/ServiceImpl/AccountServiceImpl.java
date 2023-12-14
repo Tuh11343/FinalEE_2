@@ -82,13 +82,50 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> findAllSort(Sort sort, ItemServiceImpl.SortOrder sortOrder) {
-        return accountRepository.findAll(sort);
+    public Account findByNameAndPassword(String name, String password) {
+        return accountRepository.findByNameAndPassword(name,password);
     }
 
     @Override
-    public Account findByNameAndPassword(String name, String password) {
-        return accountRepository.findByNameAndPassword(name,password);
+    public List<Account> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return accountRepository.findAll(sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Account> findAllByNameContainsSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return accountRepository.findAllByNameContains(name,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Account findByCustomerID(Integer customerID) {
+        try{
+            return accountRepository.findByCustomer_Id(customerID);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
 }

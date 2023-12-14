@@ -1,7 +1,7 @@
 
 package FinalEE.Service;
 
-import FinalEE.Entity.ItemOrder;
+import FinalEE.Entity.Order;
 import FinalEE.ServiceImpl.ItemServiceImpl;
 import org.springframework.data.domain.Sort;
 
@@ -9,14 +9,16 @@ import java.util.List;
 
 public interface OrderService {
     
-    boolean create(ItemOrder order);
+    boolean create(Order order);
     boolean deleteByID(int id);
-    ItemOrder getOrder(int id);
-    List<ItemOrder> getAllOrder();
+    Order getOrder(int id);
+    List<Order> getAllOrder();
 
-    List<ItemOrder> findByCustomerID(Integer customerID);
+    List<Order> findByCustomerID(Integer customerID);
 
-    List<ItemOrder> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
-    List<ItemOrder> findAllByCustomerName(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<Order> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<Order> findAllByCustomerID(Integer customerID, String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<Order> findAllByTotalLessThan(double total, String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<Order> findAllByTotalGreaterThan(double total, String sort, ItemServiceImpl.SortOrder sortOrder);
     
 }

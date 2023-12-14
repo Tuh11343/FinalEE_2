@@ -30,6 +30,10 @@ public interface ItemService {
     public List<Item> findAllByNameContainsAndPriceBetween(int pageNumber,String name,double min,double max,String sort,ItemServiceImpl.SortOrder sortOrder);
     public List<Item> findAllByPriceBetween(int pageNumber,double min,double max,String sort,ItemServiceImpl.SortOrder sortOrder);
 
+    public List<Item> findByColor(int pageNumber, String color, String sort, ItemServiceImpl.SortOrder sortOrder);
+    public List<Item> findItemListByColor(String color);
+
+    public List<Item> findItemListByColor(String color, String sort, ItemServiceImpl.SortOrder sortOrder);
 
     
 }

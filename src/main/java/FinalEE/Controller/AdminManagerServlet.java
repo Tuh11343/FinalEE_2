@@ -11,15 +11,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -77,7 +73,7 @@ public class AdminManagerServlet extends HttpServlet {
         List<ItemCollection> itemCollectionList = itemCollectionServiceImpl.getAllItemCollection();
         List<ItemImage> imageList = itemImageServiceImpl.getAllItemImage();
         List<ItemMaterial> itemMaterialList = itemMaterialServiceImpl.getAllItemMaterial();
-        List<ItemOrder> orderList = orderServiceImpl.getAllOrder();
+        List<Order> orderList = orderServiceImpl.getAllOrder();
         List<OrderDetail> orderDetailList = orderDetailServiceImpl.getAllOrderDetail();
         List<ItemType> itemTypeList = itemTypeServiceImpl.getAllItemType();
         List<Permission> permissionList = permissionServiceImpl.getAllPermission();
@@ -717,7 +713,7 @@ public class AdminManagerServlet extends HttpServlet {
                         DiscountCard discountCard = discountCardServiceImpl.getDiscountCard(discountCardID);
 
 
-                        ItemOrder order = new ItemOrder();
+                        Order order = new Order();
                         order.setCustomer(customer);
                         order.setTotal(total);
                         order.setDate_purchase(datePurchaseFormatted);
@@ -750,7 +746,7 @@ public class AdminManagerServlet extends HttpServlet {
                         Customer customer = customerServiceImpl.getCustomer(customerID);
                         DiscountCard discountCard = discountCardServiceImpl.getDiscountCard(discountCardID);
 
-                        ItemOrder order = new ItemOrder();
+                        Order order = new Order();
                         order.setId(id);
                         order.setCustomer(customer);
                         order.setTotal(total);
@@ -785,7 +781,7 @@ public class AdminManagerServlet extends HttpServlet {
                         double total = Double.parseDouble(request.getParameter("add_orderDetailTotal"));
 
                         Item item = itemServiceImpl.getItem(itemID);
-                        ItemOrder order = orderServiceImpl.getOrder(orderID);
+                        Order order = orderServiceImpl.getOrder(orderID);
 
                         OrderDetail orderDetail = new OrderDetail();
                         orderDetail.setTotal(total);
@@ -813,7 +809,7 @@ public class AdminManagerServlet extends HttpServlet {
                         double total = Double.parseDouble(request.getParameter("update_orderDetailTotal"));
 
                         Item item = itemServiceImpl.getItem(itemID);
-                        ItemOrder order = orderServiceImpl.getOrder(orderID);
+                        Order order = orderServiceImpl.getOrder(orderID);
 
                         OrderDetail orderDetail = new OrderDetail();
                         orderDetail.setId(orderDetailID);

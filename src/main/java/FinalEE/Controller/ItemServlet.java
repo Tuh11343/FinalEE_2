@@ -14,11 +14,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.net.http.HttpHeaders;
 import java.util.List;
 
 import org.apache.commons.compress.utils.IOUtils;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -90,7 +88,7 @@ public class ItemServlet extends HttpServlet {
         List<ItemCollection> itemCollectionList = itemCollectionServiceImpl.getAllItemCollection();
         List<ItemImage> imageList = itemImageServiceImpl.getAllItemImage();
         List<ItemMaterial> itemMaterialList = itemMaterialServiceImpl.getAllItemMaterial();
-        List<ItemOrder> orderList = orderServiceImpl.getAllOrder();
+        List<Order> orderList = orderServiceImpl.getAllOrder();
         List<OrderDetail> orderDetailList = orderDetailServiceImpl.getAllOrderDetail();
         List<ItemType> itemTypeList = itemTypeServiceImpl.getAllItemType();
         List<Permission> permissionList = permissionServiceImpl.getAllPermission();
