@@ -10,13 +10,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "itemorderdetail")
-public class OrderDetail {
+public class OrderDetail implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

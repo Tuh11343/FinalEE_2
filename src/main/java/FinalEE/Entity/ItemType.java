@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ADMIN
@@ -17,7 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name="itemtype")
-public class ItemType {
+public class ItemType implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

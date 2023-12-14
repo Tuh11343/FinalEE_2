@@ -282,22 +282,19 @@ function searchAndSortCustomer() {
 function addAccount() {
   let name = document.getElementById("accountNameID").value;
   let password = document.getElementById("accountPasswordID").value;
-  let permission = document.getElementById("label_permissionID").value;
-  let cusID = document.getElementById("add_accountCustomerID").value;
-
-  let account = {
-    name: name,
-    paswword: password,
-    permission: permission,
-    cusID: cusID,
-  };
+  let permissionID = document.getElementById("add_account_permission").value;
+  let customerID = document.getElementById("add_account_customer").value;
+  let table=document.getElementById("tableAccount");
 
   $.ajax({
     type: "POST",
     url: adminManagerContextPath + "/AdminServlet",
     data: {
       action: "addAccount",
-      account: JSON.stringify(account),
+      name:name,
+      password:password,
+      permissionID:permissionID,
+      customerID:customerID,
     },
     headers: {
       "X-Requested-With": "XMLHttpRequest",

@@ -55,7 +55,12 @@ public class PermissionServiceImpl implements PermissionService{
 
     @Override
     public Permission getPermission(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            return permissionRepository.findById(id);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override

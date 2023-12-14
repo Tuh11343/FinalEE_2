@@ -26,11 +26,10 @@ public class OrderDetailServiceImpl implements OrderDetailService{
     public boolean create(OrderDetail orderDetail) {
         try {
             // Kiểm tra xem orderDetail có tồn tại trong database hay không
-            Optional<OrderDetail> existingOrderDetail = orderDetailRepository.findById(orderDetail.getId());
+            OrderDetail existingOrderDetail = orderDetailRepository.findById(orderDetail.getId());
 
             // Lưu orderDetail và kiểm tra kết quả
-            orderDetailRepository.save(orderDetail);
-            if (existingOrderDetail.isPresent()) {
+            if(orderDetailRepository.save(orderDetail)!=null){
                 System.out.println("Cap nhat thanh cong orderDetail:" + orderDetail.getId());
             } else {
                 System.out.println("Them thanh cong orderDetail:" + orderDetail.getId());

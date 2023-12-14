@@ -120,7 +120,21 @@ public class AdminServlet extends HttpServlet {
                     System.out.println("Cập nhật khách hàng");
 
                     ObjectMapper mapper=new ObjectMapper();
-                    Customer customer=mapper.readValue(req.getParameter("customer"),Customer.class);
+                    int accountID=Integer.parseInt(req.getParameter("update_accountID"));
+                    String name = req.getParameter("add_accountName");
+                    String password = req.getParameter("add_accountPassword");
+                    int permissionID = Integer.parseInt(req.getParameter("add_accountPermissionID"));
+                    int customerID = Integer.parseInt(req.getParameter("add_accountCustomerID"));
+
+                    Customer customer = customerServiceImpl.getCustomer(customerID);
+                    Permission permission = permissionServiceImpl.getPermission(permissionID);
+
+                    Account account = new Account();
+                    account.setId(accountID);
+                    account.setName(name);
+                    account.setCustomer(customer);
+                    account.setPassword(password);
+                    account.setPermission(permission);
 
                     if (customerServiceImpl.create(customer)) {
 
@@ -211,7 +225,19 @@ public class AdminServlet extends HttpServlet {
                     System.out.println("Thêm tài khoản");
 
                     ObjectMapper mapper=new ObjectMapper();
-                    Account account=mapper.readValue(req.getParameter("account"),Account.class);
+                    String name = req.getParameter("name");
+                    String password = req.getParameter("password");
+                    int permissionID = Integer.parseInt(req.getParameter("permissionID"));
+                    int customerID = Integer.parseInt(req.getParameter("customerID"));
+
+                    Customer customer = customerServiceImpl.getCustomer(customerID);
+                    Permission permission = permissionServiceImpl.getPermission(permissionID);
+
+                    Account account = new Account();
+                    account.setName(name);
+                    account.setCustomer(customer);
+                    account.setPassword(password);
+                    account.setPermission(permission);
 
                     if (accountServiceImpl.create(account)) {
 
