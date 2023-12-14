@@ -16,7 +16,9 @@ public interface PermissionService {
 
     Permission findByLevel(int level);
 
-    List<Permission> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
-    List<Permission> findAllByName(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<Permission> findAll(String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<Permission> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
+
+    Permission findByID(int permissionID);
     
 }

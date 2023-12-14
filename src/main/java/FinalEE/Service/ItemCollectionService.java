@@ -14,6 +14,6 @@ public interface ItemCollectionService {
     List<ItemCollection> getAllItemCollection();
 
     List<ItemCollection> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
-    List<ItemCollection> findAllByNameLikeSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<ItemCollection> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
     
 }

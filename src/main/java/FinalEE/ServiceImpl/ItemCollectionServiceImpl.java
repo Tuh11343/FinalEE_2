@@ -77,7 +77,7 @@ public class ItemCollectionServiceImpl implements ItemCollectionService{
     }
 
     @Override
-    public List<ItemCollection> findAllByNameLikeSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
+    public List<ItemCollection> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
         try{
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
@@ -85,12 +85,14 @@ public class ItemCollectionServiceImpl implements ItemCollectionService{
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            return itemCollectionRepository.findAllByNameLike(name,sortBy);
+            return itemCollectionRepository.findAllByNameContains(name,sortBy);
         }catch (Exception er){
             er.printStackTrace();
         }
         return null;
     }
+
+
 
 
 }

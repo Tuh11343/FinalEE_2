@@ -5,6 +5,7 @@ package FinalEE.Repository;
 import FinalEE.Entity.Cart;
 import FinalEE.Entity.Item;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,4 +25,13 @@ public interface CartRepository extends JpaRepository<Cart, Integer>{
     @Transactional
     @Query("DELETE FROM Cart c WHERE c.customer.id = ?1 or c.customer.id IS NULL")
     void deleteAllByCustomerID(Integer customerID);
+
+    List<Cart> findByCustomer_Id(Integer customerID, Sort sort);
+
+    List<Cart> findAll(Sort sort);
+
+    void deleteAllByCustomer_Id(Integer customerID);
+
+    void deleteById(Integer cartID);
+
 }

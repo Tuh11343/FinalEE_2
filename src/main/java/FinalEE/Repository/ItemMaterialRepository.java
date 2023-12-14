@@ -13,6 +13,6 @@ import java.util.List;
 public interface ItemMaterialRepository extends JpaRepository<ItemMaterial, Integer>{
 
     List<ItemMaterial> findAll(Sort sort);
-    List<ItemMaterial> findAllByNameLike(String name,Sort sort);
+    List<ItemMaterial> findAllByNameContains(String name,Sort sort);
 
 }

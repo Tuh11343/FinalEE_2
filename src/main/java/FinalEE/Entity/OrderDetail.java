@@ -10,13 +10,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "itemorderdetail")
-public class OrderDetail {
+public class OrderDetail implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +26,7 @@ public class OrderDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    private ItemOrder order;
+    private Order order;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")

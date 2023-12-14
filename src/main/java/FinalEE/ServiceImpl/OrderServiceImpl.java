@@ -2,12 +2,11 @@ package FinalEE.ServiceImpl;
 
 
 
-import FinalEE.Entity.Cart;
-import FinalEE.Entity.ItemOrder;
+import FinalEE.Entity.Order;
 import FinalEE.Repository.OrderRepository;
 import FinalEE.Service.OrderService;
 import java.util.List;
-import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -25,9 +24,9 @@ public class OrderServiceImpl implements OrderService{
     
     
     @Override
-    public boolean create(ItemOrder order) {
+    public boolean create(Order order) {
         try {
-            ItemOrder existingOrder;
+            Order existingOrder;
             Integer orderID = order.getId() != null ? order.getId() : null;
             existingOrder = orderRepository.findByID(orderID);
 
@@ -57,22 +56,22 @@ public class OrderServiceImpl implements OrderService{
  
 
     @Override
-    public ItemOrder getOrder(int id) {
+    public Order getOrder(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<ItemOrder> getAllOrder() {
+    public List<Order> getAllOrder() {
         return orderRepository.findAll();
     }
 
     @Override
-    public List<ItemOrder> findByCustomerID(Integer customerID) {
+    public List<Order> findByCustomerID(Integer customerID) {
         return orderRepository.findAllByCustomer_Id(customerID);
     }
 
     @Override
-    public List<ItemOrder> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder) {
+    public List<Order> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder) {
         try{
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
@@ -88,7 +87,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public List<ItemOrder> findAllByCustomerName(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
+    public List<Order> findAllByCustomerID(Integer customerID, String sort, ItemServiceImpl.SortOrder sortOrder) {
         try{
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
@@ -96,7 +95,39 @@ public class OrderServiceImpl implements OrderService{
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            return orderRepository.findAllByCustomerNameLike(name,sortBy);
+            return orderRepository.findAllByCustomer_Id(customerID,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Order> findAllByTotalLessThan(double total, String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return orderRepository.findAllByTotalIsLessThan(total,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Order> findAllByTotalGreaterThan(double total, String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return orderRepository.findAllByTotalIsGreaterThan(total,sortBy);
         }catch (Exception er){
             er.printStackTrace();
         }

@@ -69,6 +69,37 @@ public class ItemImageServiceImpl implements ItemImageService{
         return itemImageRepository.findByItemId(itemID);
     }
 
+    @Override
+    public List<ItemImage> findAllByItemID(Integer itemID, String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return itemImageRepository.findAllByItem_Id(itemID,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<ItemImage> findAll(String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return itemImageRepository.findAll(sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
 
 
 }

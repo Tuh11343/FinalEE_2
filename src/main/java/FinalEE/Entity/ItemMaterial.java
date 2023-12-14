@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ADMIN
@@ -20,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "itemmaterial")
-public class ItemMaterial {
+public class ItemMaterial implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

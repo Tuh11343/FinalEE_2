@@ -79,7 +79,7 @@ public class StockItemServiceImpl implements StockItemService{
     }
 
     @Override
-    public List<StockItem> findAllByItemIDSort(Integer itemID, String sort, ItemServiceImpl.SortOrder sortOrder) {
+    public List<StockItem> findAllByItemID(Integer itemID, String sort, ItemServiceImpl.SortOrder sortOrder) {
         try{
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
@@ -95,7 +95,7 @@ public class StockItemServiceImpl implements StockItemService{
     }
 
     @Override
-    public List<StockItem> findAllByItemNameSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
+    public List<StockItem> findAllByColor(String color, String sort, ItemServiceImpl.SortOrder sortOrder) {
         try{
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
@@ -103,7 +103,7 @@ public class StockItemServiceImpl implements StockItemService{
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            return stockItemRepository.findAllByItem_NameLike(name,sortBy);
+            return stockItemRepository.findAllByColor(color,sortBy);
         }catch (Exception er){
             er.printStackTrace();
         }

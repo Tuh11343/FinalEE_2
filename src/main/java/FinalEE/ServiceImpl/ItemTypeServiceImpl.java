@@ -62,7 +62,7 @@ public class ItemTypeServiceImpl implements ItemTypeService{
     }
 
     @Override
-    public List<ItemType> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder) {
+    public List<ItemType> findAll(String sort, ItemServiceImpl.SortOrder sortOrder) {
         try{
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
@@ -78,7 +78,7 @@ public class ItemTypeServiceImpl implements ItemTypeService{
     }
 
     @Override
-    public List<ItemType> findAllByNameSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
+    public List<ItemType> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
         try{
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
@@ -86,7 +86,7 @@ public class ItemTypeServiceImpl implements ItemTypeService{
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            return itemTypeRepository.findAllByNameLike(name,sortBy);
+            return itemTypeRepository.findAllByNameContains(name,sortBy);
         }catch (Exception er){
             er.printStackTrace();
         }

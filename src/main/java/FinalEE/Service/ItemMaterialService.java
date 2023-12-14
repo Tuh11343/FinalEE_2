@@ -14,5 +14,5 @@ public interface ItemMaterialService {
     List<ItemMaterial> getAllItemMaterial();
 
     List<ItemMaterial> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
-    List<ItemMaterial> findAllByNameLikeSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<ItemMaterial> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
 }

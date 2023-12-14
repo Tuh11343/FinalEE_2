@@ -23,6 +23,7 @@ public interface DiscountCardRepository extends JpaRepository<DiscountCard, Inte
 
 
     List<DiscountCard> findAll(Sort sort);
-    List<DiscountCard> findAllByNameLike(String name,Sort sort);
+    List<DiscountCard> findAllByNameContains(String name,Sort sort);
+    List<DiscountCard> findByCustomer_Id(Integer customerID,Sort sort);
 
 }

@@ -55,7 +55,7 @@ public class ProfileServlet extends HttpServlet {
         List<ItemCollection> itemCollectionList = itemCollectionServiceImpl.getAllItemCollection();
         List<ItemImage> imageList = itemImageServiceImpl.getAllItemImage();
         List<ItemMaterial> itemMaterialList = itemMaterialServiceImpl.getAllItemMaterial();
-        List<ItemOrder> orderList = orderServiceImpl.getAllOrder();
+        List<Order> orderList = orderServiceImpl.getAllOrder();
         List<OrderDetail> orderDetailList = orderDetailServiceImpl.getAllOrderDetail();
         List<ItemType> itemTypeList = itemTypeServiceImpl.getAllItemType();
         List<Permission> permissionList = permissionServiceImpl.getAllPermission();
@@ -96,7 +96,7 @@ public class ProfileServlet extends HttpServlet {
             req.setAttribute("customerPhoneNumber",customer.getPhone_number());
             req.setAttribute("accountPassword",account.getPassword());
 
-            List<ItemOrder> customerOrderList=orderServiceImpl.findByCustomerID(customer.getId());
+            List<Order> customerOrderList=orderServiceImpl.findByCustomerID(customer.getId());
             req.setAttribute("customerOrderList",customerOrderList);
 
 

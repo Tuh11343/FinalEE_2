@@ -699,19 +699,19 @@ button:hover {
   height: 100%;
   padding: 0 5px;
 }
-#modal-add-account button {
+#modal-add-account a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#modal-add-account button:hover {
+#modal-add-account a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -753,19 +753,19 @@ button:hover {
   height: 100%;
   padding: 0 5px;
 }
-#update-user button {
+#update-user a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#update-user button:hover {
+#update-user a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -818,19 +818,19 @@ button:hover {
   height: 100%;
   padding: 0 5px;
 }
-#update-products button {
+#update-products a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#update-products button:hover {
+#update-products a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -867,19 +867,19 @@ button:hover {
   height: 100%;
   padding: 0 5px;
 }
-#add-products button {
+#add-products a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#add-products button:hover {
+#add-products a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -941,19 +941,19 @@ button:hover {
   padding: 0 5px;
   width: 300px;
 }
-#update-customers button {
+#update-customers a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#update-customers button:hover {
+#update-customers a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -992,8 +992,8 @@ button:hover {
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
-padding:10px 20px;
-min-width:150px;
+  padding:10px 20px;
+  min-width:150px;
   border-radius: 10px;
 }
 #add-customer a:hover {
@@ -1049,7 +1049,7 @@ min-width:150px;
   padding: 0 5px;
   width: 300px;
 }
-#update-discountCard button {
+#update-discountCard a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
@@ -1061,7 +1061,7 @@ min-width:150px;
   min-width: 150px;
   border-radius: 10px;
 }
-#update-discountCard button:hover {
+#update-discountCard a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1094,7 +1094,7 @@ min-width:150px;
   height: 100%;
   padding: 0 5px;
 }
-#add-discountCard button {
+#add-discountCard a {
 
   color: #fff;
   background-color: var(--submit-color);
@@ -1102,11 +1102,11 @@ min-width:150px;
   margin: 16px;
   font-size: 1.5rem;
 
-   padding:10px 20px;
-   min-width: 150px;
+  padding:10px 20px;
+  min-width: 150px;
   border-radius: 10px;
 }
-#add-discountCard button:hover {
+#add-discountCard a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1159,19 +1159,19 @@ min-width:150px;
   padding: 0 5px;
   width: 300px;
 }
-#update-itemCollection button {
+#update-itemCollection a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
-   font-size: 1.5rem;
+  font-size: 1.5rem;
 
-    padding:10px 20px;
-    min-width: 150px;
+  padding:10px 20px;
+  min-width: 150px;
   border-radius: 10px;
 }
-#update-itemCollection button:hover {
+#update-itemCollection a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1204,19 +1204,19 @@ min-width:150px;
   height: 100%;
   padding: 0 5px;
 }
-#add-itemCollection button {
+#add-itemCollection a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#add-itemCollection button:hover {
+#add-itemCollection a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1269,7 +1269,7 @@ min-width:150px;
   padding: 0 5px;
   width: 300px;
 }
-#update-itemImage button {
+#update-itemImage a {
 
   color: #fff;
   background-color: var(--submit-color);
@@ -1277,11 +1277,11 @@ min-width:150px;
   margin: 16px;
   font-size: 1.5rem;
 
-   padding:10px 20px;
-   min-width: 150px;
+  padding:10px 20px;
+  min-width: 150px;
   border-radius: 10px;
 }
-#update-itemImage button:hover {
+#update-itemImage a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1313,19 +1313,19 @@ min-width:150px;
   height: 100%;
   padding: 0 5px;
 }
-#add-itemImage button {
+#add-itemImage a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#add-itemImage button:hover {
+#add-itemImage a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1378,19 +1378,19 @@ min-width:150px;
   padding: 0 5px;
   width: 300px;
 }
-#update-itemMaterial button {
+#update-itemMaterial a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#update-itemMaterial button:hover {
+#update-itemMaterial a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1422,19 +1422,19 @@ min-width:150px;
   height: 100%;
   padding: 0 5px;
 }
-#add-itemMaterial button {
+#add-itemMaterial a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#add-itemMaterial button:hover {
+#add-itemMaterial a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1487,19 +1487,19 @@ min-width:150px;
   padding: 0 5px;
   width: 300px;
 }
-#update-order button {
+#update-order a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#update-order button:hover {
+#update-order a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1531,19 +1531,19 @@ min-width:150px;
   height: 100%;
   padding: 0 5px;
 }
-#add-order button {
+#add-order a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#add-order button:hover {
+#add-order a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1596,19 +1596,19 @@ min-width:150px;
   padding: 0 5px;
   width: 300px;
 }
-#update-orderDetail button {
+#update-orderDetail a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#update-orderl button:hover {
+#update-order a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1640,19 +1640,19 @@ min-width:150px;
   height: 100%;
   padding: 0 5px;
 }
-#add-orderDetail button {
+#add-orderDetail a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#add-orderDetail button:hover {
+#add-orderDetail a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1705,19 +1705,19 @@ min-width:150px;
   padding: 0 5px;
   width: 300px;
 }
-#update-itemType button {
+#update-itemType a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#update-itemType button:hover {
+#update-itemType a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1749,8 +1749,8 @@ min-width:150px;
   height: 100%;
   padding: 0 5px;
 }
-#add-itemType button {
- font-size: 1.5rem;
+#add-itemType a {
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
@@ -1758,13 +1758,13 @@ min-width:150px;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#add-itemType button:hover {
+#add-itemType a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1817,19 +1817,19 @@ min-width:150px;
   padding: 0 5px;
   width: 300px;
 }
-#update-permission button {
+#update-permission a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#update-permission button:hover {
+#update-permission a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1861,19 +1861,19 @@ min-width:150px;
   height: 100%;
   padding: 0 5px;
 }
-#add-permission button {
+#add-permission a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#add-permission button:hover {
+#add-permission a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1925,19 +1925,19 @@ min-width:150px;
   height: 100%;
   padding: 0 5px;
 }
-#update-sale button {
+#update-sale a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#update-sale button:hover {
+#update-sale a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -1969,19 +1969,19 @@ min-width:150px;
   height: 100%;
   padding: 0 5px;
 }
-#add-sale button {
+#add-sale a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#add-sale button:hover {
+#add-sale a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -2034,19 +2034,19 @@ min-width:150px;
   padding: 0 5px;
   width: 300px;
 }
-#update-stockItem button {
+#update-stockItem a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#update-stockItem button:hover {
+#update-stockItem a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -2078,19 +2078,19 @@ min-width:150px;
   height: 100%;
   padding: 0 5px;
 }
-#add-stockItem button {
+#add-stockItem a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#add-stockItem button:hover {
+#add-stockItem a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -2143,19 +2143,19 @@ min-width:150px;
   padding: 0 5px;
   width: 300px;
 }
-#update-orderStatus button {
+#update-orderStatus a {
 
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
+  font-size: 1.5rem;
 
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#update-orderStatus button:hover {
+#update-orderStatus a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -2187,19 +2187,17 @@ min-width:150px;
   height: 100%;
   padding: 0 5px;
 }
-#add-orderStatus button {
-
+#add-orderStatus a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
- font-size: 1.5rem;
-
+  font-size: 1.5rem;
   padding:10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
-#add-orderStatus button:hover {
+#add-orderStatus a:hover {
   background: #ccc;
   color: #000000;
 }
@@ -2222,3 +2220,4 @@ min-width:150px;
   pointer-events: auto;
   transition: 0.4;
 }
+

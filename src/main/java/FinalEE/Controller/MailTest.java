@@ -2,18 +2,15 @@ package FinalEE.Controller;
 
 import FinalEE.Entity.Account;
 import FinalEE.Entity.Customer;
-import FinalEE.Entity.ItemOrder;
+import FinalEE.Entity.Order;
 import FinalEE.ServiceImpl.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.Base64;
 import java.util.Map;
 
 
@@ -46,7 +43,7 @@ public class MailTest extends HttpServlet {
                 case "orderConfirm" -> {
                     if (keyValueData != null) {
 
-                        ItemOrder order= (ItemOrder) keyValueData.get("order");
+                        Order order= (Order) keyValueData.get("order");
                         order.setOrder_status(orderStatusServiceImpl.confirmOrder());
                         orderServiceImpl.create(order);
 

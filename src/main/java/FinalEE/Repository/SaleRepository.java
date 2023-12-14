@@ -13,6 +13,8 @@ import java.util.List;
 public interface SaleRepository extends JpaRepository<Sale, Integer>{
 
     List<Sale> findAll(Sort sort);
-    List<Sale> findAllByNameLike(String name,Sort sort);
+    List<Sale> findAllByNameContains(String name,Sort sort);
+
+    Sale findById(int saleID);
 
 }

@@ -55,7 +55,12 @@ public class PermissionServiceImpl implements PermissionService{
 
     @Override
     public Permission getPermission(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            return permissionRepository.findById(id);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -69,7 +74,7 @@ public class PermissionServiceImpl implements PermissionService{
     }
 
     @Override
-    public List<Permission> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder) {
+    public List<Permission> findAll(String sort, ItemServiceImpl.SortOrder sortOrder) {
         try{
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
@@ -85,7 +90,7 @@ public class PermissionServiceImpl implements PermissionService{
     }
 
     @Override
-    public List<Permission> findAllByName(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
+    public List<Permission> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
         try{
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
@@ -93,7 +98,17 @@ public class PermissionServiceImpl implements PermissionService{
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            return permissionRepository.findAllByNameLike(name,sortBy);
+            return permissionRepository.findAllByNameContains(name,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Permission findByID(int permissionID) {
+        try{
+            return permissionRepository.findById(permissionID);
         }catch (Exception er){
             er.printStackTrace();
         }
