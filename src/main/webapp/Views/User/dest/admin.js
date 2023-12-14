@@ -10,14 +10,17 @@ function addCustomer() {
     phone_number: phoneNumber,
     email: email,
     address: address,
-  };
+  }; //khong dun toi
 
   $.ajax({
     type: "POST",
     url: adminManagerContextPath + "/AdminServlet",
     data: {
       action: "addCustomer",
-      customer: JSON.stringify(customer),
+      name: name,
+      phone_number: phoneNumber,
+      email: email,
+      address: address,
     },
     headers: {
       "X-Requested-With": "XMLHttpRequest",
@@ -727,4 +730,904 @@ function updateItem() {
   });
 }
 
-///Discount
+///Collection- bo suu tap
+function addItemCollection() {
+  let name = document.getElementById("add_itemCollectionName").value;
+
+  let itemCollection = {
+    name: name,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: adminManagerContextPath + "/AdminServlet",
+    data: {
+      action: "addItemCollection",
+      itemCollection: JSON.stringify(itemCollection),
+    },
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    success: function (data) {
+      if (data.success === true) {
+        let itemCollection = data.itemCollection;
+        let table = document.getElementById("yourTableId"); // Replace with the actual ID of your table
+
+        table.innerHTML +=
+          "<tr>\n" +
+          "    <td>" +
+          itemCollection.id +
+          "</td>\n" +
+          "    <td>" +
+          itemCollection.name +
+          "</td>\n" +
+          "    <td>\n" +
+          '        <div class="flex-center grpbtn">\n' +
+          '            <form action="${pageContext.request.contextPath}/AdminManagerServlet" method="post" onsubmit="handleDelete()">\n' +
+          '                <button class="btnHD btnDel" type="submit">Xóa</button>\n' +
+          '                <input type="hidden" name="itemCollectionID" value="' +
+          itemCollection.id +
+          '"/>\n' +
+          '                <input type="hidden" name="action" value="itemCollection_btnDelete"/>\n' +
+          "            </form>\n" +
+          '            <button class="btnHD btnUpdateItemCollection" data-itemCollectionID="' +
+          itemCollection.id +
+          '" data-itemCollectionName="' +
+          itemCollection.name +
+          '">Sửa</button>\n' +
+          '            <input type="hidden" name="itemCollectionID" value="' +
+          itemCollection.id +
+          '"/>\n' +
+          "        </div>\n" +
+          "    </td>\n" +
+          "</tr>";
+
+        alert("Thêm bộ sưu tập thành công");
+      } else {
+        console.log("WTF");
+      }
+    },
+    error: function (error) {
+      console.log("error:" + error);
+    },
+  });
+}
+function updateItemCollection(id) {
+  let name = document.getElementById("update_itemCollectionName").value;
+  let table = document.getElementById("tableItemCollection"); // Replace with the actual ID of your table
+
+  let itemCollection = {
+    id: id,
+    name: name,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: "${pageContext.request.contextPath}/AdminManagerServlet",
+    data: {
+      action: "updateItemCollection",
+      itemCollection: JSON.stringify(itemCollection),
+    },
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    success: function (data) {
+      if (data.success === true) {
+        let updatedItemCollection = data.itemCollection;
+
+        for (let i = 0, row; (row = table.rows[i]); i++) {
+          // Loop through each row in the table
+          let idCell = row.cells[0]; // Assume 'itemCollection.id' is the first cell in each row
+          if (idCell.textContent === updatedItemCollection.id) {
+            row.cells[1].textContent = updatedItemCollection.name; // Update item collection name
+            break; // Exit the loop after updating
+          }
+        }
+        alert("Cập nhật bộ sưu tập thành công");
+      } else {
+        console.log("WTF");
+      }
+    },
+    error: function (error) {
+      console.log("error:" + error);
+    },
+  });
+}
+function collectionToExcel(tableID) {
+  let table = document.getElementById(tableID);
+
+  let dataToSend = [];
+
+  // Lặp qua các dòng của bảng và thu thập thông tin từ mỗi ô cột
+  for (let i = 1; i < table.rows.length; i++) {
+    let currentRow = table.rows[i];
+
+    // Thu thập thông tin từ các ô cột trong dòng
+    let id = currentRow.cells[0].textContent;
+    let name = currentRow.cells[1].textContent;
+
+    // Tạo đối tượng chứa thông tin từ dòng hiện tại
+    let collectionData = {
+      id: id,
+      name: name,
+    };
+
+    // Thêm đối tượng vào mảng dataToSend
+    dataToSend.push(collectionData);
+  }
+
+  const workbook = XLSX.utils.book_new();
+  const sheet = XLSX.utils.json_to_sheet(dataToSend);
+  XLSX.utils.book_append_sheet(workbook, sheet, "Bộ sưu tập");
+
+  XLSX.writeFile(workbook, "collection.xlsx");
+}
+
+//nguyen lieu- item material
+function addItemMaterial() {
+  let name = document.getElementById("add_itemMaterialName").value;
+
+  let itemMaterial = {
+    name: name,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: adminManagerContextPath + "/AdminServlet",
+    data: {
+      action: "addItemMaterial",
+      itemMaterial: JSON.stringify(itemMaterial),
+    },
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    success: function (data) {
+      if (data.success === true) {
+        let itemMaterial = data.itemMaterial;
+        let table = document.getElementById("yourTableId"); // Replace with the actual ID of your table
+
+        table.innerHTML +=
+          "<tr>\n" +
+          "    <td>" +
+          itemMaterial.id +
+          "</td>\n" +
+          "    <td>" +
+          itemMaterial.name +
+          "</td>\n" +
+          "    <td>\n" +
+          '        <div class="flex-center grpbtn">\n' +
+          '            <button class="btnHD btnUpdateItemMaterial" data-itemMaterialID="' +
+          itemMaterial.id +
+          '" data-itemMaterialName="' +
+          itemMaterial.name +
+          '">Sửa</button>\n' +
+          '            <input type="hidden" name="itemMaterialID" value="' +
+          itemMaterial.id +
+          '"/>\n' +
+          "        </div>\n" +
+          "    </td>\n" +
+          "</tr>";
+
+        alert("Thêm vật liệu sản phẩm thành công");
+      } else {
+        console.log("WTF");
+      }
+    },
+    error: function (error) {
+      console.log("error:" + error);
+    },
+  });
+}
+function updateItemMaterial(id) {
+  let name = document.getElementById("update_itemMaterialName").value;
+  let table = document.getElementById("tableItemMaterial"); // nho thay doi cho phu hop voi table
+
+  let itemMaterial = {
+    id: id,
+    name: name,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: "${pageContext.request.contextPath}/AdminManagerServlet",
+    data: {
+      action: "updateItemMaterial",
+      itemMaterial: JSON.stringify(itemMaterial),
+    },
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    success: function (data) {
+      if (data.success === true) {
+        let updatedItemMaterial = data.itemMaterial;
+
+        for (let i = 0, row; (row = table.rows[i]); i++) {
+          // Loop through each row in the table
+          let idCell = row.cells[0]; // Assume 'itemMaterial.id' is the first cell in each row
+          if (idCell.textContent === updatedItemMaterial.id) {
+            row.cells[1].textContent = updatedItemMaterial.name; // Update item material name
+            break; // Exit the loop after updating
+          }
+        }
+        alert("Cập nhật vật liệu sản phẩm thành công");
+      } else {
+        console.log("WTF");
+      }
+    },
+    error: function (error) {
+      console.log("error:" + error);
+    },
+  });
+}
+function materialToExcel(tableID) {
+  let table = document.getElementById(tableID);
+
+  let dataToSend = [];
+
+  // Lặp qua các dòng của bảng và thu thập thông tin từ mỗi ô cột
+  for (let i = 1; i < table.rows.length; i++) {
+    let currentRow = table.rows[i];
+
+    // Thu thập thông tin từ các ô cột trong dòng
+    let id = currentRow.cells[0].textContent;
+    let name = currentRow.cells[1].textContent;
+
+    // Tạo đối tượng chứa thông tin từ dòng hiện tại
+    let materialData = {
+      id: id,
+      name: name,
+    };
+
+    // Thêm đối tượng vào mảng dataToSend
+    dataToSend.push(materialData);
+  }
+
+  const workbook = XLSX.utils.book_new();
+  const sheet = XLSX.utils.json_to_sheet(dataToSend);
+  XLSX.utils.book_append_sheet(workbook, sheet, "Nguyên liệu");
+
+  XLSX.writeFile(workbook, "ItemMaterial.xlsx");
+}
+
+//Discount
+function addDiscountCard() {
+  let customerID = document.getElementById("add_discountCardCustomerID").value;
+  let name = document.getElementById("add_discountCardName").value;
+  let percentage = document.getElementById("add_discountCardPercentage").value;
+
+  let discountCard = {
+    customerID: customerID,
+    name: name,
+    discountPercentage: percentage,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: adminManagerContextPath + "/AdminServlet",
+    data: {
+      action: "addDiscountCard",
+      discountCard: JSON.stringify(discountCard),
+    },
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    success: function (data) {
+      if (data.success === true) {
+        let discountCard = data.discountCard;
+        let table = document.getElementById("yourTableId"); // Replace with the actual ID of your table
+
+        table.innerHTML +=
+          "<tr>\n" +
+          "    <td>" +
+          discountCard.id +
+          "</td>\n" +
+          "    <td>" +
+          discountCard.customer.id +
+          "</td>\n" +
+          "    <td>" +
+          discountCard.name +
+          "</td>\n" +
+          "    <td>" +
+          discountCard.discount_percentage +
+          "</td>\n" +
+          "    <td>\n" +
+          '        <div class="flex-center grpbtn">\n' +
+          '            <button class="btnHD btnUpdateDiscountCard" data-discountCardID="' +
+          discountCard.id +
+          '" data-discountCardCustomerID="' +
+          discountCard.customer.id +
+          '" data-discountCardName="' +
+          discountCard.name +
+          '" data-discountCardPercentage="' +
+          discountCard.discount_percentage +
+          '">Sửa</button>\n' +
+          '            <input type="hidden" name="discountCardID" value="' +
+          discountCard.id +
+          '"/>\n' +
+          "        </div>\n" +
+          "    </td>\n" +
+          "</tr>";
+
+        alert("Thêm thẻ khuyến mãi thành công");
+      } else {
+        console.log("WTF");
+      }
+    },
+    error: function (error) {
+      console.log("error:" + error);
+    },
+  });
+}
+function updateDiscountCard() {
+  let id = document.getElementById("update_discountCardCustomerID").value;
+  let name = document.getElementById("update_discountCardName").value;
+  let percentage = document.getElementById("update_discountCardPercentage").value;
+  let table = document.getElementById("yourTableId"); // thay doi cái nau de có bảng discount
+
+  let discountCard = {
+    id: id,
+    name: name,
+    discount_percentage: percentage,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: "${pageContext.request.contextPath}/AdminManagerServlet",
+    data: {
+      action: "updateDiscountCard",
+      discountCard: JSON.stringify(discountCard),
+    },
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    success: function (data) {
+      if (data.success === true) {
+        let updatedDiscountCard = data.discountCard;
+
+        for (let i = 0, row; (row = table.rows[i]); i++) {
+          // Loop through each row in the table
+          let idCell = row.cells[0]; // Assume 'discountCard.id' is the first cell in each row
+          if (idCell.textContent === updatedDiscountCard.id) {
+            row.cells[1].textContent = updatedDiscountCard.customer.id; // Update customer ID
+            row.cells[2].textContent = updatedDiscountCard.name; // Update discount card name
+            row.cells[3].textContent = updatedDiscountCard.discount_percentage; // Update discount percentage
+            break; // Exit the loop after updating
+          }
+        }
+        alert("Cập nhật thẻ khuyến mãi thành công");
+      } else {
+        console.log("WTF");
+      }
+    },
+    error: function (error) {
+      console.log("error:" + error);
+    },
+  });
+}
+function customerToExcel(tableID) {
+  let table = document.getElementById(tableID);
+
+  let dataToSend = [];
+
+  // Lặp qua các dòng của bảng và thu thập thông tin từ mỗi ô cột
+  for (let i = 1; i < table.rows.length; i++) {
+    let currentRow = table.rows[i];
+
+    // Thu thập thông tin từ các ô cột trong dòng
+    let id = currentRow.cells[0].textContent;
+    let cus = currentRow.cells[1].textContent;
+    let name = currentRow.cells[2].textContent;
+    let discount = currentRow.cells[3].textContent;
+
+    // Tạo đối tượng chứa thông tin từ dòng hiện tại
+    let discountData = {
+      id: id,
+      cus: cus,
+      name: name,
+      discount: discount,
+    };
+
+    // Thêm đối tượng vào mảng dataToSend
+    dataToSend.push(discountData);
+  }
+
+  const workbook = XLSX.utils.book_new();
+  const sheet = XLSX.utils.json_to_sheet(dataToSend);
+  XLSX.utils.book_append_sheet(workbook, sheet, "Nguyên liệu");
+
+  XLSX.writeFile(workbook, "ItemMaterial.xlsx");
+}
+
+//SaleProduct
+function addSale() {
+  let itemID = document.getElementById("add_saleItemID").value;
+  let name = document.getElementById("add_saleName").value;
+  let onSale = document.getElementById("add_saleOnSale").checked;
+  let percentage = document.getElementById("add_salePercentage").value;
+
+  let sale = {
+    item: {
+      id: itemID,
+    },
+    name: name,
+    on_sale: onSale,
+    sale_percentage: percentage,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: adminManagerContextPath + "/AdminServlet",
+    data: {
+      action: "addSale",
+      sale: JSON.stringify(sale),
+    },
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    success: function (data) {
+      if (data.success === true) {
+        let sale = data.sale;
+        table.innerHTML +=
+          "<tr>\n" +
+          "    <td>" +
+          sale.id +
+          "</td>\n" +
+          "    <td>" +
+          sale.item.id +
+          "</td>\n" +
+          "    <td>" +
+          sale.name +
+          "</td>\n" +
+          "    <td>" +
+          sale.on_sale +
+          "</td>\n" +
+          "    <td>" +
+          sale.sale_percentage +
+          "</td>\n" +
+          "    <td>\n" +
+          '        <div class="flex-center grpbtn">\n' +
+          "            <button\n" +
+          '                    class="btnHD btnUpdateSale"\n' +
+          '                    data-saleID="' +
+          sale.id +
+          '"\n' +
+          '                    data-saleItemID="' +
+          sale.item.id +
+          '"\n' +
+          '                    data-saleName="' +
+          sale.name +
+          '"\n' +
+          '                    data-saleOnSale="' +
+          sale.on_sale +
+          '"\n' +
+          '                    data-salePercentage="' +
+          sale.sale_percentage +
+          '"\n' +
+          "            >\n" +
+          "                Sửa\n" +
+          "            </button>\n" +
+          '            <input type="hidden" name="saleID" value="' +
+          sale.id +
+          '"/>\n' +
+          "        </div>\n" +
+          "    </td>\n" +
+          "</tr>";
+
+        alert("Thêm sản phẩm sale thành công");
+      } else {
+        console.log("WTF");
+      }
+    },
+    error: function (error) {
+      console.log("error:" + error);
+    },
+  });
+}
+function updateSale() {
+  let id = document.getElementById("update_saleItemID").value;
+  let name = document.getElementById("update_saleName").value;
+  let onSale = document.getElementById("update_saleOnSale").checked;
+  let percentage = document.getElementById("update_salePercentage").value;
+  let table = document.getElementById("yourTableId"); // Replace with the actual ID of your table
+
+  let sale = {
+    id: id,
+    name: name,
+    on_sale: onSale,
+    sale_percentage: percentage,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: "${pageContext.request.contextPath}/AdminManagerServlet",
+    data: {
+      action: "updateSale",
+      sale: JSON.stringify(sale),
+    },
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    success: function (data) {
+      if (data.success === true) {
+        let updatedSale = data.sale;
+
+        for (let i = 0, row; (row = table.rows[i]); i++) {
+          // Loop through each row in the table
+          let idCell = row.cells[0]; // Assume 'sale.id' is the first cell in each row
+          if (idCell.textContent === updatedSale.id) {
+            // Update the row cells based on the server response
+            row.cells[1].textContent = updatedSale.item.id; // Update item ID
+            row.cells[2].textContent = updatedSale.name; // Update sale name
+            row.cells[3].textContent = updatedSale.on_sale; // Update sale on_sale
+            row.cells[4].textContent = updatedSale.sale_percentage; // Update sale percentage
+            break; // Exit the loop after updating
+          }
+        }
+        alert("Cập nhật sản phẩm sale thành công");
+      } else {
+        console.log("WTF");
+      }
+    },
+    error: function (error) {
+      console.log("error:" + error);
+    },
+  });
+}
+function saleToExcel(tableID) {
+  let table = document.getElementById(tableID);
+
+  let dataToSend = [];
+
+  // Lặp qua các dòng của bảng và thu thập thông tin từ mỗi ô cột
+  for (let i = 1; i < table.rows.length; i++) {
+    let currentRow = table.rows[i];
+
+    // Thu thập thông tin từ các ô cột trong dòng
+    let id = currentRow.cells[0].textContent;
+    let productID = currentRow.cells[1].textContent;
+    let nameSale = currentRow.cells[2].textContent;
+    let qty = currentRow.cells[3].textContent;
+    let discount = currentRow.cells[5].textContent;
+
+    // Tạo đối tượng chứa thông tin từ dòng hiện tại
+    let saleData = {
+      id: id,
+      productID: productID,
+      nameSale: nameSale,
+      qty: qty,
+      discount: discount,
+    };
+
+    // Thêm đối tượng vào mảng dataToSend
+    dataToSend.push(saleData);
+  }
+
+  const workbook = XLSX.utils.book_new();
+  const sheet = XLSX.utils.json_to_sheet(dataToSend);
+  XLSX.utils.book_append_sheet(workbook, sheet, "Sale");
+
+  XLSX.writeFile(workbook, "SaleProduct.xlsx");
+}
+
+//imageProduct
+function addItemImage() {
+  let itemID = document.getElementById("add_itemImageItemID").value;
+  let imageURL = document.getElementById("add_itemImageURL").value;
+  let table = document.getElementById("yourTableId"); // Replace with the actual ID of your table
+
+  let itemImage = {
+    item: {
+      id: itemID,
+    },
+    image_url: imageURL,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: adminManagerContextPath + "/AdminServlet",
+    data: {
+      action: "addItemImage",
+      itemImage: JSON.stringify(itemImage),
+    },
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    success: function (data) {
+      if (data.success === true) {
+        let addedItemImage = data.itemImage;
+
+        table.innerHTML +=
+          "<tr>\n" +
+          "                        <td>" +
+          addedItemImage.id +
+          "</td>\n" +
+          "                        <td>" +
+          addedItemImage.item.id +
+          "</td>\n" +
+          "                        <td>" +
+          addedItemImage.image_url +
+          "</td>\n" +
+          "                        <td>\n" +
+          '                            <div class="flex-center grpbtn">\n' +
+          "                                <button\n" +
+          '                                        class="btnHD btnUpdateItemImage"\n' +
+          '                                        data-itemImageID="' +
+          addedItemImage.id +
+          '"\n' +
+          '                                        data-itemImageItemID="' +
+          addedItemImage.item.id +
+          '"\n' +
+          '                                        data-itemImageURL="' +
+          addedItemImage.image_url +
+          '"\n' +
+          "                                >\n" +
+          "                                    Sửa\n" +
+          "                                </button>\n" +
+          '                                <input type="hidden" name="itemImageID" value="' +
+          addedItemImage.id +
+          '"/>\n' +
+          "                            </div>\n" +
+          "                        </td>\n" +
+          "                    </tr>";
+        alert("Thêm hình ảnh sản phẩm thành công");
+      } else {
+        console.log("WTF");
+      }
+    },
+    error: function (error) {
+      console.log("error:" + error);
+    },
+  });
+}
+function updateItemImage() {
+  let id = document.getElementById("update_itemImageID").value;
+  let itemID = document.getElementById("update_itemImageItemID").value;
+  let imageURL = document.getElementById("update_itemImageURL").value;
+  let table = document.getElementById("yourTableId"); // Replace with the actual ID of your table
+
+  let itemImage = {
+    id: id,
+    item: {
+      id: itemID,
+    },
+    image_url: imageURL,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: "${pageContext.request.contextPath}/AdminManagerServlet",
+    data: {
+      action: "updateItemImage",
+      itemImage: JSON.stringify(itemImage),
+    },
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    success: function (data) {
+      if (data.success === true) {
+        let updatedItemImage = data.itemImage;
+
+        for (let i = 0, row; (row = table.rows[i]); i++) {
+          // Loop through each row in the table
+          let idCell = row.cells[0]; // Assume 'itemImage.id' is the first cell in each row
+          if (idCell.textContent === id) {
+            row.cells[1].textContent = updatedItemImage.item.id; // Update item ID
+            row.cells[2].textContent = updatedItemImage.image_url; // Update image URL
+            break; // Exit the loop after updating
+          }
+        }
+        alert("Cập nhật hình ảnh sản phẩm thành công");
+      } else {
+        console.log("WTF");
+      }
+    },
+    error: function (error) {
+      console.log("error:" + error);
+    },
+  });
+}
+function imagesToExcel(tableID) {
+  let table = document.getElementById(tableID);
+
+  let dataToSend = [];
+
+  // Lặp qua các dòng của bảng và thu thập thông tin từ mỗi ô cột
+  for (let i = 1; i < table.rows.length; i++) {
+    let currentRow = table.rows[i];
+
+    // Thu thập thông tin từ các ô cột trong dòng
+    let id = currentRow.cells[0].textContent;
+    let productID = currentRow.cells[1].textContent;
+    let nameIamge = currentRow.cells[2].textContent;
+
+    // Tạo đối tượng chứa thông tin từ dòng hiện tại
+    let ImagesData = {
+      id: id,
+      productID: productID,
+      nameIamge: nameIamge,
+    };
+
+    // Thêm đối tượng vào mảng dataToSend
+    dataToSend.push(ImagesData);
+  }
+
+  const workbook = XLSX.utils.book_new();
+  const sheet = XLSX.utils.json_to_sheet(dataToSend);
+  XLSX.utils.book_append_sheet(workbook, sheet, "Sale");
+
+  XLSX.writeFile(workbook, "SaleProduct.xlsx");
+}
+function searchAndSortItemImage() {
+  let imageInputSearch = document.getElementById("imageInputSearch").value;
+  let imageSortType = document.getElementById("imageSortType").value;
+  let imageSearchType = document.getElementById("imageSearchType").value;
+
+  $.ajax({
+    type: "POST",
+    url: adminManagerContextPath + "/AdminServlet",
+    data: {
+      action: "searchAndSortItemImage",
+      imageInputSearch: imageInputSearch,
+      imageSortType: imageSortType,
+      imageSearchType: imageSearchType,
+    },
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    success: function (data) {
+      if (data.success === true) {
+        let table = document.getElementById("tableItemImage");
+        table.innerHTML = "";
+
+        // Assuming data.items is an array of item images
+        data.items.forEach(function (itemImage) {
+          table.innerHTML +=
+            "<tr>\n" +
+            "                        <td>" +
+            itemImage.id +
+            "</td>\n" +
+            "                        <td>" +
+            itemImage.item.id +
+            "</td>\n" +
+            "                        <td>" +
+            itemImage.image_url +
+            "</td>\n" +
+            "                        <td>\n" +
+            '                            <div class="flex-center grpbtn">\n' +
+            "                                <button\n" +
+            '                                        class="btnHD btnUpdateItemImage"\n' +
+            '                                        data-itemImageID="' +
+            itemImage.id +
+            '"\n' +
+            '                                        data-itemImageItemID="' +
+            itemImage.item.id +
+            '"\n' +
+            '                                        data-itemImageURL="' +
+            itemImage.image_url +
+            '"\n' +
+            "                                >\n" +
+            "                                    Sửa\n" +
+            "                                </button>\n" +
+            '                                <input type="hidden" name="itemImageID" value="' +
+            itemImage.id +
+            '"/>\n' +
+            "                            </div>\n" +
+            "                        </td>\n" +
+            "                    </tr>";
+        });
+
+        alert("Tìm và sắp xếp hình ảnh sản phẩm thành công");
+      } else {
+        console.log("WTF");
+      }
+    },
+    error: function (error) {
+      console.log("error:" + error);
+    },
+  });
+}
+
+//itemType
+function addItemType() {
+  let itemTypeName = document.getElementById("add_itemTypeName").value;
+  let table = document.getElementById("yourTableId"); // Replace with the actual ID of your table
+
+  let itemType = {
+    name: itemTypeName,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: adminManagerContextPath + "/AdminServlet",
+    data: {
+      action: "addItemType",
+      itemType: JSON.stringify(itemType),
+    },
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    success: function (data) {
+      if (data.success === true) {
+        let addedItemType = data.itemType;
+
+        table.innerHTML +=
+          "<tr>\n" +
+          "                        <td>" +
+          addedItemType.id +
+          "</td>\n" +
+          "                        <td>" +
+          addedItemType.name +
+          "</td>\n" +
+          "                        <td>\n" +
+          '                            <div class="flex-center grpbtn">\n' +
+          "                                <button\n" +
+          '                                        class="btnHD btnUpdateItemType"\n' +
+          '                                        data-itemTypeID="' +
+          addedItemType.id +
+          '"\n' +
+          '                                        data-itemTypeName="' +
+          addedItemType.name +
+          '"\n' +
+          "                                >\n" +
+          "                                    Sửa\n" +
+          "                                </button>\n" +
+          '                                <input type="hidden" name="itemTypeID" value="' +
+          addedItemType.id +
+          '"/>\n' +
+          "                            </div>\n" +
+          "                        </td>\n" +
+          "                    </tr>";
+        alert("Thêm loại sản phẩm thành công");
+      } else {
+        console.log("WTF");
+      }
+    },
+    error: function (error) {
+      console.log("error:" + error);
+    },
+  });
+}
+function updateItemType() {
+  let itemTypeID = document.getElementById("update_itemTypeID").value;
+  let itemTypeName = document.getElementById("update_itemTypeName").value;
+  let table = document.getElementById("yourTableId"); // Replace with the actual ID of your table
+
+  let itemType = {
+    id: itemTypeID,
+    name: itemTypeName,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: adminManagerContextPath + "/AdminServlet",
+    data: {
+      action: "updateItemType",
+      itemType: JSON.stringify(itemType),
+    },
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    success: function (data) {
+      if (data.success === true) {
+        let updatedItemType = data.itemType;
+
+        // Loop through each row in the table
+        for (let i = 0, row; (row = table.rows[i]); i++) {
+          let idCell = row.cells[0]; // Assuming 'itemType.id' is the first cell in each row
+          if (idCell.textContent === itemTypeID) {
+            // Update the corresponding row
+            row.cells[1].textContent = updatedItemType.name; // Assuming 'itemType.name' is the second cell in each row
+            break;
+          }
+        }
+
+        alert("Cập nhật loại sản phẩm thành công");
+      } else {
+        console.log("WTF");
+      }
+    },
+    error: function (error) {
+      console.log("error:" + error);
+    },
+  });
+}

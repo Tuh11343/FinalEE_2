@@ -1590,23 +1590,7 @@
                         <td>${discountCard.discount_percentage}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input
-                                            type="hidden"
-                                            name="discountCardID"
-                                            value="${discountCard.id}"
-                                    />
-                                    <input
-                                            type="hidden"
-                                            name="action"
-                                            value="discountCard_btnDelete"
-                                    />
-                                </form>
+
                                 <button
                                         class="btnHD btnUpdateDiscountCard"
                                         data-discountCardID="${discountCard.id}"
@@ -1801,7 +1785,7 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="tableItemCollection">
                 <c:forEach items="${requestScope.itemCollectionList}" var="itemCollection">
                     <tr>
                         <td>${itemCollection.id}</td>
@@ -1928,18 +1912,18 @@
                     <div class="sort-search">
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
-                            <select class="selecttype" name="" id="">
+                            <select class="selecttype" name="" id="imageSearchType">
                                 <option value="" selected>--</option>
                                 <option value="">Tên</option>
                                 <option value="">Giá</option>
                             </select>
-                            <input type="text" value=""/>
+                            <input type="text" value="imageInputSearch"/>
                             <button class="btnHD btnsearch">Tìm</button>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
-                        <select name="" id="">
+                        <select name="" id="imageSortType">
                             <option value="" selected>--</option>
                             <option value="">Z-A</option>
                             <option value="">A-Z</option>
@@ -1969,15 +1953,7 @@
                         <td>${itemImage.image_url}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input type="hidden" name="itemImageID" value="${itemImage.id}"/>
-                                    <input type="hidden" name="action" value="itemImage_btnDelete"/>
-                                </form>
+
                                 <button
                                         class="btnHD btnUpdateItemImage"
                                         data-itemImageID="${itemImage.id}"
@@ -3236,15 +3212,7 @@
                         <td>${sale.sale_percentage}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input type="hidden" name="saleID" value="${sale.id}"/>
-                                    <input type="hidden" name="action" value="sale_btnDelete"/>
-                                </form>
+
                                 <button
                                         class="btnHD btnUpdateSale"
                                         data-saleID="${sale.id}"
