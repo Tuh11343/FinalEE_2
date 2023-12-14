@@ -46,7 +46,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
 
     List<Item> findAll(Sort sort);
     List<Item> findAllByNameContains(String name,Sort sort);
-    List<Item> findAllByPriceBetween(double min,double max,Sort sort);
 
     List<Item> findAllByPriceLessThan(double price,Sort sort);
     List<Item> findAllByPriceGreaterThan(double price,Sort sort);

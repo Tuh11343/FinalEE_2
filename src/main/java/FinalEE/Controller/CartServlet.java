@@ -127,7 +127,6 @@ public class CartServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         ServletContext servletContext = getServletContext();
-        HttpSession session = req.getSession();
 
         accountServiceImpl = (AccountServiceImpl) servletContext.getAttribute("accountServiceImpl");
         cartServiceImpl = (CartServiceImpl) servletContext.getAttribute("cartServiceImpl");

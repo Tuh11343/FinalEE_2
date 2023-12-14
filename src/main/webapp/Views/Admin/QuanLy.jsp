@@ -701,14 +701,6 @@
                 <canvas id="myChart"></canvas>
             </div>
 
-            <%--
-          <table id="statsTable" class="product-table bang">
-            <tr>
-              <th>Sản phẩm</th>
-              <th>Số lượng đã bán</th>
-            </tr>
-          </table>
-          <canvas id="productChart"></canvas>--%>
         </div>
 
         <!--Account-->
@@ -722,10 +714,10 @@
                     >
                         Thêm
                     </button>
-                    <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="accountToExcel()"
                     >
                         Xuất Excel
-                    </button>
+                    </a>
                 </div>
                 <h2 style="font-size: 30px">Quản lý tài khoản</h2>
                 <div class="sorttable">
@@ -733,8 +725,9 @@
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
                             <select class="selecttype" name="" id="accountSearchType">
-                                <option value="">Tên</option>
-                                <option value="">Giá</option>
+                                <option value="id">ID</option>
+                                <option value="name">Tên</option>
+                                <option value="customerID">ID Khách hàng</option>
                             </select>
                             <input type="text" value="" id="accountInputSearch"/>
                             <button class="btnHD btnsearch">Tìm</button>
@@ -774,7 +767,7 @@
                         <td>${account.password}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <a class="btnHD btnDel" type="submit">Xóa</a>
+                                <a class="btnHD btnDel" onclick="deleteAccount(${account.id})" type="submit">Xóa</a>
                                 <a class="btnHD btnUpdateUser"
                                    id="account_updateTrigger"
                                    data-customerID="${account.customer.id}"
@@ -784,7 +777,6 @@
                                 >
                                     Sửa
                                 </a>
-                                <input type="hidden" name="accountID" value="${account.id}"/>
                             </div>
                         </td>
                     </tr>
@@ -795,70 +787,71 @@
             <!--Update Account-->
             <div id="update-user" class="updatemodal flex-center">
                 <div class="update-modal">
-                    <form
-                            class="form__update"
-                            action="${pageContext.request.contextPath}/AdminManagerServlet"
-                            method="post"
-                    >
-                        <span class="close">&times;</span>
-                        <h2 class="text-center" style="padding: 16px 0">CẬP NHẬT NGƯỜI DÙNG</h2>
 
-                        <!--Account Name-->
-                        <div class="form-grp">
-                            <label for="update_accountNameID">Tên tài khoản:</label>
-                            <input
-                                    type="text"
-                                    maxlength="100"
-                                    id="update_accountNameID"
-                                    name="update_accountName"
-                                    value=""
-                                    placeholder="Nhập vào tài khoản"
-                            />
-                        </div>
+                    <span class="close">&times;</span>
+                    <h2 class="text-center" style="padding: 16px 0">CẬP NHẬT NGƯỜI DÙNG</h2>
 
-                        <!--Account Password-->
-                        <div class="form-grp">
-                            <label for="update_accountPasswordID">Mật khẩu:</label>
-                            <input
-                                    type="password"
-                                    maxlength="100"
-                                    id="update_accountPasswordID"
-                                    name="update_accountPassword"
-                                    value=""
-                                    placeholder="Nhập vào mật khẩu"
-                            />
-                        </div>
+                    <!--Account ID-->
+                    <div class="form-grp">
+                        <input type="hidden" id="update_accountID" name="update_accountID"/>
+                    </div>
 
-                        <!--Account Permission-->
-                        <div class="form-grp">
-                            <label for="update_label_permissionID">Permission:</label>
-                            <select
-                                    id="update_label_permissionID"
-                                    name="update_accountPermissionID"
-                            >
-                                <c:forEach items="${requestScope.permissionList}" var="permission">
-                                    <option value="${permission.id}">${permission.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
+                    <!--Account Name-->
+                    <div class="form-grp">
+                        <label for="update_accountName">Tên tài khoản:</label>
+                        <input
+                                type="text"
+                                maxlength="100"
+                                id="update_accountName"
+                                name="update_accountName"
+                                value=""
+                                placeholder="Nhập vào tài khoản"
+                        />
+                    </div>
 
-                        <!--Account Customer-->
-                        <div class="form-grp">
-                            <label for="update_label_customerID">Customer:</label>
-                            <select id="update_label_customerID" name="update_accountCustomerID">
-                                <c:forEach items="${requestScope.customerList}" var="customer">
-                                    <option value="${customer.id}">
-                                            ${customer.id} : ${customer.name}
-                                    </option>
-                                </c:forEach>
-                            </select>
-                        </div>
+                    <!--Account Password-->
+                    <div class="form-grp">
+                        <label for="update_accountPassword">Mật khẩu:</label>
+                        <input
+                                type="password"
+                                maxlength="100"
+                                id="update_accountPassword"
+                                name="update_accountPassword"
+                                value=""
+                                placeholder="Nhập vào mật khẩu"
+                        />
+                    </div>
 
-                        <!--Update Button-->
-                        <div class="flex-center">
-                            <a onclick="updateAccount()">Cập nhật</a>
-                        </div>
-                    </form>
+                    <!--Account Permission-->
+                    <div class="form-grp">
+                        <label for="update_accountPermissionID">Permission:</label>
+                        <select
+                                id="update_accountPermissionID"
+                                name="update_accountPermissionID"
+                        >
+                            <c:forEach items="${requestScope.permissionList}" var="permission">
+                                <option value="${permission.id}">${permission.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+                    <!--Account Customer-->
+                    <div class="form-grp">
+                        <label for="update_accountCustomerID">Customer:</label>
+                        <select id="update_accountCustomerID" name="update_accountCustomerID">
+                            <c:forEach items="${requestScope.customerList}" var="customer">
+                                <option value="${customer.id}">
+                                        ${customer.id} : ${customer.name}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+                    <!--Update Button-->
+                    <div class="flex-center">
+                        <a id="updateAccount" onclick="updateAccount()" class="btn submit">Cập nhật</a>
+                    </div>
+
                 </div>
             </div>
 
@@ -870,11 +863,11 @@
 
                     <!--Account Name-->
                     <div class="form-grp">
-                        <label for="accountNameID">Tên tài khoản:</label>
+                        <label for="add_accountName">Tên tài khoản:</label>
                         <input
                                 type="text"
                                 maxlength="100"
-                                id="accountNameID"
+                                id="add_accountName"
                                 name="add_accountName"
                                 value=""
                                 placeholder="Nhập vào tài khoản"
@@ -883,11 +876,11 @@
                         <!--Account Password-->
                     </div>
                     <div class="form-grp">
-                        <label for="accountPasswordID">Mật khẩu:</label>
+                        <label for="add_accountPassword">Mật khẩu:</label>
                         <input
                                 type="password"
                                 maxlength="100"
-                                id="accountPasswordID"
+                                id="add_accountPassword"
                                 name="add_accountPassword"
                                 value=""
                                 placeholder="Nhập vào mật khẩu"
@@ -896,8 +889,8 @@
 
                     <!--Account Permission-->
                     <div class="form-grp">
-                        <label for="add_account_permission">Permission:</label>
-                        <select id="add_account_permission">
+                        <label for="add_accountPermissionID">Permission:</label>
+                        <select id="add_accountPermissionID">
                             <c:forEach items="${requestScope.permissionList}" var="permission">
                                 <option value="${permission.id}">${permission.name}</option>
                             </c:forEach>
@@ -906,8 +899,8 @@
 
                     <!--Account Customer-->
                     <div class="form-grp">
-                        <label for="add_account_customer">Customer:</label>
-                        <select id="add_account_customer">
+                        <label for="add_accountCustomerID">Customer:</label>
+                        <select id="add_accountCustomerID">
                             <c:forEach items="${requestScope.customerList}" var="customer">
                                 <option value="${customer.id}">
                                         ${customer.id} : ${customer.name}
@@ -918,9 +911,9 @@
 
                     <!--Add Button-->
                     <div class="flex-center">
-                        <a onclick="addAccount()">Thêm</a>
+                        <a id="addAccount" onclick="addAccount()" class="btn submit">Thêm</a>
                     </div>
-                    </form>
+
                 </div>
             </div>
         </div>
@@ -937,7 +930,7 @@
                         Thêm
                     </button>
                     <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
-                       onclick="customerToExcel('tableItem')"
+                       onclick="itemToExcel()"
                     >
                         Xuất Excel
                     </a>
@@ -947,23 +940,21 @@
                     <div class="sort-search">
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
-                            <select class="selecttype" name="" id="">
+                            <select class="selecttype" name="" id="itemSearchType">
                                 <option value="">Tên</option>
                                 <option value="">Giá</option>
                             </select>
-                            <input type="text" value=""/>
+                            <input type="text" id="itemInputSearch"/>
                             <button class="btnHD btnsearch">Tìm</button>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
-                        <select name="" id="">
+                        <select name="" id="itemSortType">
                             <option value="" selected>--</option>
                             <option value="">Z-A</option>
                             <option value="">A-Z</option>
-                            <option value="">Giá tăng</option>
-                            <option value="">Giá giảm</option>
-                            <option value="">Mã sản phẩm</option>
+
                         </select>
                     </div>
                 </div>
@@ -1023,7 +1014,7 @@
                                         method="post"
                                         onsubmit="handleDelete()"
                                 >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
+                                    <a class="btnHD btnDel" onclick="deleteItem(${item.id})" type="submit">Xóa</a>
                                     <input type="hidden" name="itemID" value="${item.id}"/>
                                     <input type="hidden" name="action" value="item_btnDelete"/>
                                 </form>
@@ -1056,6 +1047,11 @@
                         <span class="close clsupdateproduct">&times;</span>
 
                         <h2 class="text-center" style="padding: 16px 0">Cập nhật sản phẩm</h2>
+
+                        <!--Item ID-->
+                        <div class="form-grp">
+                            <input type="hidden" id="update_itemID" name="update_itemID"/>
+                        </div>
 
                         <!--Item Name-->
                         <div class="form-grp">
@@ -1159,8 +1155,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <input type="hidden" name="action" value="item_btnUpdate"/>
-                            <button type="submit">Cập nhật</button>
+                            <a id="updateItem" onclick="updateItem()" class="btn submit">Cập nhật</a>
                         </div>
                     </form>
                 </div>
@@ -1272,7 +1267,9 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addproducts" type="submit" class="btn submit">Thêm</button>
+                            <a id="addItem" onclick="addItem()" class="btn submit">Thêm</a>
+
+
                         </div>
                     </form>
                 </div>
@@ -1292,7 +1289,7 @@
                         Thêm
                     </button>
                     <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
-                       onclick="customerToExcel('tableCustomer')"
+                       onclick="customerToExcel()"
                     >
                         Xuất Excel
                     </a>
@@ -1371,14 +1368,9 @@
 
                         <h2 class="text-center" style="padding: 16px 0">Cập Nhật Khách Hàng</h2>
 
-                        <!--Customer Name-->
+                        <!--Customer ID-->
                         <div class="form-grp">
-                            <label for="update_customerName">Tên khách hàng:</label>
-                            <input
-                                    type="hidden"
-                                    id="update_customerID"
-                                    name="update_customerNameID"
-                            />
+                            <input type="hidden" id="update_customerID" name="update_customerName"/>
                         </div>
 
                         <!--Customer Name-->
@@ -1519,34 +1511,31 @@
                     >
                         Thêm
                     </button>
-                    <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                       onclick="discountCardToExcel()"
                     >
                         Xuất Excel
-                    </button>
+                    </a>
                 </div>
                 <h2 style="font-size: 30px">Quản lý mã giảm giá</h2>
                 <div class="sorttable">
                     <div class="sort-search">
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
-                            <select class="selecttype" name="" id="">
-                                <option value="" selected>--</option>
-                                <option value="">Tên</option>
-                                <option value="">Giá</option>
+                            <select class="selecttype" name="" id="discountCardSearchType">
+                                <option value="id">ID</option>
+                                <option value="name">Tên thẻ</option>
+                                <option value="customerID">ID Khách hàng</option>
                             </select>
-                            <input type="text" value=""/>
+                            <input type="text" id="discountCardInputSearch"/>
                             <button class="btnHD btnsearch">Tìm</button>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
-                        <select name="" id="">
-                            <option value="" selected>--</option>
+                        <select name="" id="discountCardSortType">
                             <option value="">Z-A</option>
                             <option value="">A-Z</option>
-                            <option value="">Giá tăng</option>
-                            <option value="">Giá giảm</option>
-                            <option value="">Mã sản phẩm</option>
                         </select>
                     </div>
                 </div>
@@ -1577,7 +1566,8 @@
                                         method="post"
                                         onsubmit="handleDelete()"
                                 >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
+                                    <a class="btnHD btnDel" onclick="deleteDiscountCard(${discountCard.id})"
+                                       type="submit">Xóa</a>
                                     <input
                                             type="hidden"
                                             name="discountCardID"
@@ -1619,6 +1609,11 @@
                         <h2 class="text-center" style="padding: 16px 0">
                             Cập Nhật Thẻ Khuyến Mãi
                         </h2>
+
+                        <!--Discount ID-->
+                        <div class="form-grp">
+                            <input type="hidden" id="update_discountID" name="update_discountID"/>
+                        </div>
 
                         <!--Customer ID-->
                         <div class="form-grp">
@@ -1662,8 +1657,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <input type="hidden" name="action" value="discountCard_btnUpdate"/>
-                            <button type="submit">Cập nhật</button>
+                            <a id="updateDiscountCard" onclick="updateDiscountCard()" class="btn submit">Cập nhật</a>
                         </div>
                     </form>
                 </div>
@@ -1718,9 +1712,9 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addDiscountCard" type="submit" class="btn submit">
+                            <a id="addDiscountCard" onclick="addDiscountCard()" class="btn submit">
                                 Thêm
-                            </button>
+                            </a>
                         </div>
                     </form>
                 </div>
@@ -1739,40 +1733,35 @@
                     >
                         Thêm
                     </button>
-                    <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                       onclick="itemCollectionToExcel()"
                     >
                         Xuất Excel
-                    </button>
+                    </a>
                 </div>
                 <h2 style="font-size: 30px">Quản lý bộ sưu tập</h2>
                 <div class="sorttable">
                     <div class="sort-search">
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
-                            <select class="selecttype" name="" id="">
-                                <option value="" selected>--</option>
-                                <option value="">Tên</option>
-                                <option value="">Giá</option>
+                            <select class="selecttype" name="" id="itemCollectionSearchType">
+                                <option value="id">ID</option>
+                                <option value="name">Tên</option>
                             </select>
-                            <input type="text" value=""/>
+                            <input type="text" id="itemCollectionInputSearch"/>
                             <button class="btnHD btnsearch">Tìm</button>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
-                        <select name="" id="">
-                            <option value="" selected>--</option>
-                            <option value="">Z-A</option>
-                            <option value="">A-Z</option>
-                            <option value="">Giá tăng</option>
-                            <option value="">Giá giảm</option>
-                            <option value="">Mã sản phẩm</option>
+                        <select name="" id="itemCollectionSortType">
+                            <option value="az">Z-A</option>
+                            <option value="za">A-Z</option>
+
                         </select>
                     </div>
                 </div>
             </div>
-
-            <!--Add Item Collection Button-->
 
             <!--Table Item Collection-->
             <table class="item-table bang">
@@ -1790,23 +1779,8 @@
                         <td>${itemCollection.name}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input
-                                            type="hidden"
-                                            name="itemCollectionID"
-                                            value="${itemCollection.id}"
-                                    />
-                                    <input
-                                            type="hidden"
-                                            name="action"
-                                            value="itemCollection_btnDelete"
-                                    />
-                                </form>
+                                <a class="btnHD btnDel" onclick="deleteItemCollection(${itemCollection.id})"
+                                   type="submit">Xóa</a>
                                 <button
                                         class="btnHD btnUpdateItemCollection"
                                         data-itemCollectionID="${itemCollection.id}"
@@ -1814,11 +1788,6 @@
                                 >
                                     Sửa
                                 </button>
-                                <input
-                                        type="hidden"
-                                        name="itemCollectionID"
-                                        value="${itemCollection.id}"
-                                />
                             </div>
                         </td>
                     </tr>
@@ -1834,6 +1803,11 @@
 
                         <h2 class="text-center" style="padding: 16px 0">Cập Nhật Bộ Sưu Tập</h2>
 
+                        <!--Item Collection ID-->
+                        <div class="form-grp">
+                            <input type="hidden" id="update_itemCollectionID" name="update_itemCollectionID"/>
+                        </div>
+
                         <!--Item Collection Name-->
                         <div class="form-grp">
                             <label for="update_itemCollectionName">Tên Bộ Sưu Tập:</label>
@@ -1848,18 +1822,15 @@
                         </div>
 
                         <div class="flex-center">
-                            <input type="hidden" name="action" value="itemCollection_btnUpdate"/>
-                            <button type="submit">Cập nhật</button>
+                            <a id="updateItemCollection" onclick="updateItemCollection()" class="btn submit">Cập
+                                nhật</a>
                         </div>
                     </form>
                 </div>
             </div>
 
             <!--Add Item Collection Modal-->
-            <div
-                    id="add-itemCollection"
-                    class="modal-add flex-center modal__addItemCollection"
-            >
+            <div id="add-itemCollection" class="modal-add flex-center modal__addItemCollection">
                 <div class="add-modal">
                     <form class="form__add" action="#" method="post">
                         <span class="close clsAddItemCollection">&times;</span>
@@ -1879,9 +1850,9 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addItemCollection" type="submit" class="btn submit">
+                            <a id="addItemCollection" onclick="addItemCollection()" class="btn submit">
                                 Thêm
-                            </button>
+                            </a>
                         </div>
                     </form>
                 </div>
@@ -1900,34 +1871,29 @@
                     >
                         Thêm
                     </button>
-                    <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="itemImageToExcel()"
                     >
                         Xuất Excel
-                    </button>
+                    </a>
                 </div>
                 <h2 style="font-size: 30px">Quản lý hình ảnh</h2>
                 <div class="sorttable">
                     <div class="sort-search">
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
-                            <select class="selecttype" name="" id="">
-                                <option value="" selected>--</option>
-                                <option value="">Tên</option>
-                                <option value="">Giá</option>
+                            <select class="selecttype" name="" id="itemImageSearchType">
+                                <option value="id">ID</option>
+                                <option value="itemID">ID Sản phẩm</option>
                             </select>
-                            <input type="text" value=""/>
+                            <input type="text" id="itemImageInputSearch"/>
                             <button class="btnHD btnsearch">Tìm</button>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
-                        <select name="" id="">
-                            <option value="" selected>--</option>
-                            <option value="">Z-A</option>
-                            <option value="">A-Z</option>
-                            <option value="">Giá tăng</option>
-                            <option value="">Giá giảm</option>
-                            <option value="">Mã sản phẩm</option>
+                        <select name="" id="itemImageSortType">
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
                         </select>
                     </div>
                 </div>
@@ -1951,15 +1917,9 @@
                         <td>${itemImage.image_url}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input type="hidden" name="itemImageID" value="${itemImage.id}"/>
-                                    <input type="hidden" name="action" value="itemImage_btnDelete"/>
-                                </form>
+                                <a class="btnHD btnDel"
+                                   onclick="handleDelete(${itemImage.id},'deleteItemImage','tableItemImage')"
+                                   type="submit">Xóa</a>
                                 <button
                                         class="btnHD btnUpdateItemImage"
                                         data-itemImageID="${itemImage.id}"
@@ -1968,7 +1928,6 @@
                                 >
                                     Sửa
                                 </button>
-                                <input type="hidden" name="itemImageID" value="${itemImage.id}"/>
                             </div>
                         </td>
                     </tr>
@@ -1985,6 +1944,11 @@
                         <h2 class="text-center" style="padding: 16px 0">
                             Cập Nhật Hình Ảnh Sản Phẩm
                         </h2>
+
+                        <!--Item Image ID-->
+                        <div class="form-grp">
+                            <input type="hidden" id="update_itemImageID" name="update_itemImageID"/>
+                        </div>
 
                         <!--Item ID-->
                         <div class="form-grp">
@@ -2010,8 +1974,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <input type="hidden" name="action" value="itemImage_btnUpdate"/>
-                            <button type="submit">Cập nhật</button>
+                            <a id="updateItemImage" onclick="updateItemImage()" class="btn submit">Cập nhật</a>
                         </div>
                     </form>
                 </div>
@@ -2050,7 +2013,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addItemImage" type="submit" class="btn submit">Thêm</button>
+                            <a id="addItemImage" onclick="addItemImage()" class="btn submit">Thêm</a>
                         </div>
                     </form>
                 </div>
@@ -2069,40 +2032,35 @@
                     >
                         Thêm
                     </button>
-                    <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
-                    >
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                       onclick="itemMaterialToExcel()">
                         Xuất Excel
-                    </button>
+                    </a>
                 </div>
                 <h2 style="font-size: 30px">Quản lý nguyên liệu</h2>
                 <div class="sorttable">
                     <div class="sort-search">
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
-                            <select class="selecttype" name="" id="">
-                                <option value="" selected>--</option>
-                                <option value="">Tên</option>
-                                <option value="">Giá</option>
+                            <select class="selecttype" name="" id="itemMaterialSearchType">
+                                <option value="id">ID</option>
+                                <option value="name">Tên</option>
                             </select>
-                            <input type="text" value=""/>
+                            <input type="text" id="itemMaterialInputSearch"/>
                             <button class="btnHD btnsearch">Tìm</button>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
-                        <select name="" id="">
-                            <option value="" selected>--</option>
-                            <option value="">Z-A</option>
-                            <option value="">A-Z</option>
-                            <option value="">Giá tăng</option>
-                            <option value="">Giá giảm</option>
-                            <option value="">Mã sản phẩm</option>
+                        <select name="" id="itemMaterialSortType">
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
                         </select>
                     </div>
                 </div>
             </div>
 
-            <!--Table Item Image-->
+            <!--Table Item Material-->
             <table class="item-table bang">
                 <thead>
                 <tr>
@@ -2118,23 +2076,9 @@
                         <td>${itemMaterial.name}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input
-                                            type="hidden"
-                                            name="itemMaterialID"
-                                            value="${itemMaterial.id}"
-                                    />
-                                    <input
-                                            type="hidden"
-                                            name="action"
-                                            value="itemMaterial_btnDelete"
-                                    />
-                                </form>
+                                <a class="btnHD btnDel"
+                                   onclick="handleDelete(${itemMaterial.id},'deleteItemMaterial','tableItemMaterial')"
+                                   type="submit">Xóa</a>
                                 <button
                                         class="btnHD btnUpdateItemMaterial"
                                         data-itemMaterialID="${itemMaterial.id}"
@@ -2142,11 +2086,6 @@
                                 >
                                     Sửa
                                 </button>
-                                <input
-                                        type="hidden"
-                                        name="itemMaterialID"
-                                        value="${itemMaterial.id}"
-                                />
                             </div>
                         </td>
                     </tr>
@@ -2157,12 +2096,17 @@
             <!--Update Item Material Modal-->
             <div id="update-itemMaterial" class="modal-update flex-center">
                 <div class="update-modal">
-                    <form class="form__update" action="#" method="post">
+                    <form class="form__update">
                         <span class="close clsUpdateItemMaterial">&times;</span>
 
                         <h2 class="text-center" style="padding: 16px 0">
                             Cập Nhật Vật Liệu Sản Phẩm
                         </h2>
+
+                        <!--Item Material ID-->
+                        <div class="form-grp">
+                            <input type="hidden" id="update_itemMaterialID" name="update_itemMaterialID"/>
+                        </div>
 
                         <!--Item Material Name-->
                         <div class="form-grp">
@@ -2178,8 +2122,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <input type="hidden" name="action" value="itemMaterial_btnUpdate"/>
-                            <button type="submit">Cập Nhật</button>
+                            <a id="updateItemMaterial" onclick="updateItemMaterial()" class="btn submit">Cập nhật</a>
                         </div>
                     </form>
                 </div>
@@ -2188,7 +2131,7 @@
             <!--Add Item Image Modal-->
             <div id="add-itemMaterial" class="modal-add flex-center modal__addItemMaterial">
                 <div class="add-modal">
-                    <form class="form__add" action="#" method="post">
+                    <form class="form__add">
                         <span class="close clsAddItemMaterial">&times;</span>
                         <h2 class="text-center" style="padding: 16px 0">
                             Thêm Vật Liệu Sản Phẩm
@@ -2208,9 +2151,9 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addItemMaterial" type="submit" class="btn submit">
+                            <a id="addItemMaterial" onclick="addItemMaterial()" class="btn submit">
                                 Thêm
-                            </button>
+                            </a>
                         </div>
                     </form>
                 </div>
@@ -2228,40 +2171,35 @@
                     >
                         Thêm
                     </button>
-                    <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="orderToExcel()"
                     >
                         Xuất Excel
-                    </button>
+                    </a>
                 </div>
                 <h2 style="font-size: 30px">Quản lý hóa đơn</h2>
                 <div class="sorttable">
                     <div class="sort-search">
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
-                            <select class="selecttype" name="" id="">
-                                <option value="" selected>--</option>
-                                <option value="">Tên</option>
-                                <option value="">Giá</option>
+                            <select class="selecttype" name="" id="orderSearchType">
+                                <option value="id">ID</option>
+                                <option value="customerID">ID khách hàng</option>
+                                <option value="lowerPrice">Giá tiền thấp hơn</option>
+                                <option value="higherPrice">Giá tiền cao hơn</option>
                             </select>
-                            <input type="text" value=""/>
-                            <button class="btnHD btnsearch">Tìm</button>
+                            <input type="text" id="orderInputSearch"/>
+                            <a class="btnHD btnsearch" onclick="searchAndSortOrder()">Tìm</a>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
-                        <select name="" id="">
-                            <option value="" selected>--</option>
-                            <option value="">Z-A</option>
-                            <option value="">A-Z</option>
-                            <option value="">Giá tăng</option>
-                            <option value="">Giá giảm</option>
-                            <option value="">Mã sản phẩm</option>
+                        <select name="" id="orderSortType">
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
                         </select>
                     </div>
                 </div>
             </div>
-
-            <!--Add Order Button-->
 
             <!--Table Order-->
             <table class="item-table bang">
@@ -2291,15 +2229,8 @@
                         <td>${order.note}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input type="hidden" name="orderID" value="${order.id}"/>
-                                    <input type="hidden" name="action" value="order_btnDelete"/>
-                                </form>
+                                <a class="btnHD btnDel" onclick="handleDelete(${order.id},'deleteOrder','tableOrder')"
+                                   type="submit">Xóa</a>
                                 <button
                                         class="btnHD btnUpdateOrder"
                                         data-orderID="${order.id}"
@@ -2313,7 +2244,7 @@
                                 >
                                     Sửa
                                 </button>
-                                <input type="hidden" name="orderID" value="${order.id}"/>
+
                             </div>
                         </td>
                     </tr>
@@ -2324,10 +2255,15 @@
             <!--Update Order Modal-->
             <div id="update-order" class="modal-update flex-center">
                 <div class="update-modal">
-                    <form class="form__update" action="#" method="post">
+                    <form class="form__update">
                         <span class="close clsUpdateOrder">&times;</span>
 
                         <h2 class="text-center" style="padding: 16px 0">Cập Nhật Hóa Đơn</h2>
+
+                        <!--Order ID-->
+                        <div class="form-grp">
+                            <input type="hidden" id="update_orderID" name="update_orderID"/>
+                        </div>
 
                         <!--Order Customer ID-->
                         <div class="form-grp">
@@ -2390,11 +2326,9 @@
                         <div class="form-grp">
                             <label for="update_orderStatus">Tình trạng đơn hàng:</label>
                             <select id="update_orderStatus" name="update_orderStatus">
-                                <option value="${0}">0 : Đã đặt đơn</option>
-                                <option value="${1}">1 : Đang chuẩn bị hàng</option>
-                                <option value="${2}">2 : Đơn hàng đã hủy</option>
-                                <option value="${3}">3 : Đang giao hàng</option>
-                                <option value="${4}">4 : Đơn hàng thành công</option>
+                                <c:forEach items="${requestScope.orderStatusList}" var="orderStatus">
+                                    <option value="${orderStatus.id}">${orderStatus.name}</option>
+                                </c:forEach>
                             </select>
                         </div>
 
@@ -2425,8 +2359,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <input type="hidden" name="action" value="order_btnUpdate"/>
-                            <button type="submit">Cập Nhật</button>
+                            <a id="updateOrder" onclick="updateOrder()" class="btn submit">Cập nhật</a>
                         </div>
                     </form>
                 </div>
@@ -2435,7 +2368,7 @@
             <!--Add Order Modal-->
             <div id="add-order" class="modal-add flex-center modal__addOrder">
                 <div class="add-modal">
-                    <form class="form__add" action="#" method="post">
+                    <form class="form__add">
                         <span class="close clsAddOrder">&times;</span>
                         <h2 class="text-center" style="padding: 16px 0">Thêm Hóa Đơn</h2>
 
@@ -2497,11 +2430,9 @@
                         <div class="form-grp">
                             <label for="add_orderStatus">Tình trạng đơn hàng:</label>
                             <select id="add_orderStatus" name="add_orderStatus">
-                                <option value="${0}">0 : Đã đặt đơn</option>
-                                <option value="${1}">1 : Đang chuẩn bị hàng</option>
-                                <option value="${2}">2 : Đơn hàng đã hủy</option>
-                                <option value="${3}">3 : Đang giao hàng</option>
-                                <option value="${4}">4 : Đơn hàng thành công</option>
+                                <c:forEach items="${requestScope.orderStatusList}" var="orderStatus">
+                                    <option value="${orderStatus.id}">${orderStatus.name}</option>
+                                </c:forEach>
                             </select>
                         </div>
 
@@ -2532,7 +2463,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addOrder" type="submit" class="btn submit">Thêm</button>
+                            <a id="addOrder" onclick="addOrder()" class="btn submit">Thêm</a>
                         </div>
                     </form>
                 </div>
@@ -2550,34 +2481,32 @@
                     >
                         Thêm
                     </button>
-                    <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="orderDetailToExcel()"
                     >
                         Xuất Excel
-                    </button>
+                    </a>
                 </div>
                 <h2 style="font-size: 30px">Quản lý chi tiết hóa đơn</h2>
                 <div class="sorttable">
                     <div class="sort-search">
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
-                            <select class="selecttype" name="" id="">
-                                <option value="" selected>--</option>
-                                <option value="">Tên</option>
-                                <option value="">Giá</option>
+                            <select class="selecttype" name="" id="orderDetailSearchType">
+                                <option value="id">ID</option>
+                                <option value="orderID">ID hóa đơn</option>
+                                <option value="lowerPrice">Giá thấp hơn</option>
+                                <option value="higherPrice">Giá cao ho</option>
                             </select>
-                            <input type="text" value=""/>
-                            <button class="btnHD btnsearch">Tìm</button>
+                            <input type="text" id="orderDetailInputSearch"/>
+                            <a class="btnHD btnsearch" onclick="searchAndSortOrderDetail()">Tìm</a>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
-                        <select name="" id="">
+                        <select name="" id="orderDetailSortType">
                             <option value="" selected>--</option>
-                            <option value="">Z-A</option>
-                            <option value="">A-Z</option>
-                            <option value="">Giá tăng</option>
-                            <option value="">Giá giảm</option>
-                            <option value="">Mã sản phẩm</option>
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
                         </select>
                     </div>
                 </div>
@@ -2598,7 +2527,7 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableOrderDetail">
                 <c:forEach items="${requestScope.orderDetailList}" var="orderDetail">
                     <tr>
                         <td>${orderDetail.id}</td>
@@ -2610,23 +2539,8 @@
                         <td>${orderDetail.total}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input
-                                            type="hidden"
-                                            name="orderDetailID"
-                                            value="${orderDetail.id}"
-                                    />
-                                    <input
-                                            type="hidden"
-                                            name="action"
-                                            value="orderDetail_btnDelete"
-                                    />
-                                </form>
+                                    <a class="btnHD btnDel" onclick="handleDelete(${orderDetail.id},'deleteOrderDetail','tableOrderDetail')"
+                                       type="submit">Xóa</a>
                                 <button
                                         class="btnHD btnUpdateOrderDetail"
                                         data-orderDetailID="${orderDetail.id}"
@@ -2639,11 +2553,6 @@
                                 >
                                     Sửa
                                 </button>
-                                <input
-                                        type="hidden"
-                                        name="orderDetailID"
-                                        value="${orderDetail.id}"
-                                />
                             </div>
                         </td>
                     </tr>
@@ -2660,6 +2569,11 @@
                         <h2 class="text-center" style="padding: 16px 0">
                             Cập Nhật Chi Tiết Hóa Đơn
                         </h2>
+
+                        <!--Order Detail ID-->
+                        <div class="form-grp">
+                            <input type="hidden" id="update_orderDetailID" name="update_orderDetailID"/>
+                        </div>
 
                         <!--OrderDetail Order ID-->
                         <div class="form-grp">
@@ -2738,8 +2652,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <input type="hidden" name="action" value="orderDetail_btnUpdate"/>
-                            <button type="submit">Cập Nhật</button>
+                            <a id="updateOrderDetail" onclick="updateOrderDetail()" class="btn submit">Cập nhật</a>
                         </div>
                     </form>
                 </div>
@@ -2748,7 +2661,7 @@
             <!--Add Order Detail Modal-->
             <div id="add-orderDetail" class="modal-add flex-center modal__addOrderDetail">
                 <div class="add-modal">
-                    <form class="form__add" action="#" method="post">
+                    <form class="form__add">
                         <span class="close clsAddOrderDetail">&times;</span>
                         <h2 class="text-center" style="padding: 16px 0">Thêm Chi Tiết Hóa Đơn</h2>
 
@@ -2820,9 +2733,9 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addOrderDetail" type="submit" class="btn submit">
+                            <a id="addOrderDetail" onclick="addOrderDetail()" class="btn submit">
                                 Thêm
-                            </button>
+                            </a>
                         </div>
                     </form>
                 </div>
@@ -2841,10 +2754,10 @@
                     >
                         Thêm
                     </button>
-                    <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="itemTypeToExcel()"
                     >
                         Xuất Excel
-                    </button>
+                    </a>
                 </div>
 
                 <h2 style="font-size: 30px">Quản lý kiểu sản phẩm</h2>
@@ -2852,30 +2765,25 @@
                     <div class="sort-search">
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
-                            <select class="selecttype" name="" id="">
-                                <option value="" selected>--</option>
-                                <option value="">Tên</option>
-                                <option value="">Giá</option>
+                            <select class="selecttype" name="" id="itemTypeSearchType">
+                                <option value="id">ID</option>
+                                <option value="name">Name</option>
                             </select>
-                            <input type="text" value=""/>
-                            <button class="btnHD btnsearch">Tìm</button>
+                            <input type="text" id="itemTypeInputSearch"/>
+                            <a class="btnHD btnsearch">Tìm</a>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
-                        <select name="" id="">
-                            <option value="" selected>--</option>
-                            <option value="">Z-A</option>
-                            <option value="">A-Z</option>
-                            <option value="">Giá tăng</option>
-                            <option value="">Giá giảm</option>
-                            <option value="">Mã sản phẩm</option>
+                        <select name="" id="itemTypeSortType">
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
                         </select>
                     </div>
                 </div>
             </div>
 
-            <!--Table Item Image-->
+            <!--Table Item Type-->
             <table class="item-table bang">
                 <thead>
                 <tr>
@@ -2891,15 +2799,8 @@
                         <td>${itemType.name}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input type="hidden" name="itemTypeID" value="${itemType.id}"/>
-                                    <input type="hidden" name="action" value="itemType_btnDelete"/>
-                                </form>
+                                    <a class="btnHD btnDel" onclick="deleteItemType(${itemType.id})"
+                                       type="submit">Xóa</a>
                                 <button
                                         class="btnHD btnUpdateItemType"
                                         data-itemTypeID="${itemType.id}"
@@ -2907,7 +2808,6 @@
                                 >
                                     Sửa
                                 </button>
-                                <input type="hidden" name="itemTypeID" value="${itemType.id}"/>
                             </div>
                         </td>
                     </tr>
@@ -2925,6 +2825,10 @@
                             Cập Nhật Loại Sản Phẩm
                         </h2>
 
+                        <div class="form-grp">
+                            <input type="hidden" id="update_itemTypeID" name="update_itemTypeID"/>
+                        </div>
+
                         <!--Item Type Name-->
                         <div class="form-grp">
                             <label for="update_itemTypeName">Tên Loại Sản Phẩm:</label>
@@ -2939,8 +2843,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <input type="hidden" name="action" value="itemType_btnUpdate"/>
-                            <button type="submit">Cập Nhật</button>
+                            <a id="updateItemType" onclick="updateItemType()" class="btn submit">Cập nhật</a>
                         </div>
                     </form>
                 </div>
@@ -2967,7 +2870,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addItemType" type="submit" class="btn submit">Thêm</button>
+                            <a id="addItemType" onclick="addItemType()" type="submit" class="btn submit">Thêm</a>
                         </div>
                     </form>
                 </div>
@@ -3037,19 +2940,8 @@
                         <td>${permission.level}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input
-                                            type="hidden"
-                                            name="permissionID"
-                                            value="${permission.id}"
-                                    />
-                                    <input type="hidden" name="action" value="permission_btnDelete"/>
-                                </form>
+                                <a class="btnHD btnDel" onclick="deletePermission(${permission.id})"
+                                   type="submit">Xóa</a>
                                 <button
                                         class="btnHD btnUpdatePermission"
                                         data-permissionID="${permission.id}"
@@ -3058,7 +2950,6 @@
                                 >
                                     Sửa
                                 </button>
-                                <input type="hidden" name="permissionID" value="${permission.id}"/>
                             </div>
                         </td>
                     </tr>
@@ -3101,8 +2992,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <input type="hidden" name="action" value="permission_btnUpdate"/>
-                            <button type="submit">Cập Nhật</button>
+                            <a id="updatePermission" onclick="updatePermission()" class="btn submit">Cập nhật</a>
                         </div>
                     </form>
                 </div>
@@ -3142,9 +3032,9 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addPermission" type="submit" class="btn submit">
+                            <a id="addPermission" onclick="addPermission()" class="btn submit">
                                 Thêm
-                            </button>
+                            </a>
                         </div>
                     </form>
                 </div>
@@ -3218,15 +3108,7 @@
                         <td>${sale.sale_percentage}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input type="hidden" name="saleID" value="${sale.id}"/>
-                                    <input type="hidden" name="action" value="sale_btnDelete"/>
-                                </form>
+                                <a class="btnHD btnDel" onclick="deleteSale(${sale.id})" type="submit">Xóa</a>
                                 <button
                                         class="btnHD btnUpdateSale"
                                         data-saleID="${sale.id}"
@@ -3305,8 +3187,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <input type="hidden" name="action" value="sale_btnUpdate"/>
-                            <button type="submit">Cập Nhật</button>
+                            <a id="updateSale" onclick="updateSale()" class="btn submit">Cập nhật</a>
                         </div>
                     </form>
                 </div>
@@ -3369,7 +3250,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addSale" type="submit" class="btn submit">Thêm</button>
+                            <a id="addSale" onclick="addSale()" class="btn submit">Thêm</a>
                         </div>
                     </form>
                 </div>
@@ -3398,24 +3279,20 @@
                     <div class="sort-search">
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
-                            <select class="selecttype" name="" id="">
-                                <option value="" selected>--</option>
-                                <option value="">Tên</option>
-                                <option value="">Giá</option>
+                            <select class="selecttype" name="" id="stockItemSearchType">
+                                <option value="">ID</option>
+                                <option value="">ID sản phẩm</option>
                             </select>
-                            <input type="text" value=""/>
+                            <input type="text" id="stockItemInputSearch"/>
                             <button class="btnHD btnsearch">Tìm</button>
                         </div>
                     </div>
                     <div class="sort-box">
-                        <label for="">Sắp xếp theo:</label>
-                        <select name="" id="">
+                        <label for="stockItemSortType">Sắp xếp theo:</label>
+                        <select name="" id="stockItemSortType">
                             <option value="" selected>--</option>
                             <option value="">Z-A</option>
                             <option value="">A-Z</option>
-                            <option value="">Giá tăng</option>
-                            <option value="">Giá giảm</option>
-                            <option value="">Mã sản phẩm</option>
                         </select>
                     </div>
                 </div>
@@ -3433,25 +3310,21 @@
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableStockItem">
                 <c:forEach items="${requestScope.stockItemList}" var="stockItem">
                     <tr>
-                        <td scope="row">${stockItem.id}</td>
+                        <td>${stockItem.id}</td>
                         <td>${stockItem.item.id}</td>
                         <td>${stockItem.color}</td>
                         <td>${stockItem.size}</td>
                         <td>${stockItem.amount}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input type="hidden" name="stockItemID" value="${stockItem.id}"/>
-                                    <input type="hidden" name="action" value="stockItem_btnDelete"/>
-                                </form>
+
+                                <a class="btnHD btnDel"
+                                   onclick="handleDelete(${stockItem.id},'deleteStockItem','tableStockItem')"
+                                   type="submit">Xóa</a>
+
                                 <button
                                         class="btnHD btnUpdateStockItem"
                                         data-stockItemID="${stockItem.id}"
@@ -3462,7 +3335,7 @@
                                 >
                                     Sửa
                                 </button>
-                                <input type="hidden" name="stockItemID" value="${stockItem.id}"/>
+
                             </div>
                         </td>
                     </tr>
@@ -3479,6 +3352,7 @@
                         <h2 class="text-center" style="padding: 16px 0">
                             Cập Nhật Số Lượng Hàng Hóa
                         </h2>
+
 
                         <!--StockItem Item ID-->
                         <div class="form-grp">
@@ -3530,8 +3404,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <input type="hidden" name="action" value="stockItem_btnUpdate"/>
-                            <button type="submit">Cập Nhật</button>
+                            <a id="updateStockItem" onclick="updateStockItem()" class="btn submit">Cập nhật</a>
                         </div>
                     </form>
                 </div>
@@ -3596,13 +3469,12 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addStockItem" type="submit" class="btn submit">Thêm</button>
+                            <a id="addStockItem" onclick="addStockItem()" class="btn submit">Thêm</a>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
 
         <!--Order Status-->
         <div class="product-data table-data" data-type="orderStatusList">
@@ -3641,9 +3513,7 @@
                             <option value="" selected>--</option>
                             <option value="">Z-A</option>
                             <option value="">A-Z</option>
-                            <option value="">Giá tăng</option>
-                            <option value="">Giá giảm</option>
-                            <option value="">Mã sản phẩm</option>
+
                         </select>
                     </div>
                 </div>
@@ -3658,41 +3528,37 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
-                <c:forEach items="${requestScope.itemMaterialList}" var="orderStatus">
+                <tbody id="tableOrderStatus">
+                <c:forEach items="${requestScope.orderStatusList}" var="orderStatus">
                     <tr>
-                        <td>${itemMaterial.id}</td>
-                        <td>${itemMaterial.name}</td>
+                        <td>${orderStatus.id}</td>
+                        <td>${orderStatus.name}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input
-                                            type="hidden"
-                                            name="itemMaterialID"
-                                            value="${itemMaterial.id}"
-                                    />
-                                    <input
-                                            type="hidden"
-                                            name="action"
-                                            value="itemMaterial_btnDelete"
-                                    />
-                                </form>
+
+                                <a class="btnHD btnDel" onclick="deleteOrderStatus(${orderStatus.id})"
+                                   type="submit">Xóa</a>
+                                <input
+                                        type="hidden"
+                                        name="orderStatusID"
+                                        value="${orderStatus.id}"
+                                />
+                                <input
+                                        type="hidden"
+                                        name="action"
+                                        value="orderStatus_btnDelete"
+                                />
                                 <button
                                         class="btnHD btnUpdateOrderStatus"
-                                        data-itemMaterialID="${itemMaterial.id}"
-                                        data-itemMaterialName="${itemMaterial.name}"
+                                        data-itemMaterialID="${orderStatus.id}"
+                                        data-itemMaterialName="${orderStatus.name}"
                                 >
                                     Sửa
                                 </button>
                                 <input
                                         type="hidden"
-                                        name="itemMaterialID"
-                                        value="${itemMaterial.id}"
+                                        name="orderStatusID"
+                                        value="${orderStatus.id}"
                                 />
                             </div>
                         </td>
@@ -3725,8 +3591,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <input type="hidden" name="action" value="itemMaterial_btnUpdate"/>
-                            <button type="submit">Cập Nhật</button>
+                            <a id="updateOrderStatus" onclick="updateOrderStatus()" class="btn submit">Cập nhật</a>
                         </div>
                     </form>
                 </div>
@@ -3755,9 +3620,9 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addOrderStatus" type="submit" class="btn submit">
+                            <a id="addOrderStatus" onclick="addOrderStatus()" class="btn submit">
                                 Thêm
-                            </button>
+                            </a>
                         </div>
                     </form>
                 </div>
@@ -3781,68 +3646,6 @@
 <script src="${pageContext.request.contextPath}/Views/Admin/vinh_main.js"></script>
 
 <script>
-    function test() {
-        $.ajax({
-            type: "POST",
-            url: contextPath + "/StatisticServlet",
-            data: {
-                action: "test",
-            },
-            headers: {
-                "X-Requested-With": "XMLHttpRequest",
-            },
-            success: function (data) {
-                console.log(1);
-                if (data.success === 1) {
-                    for (var i = 0; i < data.length; i++) {
-                        console.log(data[0][0]);
-                    }
-                    const productData = [
-                        {product: "Áo thun xanh dương", sales: 100},
-                        {product: "Áo ba lỗ trắng", sales: 200},
-                        {product: "Áo khoác dù chống nước", sales: 150},
-                    ];
-                    // Populate table
-                    const table = document.getElementById("statsTable");
-                    productData.forEach((data) => {
-                        const row = table.insertRow(-1);
-                        const cell1 = row.insertCell(0);
-                        const cell2 = row.insertCell(1);
-                        cell1.textContent = data.product;
-                        cell2.textContent = data.sales;
-                    });
-                    // Create chart
-                    const ctx = document.getElementById("productChart").getContext("2d");
-                    new Chart(ctx, {
-                        type: "bar",
-                        data: {
-                            labels: productData.map((data) => data.product),
-                            datasets: [
-                                {
-                                    label: "Sales",
-                                    data: productData.map((data) => data.sales),
-                                    backgroundColor: "rgba(75, 192, 192, 0.2)",
-                                    borderColor: "rgba(75, 192, 192, 1)",
-                                    borderWidth: 1,
-                                },
-                            ],
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                },
-                            },
-                        },
-                    });
-                } else if (data.success === 0) {
-                }
-            },
-        });
-    }
-</script>
-
-<script>
     const adminManagerContextPath = "${pageContext.request.contextPath}";
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -3854,4 +3657,5 @@
 
 </body>
 </html>
+
 

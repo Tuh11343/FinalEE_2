@@ -15,8 +15,8 @@ public interface StockItemService {
     List<StockItem> getAllStockItem();
 
     List<StockItem> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
-    List<StockItem> findAllByItemIDSort(Integer itemID, String sort, ItemServiceImpl.SortOrder sortOrder);
-    List<StockItem> findAllByItemNameSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<StockItem> findAllByItemID(Integer itemID, String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<StockItem> findAllByColor(String color, String sort, ItemServiceImpl.SortOrder sortOrder);
 
     
 }

@@ -35,5 +35,8 @@ public interface ItemService {
 
     public List<Item> findItemListByColor(String color, String sort, ItemServiceImpl.SortOrder sortOrder);
 
+    List<Item> findAllByPriceLessThan(double price, String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<Item> findAllByPriceGreaterThan(double price, String sort, ItemServiceImpl.SortOrder sortOrder);
+
     
 }
