@@ -730,18 +730,18 @@
                     <div class="sort-search">
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
-                            <select class="selecttype" name="" id="">
+                            <select class="selecttype" name="" id="accountSearchType">
                                 <option value="" selected>--</option>
                                 <option value="">Tên</option>
                                 <option value="">Giá</option>
                             </select>
-                            <input type="text" value=""/>
+                            <input type="text" value="" id="accountInputSearch"/>
                             <button class="btnHD btnsearch">Tìm</button>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
-                        <select name="" id="">
+                        <select name="" id="accountSortType">
                             <option value="" selected>--</option>
                             <option value="">Z-A</option>
                             <option value="">A-Z</option>
@@ -767,7 +767,7 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableAccount">
                 <c:forEach items="${requestScope.accountList}" var="account">
                     <tr>
                         <td>${account.id}</td>
