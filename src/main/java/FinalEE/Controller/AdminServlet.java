@@ -10,6 +10,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,7 +102,17 @@ public class AdminServlet extends HttpServlet {
                     System.out.println("Thêm khách hàng");
 
                     ObjectMapper mapper=new ObjectMapper();
-                    Customer customer=mapper.readValue(req.getParameter("customer"),Customer.class);
+
+                    String name = req.getParameter("add_customerName");
+                    String phoneNumber = req.getParameter("add_customerPhoneNumber");
+                    String email = req.getParameter("add_customerEmail");
+                    String address = req.getParameter("add_customerAddress");
+
+                    Customer customer = new Customer();
+                    customer.setAddress(address);
+                    customer.setEmail(email);
+                    customer.setName(name);
+                    customer.setPhone_number(phoneNumber);
 
                     if (customerServiceImpl.create(customer)) {
 
@@ -117,24 +130,18 @@ public class AdminServlet extends HttpServlet {
                     }
                 }
                 case "updateCustomer"->{
-                    System.out.println("Cập nhật khách hàng");
+                    int id = Integer.parseInt(req.getParameter("update_customerID"));
+                    String name = req.getParameter("update_customerName");
+                    String phoneNumber = req.getParameter("update_customerPhoneNumber");
+                    String email = req.getParameter("update_customerEmail");
+                    String address = req.getParameter("update_customerAddress");
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    int accountID=Integer.parseInt(req.getParameter("update_accountID"));
-                    String name = req.getParameter("add_accountName");
-                    String password = req.getParameter("add_accountPassword");
-                    int permissionID = Integer.parseInt(req.getParameter("add_accountPermissionID"));
-                    int customerID = Integer.parseInt(req.getParameter("add_accountCustomerID"));
-
-                    Customer customer = customerServiceImpl.getCustomer(customerID);
-                    Permission permission = permissionServiceImpl.getPermission(permissionID);
-
-                    Account account = new Account();
-                    account.setId(accountID);
-                    account.setName(name);
-                    account.setCustomer(customer);
-                    account.setPassword(password);
-                    account.setPermission(permission);
+                    Customer customer = new Customer();
+                    customer.setId(id);
+                    customer.setAddress(address);
+                    customer.setEmail(email);
+                    customer.setName(name);
+                    customer.setPhone_number(phoneNumber);
 
                     if (customerServiceImpl.create(customer)) {
 
@@ -143,6 +150,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -222,13 +230,10 @@ public class AdminServlet extends HttpServlet {
 
                 /*Account*/
                 case "addAccount"->{
-                    System.out.println("Thêm tài khoản");
-
-                    ObjectMapper mapper=new ObjectMapper();
-                    String name = req.getParameter("name");
-                    String password = req.getParameter("password");
-                    int permissionID = Integer.parseInt(req.getParameter("permissionID"));
-                    int customerID = Integer.parseInt(req.getParameter("customerID"));
+                    String name = req.getParameter("add_accountName");
+                    String password = req.getParameter("add_accountPassword");
+                    int permissionID = Integer.parseInt(req.getParameter("add_accountPermissionID"));
+                    int customerID = Integer.parseInt(req.getParameter("add_accountCustomerID"));
 
                     Customer customer = customerServiceImpl.getCustomer(customerID);
                     Permission permission = permissionServiceImpl.getPermission(permissionID);
@@ -246,6 +251,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -255,10 +261,21 @@ public class AdminServlet extends HttpServlet {
                     }
                 }
                 case "updateAccount"->{
-                    System.out.println("Cập nhật tài khoản");
+                    int id = Integer.parseInt(req.getParameter("update_accountID"));
+                    String name = req.getParameter("update_accountName");
+                    String password = req.getParameter("update_accountPassword");
+                    int permissionID = Integer.parseInt(req.getParameter("update_accountPermissionID"));
+                    int customerID = Integer.parseInt(req.getParameter("update_accountCustomerID"));
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    Account account=mapper.readValue(req.getParameter("account"),Account.class);
+                    Permission permission = permissionServiceImpl.getPermission(permissionID);
+                    Customer customer = customerServiceImpl.getCustomer(customerID);
+
+                    Account account = new Account();
+                    account.setId(id);
+                    account.setName(name);
+                    account.setCustomer(customer);
+                    account.setPassword(password);
+                    account.setPermission(permission);
 
                     if (accountServiceImpl.create(account)) {
 
@@ -267,6 +284,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -477,8 +495,16 @@ public class AdminServlet extends HttpServlet {
                 case "addDiscountCard"->{
                     System.out.println("Thêm thẻ khuyến mãi");
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    DiscountCard discountCard=mapper.readValue(req.getParameter("discountCard"),DiscountCard.class);
+                    int customerID = Integer.parseInt(req.getParameter("add_discountCardID"));
+                    String name = req.getParameter("add_discountCardName");
+                    int discountPercentage = Integer.parseInt(req.getParameter("add_discountCardDiscountPercentage"));
+
+                    Customer customer = customerServiceImpl.getCustomer(customerID);
+
+                    DiscountCard discountCard = new DiscountCard();
+                    discountCard.setCustomer(customer);
+                    discountCard.setDiscount_percentage(discountPercentage);
+                    discountCard.setName(name);
 
                     if (discountCardServiceImpl.create(discountCard)) {
 
@@ -487,6 +513,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -496,10 +523,18 @@ public class AdminServlet extends HttpServlet {
                     }
                 }
                 case "updateDiscountCard"->{
-                    System.out.println("Cập nhật thẻ khuyến mãi");
+                    int id = Integer.parseInt(req.getParameter("update_discountCardID"));
+                    int discountPercentage = Integer.parseInt(req.getParameter("update_discountCardDiscountPercentage"));
+                    String name = req.getParameter("update_discountCardName");
+                    int customerID = Integer.parseInt(req.getParameter("update_discountCardID"));
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    DiscountCard discountCard=mapper.readValue(req.getParameter("discountCard"),DiscountCard.class);
+                    Customer customer = customerServiceImpl.getCustomer(customerID);
+
+                    DiscountCard discountCard = new DiscountCard();
+                    discountCard.setId(id);
+                    discountCard.setCustomer(customer);
+                    discountCard.setDiscount_percentage(discountPercentage);
+                    discountCard.setName(name);
 
                     if (discountCardServiceImpl.create(discountCard)) {
 
@@ -508,6 +543,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -608,10 +644,10 @@ public class AdminServlet extends HttpServlet {
 
                 /*ItemCollection*/
                 case "addItemCollection"->{
-                    System.out.println("Thêm bộ sưu tập sản phẩm");
+                    String name = req.getParameter("add_itemCollectionName");
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    ItemCollection itemCollection=mapper.readValue(req.getParameter("itemCollection"),ItemCollection.class);
+                    ItemCollection itemCollection = new ItemCollection();
+                    itemCollection.setName(name);
 
                     if (itemCollectionServiceImpl.create(itemCollection)) {
 
@@ -620,6 +656,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -629,10 +666,12 @@ public class AdminServlet extends HttpServlet {
                     }
                 }
                 case "updateItemCollection"->{
-                    System.out.println("Cập nhật bộ sưu tập sản phẩm");
+                    int id = Integer.parseInt(req.getParameter("update_itemCollectionID"));
+                    String name = req.getParameter("update_itemCollectionName");
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    ItemCollection itemCollection=mapper.readValue(req.getParameter("itemCollection"),ItemCollection.class);
+                    ItemCollection itemCollection = new ItemCollection();
+                    itemCollection.setId(id);
+                    itemCollection.setName(name);
 
                     if (itemCollectionServiceImpl.create(itemCollection)) {
 
@@ -641,6 +680,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -720,10 +760,14 @@ public class AdminServlet extends HttpServlet {
 
                 /*ItemImage*/
                 case "addItemImage"->{
-                    System.out.println("Thêm hình ảnh sản phẩm");
+                    int itemID = Integer.parseInt(req.getParameter("add_itemImageItemID"));
+                    String url = req.getParameter("add_itemImageURL");
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    ItemImage itemImage=mapper.readValue(req.getParameter("itemImage"),ItemImage.class);
+                    Item item = itemServiceImpl.getItem(itemID);
+
+                    ItemImage itemImage = new ItemImage();
+                    itemImage.setImage_url(url);
+                    itemImage.setItem(item);
 
                     if (itemImageServiceImpl.create(itemImage)) {
 
@@ -732,6 +776,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -741,10 +786,16 @@ public class AdminServlet extends HttpServlet {
                     }
                 }
                 case "updateItemImage"->{
-                    System.out.println("Cập nhật hình ảnh sản phẩm");
+                    int id = Integer.parseInt(req.getParameter("update_itemImageID"));
+                    int itemID = Integer.parseInt(req.getParameter("update_itemImageItemID"));
+                    String url = req.getParameter("update_itemImageURL");
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    ItemImage itemImage=mapper.readValue(req.getParameter("itemImage"),ItemImage.class);
+                    Item item = itemServiceImpl.getItem(itemID);
+
+                    ItemImage itemImage = new ItemImage();
+                    itemImage.setId(id);
+                    itemImage.setImage_url(url);
+                    itemImage.setItem(item);
 
                     if (itemImageServiceImpl.create(itemImage)) {
 
@@ -753,6 +804,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -832,10 +884,10 @@ public class AdminServlet extends HttpServlet {
 
                 /*ItemMaterial*/
                 case "addItemMaterial"->{
-                    System.out.println("Thêm vật liệu sản phẩm");
+                    String name = req.getParameter("add_itemMaterialName");
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    ItemMaterial itemMaterial=mapper.readValue(req.getParameter("itemMaterial"),ItemMaterial.class);
+                    ItemMaterial itemMaterial = new ItemMaterial();
+                    itemMaterial.setName(name);
 
                     if (itemMaterialServiceImpl.create(itemMaterial)) {
 
@@ -844,6 +896,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -853,10 +906,12 @@ public class AdminServlet extends HttpServlet {
                     }
                 }
                 case "updateItemMaterial"->{
-                    System.out.println("Cập nhật vật liệu sản phẩm");
+                    int id = Integer.parseInt(req.getParameter("update_itemMaterialID"));
+                    String name = req.getParameter("update_itemMaterialName");
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    ItemMaterial itemMaterial=mapper.readValue(req.getParameter("itemMaterial"),ItemMaterial.class);
+                    ItemMaterial itemMaterial = new ItemMaterial();
+                    itemMaterial.setId(id);
+                    itemMaterial.setName(name);
 
                     if (itemMaterialServiceImpl.create(itemMaterial)) {
 
@@ -865,6 +920,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -944,10 +1000,10 @@ public class AdminServlet extends HttpServlet {
 
                 /*ItemType*/
                 case "addItemType"->{
-                    System.out.println("Thêm loại sản phẩm");
+                    String name = req.getParameter("add_itemTypeName");
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    ItemType itemType=mapper.readValue(req.getParameter("itemType"),ItemType.class);
+                    ItemType itemType = new ItemType();
+                    itemType.setName(name);
 
                     if (itemTypeServiceImpl.create(itemType)) {
 
@@ -956,6 +1012,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -965,10 +1022,12 @@ public class AdminServlet extends HttpServlet {
                     }
                 }
                 case "updateItemType"->{
-                    System.out.println("Cập nhật loại sản phẩm");
+                    int id = Integer.parseInt(req.getParameter("update_itemTypeID"));
+                    String name = req.getParameter("update_itemTypeName");
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    ItemType itemType=mapper.readValue(req.getParameter("itemType"),ItemType.class);
+                    ItemType itemType = new ItemType();
+                    itemType.setId(id);
+                    itemType.setName(name);
 
                     if (itemTypeServiceImpl.create(itemType)) {
 
@@ -977,6 +1036,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -1056,10 +1116,23 @@ public class AdminServlet extends HttpServlet {
 
                 /*OrderDetail*/
                 case "addOrderDetail"->{
-                    System.out.println("Thêm hóa đơn chi tiết");
+                    int orderID = Integer.parseInt(req.getParameter("add_orderDetailOrderID"));
+                    int itemID = Integer.parseInt(req.getParameter("add_orderDetailItemID"));
+                    int amount = Integer.parseInt(req.getParameter("add_orderDetailAmount"));
+                    String itemColor = req.getParameter("add_orderDetailItemColor");
+                    String itemSize = req.getParameter("add_orderDetailItemSize");
+                    double total = Double.parseDouble(req.getParameter("add_orderDetailTotal"));
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    OrderDetail orderDetail=mapper.readValue(req.getParameter("orderDetail"),OrderDetail.class);
+                    Item item = itemServiceImpl.getItem(itemID);
+                    Order order = orderServiceImpl.getOrder(orderID);
+
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.setTotal(total);
+                    orderDetail.setItem(item);
+                    orderDetail.setAmount(amount);
+                    orderDetail.setOrder(order);
+                    orderDetail.setItem_color(itemColor);
+                    orderDetail.setItem_size(itemSize);
 
                     if (orderDetailServiceImpl.create(orderDetail)) {
 
@@ -1068,6 +1141,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -1077,10 +1151,25 @@ public class AdminServlet extends HttpServlet {
                     }
                 }
                 case "updateOrderDetail"->{
-                    System.out.println("Cập nhật hóa đơn chi tiết");
+                    int orderDetailID = Integer.parseInt(req.getParameter("update_orderDetailID"));
+                    int orderID = Integer.parseInt(req.getParameter("update_orderDetailOrderID"));
+                    int itemID = Integer.parseInt(req.getParameter("update_orderDetailItemID"));
+                    int amount = Integer.parseInt(req.getParameter("update_orderDetailAmount"));
+                    String itemColor = req.getParameter("update_orderDetailItemColor");
+                    String itemSize = req.getParameter("update_orderDetailItemSize");
+                    double total = Double.parseDouble(req.getParameter("update_orderDetailTotal"));
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    OrderDetail orderDetail=mapper.readValue(req.getParameter("orderDetail"),OrderDetail.class);
+                    Item item = itemServiceImpl.getItem(itemID);
+                    Order order = orderServiceImpl.getOrder(orderID);
+
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.setId(orderDetailID);
+                    orderDetail.setTotal(total);
+                    orderDetail.setItem(item);
+                    orderDetail.setAmount(amount);
+                    orderDetail.setOrder(order);
+                    orderDetail.setItem_color(itemColor);
+                    orderDetail.setItem_size(itemSize);
 
                     if (orderDetailServiceImpl.create(orderDetail)) {
 
@@ -1089,6 +1178,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -1210,10 +1300,38 @@ public class AdminServlet extends HttpServlet {
 
                 /*Order*/
                 case "addOrder"->{
-                    System.out.println("Thêm hóa đơn");
+                    int customerID = Integer.parseInt(req.getParameter("add_orderCustomerID"));
+                    int discountCardID = Integer.parseInt(req.getParameter("add_orderDiscountCardID"));
+                    double total = Double.parseDouble(req.getParameter("add_orderTotal"));
+                    String datePurchase = req.getParameter("add_orderDatePurchase");
+                    OrderStatus orderStatus=orderStatusServiceImpl.findById(Integer.parseInt(req.getParameter("add_orderOrderStatusID")));
+                    String address=req.getParameter("add_orderAddress");
+                    String note=req.getParameter("add_orderNote");
+                    String email=req.getParameter("add_orderEmail");
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    Order order=mapper.readValue(req.getParameter("order"),Order.class);
+
+                    /*Xử lý định dạng date*/
+                    SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date datePurchaseFormatted = null;
+                    try {
+                        datePurchaseFormatted = inputFormat.parse(datePurchase);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    Customer customer = customerServiceImpl.getCustomer(customerID);
+                    DiscountCard discountCard = discountCardServiceImpl.getDiscountCard(discountCardID);
+
+
+                    Order order = new Order();
+                    order.setCustomer(customer);
+                    order.setTotal(total);
+                    order.setDate_purchase(datePurchaseFormatted);
+                    order.setDiscountCard(discountCard);
+                    order.setOrder_status(orderStatus);
+                    order.setNote(note);
+                    order.setAddress(address);
+                    order.setEmail(email);
 
                     if (orderServiceImpl.create(order)) {
 
@@ -1222,6 +1340,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -1231,10 +1350,39 @@ public class AdminServlet extends HttpServlet {
                     }
                 }
                 case "updateOrder"->{
-                    System.out.println("Cập nhật hóa đơn");
+                    int orderID=Integer.parseInt(req.getParameter("update_orderID"));
+                    int customerID = Integer.parseInt(req.getParameter("update_orderCustomerID"));
+                    int discountCardID = Integer.parseInt(req.getParameter("update_orderDiscountCardID"));
+                    double total = Double.parseDouble(req.getParameter("update_orderTotal"));
+                    String datePurchase = req.getParameter("update_orderDatePurchase");
+                    OrderStatus orderStatus=orderStatusServiceImpl.findById(Integer.parseInt(req.getParameter("update_orderOrderStatusID")));
+                    String address=req.getParameter("update_orderAddress");
+                    String note=req.getParameter("update_orderNote");
+                    String email=req.getParameter("update_orderEmail");
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    Order order=mapper.readValue(req.getParameter("order"),Order.class);
+                    /*Xử lý định dạng date*/
+                    SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date datePurchaseFormatted = null;
+                    try {
+                        datePurchaseFormatted = inputFormat.parse(datePurchase);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    Customer customer = customerServiceImpl.getCustomer(customerID);
+                    DiscountCard discountCard = discountCardServiceImpl.getDiscountCard(discountCardID);
+
+
+                    Order order = new Order();
+                    order.setId(orderID);
+                    order.setCustomer(customer);
+                    order.setTotal(total);
+                    order.setDate_purchase(datePurchaseFormatted);
+                    order.setDiscountCard(discountCard);
+                    order.setOrder_status(orderStatus);
+                    order.setNote(note);
+                    order.setAddress(address);
+                    order.setEmail(email);
 
                     if (orderServiceImpl.create(order)) {
 
@@ -1243,6 +1391,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -1362,12 +1511,594 @@ public class AdminServlet extends HttpServlet {
 
                 }
 
+                /*Permission*/
+                case "addPermission"->{
+                    int level = Integer.parseInt(req.getParameter("add_permissionLevel"));
+                    String name = req.getParameter("add_permissionName");
+
+                    Permission permission = new Permission();
+                    permission.setLevel(level);
+                    permission.setName(name);
+
+                    if (permissionServiceImpl.create(permission)) {
+
+                        Map<String, Object> responseData = new HashMap<>();
+                        responseData.put("permission", permission);
+                        responseData.put("success", true);
+
+                        // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
+                        String json = mapper.writeValueAsString(responseData);
+
+                        resp.setContentType("application/json");
+                        resp.setCharacterEncoding("UTF-8");
+                        resp.getWriter().write(json);
+
+                    }
+                }
+                case "updatePermission"->{
+                    int id = Integer.parseInt(req.getParameter("update_permissionID"));
+                    String name = req.getParameter("update_permissionName");
+                    int level = Integer.parseInt(req.getParameter("update_permissionLevel"));
+
+                    Permission permission = new Permission();
+                    permission.setId(id);
+                    permission.setLevel(level);
+                    permission.setName(name);
+
+                    if (permissionServiceImpl.create(permission)) {
+
+                        Map<String, Object> responseData = new HashMap<>();
+                        responseData.put("permission", permission);
+                        responseData.put("success", true);
+
+                        // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
+                        String json = mapper.writeValueAsString(responseData);
+
+                        resp.setContentType("application/json");
+                        resp.setCharacterEncoding("UTF-8");
+                        resp.getWriter().write(json);
+
+                    }
+                }
+                case "deletePermission"->{
+                    System.out.println("Xóa quyền tài khoản");
+
+                    Integer permissionID=Integer.parseInt(req.getParameter("id"));
+                    ObjectMapper mapper=new ObjectMapper();
+
+                    if (permissionServiceImpl.deleteByID(permissionID)) {
+
+                        Map<String, Object> responseData = new HashMap<>();
+                        responseData.put("success", true);
+
+                        // Convert the map to JSON
+                        String json = mapper.writeValueAsString(responseData);
+
+                        resp.setContentType("application/json");
+                        resp.setCharacterEncoding("UTF-8");
+                        resp.getWriter().write(json);
+
+                    }
+                }
+                case "searchAndSortPermission"->{
+                    String searchType=req.getParameter("permissionSearchType");
+                    String permissionInputSearch=req.getParameter("permissionInputSearch");
+                    switch (searchType){
+                        case "noData"->{
+
+                        }
+                        case "id"->{
+                            Integer permissionID=Integer.parseInt(req.getParameter("permissionInputSearch"));
+                            Permission permission=permissionServiceImpl.findByID(permissionID);
+
+                            ObjectMapper mapper=new ObjectMapper();
+                            Map<String, Object> responseData = new HashMap<>();
+                            responseData.put("success", true);
+                            responseData.put("permission",permission);
+
+                            // Convert the map to JSON
+                            String json = mapper.writeValueAsString(responseData);
+
+                            resp.setContentType("application/json");
+                            resp.setCharacterEncoding("UTF-8");
+                            resp.getWriter().write(json);
+
+                        }
+                        case "name"->{
+                            String permissionSortType=req.getParameter("permissionSortType");
+                            List<Permission> permissionList=null;
+                            if(permissionSortType.equals("az")){
+                                permissionList=permissionServiceImpl.findAllByNameContains(permissionInputSearch,"name", ItemServiceImpl.SortOrder.ASC);
+                            }else if(permissionSortType.equals("za")){
+                                permissionList=permissionServiceImpl.findAllByNameContains(permissionInputSearch,"name", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            ObjectMapper mapper=new ObjectMapper();
+                            Map<String, Object> responseData = new HashMap<>();
+                            responseData.put("success", true);
+                            responseData.put("permissionList",permissionList);
+
+                            // Convert the map to JSON
+                            String json = mapper.writeValueAsString(responseData);
+
+                            resp.setContentType("application/json");
+                            resp.setCharacterEncoding("UTF-8");
+                            resp.getWriter().write(json);
+                        }
+                    }
+
+                }
+
+                /*Sale*/
+                case "addSale"->{
+                    int itemId = Integer.parseInt(req.getParameter("add_saleItemID"));
+                    String name = req.getParameter("add_saleName");
+                    int onSale = Integer.parseInt(req.getParameter("add_saleOnSale"));
+                    int salePercentage = Integer.parseInt(req.getParameter("add_salePercentage"));
+
+                    Item item = itemServiceImpl.getItem(itemId);
+
+                    Sale sale = new Sale();
+                    sale.setSale_percentage(salePercentage);
+                    sale.setOn_sale(onSale);
+                    sale.setItem(item);
+                    sale.setName(name);
+
+                    if (saleServiceImpl.create(sale)) {
+
+                        Map<String, Object> responseData = new HashMap<>();
+                        responseData.put("sale", sale);
+                        responseData.put("success", true);
+
+                        // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
+                        String json = mapper.writeValueAsString(responseData);
+
+                        resp.setContentType("application/json");
+                        resp.setCharacterEncoding("UTF-8");
+                        resp.getWriter().write(json);
+
+                    }
+                }
+                case "updateSale"->{
+                    int id = Integer.parseInt(req.getParameter("update_saleID"));
+                    int itemId = Integer.parseInt(req.getParameter("update_saleItemID"));
+                    String name = req.getParameter("update_saleName");
+                    int onSale = Integer.parseInt(req.getParameter("update_saleOnSale"));
+                    int salePercentage = Integer.parseInt(req.getParameter("update_salePercentage"));
+
+                    Item item = itemServiceImpl.getItem(itemId);
+
+                    Sale sale = new Sale();
+                    sale.setId(id);
+                    sale.setSale_percentage(salePercentage);
+                    sale.setOn_sale(onSale);
+                    sale.setItem(item);
+                    sale.setName(name);
+
+                    if (saleServiceImpl.create(sale)) {
+
+                        Map<String, Object> responseData = new HashMap<>();
+                        responseData.put("sale", sale);
+                        responseData.put("success", true);
+
+                        // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
+                        String json = mapper.writeValueAsString(responseData);
+
+                        resp.setContentType("application/json");
+                        resp.setCharacterEncoding("UTF-8");
+                        resp.getWriter().write(json);
+
+                    }
+                }
+                case "deleteSale"->{
+                    System.out.println("Xóa thẻ khuyến mãi");
+
+                    Integer saleID=Integer.parseInt(req.getParameter("id"));
+                    ObjectMapper mapper=new ObjectMapper();
+
+                    if (saleServiceImpl.deleteByID(saleID)) {
+
+                        Map<String, Object> responseData = new HashMap<>();
+                        responseData.put("success", true);
+
+                        // Convert the map to JSON
+                        String json = mapper.writeValueAsString(responseData);
+
+                        resp.setContentType("application/json");
+                        resp.setCharacterEncoding("UTF-8");
+                        resp.getWriter().write(json);
+
+                    }
+                }
+                case "searchAndSortSale"->{
+                    String searchType=req.getParameter("saleSearchType");
+                    String saleInputSearch=req.getParameter("saleInputSearch");
+                    switch (searchType){
+                        case "noData"->{
+
+                        }
+                        case "id"->{
+                            Integer saleID=Integer.parseInt(req.getParameter("saleInputSearch"));
+                            Sale sale=saleServiceImpl.getSale(saleID);
+
+                            ObjectMapper mapper=new ObjectMapper();
+                            Map<String, Object> responseData = new HashMap<>();
+                            responseData.put("success", true);
+                            responseData.put("sale",sale);
+
+                            // Convert the map to JSON
+                            String json = mapper.writeValueAsString(responseData);
+
+                            resp.setContentType("application/json");
+                            resp.setCharacterEncoding("UTF-8");
+                            resp.getWriter().write(json);
+
+                        }
+                        case "name"->{
+                            String saleSortType=req.getParameter("saleSortType");
+                            List<Sale> saleList=null;
+                            if(saleSortType.equals("az")){
+                                saleList=saleServiceImpl.findAllByNameContains(saleInputSearch,"name", ItemServiceImpl.SortOrder.ASC);
+                            }else if(saleSortType.equals("za")){
+                                saleList=saleServiceImpl.findAllByNameContains(saleInputSearch,"name", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            ObjectMapper mapper=new ObjectMapper();
+                            Map<String, Object> responseData = new HashMap<>();
+                            responseData.put("success", true);
+                            responseData.put("saleList",saleList);
+
+                            // Convert the map to JSON
+                            String json = mapper.writeValueAsString(responseData);
+
+                            resp.setContentType("application/json");
+                            resp.setCharacterEncoding("UTF-8");
+                            resp.getWriter().write(json);
+                        }
+                    }
+
+                }
+
+                /*StockItem*/
+                case "addStockItem"->{
+                    int itemId = Integer.parseInt(req.getParameter("itemID"));
+                    String color = req.getParameter("color");
+                    String size = req.getParameter("size");
+                    int amount = Integer.parseInt(req.getParameter("amount"));
+
+                    Item item = itemServiceImpl.getItem(itemId);
+
+                    StockItem stockItem = new StockItem();
+                    stockItem.setAmount(amount);
+                    stockItem.setSize(size);
+                    stockItem.setColor(color);
+                    stockItem.setItem(item);
+
+                    if (stockItemServiceImpl.create(stockItem)) {
+
+                        Map<String, Object> responseData = new HashMap<>();
+                        responseData.put("stockItem", stockItem);
+                        responseData.put("success", true);
+
+                        // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
+                        String json = mapper.writeValueAsString(responseData);
+
+                        resp.setContentType("application/json");
+                        resp.setCharacterEncoding("UTF-8");
+                        resp.getWriter().write(json);
+
+                    }
+                }
+                case "updateStockItem"->{
+                    int id = Integer.parseInt(req.getParameter("id"));
+                    int itemId = Integer.parseInt(req.getParameter("itemID"));
+                    String color = req.getParameter("color");
+                    String size = req.getParameter("size");
+                    int amount = Integer.parseInt(req.getParameter("amount"));
+
+                    Item item = itemServiceImpl.getItem(itemId);
+
+                    StockItem stockItem = new StockItem();
+                    stockItem.setId(id);
+                    stockItem.setAmount(amount);
+                    stockItem.setSize(size);
+                    stockItem.setColor(color);
+                    stockItem.setItem(item);
+
+                    if (stockItemServiceImpl.create(stockItem)) {
+
+                        Map<String, Object> responseData = new HashMap<>();
+                        responseData.put("stockItem", stockItem);
+                        responseData.put("success", true);
+
+                        // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
+                        String json = mapper.writeValueAsString(responseData);
+
+                        resp.setContentType("application/json");
+                        resp.setCharacterEncoding("UTF-8");
+                        resp.getWriter().write(json);
+
+                    }
+                }
+                case "deleteStockItem"->{
+                    System.out.println("Xóa thông tin sản phẩm");
+
+                    Integer stockItemID=Integer.parseInt(req.getParameter("id"));
+                    ObjectMapper mapper=new ObjectMapper();
+
+                    if (stockItemServiceImpl.deleteByID(stockItemID)) {
+
+                        Map<String, Object> responseData = new HashMap<>();
+                        responseData.put("success", true);
+
+                        // Convert the map to JSON
+                        String json = mapper.writeValueAsString(responseData);
+
+                        resp.setContentType("application/json");
+                        resp.setCharacterEncoding("UTF-8");
+                        resp.getWriter().write(json);
+
+                    }
+                }
+                case "searchAndSortStockItem"->{
+                    String searchType=req.getParameter("stockItemSearchType");
+                    String stockItemInputSearch=req.getParameter("stockItemInputSearch");
+                    switch (searchType){
+                        case "noData"->{
+
+                        }
+                        case "id"->{
+                            Integer stockItemID=Integer.parseInt(req.getParameter("stockItemInputSearch"));
+                            StockItem stockItem=stockItemServiceImpl.getStockItem(stockItemID);
+
+                            ObjectMapper mapper=new ObjectMapper();
+                            Map<String, Object> responseData = new HashMap<>();
+                            responseData.put("success", true);
+                            responseData.put("stockItem",stockItem);
+
+                            // Convert the map to JSON
+                            String json = mapper.writeValueAsString(responseData);
+
+                            resp.setContentType("application/json");
+                            resp.setCharacterEncoding("UTF-8");
+                            resp.getWriter().write(json);
+
+                        }
+                        case "itemID"->{
+                            String stockItemSortType=req.getParameter("stockItemSortType");
+                            List<StockItem> stockItemList=null;
+                            if(stockItemSortType.equals("az")){
+                                stockItemList=stockItemServiceImpl.findAllByItemID(Integer.parseInt(stockItemInputSearch),"item_id", ItemServiceImpl.SortOrder.ASC);
+                            }else if(stockItemSortType.equals("za")){
+                                stockItemList=stockItemServiceImpl.findAllByItemID(Integer.parseInt(stockItemInputSearch),"item_id", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            ObjectMapper mapper=new ObjectMapper();
+                            Map<String, Object> responseData = new HashMap<>();
+                            responseData.put("success", true);
+                            responseData.put("stockItemList",stockItemList);
+
+                            // Convert the map to JSON
+                            String json = mapper.writeValueAsString(responseData);
+
+                            resp.setContentType("application/json");
+                            resp.setCharacterEncoding("UTF-8");
+                            resp.getWriter().write(json);
+                        }
+                    }
+
+                }
+
+                /*Item*/
+                case "addItem"->{
+                    String name = req.getParameter("add_itemName");
+                    int itemTypeID = Integer.parseInt(req.getParameter("add_itemTypeID"));
+                    int itemMaterialID = Integer.parseInt(req.getParameter("add_itemMaterialID"));
+                    int itemCollectionID = Integer.parseInt(req.getParameter("add_itemCollectionID"));
+                    int isNew = Integer.parseInt(req.getParameter("add_itemIsNew"));
+                    int isHot = Integer.parseInt(req.getParameter("add_itemIsHot"));
+                    double price = Double.parseDouble(req.getParameter("add_itemPrice"));
+                    int yearProduce = Integer.parseInt(req.getParameter("add_itemYearProduce"));
+                    String description=req.getParameter("add_itemDescription");
+
+                    ItemCollection itemCollection = itemCollectionServiceImpl.getItemCollection(itemCollectionID);
+                    ItemMaterial itemMaterial = itemMaterialServiceImpl.getItemMaterial(itemMaterialID);
+                    ItemType itemType = itemTypeServiceImpl.getItemType(itemTypeID);
+
+                    Item item = new Item();
+                    item.setIs_hot(isHot);
+                    item.setIs_new(isNew);
+                    item.setItemCollection(itemCollection);
+                    item.setItemMaterial(itemMaterial);
+                    item.setItemType(itemType);
+                    item.setName(name);
+                    item.setPrice(price);
+                    item.setYear_produce(yearProduce);
+                    item.setDescription(description);
+
+                    if (itemServiceImpl.create(item)) {
+
+                        Map<String, Object> responseData = new HashMap<>();
+                        responseData.put("item", item);
+                        responseData.put("success", true);
+
+                        // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
+                        String json = mapper.writeValueAsString(responseData);
+
+                        resp.setContentType("application/json");
+                        resp.setCharacterEncoding("UTF-8");
+                        resp.getWriter().write(json);
+
+                    }
+                }
+                case "updateItem"->{
+                    int itemID=Integer.parseInt(req.getParameter("update_itemID"));
+                    String name = req.getParameter("update_itemName");
+                    int itemTypeID = Integer.parseInt(req.getParameter("update_itemTypeID"));
+                    int itemMaterialID = Integer.parseInt(req.getParameter("update_itemMaterialID"));
+                    int itemCollectionID = Integer.parseInt(req.getParameter("update_itemCollectionID"));
+                    int isNew = Integer.parseInt(req.getParameter("update_itemIsNew"));
+                    int isHot = Integer.parseInt(req.getParameter("update_itemIsHot"));
+                    double price = Double.parseDouble(req.getParameter("update_itemPrice"));
+                    int yearProduce = Integer.parseInt(req.getParameter("update_itemYearProduce"));
+                    String description=req.getParameter("update_itemDescription");
+
+                    ItemCollection itemCollection = itemCollectionServiceImpl.getItemCollection(itemCollectionID);
+                    ItemMaterial itemMaterial = itemMaterialServiceImpl.getItemMaterial(itemMaterialID);
+                    ItemType itemType = itemTypeServiceImpl.getItemType(itemTypeID);
+
+                    Item item = new Item();
+                    item.setId(itemID);
+                    item.setIs_hot(isHot);
+                    item.setIs_new(isNew);
+                    item.setItemCollection(itemCollection);
+                    item.setItemMaterial(itemMaterial);
+                    item.setItemType(itemType);
+                    item.setName(name);
+                    item.setPrice(price);
+                    item.setYear_produce(yearProduce);
+                    item.setDescription(description);
+
+                    if (itemServiceImpl.create(item)) {
+
+                        Map<String, Object> responseData = new HashMap<>();
+                        responseData.put("item", item);
+                        responseData.put("success", true);
+
+                        // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
+                        String json = mapper.writeValueAsString(responseData);
+
+                        resp.setContentType("application/json");
+                        resp.setCharacterEncoding("UTF-8");
+                        resp.getWriter().write(json);
+
+                    }
+                }
+                case "deleteItem"->{
+                    System.out.println("Xóa hóa đơn chi tiết");
+
+                    Integer itemID=Integer.parseInt(req.getParameter("id"));
+                    ObjectMapper mapper=new ObjectMapper();
+
+                    if (itemServiceImpl.deleteByID(itemID)) {
+
+                        Map<String, Object> responseData = new HashMap<>();
+                        responseData.put("success", true);
+
+                        // Convert the map to JSON
+                        String json = mapper.writeValueAsString(responseData);
+
+                        resp.setContentType("application/json");
+                        resp.setCharacterEncoding("UTF-8");
+                        resp.getWriter().write(json);
+
+                    }
+                }
+                case "searchAndSortItem"->{
+                    String searchType=req.getParameter("itemSearchType");
+                    String itemInputSearch=req.getParameter("itemInputSearch");
+                    switch (searchType){
+                        case "noData"->{
+
+                        }
+                        case "id"->{
+                            Integer itemID=Integer.parseInt(req.getParameter("itemInputSearch"));
+                            Item item=itemServiceImpl.getItem(itemID);
+
+                            ObjectMapper mapper=new ObjectMapper();
+                            Map<String, Object> responseData = new HashMap<>();
+                            responseData.put("success", true);
+                            responseData.put("item",item);
+
+                            // Convert the map to JSON
+                            String json = mapper.writeValueAsString(responseData);
+
+                            resp.setContentType("application/json");
+                            resp.setCharacterEncoding("UTF-8");
+                            resp.getWriter().write(json);
+
+                        }
+                        case "itemColor"->{
+                            String itemSortType=req.getParameter("itemSortType");
+                            List<Item> itemList=null;
+                            if(itemSortType.equals("az")){
+                                itemList=itemServiceImpl.findItemListByColor(itemInputSearch,"item_id", ItemServiceImpl.SortOrder.ASC);
+                            }else if(itemSortType.equals("za")){
+                                itemList=itemServiceImpl.findItemListByColor(itemInputSearch,"item_id", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            ObjectMapper mapper=new ObjectMapper();
+                            Map<String, Object> responseData = new HashMap<>();
+                            responseData.put("success", true);
+                            responseData.put("itemList",itemList);
+
+                            // Convert the map to JSON
+                            String json = mapper.writeValueAsString(responseData);
+
+                            resp.setContentType("application/json");
+                            resp.setCharacterEncoding("UTF-8");
+                            resp.getWriter().write(json);
+                        }
+                        case "lowerPrice"->{
+                            String itemSortType=req.getParameter("itemSortType");
+                            List<Item> itemList=null;
+                            if(itemSortType.equals("az")){
+                                itemList=itemServiceImpl.findAllByPriceLessThan(Double.parseDouble(itemInputSearch),"total", ItemServiceImpl.SortOrder.ASC);
+                            }else if(itemSortType.equals("za")){
+                                itemList=itemServiceImpl.findAllByPriceLessThan(Double.parseDouble(itemInputSearch),"total", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            ObjectMapper mapper=new ObjectMapper();
+                            Map<String, Object> responseData = new HashMap<>();
+                            responseData.put("success", true);
+                            responseData.put("itemList",itemList);
+
+                            // Convert the map to JSON
+                            String json = mapper.writeValueAsString(responseData);
+
+                            resp.setContentType("application/json");
+                            resp.setCharacterEncoding("UTF-8");
+                            resp.getWriter().write(json);
+                        }
+                        case "higherPrice"->{
+                            String itemSortType=req.getParameter("itemSortType");
+                            List<Item> itemList=null;
+                            if(itemSortType.equals("az")){
+                                itemList=itemServiceImpl.findAllByPriceGreaterThan(Double.parseDouble(itemInputSearch),"total", ItemServiceImpl.SortOrder.ASC);
+                            }else if(itemSortType.equals("za")){
+                                itemList=itemServiceImpl.findAllByPriceGreaterThan(Double.parseDouble(itemInputSearch),"total", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            ObjectMapper mapper=new ObjectMapper();
+                            Map<String, Object> responseData = new HashMap<>();
+                            responseData.put("success", true);
+                            responseData.put("itemList",itemList);
+
+                            // Convert the map to JSON
+                            String json = mapper.writeValueAsString(responseData);
+
+                            resp.setContentType("application/json");
+                            resp.setCharacterEncoding("UTF-8");
+                            resp.getWriter().write(json);
+                        }
+                    }
+
+                }
+
                 /*OrderStatus*/
                 case "addOrderStatus"->{
-                    System.out.println("Thêm tình trạng đơn hàng");
+                    String name = req.getParameter("add_orderStatusName");
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    OrderStatus orderStatus=mapper.readValue(req.getParameter("orderStatus"),OrderStatus.class);
+                    OrderStatus orderStatus = new OrderStatus();
+                    orderStatus.setName(name);
 
                     if (orderStatusServiceImpl.create(orderStatus)) {
 
@@ -1376,6 +2107,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -1385,10 +2117,12 @@ public class AdminServlet extends HttpServlet {
                     }
                 }
                 case "updateOrderStatus"->{
-                    System.out.println("Cập nhật tình trạng đơn hàng");
+                    int id = Integer.parseInt(req.getParameter("update_orderStatusID"));
+                    String name = req.getParameter("update_orderStatusName");
 
-                    ObjectMapper mapper=new ObjectMapper();
-                    OrderStatus orderStatus=mapper.readValue(req.getParameter("orderStatus"),OrderStatus.class);
+                    OrderStatus orderStatus = new OrderStatus();
+                    orderStatus.setId(id);
+                    orderStatus.setName(name);
 
                     if (orderStatusServiceImpl.create(orderStatus)) {
 
@@ -1397,6 +2131,7 @@ public class AdminServlet extends HttpServlet {
                         responseData.put("success", true);
 
                         // Convert the map to JSON
+                        ObjectMapper mapper=new ObjectMapper();
                         String json = mapper.writeValueAsString(responseData);
 
                         resp.setContentType("application/json");
@@ -1406,7 +2141,7 @@ public class AdminServlet extends HttpServlet {
                     }
                 }
                 case "deleteOrderStatus"->{
-                    System.out.println("Xóa tình trạng đơn hàng");
+                    System.out.println("Xóa vật liệu sản phẩm");
 
                     Integer orderStatusID=Integer.parseInt(req.getParameter("id"));
                     ObjectMapper mapper=new ObjectMapper();
@@ -1473,230 +2208,6 @@ public class AdminServlet extends HttpServlet {
                     }
 
                 }
-
-                /*Permission*/
-                case "addPermission"->{
-                    System.out.println("Thêm quyền tài khoản");
-
-                    ObjectMapper mapper=new ObjectMapper();
-                    Permission permission=mapper.readValue(req.getParameter("permission"),Permission.class);
-
-                    if (permissionServiceImpl.create(permission)) {
-
-                        Map<String, Object> responseData = new HashMap<>();
-                        responseData.put("permission", permission);
-                        responseData.put("success", true);
-
-                        // Convert the map to JSON
-                        String json = mapper.writeValueAsString(responseData);
-
-                        resp.setContentType("application/json");
-                        resp.setCharacterEncoding("UTF-8");
-                        resp.getWriter().write(json);
-
-                    }
-                }
-                case "updatePermission"->{
-                    System.out.println("Cập nhật quyền tài khoản");
-
-                    ObjectMapper mapper=new ObjectMapper();
-                    Permission permission=mapper.readValue(req.getParameter("permission"),Permission.class);
-
-                    if (permissionServiceImpl.create(permission)) {
-
-                        Map<String, Object> responseData = new HashMap<>();
-                        responseData.put("permission", permission);
-                        responseData.put("success", true);
-
-                        // Convert the map to JSON
-                        String json = mapper.writeValueAsString(responseData);
-
-                        resp.setContentType("application/json");
-                        resp.setCharacterEncoding("UTF-8");
-                        resp.getWriter().write(json);
-
-                    }
-                }
-                case "deletePermission"->{
-                    System.out.println("Xóa quyền tài khoản");
-
-                    Integer permissionID=Integer.parseInt(req.getParameter("id"));
-                    ObjectMapper mapper=new ObjectMapper();
-
-                    if (permissionServiceImpl.deleteByID(permissionID)) {
-
-                        Map<String, Object> responseData = new HashMap<>();
-                        responseData.put("success", true);
-
-                        // Convert the map to JSON
-                        String json = mapper.writeValueAsString(responseData);
-
-                        resp.setContentType("application/json");
-                        resp.setCharacterEncoding("UTF-8");
-                        resp.getWriter().write(json);
-
-                    }
-                }
-                case "searchAndSortPermission"->{
-                    String searchType=req.getParameter("permissionSearchType");
-                    String permissionInputSearch=req.getParameter("permissionInputSearch");
-                    switch (searchType){
-                        case "noData"->{
-
-                        }
-                        case "id"->{
-                            Integer permissionID=Integer.parseInt(req.getParameter("permissionInputSearch"));
-                            Permission permission=permissionServiceImpl.findByID(permissionID);
-
-                            ObjectMapper mapper=new ObjectMapper();
-                            Map<String, Object> responseData = new HashMap<>();
-                            responseData.put("success", true);
-                            responseData.put("permission",permission);
-
-                            // Convert the map to JSON
-                            String json = mapper.writeValueAsString(responseData);
-
-                            resp.setContentType("application/json");
-                            resp.setCharacterEncoding("UTF-8");
-                            resp.getWriter().write(json);
-
-                        }
-                        case "name"->{
-                            String permissionSortType=req.getParameter("permissionSortType");
-                            List<Permission> permissionList=null;
-                            if(permissionSortType.equals("az")){
-                                permissionList=permissionServiceImpl.findAllByNameContains(permissionInputSearch,"name", ItemServiceImpl.SortOrder.ASC);
-                            }else if(permissionSortType.equals("za")){
-                                permissionList=permissionServiceImpl.findAllByNameContains(permissionInputSearch,"name", ItemServiceImpl.SortOrder.DESC);
-                            }
-
-                            ObjectMapper mapper=new ObjectMapper();
-                            Map<String, Object> responseData = new HashMap<>();
-                            responseData.put("success", true);
-                            responseData.put("permissionList",permissionList);
-
-                            // Convert the map to JSON
-                            String json = mapper.writeValueAsString(responseData);
-
-                            resp.setContentType("application/json");
-                            resp.setCharacterEncoding("UTF-8");
-                            resp.getWriter().write(json);
-                        }
-                    }
-
-                }
-
-                /*Permission*//*
-                case "addPermission"->{
-                    System.out.println("Thêm quyền tài khoản");
-
-                    ObjectMapper mapper=new ObjectMapper();
-                    Permission permission=mapper.readValue(req.getParameter("permission"),Permission.class);
-
-                    if (permissionServiceImpl.create(permission)) {
-
-                        Map<String, Object> responseData = new HashMap<>();
-                        responseData.put("permission", permission);
-                        responseData.put("success", true);
-
-                        // Convert the map to JSON
-                        String json = mapper.writeValueAsString(responseData);
-
-                        resp.setContentType("application/json");
-                        resp.setCharacterEncoding("UTF-8");
-                        resp.getWriter().write(json);
-
-                    }
-                }
-                case "updatePermission"->{
-                    System.out.println("Cập nhật quyền tài khoản");
-
-                    ObjectMapper mapper=new ObjectMapper();
-                    Permission permission=mapper.readValue(req.getParameter("permission"),Permission.class);
-
-                    if (permissionServiceImpl.create(permission)) {
-
-                        Map<String, Object> responseData = new HashMap<>();
-                        responseData.put("permission", permission);
-                        responseData.put("success", true);
-
-                        // Convert the map to JSON
-                        String json = mapper.writeValueAsString(responseData);
-
-                        resp.setContentType("application/json");
-                        resp.setCharacterEncoding("UTF-8");
-                        resp.getWriter().write(json);
-
-                    }
-                }
-                case "deletePermission"->{
-                    System.out.println("Xóa quyền tài khoản");
-
-                    Integer permissionID=Integer.parseInt(req.getParameter("id"));
-                    ObjectMapper mapper=new ObjectMapper();
-
-                    if (permissionServiceImpl.deleteByID(permissionID)) {
-
-                        Map<String, Object> responseData = new HashMap<>();
-                        responseData.put("success", true);
-
-                        // Convert the map to JSON
-                        String json = mapper.writeValueAsString(responseData);
-
-                        resp.setContentType("application/json");
-                        resp.setCharacterEncoding("UTF-8");
-                        resp.getWriter().write(json);
-
-                    }
-                }
-                case "searchAndSortPermission"->{
-                    String searchType=req.getParameter("permissionSearchType");
-                    String permissionInputSearch=req.getParameter("permissionInputSearch");
-                    switch (searchType){
-                        case "noData"->{
-
-                        }
-                        case "id"->{
-                            Integer permissionID=Integer.parseInt(req.getParameter("permissionInputSearch"));
-                            Permission permission=permissionServiceImpl.findByID(permissionID);
-
-                            ObjectMapper mapper=new ObjectMapper();
-                            Map<String, Object> responseData = new HashMap<>();
-                            responseData.put("success", true);
-                            responseData.put("permission",permission);
-
-                            // Convert the map to JSON
-                            String json = mapper.writeValueAsString(responseData);
-
-                            resp.setContentType("application/json");
-                            resp.setCharacterEncoding("UTF-8");
-                            resp.getWriter().write(json);
-
-                        }
-                        case "name"->{
-                            String permissionSortType=req.getParameter("permissionSortType");
-                            List<Permission> permissionList=null;
-                            if(permissionSortType.equals("az")){
-                                permissionList=permissionServiceImpl.findAllByNameContains(permissionInputSearch,"name", ItemServiceImpl.SortOrder.ASC);
-                            }else if(permissionSortType.equals("za")){
-                                permissionList=permissionServiceImpl.findAllByNameContains(permissionInputSearch,"name", ItemServiceImpl.SortOrder.DESC);
-                            }
-
-                            ObjectMapper mapper=new ObjectMapper();
-                            Map<String, Object> responseData = new HashMap<>();
-                            responseData.put("success", true);
-                            responseData.put("permissionList",permissionList);
-
-                            // Convert the map to JSON
-                            String json = mapper.writeValueAsString(responseData);
-
-                            resp.setContentType("application/json");
-                            resp.setCharacterEncoding("UTF-8");
-                            resp.getWriter().write(json);
-                        }
-                    }
-
-                }*/
 
             }
 

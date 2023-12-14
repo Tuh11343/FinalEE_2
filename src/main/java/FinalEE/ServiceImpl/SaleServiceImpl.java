@@ -80,7 +80,7 @@ public class SaleServiceImpl implements SaleService{
     }
 
     @Override
-    public List<Sale> findAllByNameSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
+    public List<Sale> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
         try{
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
@@ -88,12 +88,11 @@ public class SaleServiceImpl implements SaleService{
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            return saleRepository.findAllByNameLike(name,sortBy);
+            return saleRepository.findAllByNameContains(name,sortBy);
         }catch (Exception er){
             er.printStackTrace();
         }
         return null;
     }
-
 
 }

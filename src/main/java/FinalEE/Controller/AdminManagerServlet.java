@@ -100,13 +100,13 @@ public class AdminManagerServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest req, HttpServletResponse response) {
         try{
             response.setContentType("text/html;charset=UTF-8");
 
-            String requestedWith = request.getHeader("X-Requested-With");
-            if (requestedWith != null && requestedWith.equals("XMLHttpRequest")) {
-                String action = request.getParameter("action");
+            String reqedWith = req.getHeader("X-Requested-With");
+            if (reqedWith != null && reqedWith.equals("XMLHttpRequest")) {
+                String action = req.getParameter("action");
 
                 switch (action) {
 
@@ -116,9 +116,9 @@ public class AdminManagerServlet extends HttpServlet {
 
 
                         int month=-1,year=-1;
-                        if(request.getParameter("month")!=null&&request.getParameter("year")!=null){
-                            month=Integer.parseInt(request.getParameter("month"));
-                            year=Integer.parseInt(request.getParameter("year"));
+                        if(req.getParameter("month")!=null&&req.getParameter("year")!=null){
+                            month=Integer.parseInt(req.getParameter("month"));
+                            year=Integer.parseInt(req.getParameter("year"));
                         }
 
                         List<Object[]> productsSoldByMonth = statisticServiceIml.productsSoldByMonth(month,year);
@@ -150,8 +150,8 @@ public class AdminManagerServlet extends HttpServlet {
                         System.out.println("Products Sold By Year");
 
                         int year=-1;
-                        if(request.getParameter("year")!=null){
-                            year=Integer.parseInt(request.getParameter("year"));
+                        if(req.getParameter("year")!=null){
+                            year=Integer.parseInt(req.getParameter("year"));
                         }
 
                         List<Object[]> productsSoldByYear = statisticServiceIml.productsSoldByYear(year);
@@ -183,9 +183,9 @@ public class AdminManagerServlet extends HttpServlet {
                         System.out.println("Total Products Sold By Month");
 
                         int month=-1,year=-1;
-                        if(request.getParameter("year")!=null){
-                            month=Integer.parseInt(request.getParameter("month"));
-                            year=Integer.parseInt(request.getParameter("year"));
+                        if(req.getParameter("year")!=null){
+                            month=Integer.parseInt(req.getParameter("month"));
+                            year=Integer.parseInt(req.getParameter("year"));
                         }
 
                         List<Object[]> totalProductsSoldByMonth=statisticServiceIml.totalProductsSoldByMonth(month,year);
@@ -213,8 +213,8 @@ public class AdminManagerServlet extends HttpServlet {
                         System.out.println("Total Products Sold By Year");
 
                         int year=-1;
-                        if(request.getParameter("year")!=null){
-                            year=Integer.parseInt(request.getParameter("year"));
+                        if(req.getParameter("year")!=null){
+                            year=Integer.parseInt(req.getParameter("year"));
                         }
 
                         List<Object[]> totalProductsSoldByYear=statisticServiceIml.totalProductsSoldByYear(year);
@@ -266,9 +266,9 @@ public class AdminManagerServlet extends HttpServlet {
                         System.out.println("Month Revenue");
 
                         int month=-1,year=-1;
-                        if(request.getParameter("year")!=null){
-                            month=Integer.parseInt(request.getParameter("month"));
-                            year=Integer.parseInt(request.getParameter("year"));
+                        if(req.getParameter("year")!=null){
+                            month=Integer.parseInt(req.getParameter("month"));
+                            year=Integer.parseInt(req.getParameter("year"));
                         }
 
                         List<Object[]> totalProductsSoldByMonth=statisticServiceIml.getRevenueByMonth(month,year);
@@ -298,26 +298,26 @@ public class AdminManagerServlet extends HttpServlet {
                 }
 
             } else {
-                String action = request.getParameter("action");
+                String action = req.getParameter("action");
                 System.out.println(action);
                 switch (action) {
                     /*Account*/
                     case "account_btnDelete" -> {
-                        int accountID = Integer.parseInt(request.getParameter("accountID"));
+                        int accountID = Integer.parseInt(req.getParameter("accountID"));
                         if (accountServiceImpl.deleteByID(accountID)) {
                             response.getWriter().println("<script>alert('Xóa tài khoản thành công!');</script>");
                         } else {
                             response.getWriter().println("<script>alert('Xóa tài khoản thất bại!');</script>");
                         }
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "account_btnUpdate" -> {
 
-                        int id = Integer.parseInt(request.getParameter("update_accountID"));
-                        String name = request.getParameter("update_accountName");
-                        String password = request.getParameter("update_accountPassword");
-                        int permissionID = Integer.parseInt(request.getParameter("update_accountPermissionID"));
-                        int customerID = Integer.parseInt(request.getParameter("update_accountCustomerID"));
+                        int id = Integer.parseInt(req.getParameter("update_accountID"));
+                        String name = req.getParameter("update_accountName");
+                        String password = req.getParameter("update_accountPassword");
+                        int permissionID = Integer.parseInt(req.getParameter("update_accountPermissionID"));
+                        int customerID = Integer.parseInt(req.getParameter("update_accountCustomerID"));
 
                         Permission permission = permissionServiceImpl.getPermission(permissionID);
                         Customer customer = customerServiceImpl.getCustomer(customerID);
@@ -336,15 +336,15 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Cập nhật tài khoản thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
 
                     }
                     case "account_btnAdd" -> {
 
-                        String name = request.getParameter("add_accountName");
-                        String password = request.getParameter("add_accountPassword");
-                        int permissionID = Integer.parseInt(request.getParameter("add_accountPermissionID"));
-                        int customerID = Integer.parseInt(request.getParameter("add_accountCustomerID"));
+                        String name = req.getParameter("add_accountName");
+                        String password = req.getParameter("add_accountPassword");
+                        int permissionID = Integer.parseInt(req.getParameter("add_accountPermissionID"));
+                        int customerID = Integer.parseInt(req.getParameter("add_accountCustomerID"));
 
                         Customer customer = customerServiceImpl.getCustomer(customerID);
                         Permission permission = permissionServiceImpl.getPermission(permissionID);
@@ -362,20 +362,20 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Thêm tài khoản thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
 
 //            Item Handle
                     case "item_btnAdd" -> {
 
-                        String name = request.getParameter("add_itemName");
-                        int itemTypeID = Integer.parseInt(request.getParameter("add_itemTypeID"));
-                        int itemMaterialID = Integer.parseInt(request.getParameter("add_itemMaterialID"));
-                        int itemCollectionID = Integer.parseInt(request.getParameter("add_itemCollectionID"));
-                        int isNew = Integer.parseInt(request.getParameter("add_itemIsNew"));
-                        int isHot = Integer.parseInt(request.getParameter("add_itemIsHot"));
-                        double price = Double.parseDouble(request.getParameter("add_itemPrice"));
-                        int yearProduce = Integer.parseInt(request.getParameter("add_itemYearProduce"));
+                        String name = req.getParameter("add_itemName");
+                        int itemTypeID = Integer.parseInt(req.getParameter("add_itemTypeID"));
+                        int itemMaterialID = Integer.parseInt(req.getParameter("add_itemMaterialID"));
+                        int itemCollectionID = Integer.parseInt(req.getParameter("add_itemCollectionID"));
+                        int isNew = Integer.parseInt(req.getParameter("add_itemIsNew"));
+                        int isHot = Integer.parseInt(req.getParameter("add_itemIsHot"));
+                        double price = Double.parseDouble(req.getParameter("add_itemPrice"));
+                        int yearProduce = Integer.parseInt(req.getParameter("add_itemYearProduce"));
 
                         ItemCollection itemCollection = itemCollectionServiceImpl.getItemCollection(itemCollectionID);
                         ItemMaterial itemMaterial = itemMaterialServiceImpl.getItemMaterial(itemMaterialID);
@@ -398,19 +398,19 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Thêm sản phẩm thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "item_btnUpdate" -> {
 
-                        int id = Integer.parseInt(request.getParameter("update_itemID"));
-                        String name = request.getParameter("update_itemName");
-                        int itemTypeID = Integer.parseInt(request.getParameter("update_itemTypeID"));
-                        int itemMaterialID = Integer.parseInt(request.getParameter("update_itemMaterialID"));
-                        int itemCollectionID = Integer.parseInt(request.getParameter("update_itemCollectionID"));
-                        int isNew = Integer.parseInt(request.getParameter("update_itemIsNew"));
-                        int isHot = Integer.parseInt(request.getParameter("update_itemIsHot"));
-                        double price = Double.parseDouble(request.getParameter("update_itemPrice"));
-                        int yearProduce = Integer.parseInt(request.getParameter("update_itemYearProduce"));
+                        int id = Integer.parseInt(req.getParameter("update_itemID"));
+                        String name = req.getParameter("update_itemName");
+                        int itemTypeID = Integer.parseInt(req.getParameter("update_itemTypeID"));
+                        int itemMaterialID = Integer.parseInt(req.getParameter("update_itemMaterialID"));
+                        int itemCollectionID = Integer.parseInt(req.getParameter("update_itemCollectionID"));
+                        int isNew = Integer.parseInt(req.getParameter("update_itemIsNew"));
+                        int isHot = Integer.parseInt(req.getParameter("update_itemIsHot"));
+                        double price = Double.parseDouble(req.getParameter("update_itemPrice"));
+                        int yearProduce = Integer.parseInt(req.getParameter("update_itemYearProduce"));
 
                         ItemCollection itemCollection = itemCollectionServiceImpl.getItemCollection(itemCollectionID);
                         ItemMaterial itemMaterial = itemMaterialServiceImpl.getItemMaterial(itemMaterialID);
@@ -433,16 +433,16 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Cập nhật sản phẩm thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "item_btnDelete" -> {
-                        int itemID = Integer.parseInt(request.getParameter("itemID"));
+                        int itemID = Integer.parseInt(req.getParameter("itemID"));
                         if (itemServiceImpl.deleteByID(itemID)) {
                             response.getWriter().println("<script>alert('Xóa sản phẩm thành công!');</script>");
                         } else {
                             response.getWriter().println("<script>alert('Xóa sản phẩm thất bại!');</script>");
                         }
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
 
                     /*Customer Handle*/
@@ -450,10 +450,10 @@ public class AdminManagerServlet extends HttpServlet {
 
                         System.out.println("Thêm khách hàng");
 
-                        String name = request.getParameter("add_customerName");
-                        String phoneNumber = request.getParameter("add_customerPhoneNumber");
-                        String email = request.getParameter("add_customerEmail");
-                        String address = request.getParameter("add_customerAddress");
+                        String name = req.getParameter("add_customerName");
+                        String phoneNumber = req.getParameter("add_customerPhoneNumber");
+                        String email = req.getParameter("add_customerEmail");
+                        String address = req.getParameter("add_customerAddress");
 
                         Customer customer = new Customer();
                         customer.setAddress(address);
@@ -468,16 +468,16 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Thêm khách hàng thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
 
                     }
                     case "customer_btnUpdate" -> {
 
-                        int id = Integer.parseInt(request.getParameter("update_customerID"));
-                        String name = request.getParameter("update_customerName");
-                        String phoneNumber = request.getParameter("update_customerPhoneNumber");
-                        String email = request.getParameter("update_customerEmail");
-                        String address = request.getParameter("update_customerAddress");
+                        int id = Integer.parseInt(req.getParameter("update_customerID"));
+                        String name = req.getParameter("update_customerName");
+                        String phoneNumber = req.getParameter("update_customerPhoneNumber");
+                        String email = req.getParameter("update_customerEmail");
+                        String address = req.getParameter("update_customerAddress");
 
                         Customer customer = new Customer();
                         customer.setId(id);
@@ -493,25 +493,25 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Cập nhật khách hàng thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
 
                     }
                     case "customer_btnDelete" -> {
-                        int customerID = Integer.parseInt(request.getParameter("customerID"));
+                        int customerID = Integer.parseInt(req.getParameter("customerID"));
                         if (customerServiceImpl.deleteByID(customerID)) {
                             response.getWriter().println("<script>alert('Xóa khách hàng thành công!');</script>");
                         } else {
                             response.getWriter().println("<script>alert('Xóa khách hàng thất bại!');</script>");
                         }
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
 
                     /*Discount Card*/
                     case "discountCard_btnAdd" -> {
 
-                        int customerID = Integer.parseInt(request.getParameter("add_discountCardID"));
-                        String name = request.getParameter("add_discountCardName");
-                        int discountPercentage = Integer.parseInt(request.getParameter("add_discountCardDiscountPercentage"));
+                        int customerID = Integer.parseInt(req.getParameter("add_discountCardID"));
+                        String name = req.getParameter("add_discountCardName");
+                        int discountPercentage = Integer.parseInt(req.getParameter("add_discountCardDiscountPercentage"));
 
                         Customer customer = customerServiceImpl.getCustomer(customerID);
 
@@ -527,14 +527,14 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Thêm khách hàng thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
 
                     }
                     case "discountCard_btnUpdate" -> {
-                        int id = Integer.parseInt(request.getParameter("update_discountCardID"));
-                        int discountPercentage = Integer.parseInt(request.getParameter("update_discountCardDiscountPercentage"));
-                        String name = request.getParameter("update_discountCardName");
-                        int customerID = Integer.parseInt(request.getParameter("update_discountCardID"));
+                        int id = Integer.parseInt(req.getParameter("update_discountCardID"));
+                        int discountPercentage = Integer.parseInt(req.getParameter("update_discountCardDiscountPercentage"));
+                        String name = req.getParameter("update_discountCardName");
+                        int customerID = Integer.parseInt(req.getParameter("update_discountCardID"));
 
                         Customer customer = customerServiceImpl.getCustomer(customerID);
 
@@ -551,22 +551,22 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "discountCard_btnDelete" -> {
-                        int discountCardID = Integer.parseInt(request.getParameter("discountCardID"));
+                        int discountCardID = Integer.parseInt(req.getParameter("discountCardID"));
                         if (discountCardServiceImpl.deleteByID(discountCardID)) {
                             response.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thành công!');</script>");
                         } else {
                             response.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thất bại!');</script>");
                         }
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
 
                     /*Item Collection*/
                     case "itemCollection_btnAdd" -> {
 
-                        String name = request.getParameter("add_itemCollectionName");
+                        String name = req.getParameter("add_itemCollectionName");
 
                         ItemCollection itemCollection = new ItemCollection();
                         itemCollection.setName(name);
@@ -577,12 +577,12 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Thêm bộ sưu tập thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "itemCollection_btnUpdate" -> {
 
-                        int id = Integer.parseInt(request.getParameter("update_itemCollectionID"));
-                        String name = request.getParameter("update_itemCollectionName");
+                        int id = Integer.parseInt(req.getParameter("update_itemCollectionID"));
+                        String name = req.getParameter("update_itemCollectionName");
 
                         ItemCollection itemCollection = new ItemCollection();
                         itemCollection.setId(id);
@@ -596,19 +596,19 @@ public class AdminManagerServlet extends HttpServlet {
 
                     }
                     case "itemCollection_btnDelete" -> {
-                        int itemCollectionID = Integer.parseInt(request.getParameter("itemCollectionID"));
+                        int itemCollectionID = Integer.parseInt(req.getParameter("itemCollectionID"));
                         if (itemCollectionServiceImpl.deleteByID(itemCollectionID)) {
                             response.getWriter().println("<script>alert('Xóa bộ sưu tập thành công!');</script>");
                         } else {
                             response.getWriter().println("<script>alert('Xóa bộ sưu tập thất bại!');</script>");
                         }
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
 
                     /*Item Image*/
                     case "itemImage_btnAdd" -> {
-                        int itemID = Integer.parseInt(request.getParameter("add_itemImageItemID"));
-                        String url = request.getParameter("add_itemImageURL");
+                        int itemID = Integer.parseInt(req.getParameter("add_itemImageItemID"));
+                        String url = req.getParameter("add_itemImageURL");
 
                         Item item = itemServiceImpl.getItem(itemID);
 
@@ -622,12 +622,12 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Thêm ảnh cho sản phẩm thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "itemImage_btnUpdate" -> {
-                        int id = Integer.parseInt(request.getParameter("update_itemImageID"));
-                        int itemID = Integer.parseInt(request.getParameter("update_itemImageItemID"));
-                        String url = request.getParameter("update_itemImageURL");
+                        int id = Integer.parseInt(req.getParameter("update_itemImageID"));
+                        int itemID = Integer.parseInt(req.getParameter("update_itemImageItemID"));
+                        String url = req.getParameter("update_itemImageURL");
 
                         Item item = itemServiceImpl.getItem(itemID);
 
@@ -643,18 +643,18 @@ public class AdminManagerServlet extends HttpServlet {
                         }
                     }
                     case "itemImage_btnDelete" -> {
-                        int itemImageID = Integer.parseInt(request.getParameter("itemImageID"));
+                        int itemImageID = Integer.parseInt(req.getParameter("itemImageID"));
                         if (itemImageServiceImpl.deleteByID(itemImageID)) {
                             response.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thành công!');</script>");
                         } else {
                             response.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thất bại!');</script>");
                         }
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
 
                     /*Item Material*/
                     case "itemMaterial_btnAdd" -> {
-                        String name = request.getParameter("add_itemMaterialName");
+                        String name = req.getParameter("add_itemMaterialName");
 
                         ItemMaterial itemMaterial = new ItemMaterial();
                         itemMaterial.setName(name);
@@ -665,11 +665,11 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Thêm vật liệu thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "itemMaterial_btnUpdate" -> {
-                        int id = Integer.parseInt(request.getParameter("update_itemMaterialID"));
-                        String name = request.getParameter("update_itemMaterialName");
+                        int id = Integer.parseInt(req.getParameter("update_itemMaterialID"));
+                        String name = req.getParameter("update_itemMaterialName");
 
                         ItemMaterial itemMaterial = new ItemMaterial();
                         itemMaterial.setId(id);
@@ -681,24 +681,24 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Cập nhật vật liệu thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "itemMaterial_btnDelete" -> {
-                        int itemMaterialID = Integer.parseInt(request.getParameter("itemMaterialID"));
+                        int itemMaterialID = Integer.parseInt(req.getParameter("itemMaterialID"));
                         if (itemMaterialServiceImpl.deleteByID(itemMaterialID)) {
                             response.getWriter().println("<script>alert('Xóa vật liệu thành công!');</script>");
                         } else {
                             response.getWriter().println("<script>alert('Xóa vật liệu thất bại!');</script>");
                         }
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
 
                     /*Order*/
                     case "oder_btnAdd" -> {
-                        int customerID = Integer.parseInt(request.getParameter("add_orderCustomerID"));
-                        int discountCardID = Integer.parseInt(request.getParameter("add_orderDiscountCardID"));
-                        double total = Double.parseDouble(request.getParameter("add_orderTotal"));
-                        String datePurchase = request.getParameter("add_orderDatePurchase");
+                        int customerID = Integer.parseInt(req.getParameter("add_orderCustomerID"));
+                        int discountCardID = Integer.parseInt(req.getParameter("add_orderDiscountCardID"));
+                        double total = Double.parseDouble(req.getParameter("add_orderTotal"));
+                        String datePurchase = req.getParameter("add_orderDatePurchase");
 
                         /*Xử lý định dạng date*/
                         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -725,14 +725,14 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Thêm hóa đơn thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "order_btnUpdate" -> {
-                        int id = Integer.parseInt(request.getParameter("update_orderID"));
-                        int customerID = Integer.parseInt(request.getParameter("update_orderCustomerID"));
-                        int discountCardID = Integer.parseInt(request.getParameter("update_orderDiscountCardID"));
-                        double total = Double.parseDouble(request.getParameter("update_orderTotal"));
-                        String datePurchase = request.getParameter("update_orderDatePurchase");
+                        int id = Integer.parseInt(req.getParameter("update_orderID"));
+                        int customerID = Integer.parseInt(req.getParameter("update_orderCustomerID"));
+                        int discountCardID = Integer.parseInt(req.getParameter("update_orderDiscountCardID"));
+                        double total = Double.parseDouble(req.getParameter("update_orderTotal"));
+                        String datePurchase = req.getParameter("update_orderDatePurchase");
 
                         /*Xử lý định dạng date*/
                         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -759,26 +759,26 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Cập nhật hóa đơn thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "order_btnDelete" -> {
-                        int orderID = Integer.parseInt(request.getParameter("orderID"));
+                        int orderID = Integer.parseInt(req.getParameter("orderID"));
                         if (orderServiceImpl.deleteByID(orderID)) {
                             response.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thành công!');</script>");
                         } else {
                             response.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thất bại!');</script>");
                         }
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
 
                     /*Order Detail*/
                     case "orderDetail_btnAdd" -> {
-                        int orderID = Integer.parseInt(request.getParameter("add_orderDetailOrderID"));
-                        int itemID = Integer.parseInt(request.getParameter("add_orderDetailItemID"));
-                        int amount = Integer.parseInt(request.getParameter("add_orderDetailAmount"));
-                        String itemColor = request.getParameter("add_orderDetailItemColor");
-                        String itemSize = request.getParameter("add_orderDetailItemSize");
-                        double total = Double.parseDouble(request.getParameter("add_orderDetailTotal"));
+                        int orderID = Integer.parseInt(req.getParameter("add_orderDetailOrderID"));
+                        int itemID = Integer.parseInt(req.getParameter("add_orderDetailItemID"));
+                        int amount = Integer.parseInt(req.getParameter("add_orderDetailAmount"));
+                        String itemColor = req.getParameter("add_orderDetailItemColor");
+                        String itemSize = req.getParameter("add_orderDetailItemSize");
+                        double total = Double.parseDouble(req.getParameter("add_orderDetailTotal"));
 
                         Item item = itemServiceImpl.getItem(itemID);
                         Order order = orderServiceImpl.getOrder(orderID);
@@ -797,16 +797,16 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Thêm chi tiết hóa đơn thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "orderDetail_btnUpdate" -> {
-                        int orderDetailID = Integer.parseInt(request.getParameter("update_orderDetailID"));
-                        int orderID = Integer.parseInt(request.getParameter("update_orderDetailOrderID"));
-                        int itemID = Integer.parseInt(request.getParameter("update_orderDetailItemID"));
-                        int amount = Integer.parseInt(request.getParameter("update_orderDetailAmount"));
-                        String itemColor = request.getParameter("update_orderDetailItemColor");
-                        String itemSize = request.getParameter("update_orderDetailItemSize");
-                        double total = Double.parseDouble(request.getParameter("update_orderDetailTotal"));
+                        int orderDetailID = Integer.parseInt(req.getParameter("update_orderDetailID"));
+                        int orderID = Integer.parseInt(req.getParameter("update_orderDetailOrderID"));
+                        int itemID = Integer.parseInt(req.getParameter("update_orderDetailItemID"));
+                        int amount = Integer.parseInt(req.getParameter("update_orderDetailAmount"));
+                        String itemColor = req.getParameter("update_orderDetailItemColor");
+                        String itemSize = req.getParameter("update_orderDetailItemSize");
+                        double total = Double.parseDouble(req.getParameter("update_orderDetailTotal"));
 
                         Item item = itemServiceImpl.getItem(itemID);
                         Order order = orderServiceImpl.getOrder(orderID);
@@ -827,18 +827,18 @@ public class AdminManagerServlet extends HttpServlet {
                         }
                     }
                     case "orderDetail_btnDelete" -> {
-                        int orderDetailID = Integer.parseInt(request.getParameter("orderDetailID"));
+                        int orderDetailID = Integer.parseInt(req.getParameter("orderDetailID"));
                         if (orderDetailServiceImpl.deleteByID(orderDetailID)) {
                             response.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thành công!');</script>");
                         } else {
                             response.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thất bại!');</script>");
                         }
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
 
                     /*Item Type*/
                     case "itemType_btnAdd" -> {
-                        String name = request.getParameter("add_itemTypeName");
+                        String name = req.getParameter("add_itemTypeName");
 
                         ItemType itemType = new ItemType();
                         itemType.setName(name);
@@ -849,11 +849,11 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Thêm loại sản phẩm thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "itemType_btnUpdate" -> {
-                        int id = Integer.parseInt(request.getParameter("update_itemTypeID"));
-                        String name = request.getParameter("update_itemTypeName");
+                        int id = Integer.parseInt(req.getParameter("update_itemTypeID"));
+                        String name = req.getParameter("update_itemTypeName");
 
                         ItemType itemType = new ItemType();
                         itemType.setId(id);
@@ -865,22 +865,22 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Cập nhật loại sản phẩm thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "itemType_btnDelete" -> {
-                        int itemTypeID = Integer.parseInt(request.getParameter("itemTypeID"));
+                        int itemTypeID = Integer.parseInt(req.getParameter("itemTypeID"));
                         if (itemTypeServiceImpl.deleteByID(itemTypeID)) {
                             response.getWriter().println("<script>alert('Xóa loại sản phẩm thành công!');</script>");
                         } else {
                             response.getWriter().println("<script>alert('Xóa loại sản phẩm thất bại!');</script>");
                         }
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
 
                     /*Permission*/
                     case "permission_btnAdd" -> {
-                        int level = Integer.parseInt(request.getParameter("add_permissionLevel"));
-                        String name = request.getParameter("add_permissionName");
+                        int level = Integer.parseInt(req.getParameter("add_permissionLevel"));
+                        String name = req.getParameter("add_permissionName");
 
                         Permission permission = new Permission();
                         permission.setLevel(level);
@@ -892,12 +892,12 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Thêm quyền thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "permission_btnUpdate" -> {
-                        int id = Integer.parseInt(request.getParameter("update_permissionID"));
-                        String name = request.getParameter("update_permissionName");
-                        int level = Integer.parseInt(request.getParameter("update_permissionLevel"));
+                        int id = Integer.parseInt(req.getParameter("update_permissionID"));
+                        String name = req.getParameter("update_permissionName");
+                        int level = Integer.parseInt(req.getParameter("update_permissionLevel"));
 
                         Permission permission = new Permission();
                         permission.setId(id);
@@ -910,24 +910,24 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Cập nhật quyền thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "permission_btnDelete" -> {
-                        int permissionID = Integer.parseInt(request.getParameter("permissionID"));
+                        int permissionID = Integer.parseInt(req.getParameter("permissionID"));
                         if (permissionServiceImpl.deleteByID(permissionID)) {
                             response.getWriter().println("<script>alert('Xóa vật liệu thành công!');</script>");
                         } else {
                             response.getWriter().println("<script>alert('Xóa vật liệu thất bại!');</script>");
                         }
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
 
                     /*Sale*/
                     case "sale_btnAdd" -> {
-                        int itemId = Integer.parseInt(request.getParameter("add_saleItemID"));
-                        String name = request.getParameter("add_saleName");
-                        int onSale = Integer.parseInt(request.getParameter("add_saleOnSale"));
-                        int salePercentage = Integer.parseInt(request.getParameter("add_salePercentage"));
+                        int itemId = Integer.parseInt(req.getParameter("add_saleItemID"));
+                        String name = req.getParameter("add_saleName");
+                        int onSale = Integer.parseInt(req.getParameter("add_saleOnSale"));
+                        int salePercentage = Integer.parseInt(req.getParameter("add_salePercentage"));
 
                         Item item = itemServiceImpl.getItem(itemId);
 
@@ -943,14 +943,14 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Thêm thẻ khuyến mãi thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "sale_btnUpdate" -> {
-                        int id = Integer.parseInt(request.getParameter("update_saleID"));
-                        int itemId = Integer.parseInt(request.getParameter("update_saleItemID"));
-                        String name = request.getParameter("update_saleName");
-                        int onSale = Integer.parseInt(request.getParameter("update_saleOnSale"));
-                        int salePercentage = Integer.parseInt(request.getParameter("update_salePercentage"));
+                        int id = Integer.parseInt(req.getParameter("update_saleID"));
+                        int itemId = Integer.parseInt(req.getParameter("update_saleItemID"));
+                        String name = req.getParameter("update_saleName");
+                        int onSale = Integer.parseInt(req.getParameter("update_saleOnSale"));
+                        int salePercentage = Integer.parseInt(req.getParameter("update_salePercentage"));
 
                         Item item = itemServiceImpl.getItem(itemId);
 
@@ -967,24 +967,24 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "sale_btnDelete" -> {
-                        int saleID = Integer.parseInt(request.getParameter("saleID"));
+                        int saleID = Integer.parseInt(req.getParameter("saleID"));
                         if (saleServiceImpl.deleteByID(saleID)) {
                             response.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thành công!');</script>");
                         } else {
                             response.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thất bại!');</script>");
                         }
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
 
                     /*Stock Item*/
                     case "stockItem_btnAdd" -> {
-                        int itemId = Integer.parseInt(request.getParameter("add_stockItemItemID"));
-                        String color = request.getParameter("add_stockItemColor");
-                        String size = request.getParameter("add_stockItemSize");
-                        int amount = Integer.parseInt(request.getParameter("add_stockItemAmount"));
+                        int itemId = Integer.parseInt(req.getParameter("add_stockItemItemID"));
+                        String color = req.getParameter("add_stockItemColor");
+                        String size = req.getParameter("add_stockItemSize");
+                        int amount = Integer.parseInt(req.getParameter("add_stockItemAmount"));
 
                         Item item = itemServiceImpl.getItem(itemId);
 
@@ -1000,14 +1000,14 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Thêm hàng hóa sản phẩm thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "stockItem_btnUpdate" -> {
-                        int id = Integer.parseInt(request.getParameter("update_stockItemID"));
-                        int itemId = Integer.parseInt(request.getParameter("update_stockItemItemID"));
-                        String color = request.getParameter("update_stockItemColor");
-                        String size = request.getParameter("update_stockItemSize");
-                        int amount = Integer.parseInt(request.getParameter("update_stockItemAmount"));
+                        int id = Integer.parseInt(req.getParameter("update_stockItemID"));
+                        int itemId = Integer.parseInt(req.getParameter("update_stockItemItemID"));
+                        String color = req.getParameter("update_stockItemColor");
+                        String size = req.getParameter("update_stockItemSize");
+                        int amount = Integer.parseInt(req.getParameter("update_stockItemAmount"));
 
                         Item item = itemServiceImpl.getItem(itemId);
 
@@ -1024,16 +1024,16 @@ public class AdminManagerServlet extends HttpServlet {
                             response.getWriter().println("<script>alert('Cập nhật hàng hóa sản phẩm thất bại!');</script>");
                         }
 
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
                     case "stockItem_btnDelete" -> {
-                        int stockItemID = Integer.parseInt(request.getParameter("stockItemID"));
+                        int stockItemID = Integer.parseInt(req.getParameter("stockItemID"));
                         if (stockItemServiceImpl.deleteByID(stockItemID)) {
                             response.getWriter().println("<script>alert('Xóa hàng hóa sản phẩm thành công!');</script>");
                         } else {
                             response.getWriter().println("<script>alert('Xóa hàng hóa sản phẩm thất bại!');</script>");
                         }
-                        request.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(request, response);
+                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
 
                     default -> System.out.println("Khong ton tai action trong AdminManagerServlet");

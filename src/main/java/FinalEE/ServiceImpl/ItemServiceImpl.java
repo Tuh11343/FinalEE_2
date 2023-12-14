@@ -265,6 +265,38 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public List<Item> findAllByPriceLessThan(double price, String sort, SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return itemRepository.findAllByPriceLessThan(price,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Item> findAllByPriceGreaterThan(double price, String sort, SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return itemRepository.findAllByPriceGreaterThan(price,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public List<Item> findByColor(int pageNumber, String color, String sort, SortOrder sortOrder) {
         try {
             Sort sortBy;

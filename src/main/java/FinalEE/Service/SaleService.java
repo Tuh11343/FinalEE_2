@@ -15,6 +15,7 @@ public interface SaleService {
     List<Sale> getAllSale();
 
     List<Sale> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
-    List<Sale> findAllByNameSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<Sale> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
+
     
 }

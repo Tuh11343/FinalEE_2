@@ -59,8 +59,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public boolean deleteByID(int cartID) {
         if (cartRepository.existsById(cartID)) {
-            //cartRepository.deleteById(cartID);
-            System.out.println("Ban da xoa:" + cartID);
+            cartRepository.deleteById(cartID);
             return true;
         }
         return false;

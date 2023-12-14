@@ -30,4 +30,8 @@ public interface CartRepository extends JpaRepository<Cart, Integer>{
 
     List<Cart> findAll(Sort sort);
 
+    void deleteAllByCustomer_Id(Integer customerID);
+
+    void deleteById(Integer cartID);
+
 }
