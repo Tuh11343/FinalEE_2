@@ -5,13 +5,11 @@ import FinalEE.ServiceImpl.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
@@ -152,7 +150,7 @@ public class HeaderServlet extends HttpServlet {
 
             double orderTotal = 0f;
             /*Create Oder*/
-            ItemOrder order = new ItemOrder();
+            Order order = new Order();
             order.setCustomer(null);
             order.setTotal(orderTotal);
             order.setEmail(req.getParameter("email"));
@@ -301,7 +299,7 @@ public class HeaderServlet extends HttpServlet {
 
     }
 
-    private void sendConfirmOrderEmail(ItemOrder order, List<Cart> cartList) {
+    private void sendConfirmOrderEmail(Order order, List<Cart> cartList) {
         try {
             Map<String, Object> keyValue = new HashMap<>();
             keyValue.put("email", order.getEmail());

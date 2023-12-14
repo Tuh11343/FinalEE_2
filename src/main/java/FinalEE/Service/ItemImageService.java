@@ -14,5 +14,8 @@ public interface ItemImageService {
     ItemImage getItemImage(int id);
     List<ItemImage> getAllItemImage();
     List<ItemImage> findByItemID(int itemID);
+
+    List<ItemImage> findAllByItemID(Integer itemID, String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<ItemImage> findAll(String sort, ItemServiceImpl.SortOrder sortOrder);
     
 }

@@ -16,6 +16,8 @@ public interface AccountService {
 
     Account findByID(Integer accountID);
     Account findByNameAndPassword(String name, String password);
-    List<Account> findAllSort(Sort sort, ItemServiceImpl.SortOrder sortOrder);
+    List<Account> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<Account> findAllByNameContainsSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
+    Account findByCustomerID(Integer customerID);
     
 }

@@ -104,7 +104,7 @@ public class OrderStatusServiceImpl implements OrderStatusService {
     }
 
     @Override
-    public List<OrderStatus> findAllByNameSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
+    public List<OrderStatus> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder) {
         try{
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
@@ -112,7 +112,17 @@ public class OrderStatusServiceImpl implements OrderStatusService {
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            return orderStatusRepository.findAllByNameLike(name,sortBy);
+            return orderStatusRepository.findAllByNameContains(name,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public OrderStatus findById(int orderStatusID) {
+        try{
+            return orderStatusRepository.findById(orderStatusID);
         }catch (Exception er){
             er.printStackTrace();
         }

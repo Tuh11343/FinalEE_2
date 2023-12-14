@@ -15,7 +15,7 @@ public class ExcelServiceImpl implements ExcelService {
 
 
     @Override
-    public ByteArrayInputStream exportToExcel(List<ItemOrder> orders) {
+    public ByteArrayInputStream exportToExcel(List<Order> orders) {
         try (
                 Workbook workbook = new XSSFWorkbook();
                 ByteArrayOutputStream out = new ByteArrayOutputStream()
@@ -33,7 +33,7 @@ public class ExcelServiceImpl implements ExcelService {
             headerRow.createCell(6).setCellValue("Email");
 
             int rowIdx = 1;
-            for (ItemOrder order : orders) {
+            for (Order order : orders) {
                 Row row = sheet.createRow(rowIdx++);
 
                 row.createCell(0).setCellValue(order.getId());
@@ -424,7 +424,7 @@ public class ExcelServiceImpl implements ExcelService {
 
 
     @Override
-    public ByteArrayInputStream exportItemOrderToExcel(List<ItemOrder> itemOrderList) {
+    public ByteArrayInputStream exportItemOrderToExcel(List<Order> orderList) {
         try (
                 Workbook workbook = new XSSFWorkbook();
                 ByteArrayOutputStream out = new ByteArrayOutputStream()
@@ -444,43 +444,43 @@ public class ExcelServiceImpl implements ExcelService {
             headerRow.createCell(8).setCellValue("Email");
 
             int rowIdx = 1;
-            for (ItemOrder itemOrder : itemOrderList) {
+            for (Order order : orderList) {
                 Row row = sheet.createRow(rowIdx++);
 
                 // Order ID
-                row.createCell(0).setCellValue(itemOrder.getId());
+                row.createCell(0).setCellValue(order.getId());
 
                 // Customer ID
-                if (itemOrder.getCustomer() != null && itemOrder.getCustomer().getId() != null) {
-                    row.createCell(1).setCellValue(itemOrder.getCustomer().getId());
+                if (order.getCustomer() != null && order.getCustomer().getId() != null) {
+                    row.createCell(1).setCellValue(order.getCustomer().getId());
                 }
 
                 // Discount Card ID
-                if (itemOrder.getDiscountCard() != null && itemOrder.getDiscountCard().getId() != null) {
-                    row.createCell(2).setCellValue(itemOrder.getDiscountCard().getId());
+                if (order.getDiscountCard() != null && order.getDiscountCard().getId() != null) {
+                    row.createCell(2).setCellValue(order.getDiscountCard().getId());
                 }
 
                 // Total
-                row.createCell(3).setCellValue(itemOrder.getTotal());
+                row.createCell(3).setCellValue(order.getTotal());
 
                 // Date of Purchase
-                if (itemOrder.getDate_purchase() != null) {
-                    row.createCell(4).setCellValue(itemOrder.getDate_purchase().toString());
+                if (order.getDate_purchase() != null) {
+                    row.createCell(4).setCellValue(order.getDate_purchase().toString());
                 }
 
                 // Order Status ID
-                if (itemOrder.getOrder_status() != null && itemOrder.getOrder_status().getId() != null) {
-                    row.createCell(5).setCellValue(itemOrder.getOrder_status().getId());
+                if (order.getOrder_status() != null && order.getOrder_status().getId() != null) {
+                    row.createCell(5).setCellValue(order.getOrder_status().getId());
                 }
 
                 // Address
-                row.createCell(6).setCellValue(itemOrder.getAddress());
+                row.createCell(6).setCellValue(order.getAddress());
 
                 // Note
-                row.createCell(7).setCellValue(itemOrder.getNote());
+                row.createCell(7).setCellValue(order.getNote());
 
                 // Email
-                row.createCell(8).setCellValue(itemOrder.getEmail());
+                row.createCell(8).setCellValue(order.getEmail());
             }
             workbook.write(out);
             return new ByteArrayInputStream(out.toByteArray());

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -43,5 +44,11 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
     @Query("SELECT MAX(i.price) FROM Item i")
     Double itemMaxPrice();
 
+    List<Item> findAll(Sort sort);
+    List<Item> findAllByNameContains(String name,Sort sort);
+    List<Item> findAllByPriceBetween(double min,double max,Sort sort);
+
+    List<Item> findAllByPriceLessThan(double price,Sort sort);
+    List<Item> findAllByPriceGreaterThan(double price,Sort sort);
 
 }

@@ -1,18 +1,17 @@
 package FinalEE.ServiceImpl;
 
 import FinalEE.Entity.Item;
+import FinalEE.Entity.StockItem;
 import FinalEE.Repository.ItemRepository;
+import FinalEE.Repository.StockItemRepository;
 import FinalEE.Service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.PageRequest;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -20,6 +19,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private StockItemRepository stockItemRepository;
 
     public static enum SortOrder {
         ASC, DESC
@@ -221,6 +222,7 @@ public class ItemServiceImpl implements ItemService {
         return null;
     }
 
+    @Override
     public List<Item> findAllByPriceBetween(int pageNumber,double min,double max, String sort, SortOrder sortOrder) {
         try {
             Sort sortBy;
@@ -232,6 +234,53 @@ public class ItemServiceImpl implements ItemService {
             int pageSize = 4; // Số lượng sản phẩm trên mỗi trang
             Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortBy);
             Page<Item> itemPage = itemRepository.findAllByPriceBetween(min,max,pageable);
+            return itemPage.getContent();
+        } catch (Exception er) {
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Item> findItemListByColor(String color) {
+        List<StockItem> stockItems = stockItemRepository.findAllByColor(color);
+        return stockItems.stream().map(StockItem::getItem).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Item> findItemListByColor(String color, String sort, SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            List<StockItem> stockItems = stockItemRepository.findAllByColor(color,sortBy);
+            return stockItems.stream().map(StockItem::getItem).collect(Collectors.toList());
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Item> findByColor(int pageNumber, String color, String sort, SortOrder sortOrder) {
+        try {
+            Sort sortBy;
+            if (sortOrder == SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            int pageSize = 4; // Số lượng sản phẩm trên mỗi trang
+            Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortBy);
+            List<Item> itemList = findItemListByColor(color);
+
+            int start = (int) pageable.getOffset();
+            int end = Math.min((start + pageable.getPageSize()), itemList.size());
+
+            Page<Item> itemPage = new PageImpl<>(itemList.subList(start, end), pageable, itemList.size());
             return itemPage.getContent();
         } catch (Exception er) {
             er.printStackTrace();

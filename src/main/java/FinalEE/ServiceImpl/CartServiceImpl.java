@@ -6,6 +6,7 @@ import FinalEE.Repository.CartRepository;
 import FinalEE.Repository.StockItemRepository;
 import FinalEE.Service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -98,6 +99,38 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<Cart> getAllCart() {
         return cartRepository.findAll();
+    }
+
+    @Override
+    public List<Cart> findAll(String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return cartRepository.findAll(sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Cart> findByCustomerID(Integer customerID, String sort, ItemServiceImpl.SortOrder sortOrder) {
+        try{
+            Sort sortBy;
+            if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
+                sortBy = Sort.by(sort).descending();
+            } else {
+                sortBy = Sort.by(sort).ascending();
+            }
+            return cartRepository.findByCustomer_Id(customerID,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
 }

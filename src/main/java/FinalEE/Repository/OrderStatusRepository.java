@@ -17,6 +17,7 @@ public interface OrderStatusRepository extends JpaRepository<OrderStatus, Intege
     OrderStatus findByID(Integer id);
 
     List<OrderStatus> findAll(Sort sort);
-    List<OrderStatus> findAllByNameLike(String name,Sort sort);
+    List<OrderStatus> findAllByNameContains(String name,Sort sort);
+    OrderStatus findById(int orderStatusID);
 
 }

@@ -14,7 +14,7 @@ public interface ItemTypeService {
     ItemType getItemType(int id);
     List<ItemType> getAllItemType();
 
-    List<ItemType> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
-    List<ItemType> findAllByNameSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<ItemType> findAll(String sort, ItemServiceImpl.SortOrder sortOrder);
+    List<ItemType> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
     
 }
