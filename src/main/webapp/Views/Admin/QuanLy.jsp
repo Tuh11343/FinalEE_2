@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib
         uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -731,7 +733,6 @@
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
                             <select class="selecttype" name="" id="accountSearchType">
-                                <option value="" selected>--</option>
                                 <option value="">Tên</option>
                                 <option value="">Giá</option>
                             </select>
@@ -742,12 +743,8 @@
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
                         <select name="" id="accountSortType">
-                            <option value="" selected>--</option>
                             <option value="">Z-A</option>
                             <option value="">A-Z</option>
-                            <option value="">Giá tăng</option>
-                            <option value="">Giá giảm</option>
-                            <option value="">Mã sản phẩm</option>
                         </select>
                     </div>
                 </div>
@@ -777,25 +774,16 @@
                         <td>${account.password}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input type="hidden" name="accountID" value="${account.id}"/>
-                                    <input type="hidden" name="action" value="account_btnDelete"/>
-                                </form>
-                                <button
-                                        class="btnHD btnUpdateUser"
-                                        id="account_updateTrigger"
-                                        data-customerID="${account.customer.id}"
-                                        data-permissionID="${account.permission.id}"
-                                        data-accountName="${account.name}"
-                                        data-accountPassword="${account.password}"
+                                <a class="btnHD btnDel" type="submit">Xóa</a>
+                                <a class="btnHD btnUpdateUser"
+                                   id="account_updateTrigger"
+                                   data-customerID="${account.customer.id}"
+                                   data-permissionID="${account.permission.id}"
+                                   data-accountName="${account.name}"
+                                   data-accountPassword="${account.password}"
                                 >
                                     Sửa
-                                </button>
+                                </a>
                                 <input type="hidden" name="accountID" value="${account.id}"/>
                             </div>
                         </td>
@@ -868,8 +856,7 @@
 
                         <!--Update Button-->
                         <div class="flex-center">
-                            <input type="hidden" name="action" value="account_btnUpdate"/>
-                            <button type="submit">Cập nhật</button>
+                            <a onclick="updateAccount()">Cập nhật</a>
                         </div>
                     </form>
                 </div>
@@ -878,67 +865,61 @@
             <!--Add Account-->
             <div id="modal-add-account" class="addmodal flex-center">
                 <div class="add-modal">
-                    <form
-                            class="form__add"
-                            action="${pageContext.request.contextPath}/AdminManagerServlet"
-                            method="post"
-                    >
-                        <span class="close clsadduser">&times;</span>
-                        <h2 class="text-center" style="padding: 16px 0">THÊM NGƯỜI DÙNG</h2>
+                    <span class="close clsadduser">&times;</span>
+                    <h2 class="text-center" style="padding: 16px 0">THÊM NGƯỜI DÙNG</h2>
 
-                        <!--Account Name-->
-                        <div class="form-grp">
-                            <label for="accountNameID">Tên tài khoản:</label>
-                            <input
-                                    type="text"
-                                    maxlength="100"
-                                    id="accountNameID"
-                                    name="add_accountName"
-                                    value=""
-                                    placeholder="Nhập vào tài khoản"
-                            />
+                    <!--Account Name-->
+                    <div class="form-grp">
+                        <label for="accountNameID">Tên tài khoản:</label>
+                        <input
+                                type="text"
+                                maxlength="100"
+                                id="accountNameID"
+                                name="add_accountName"
+                                value=""
+                                placeholder="Nhập vào tài khoản"
+                        />
 
-                            <!--Account Password-->
-                        </div>
-                        <div class="form-grp">
-                            <label for="accountPasswordID">Mật khẩu:</label>
-                            <input
-                                    type="password"
-                                    maxlength="100"
-                                    id="accountPasswordID"
-                                    name="add_accountPassword"
-                                    value=""
-                                    placeholder="Nhập vào mật khẩu"
-                            />
-                        </div>
+                        <!--Account Password-->
+                    </div>
+                    <div class="form-grp">
+                        <label for="accountPasswordID">Mật khẩu:</label>
+                        <input
+                                type="password"
+                                maxlength="100"
+                                id="accountPasswordID"
+                                name="add_accountPassword"
+                                value=""
+                                placeholder="Nhập vào mật khẩu"
+                        />
+                    </div>
 
-                        <!--Account Permission-->
-                        <div class="form-grp">
-                            <label for="label_permissionID">Permission:</label>
-                            <select id="label_permissionID" name="add_accountPermissionID">
-                                <c:forEach items="${requestScope.permissionList}" var="permission">
-                                    <option value="${permission.id}">${permission.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
+                    <!--Account Permission-->
+                    <div class="form-grp">
+                        <label for="add_account_permission">Permission:</label>
+                        <select id="add_account_permission">
+                            <c:forEach items="${requestScope.permissionList}" var="permission">
+                                <option value="${permission.id}">${permission.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
 
-                        <!--Account Customer-->
-                        <div class="form-grp">
-                            <label for="label_customerID">Customer:</label>
-                            <select id="label_customerID" name="add_accountCustomerID">
-                                <c:forEach items="${requestScope.customerList}" var="customer">
-                                    <option value="${customer.id}">
-                                            ${customer.id} : ${customer.name}
-                                    </option>
-                                </c:forEach>
-                            </select>
-                        </div>
+                    <!--Account Customer-->
+                    <div class="form-grp">
+                        <label for="add_account_customer">Customer:</label>
+                        <select id="add_account_customer">
+                            <c:forEach items="${requestScope.customerList}" var="customer">
+                                <option value="${customer.id}">
+                                        ${customer.id} : ${customer.name}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
 
-                        <!--Add Button-->
-                        <div class="flex-center">
-                            <button type="submit">Thêm</button>
-                            <input type="hidden" name="action" value="account_btnAdd"/>
-                        </div>
+                    <!--Add Button-->
+                    <div class="flex-center">
+                        <a onclick="addAccount()">Thêm</a>
+                    </div>
                     </form>
                 </div>
             </div>
@@ -955,7 +936,8 @@
                     >
                         Thêm
                     </button>
-                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="customerToExcel('tableItem')"
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                       onclick="customerToExcel('tableItem')"
                     >
                         Xuất Excel
                     </a>
@@ -966,7 +948,6 @@
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
                             <select class="selecttype" name="" id="">
-                                <option value="" selected>--</option>
                                 <option value="">Tên</option>
                                 <option value="">Giá</option>
                             </select>
@@ -1310,7 +1291,8 @@
                     >
                         Thêm
                     </button>
-                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="customerToExcel('tableCustomer')"
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                       onclick="customerToExcel('tableCustomer')"
                     >
                         Xuất Excel
                     </a>
@@ -1364,12 +1346,12 @@
                                 <a class="btnHD btnDel" type="submit" onclick="deleteCustomer(${customer.id})">Xóa</a>
 
                                 <button
-                                   class="btnHD btnUpdateCustomer"
-                                   data-customerID="${customer.id}"
-                                   data-customerName="${customer.name}"
-                                   data-customerPhoneNumber="${customer.phone_number}"
-                                   data-customerEmail="${customer.email}"
-                                   data-customerAddress="${customer.address}"
+                                        class="btnHD btnUpdateCustomer"
+                                        data-customerID="${customer.id}"
+                                        data-customerName="${customer.name}"
+                                        data-customerPhoneNumber="${customer.phone_number}"
+                                        data-customerEmail="${customer.email}"
+                                        data-customerAddress="${customer.address}"
                                 >
                                     Sửa
                                 </button>
@@ -1389,15 +1371,15 @@
 
                         <h2 class="text-center" style="padding: 16px 0">Cập Nhật Khách Hàng</h2>
 
-                      <!--Customer Name-->
-                      <div class="form-grp">
-                        <label for="update_customerName">Tên khách hàng:</label>
-                        <input
-                                type="hidden"
-                                id="update_customerID"
-                                name="update_customerNameID"
-                        />
-                      </div>
+                        <!--Customer Name-->
+                        <div class="form-grp">
+                            <label for="update_customerName">Tên khách hàng:</label>
+                            <input
+                                    type="hidden"
+                                    id="update_customerID"
+                                    name="update_customerNameID"
+                            />
+                        </div>
 
                         <!--Customer Name-->
                         <div class="form-grp">

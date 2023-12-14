@@ -68,12 +68,12 @@ function handleUpdateAccount() {
     item.addEventListener("click", () => {
       modal.style.display = "block";
 
-      var accountCustomerID = item.getAttribute("data-customerID");
-      var accountPermissionID = item.getAttribute("data-permissionID");
+      var accountCustomer = item.getAttribute("data-customerID");
+      var accountPermission = item.getAttribute("data-permissionID");
       var accountName = item.getAttribute("data-accountName");
       var accountPass = item.getAttribute("data-accountPassword");
 
-      console.log(accountCustomerID, accountPermissionID, accountName, accountPass);
+      console.log(accountCustomer, accountPermission, accountName, accountPass);
 
       document.getElementById("update_accountNameID").value = accountName;
       document.getElementById("update_accountPasswordID").value = accountPass;

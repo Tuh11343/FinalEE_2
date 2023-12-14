@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 
 @Entity
 @NoArgsConstructor
@@ -17,7 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "orderstatus")
-public class OrderStatus {
+public class OrderStatus implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
