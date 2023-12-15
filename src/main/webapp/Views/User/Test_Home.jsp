@@ -127,22 +127,15 @@
         </div>
     </section>
 
-    <form action="${pageContext.request.contextPath}/ItemServlet" method="post">
-
-        <button>Nhan toi</button>
-        <input type="hidden" name="action" value="test">
-
-    </form>
-
     <section class="ao pb">
         <div class="container">
-            <div class="heading --h4">Các sản phẩm áo</div>
-            <%--4 Product Below--%>
+            <div class="heading --h4">Các sản phẩm áo và quần</div>
+            <%--8 Product Below--%>
             <div class="ao__list listproduct">
 
                 <c:set var="itemCount" value="4"/>
                 <c:forEach items="${requestScope.itemList}" var="item" varStatus="index">
-                    <c:if test="${itemCount<8}">
+                    <c:if test="${itemCount<12}">
 
                         <div class="ao__list--item product">
                             <div class="carousel-img" data-type="account">

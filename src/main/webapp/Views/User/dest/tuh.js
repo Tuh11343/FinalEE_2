@@ -9,6 +9,14 @@ function submitForm(formId) {
     form.submit();
 }
 
+function confirmDelete() {
+    // Sử dụng hộp thoại xác nhận
+    var userConfirmed = confirm('Bạn có chắc chắn xóa không?');
+
+    // Trả về true nếu người dùng đã xác nhận, ngược lại trả về false
+    return userConfirmed;
+}
+
 function logInAjaxRequest() {
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;

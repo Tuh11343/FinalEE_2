@@ -72,6 +72,9 @@ public class HeaderServlet extends HttpServlet {
                     case "order" -> {
                         orderHandle(req, jsonResponse, out);
                     }
+                    case "forgetPass"->{
+                        forgetPassHandle(req,jsonResponse,out);
+                    }
                     default -> {
 
                     }
@@ -296,6 +299,26 @@ public class HeaderServlet extends HttpServlet {
         }
     }
 
+    private void forgetPassHandle(HttpServletRequest req, JSONObject jsonResponse, PrintWriter out) throws JSONException {
+        try {
+            String email = req.getParameter("email");
+
+            Account account=accountServiceImpl.findByName(email);
+            if(account!=null){
+                jsonResponse.put("success", 1);
+                sendEmailConfirmEmail(account);
+            }
+
+            out.print(jsonResponse);
+            out.flush();
+            out.close();
+        } catch (
+                Exception er) {
+            er.printStackTrace();
+        }
+
+    }
+
 
     private void sendAccountConfirmEmail(Customer customer, Account account) {
         try {
@@ -313,6 +336,24 @@ public class HeaderServlet extends HttpServlet {
             String activationLink = mailServiceImpl.mapToJSON(keyValue);
 
             String htmlMsg = "Xin chào! Để xác thực tài khoản vui lòng nhấp vào <a href='" + activationLink + "'>đường link xác nhận</a>";
+            mailServiceImpl.sendMail(keyValue, account.getName(), htmlMsg, "Thư xác nhận tài khoản");
+
+        } catch (Exception er) {
+            er.printStackTrace();
+        }
+
+    }
+
+    private void sendEmailConfirmEmail(Account account) {
+        try {
+            Map<String, Object> keyValue = new HashMap<>();
+            keyValue.put("accountID",account.getId());
+            keyValue.put("action", "forgetPass");
+
+            MailServiceImpl mailServiceImpl = new MailServiceImpl();
+            String activationLink = mailServiceImpl.mapToJSON(keyValue);
+
+            String htmlMsg = "Xin chào! Để nhập lại mật khẩu vui lòng nhấp vào <a href='" + activationLink + "'>đường link xác nhận</a>";
             mailServiceImpl.sendMail(keyValue, account.getName(), htmlMsg, "Thư xác nhận tài khoản");
 
         } catch (Exception er) {

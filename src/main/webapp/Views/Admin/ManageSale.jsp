@@ -545,20 +545,20 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             >
               <div class="sorttable">
                 <div class="sort-search">
-                  <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                  <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
                   <div class="inputsearch">
-                    <select class="selecttype" name="" id="saleSearchType">
+                    <select class="selecttype" name="saleSearchType" id="saleSearchType">
                       <option value="" selected>--</option>
                       <option value="">Tên</option>
                       <option value="">Giá</option>
                     </select>
-                    <input type="text" value="" id="saleInputSearch" />
-                    <a class="btnHD btnsearch">Tìm</a>
+                    <input type="text" value="" id="saleInputSearch" name="saleInputSearch" />
+                    <button class="btnHD btnsearch">Tìm</button>
                   </div>
                 </div>
                 <div class="sort-box">
                   <label for="">Sắp xếp theo:</label>
-                  <select name="" id="saleSortType">
+                  <select name="saleSortType" id="saleSortType">
                     <option value="" selected>--</option>
                     <option value="az">A-Z</option>
                     <option value="za">Z-A</option>
@@ -766,7 +766,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
-    <script src="${pageContext.request.contextPath}/Views/JS_Temp/account_js.js"></script>
+    <script src="${pageContext.request.contextPath}/Views/JS_Temp/sale_js.js"></script>
 
     <script>
       const adminManagerContextPath = "${pageContext.request.contextPath}";

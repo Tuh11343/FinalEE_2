@@ -1,7 +1,7 @@
 /* =====================SearchBoxHeader========================*/
 function showBoxSearch() {
   const btnShow = document.querySelector(".btnshow_search"),
-    searchModal = document.querySelector(".header__right--search");
+      searchModal = document.querySelector(".header__right--search");
   btnShow.addEventListener("click", function (e) {
     e.preventDefault();
     searchModal.classList.toggle("active");
@@ -89,16 +89,19 @@ function HideShowDes() {
 
 function submitSort() {
   const formSort = document.querySelector(".formSort"),
-    selecTed = document.querySelector(".sortinp");
+      selecTed = document.querySelector(".sortinp");
   formSort.submit();
 }
 const handleModal = () => {
   const btn_close = document.querySelector(".btn-close"),
-    modal = document.querySelector(".modal"),
-    btn_open = document.querySelector(".btn-user"),
-    overlay = document.querySelector(".overlay"),
-    tabs = document.querySelectorAll(".tab-item"),
-    forms = document.querySelectorAll(".form-pane");
+      modal = document.querySelector(".modal"),
+      btn_open = document.querySelector(".btn-user"),
+      overlay = document.querySelector(".overlay"),
+      tabs = document.querySelectorAll(".tab-item"),
+      forms = document.querySelectorAll(".form-pane"),
+      formbox = document.querySelectorAll(".form-box"),
+      btnFogetpass = document.querySelector(".fogetpass"),
+      btnPreLogin = document.querySelector(".btnpre");
   btn_open.addEventListener("click", (e) => {
     e?.preventDefault();
     console.log(1);
@@ -115,8 +118,21 @@ const handleModal = () => {
       form.classList.remove("active");
     });
   }
+  btnPreLogin.addEventListener("click", function (e) {
+    e.preventDefault();
+    formbox[0].classList.add("active");
+    formbox[1].classList.remove("active");
+  });
+  btnFogetpass.addEventListener("click", function (e) {
+    console.log(1);
+    e.preventDefault();
+    formbox[0].classList.remove("active");
+    formbox[1].classList.add("active");
+  });
   btn_close.addEventListener("click", () => {
     removeShow();
+    formbox[0].classList.add("active");
+    formbox[1].classList.remove("active");
   });
   overlay.addEventListener("click", () => {
     removeShow();
@@ -136,3 +152,4 @@ const handleModal = () => {
   });
 };
 handleModal();
+

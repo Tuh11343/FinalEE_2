@@ -540,12 +540,12 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
             <h2 style="font-size: 30px">Quản lý kiểu sản phẩm</h2>
             <form
-              action="${pageContext.request.contextPath}/ManageAccountServlet"
+              action="${pageContext.request.contextPath}/ManageItemTypeServlet"
               method="post"
             >
               <div class="sorttable">
                 <div class="sort-search">
-                  <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                  <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
                   <div class="inputsearch">
                     <select
                       class="selecttype"
@@ -560,7 +560,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                       name="itemTypeInputSearch"
                       id="itemTypeInputSearch"
                     />
-                    <a class="btnHD btnsearch">Tìm</a>
+                    <button class="btnHD btnsearch">Tìm</button>
                   </div>
                 </div>
                 <div class="sort-box">
@@ -685,7 +685,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
-    <script src="${pageContext.request.contextPath}/Views/JS_Temp/account_js.js"></script>
+    <script src="${pageContext.request.contextPath}/Views/JS_Temp/itemtype_js.js"></script>
 
     <script>
       const adminManagerContextPath = "${pageContext.request.contextPath}";
