@@ -21,35 +21,54 @@ public class StatisticServiceImpl implements StatisticService {
 
     }
 
+
     @Override
-    public List<Object[]> productsSoldByMonth(int month,int year) {
-        return statisticRepository.productsSoldByMonth(month,year);
+    public List<Object[]> getTop10BestSellingProducts() {
+        try{
+            return statisticRepository.getTop10BestSellingProducts();
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override
-    public List<Object[]> productsSoldByYear(int year) {
-        return statisticRepository.productsSoldByYear(year);
+    public List<Object[]> getTop5CustomersByRevenue() {
+        try{
+            return statisticRepository.getTop5CustomersByRevenue();
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override
-    public List<Object[]> totalProductsSoldByMonth(int month, int year) {
-        return statisticRepository.totalProductsSoldByMonth(month,year);
-    }
-
-    @Override
-    public List<Object[]> totalProductsSoldByYear(int year) {
-        return statisticRepository.totalProductsSoldByYear(year);
-    }
-
-    @Override
-    public List<Object[]> getRevenueByMonth(int month,int year) {
-        return statisticRepository.getRevenueByMonth(month,year);
+    public List<Object[]> getTop5CustomersByAmount() {
+        try{
+            return statisticRepository.getTop5CustomersByAmount();
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override
     public List<Object[]> getRecentFiveMonthRevenue() {
-        return statisticRepository.getRecentFiveMonthRevenue();
+        try{
+            return statisticRepository.getRecentFiveMonthRevenue();
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
-
+    @Override
+    public List<Object[]> getRevenueByDayOfWeek() {
+        try{
+            return statisticRepository.getRevenueByDayOfWeek();
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
 }
