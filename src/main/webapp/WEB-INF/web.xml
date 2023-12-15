@@ -48,6 +48,60 @@
         <servlet-name>ManageAccountServlet</servlet-name>
         <servlet-class>FinalEE.Controller.Manage.ManageAccountServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageCustomerServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageCustomerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageDiscountCardServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageDiscountCardServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageItemCollectionServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageItemCollectionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageItemImageServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageItemImageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageItemMaterialServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageItemMaterialServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageItemServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageItemServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageItemTypeServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageItemTypeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageOrderDetailServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageOrderDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageOrderServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageOrderStatusServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageOrderStatusServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManagePermissionServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManagePermissionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageSaleServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageSaleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageStockItemServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageStockItemServlet</servlet-class>
+    </servlet>
+
+
 
     <servlet-mapping>
         <servlet-name>ManageAccountServlet</servlet-name>
@@ -97,6 +151,59 @@
     <servlet-mapping>
         <servlet-name>AdminServlet</servlet-name>
         <url-pattern>/AdminServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ManageCustomerServlet</servlet-name>
+        <url-pattern>/ManageCustomerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageDiscountCardServlet</servlet-name>
+        <url-pattern>/ManageDiscountCardServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageItemCollectionServlet</servlet-name>
+        <url-pattern>/ManageItemCollectionServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageItemImageServlet</servlet-name>
+        <url-pattern>/ManageItemImageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageItemMaterialServlet</servlet-name>
+        <url-pattern>/ManageItemMaterialServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageItemServlet</servlet-name>
+        <url-pattern>/ManageItemServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageItemTypeServlet</servlet-name>
+        <url-pattern>/ManageItemTypeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageOrderDetailServlet</servlet-name>
+        <url-pattern>/ManageOrderDetailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageOrderServlet</servlet-name>
+        <url-pattern>/ManageOrderServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageOrderStatusServlet</servlet-name>
+        <url-pattern>/ManageOrderStatusServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManagePermissionServlet</servlet-name>
+        <url-pattern>/ManagePermissionServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageSaleServlet</servlet-name>
+        <url-pattern>/ManageSaleServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageStockItemServlet</servlet-name>
+        <url-pattern>/ManageStockItemServlet</url-pattern>
     </servlet-mapping>
 
     

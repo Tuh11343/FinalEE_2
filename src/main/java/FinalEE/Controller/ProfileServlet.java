@@ -30,7 +30,7 @@ public class ProfileServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ServletContext servletContext=getServletContext();
+        ServletContext servletContext = getServletContext();
 
         accountServiceImpl = (AccountServiceImpl) servletContext.getAttribute("accountServiceImpl");
         cartServiceImpl = (CartServiceImpl) servletContext.getAttribute("cartServiceImpl");
@@ -46,7 +46,7 @@ public class ProfileServlet extends HttpServlet {
         permissionServiceImpl = (PermissionServiceImpl) servletContext.getAttribute("permissionServiceImpl");
         saleServiceImpl = (SaleServiceImpl) servletContext.getAttribute("saleServiceImpl");
         stockItemServiceImpl = (StockItemServiceImpl) servletContext.getAttribute("stockItemServiceImpl");
-        req.setAttribute("cartServiceImpl",cartServiceImpl);
+        req.setAttribute("cartServiceImpl", cartServiceImpl);
 
         List<Account> accountList = accountServiceImpl.getAllAccount();
         List<Customer> customerList = customerServiceImpl.getAllCustomer();
@@ -77,32 +77,64 @@ public class ProfileServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
 
-        Integer signInAccountID=null;
+        Integer signInAccountID = null;
 
-        List<Cookie> cookieList= List.of(req.getCookies());
-        for(Cookie cookie: cookieList){
-            if(cookie.getName().equals("signInAccountID")){
-                signInAccountID=Integer.parseInt(cookie.getValue());
+        List<Cookie> cookieList = List.of(req.getCookies());
+        for (Cookie cookie : cookieList) {
+            if (cookie.getName().equals("signInAccountID")) {
+                signInAccountID = Integer.parseInt(cookie.getValue());
             }
         }
 
-        Account account=accountServiceImpl.findByID(signInAccountID);
-        if(account!=null){
+        Account account = accountServiceImpl.findByID(signInAccountID);
+        if (account != null) {
 
-            Customer customer=account.getCustomer();
-            req.setAttribute("customerName",customer.getName());
+            Customer customer = account.getCustomer();
+            req.setAttribute("signInCustomer", customer);
+            req.setAttribute("signInAccount", account);
+            /*req.setAttribute("customerName",customer.getName());
             req.setAttribute("customerEmail",customer.getEmail());
             req.setAttribute("customerAddress",customer.getAddress());
             req.setAttribute("customerPhoneNumber",customer.getPhone_number());
-            req.setAttribute("accountPassword",account.getPassword());
+            req.setAttribute("accountPassword",account.getPassword());*/
 
-            List<Order> customerOrderList=orderServiceImpl.findByCustomerID(customer.getId());
-            req.setAttribute("customerOrderList",customerOrderList);
+            List<Order> customerOrderList = orderServiceImpl.findByCustomerID(customer.getId());
+            req.setAttribute("customerOrderList", customerOrderList);
 
 
         }
 
 
-        req.getRequestDispatcher("/Views/User/ProfileUser.jsp").forward(req,resp);
+        req.getRequestDispatcher("/Views/User/ProfileUser.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+        switch (action) {
+            case "updateCustomerAndAccount" -> {
+                Integer customerID = Integer.parseInt(req.getParameter("customerID"));
+                Integer accountID = Integer.parseInt(req.getParameter("accountID"));
+
+                if (req.getParameter("name").isBlank() || req.getParameter("phoneNumber").isBlank() || req.getParameter("email").isBlank()
+                || req.getParameter("address").isBlank()||req.getParameter("password").isBlank()){
+
+                }else{
+                    Customer customer=new Customer();
+                    customer.setAddress(req.getParameter("address"));
+                    customer.setPhone_number(req.getParameter("phoneNumber"));
+                    customer.setName(req.getParameter("name"));
+                    customer.setEmail(req.getParameter("email"));
+                    customer.setId(customerID);
+
+                    customerServiceImpl.create(customer);
+                    Account account=accountServiceImpl.findByID(accountID);
+                    account.setPassword(req.getParameter("password"));
+                    accountServiceImpl.create(account);
+
+                    resp.sendRedirect("/FinalEE/ProfileUserServlet");
+                }
+            }
+        }
     }
 }

@@ -84,7 +84,7 @@
                                                     varStatus="status">
 
                                                     <c:set var="isSale" value="false" />
-                                                    <c:if test="${orderDetail.item.sale.on_sale eq 1}">
+                                                    <c:if test="${orderDetail.stockItem.item.sale.on_sale eq 1}">
                                                         <c:set var="isSale" value="true" />
                                                     </c:if>
 
@@ -125,48 +125,53 @@
                             </div>
                             <div class="warp__profile">
                                 <h3 class="title --h4">Thông tin tài khoản</h3>
-                                <form action="" class="warp__profile--form">
+                                <form class="warp__profile--form" action="${pageContext.request.contextPath}/ProfileUserServlet" method="post">
                                     <div class="box-form">
                                         <div class="form-gr">
                                             <span class="label" for="name-regis">Họ và tên</span>
                                             <input class="input-form" type="text" name="name" id="name-regis"
-                                                placeholder="Nhập Họ và tên" value="${requestScope.customerName}">
+                                                placeholder="Nhập Họ và tên" value="${requestScope.signInCustomer.name}">
                                             <p class="message-error error-name"></p>
                                         </div>
                                         <div class="form-gr">
                                             <span class="label" for="phone-regis">Số điện thoại</span>
-                                            <input class="input-form" type="text" name="phone" id="phone-regis"
+                                            <input class="input-form" type="text" name="phoneNumber" id="phone-regis"
                                                 placeholder="Nhập số điện thoại"
-                                                value="${requestScope.customerPhoneNumber}">
+                                                value="${requestScope.signInCustomer.phone_number}">
                                             <p class="message-error error-name"></p>
                                         </div>
                                     </div>
                                     <div class="form-gr">
                                         <span class="label" for="email-regis">Email</span>
-                                        <input class="input-form" type="text" name="email" id="email-regis"
-                                            placeholder="Nhập Email" value="${requestScope.customerEmail}">
+                                        <input class="input-form" type="email" name="email" id="email-regis"
+                                            placeholder="Nhập Email" value="${requestScope.signInCustomer.email}">
                                         <p class="message-error error-name"></p>
                                     </div>
                                     <div class="form-gr">
                                         <span class="label" for="address-regis">Địa chỉ</span>
                                         <input class="input-form" type="text" name="address" id="address-regis"
-                                            placeholder="Nhập địa chỉ" value="${requestScope.customerAddress}">
+                                            placeholder="Nhập địa chỉ" value="${requestScope.signInCustomer.address}">
                                         <p class="message-error error-name"></p>
                                     </div>
                                     <div class="form-gr">
                                         <span class="label" for="password-regis">Mật khẩu</span>
                                         <input class="input-form" type="password" name="password" id="password-regis"
-                                            placeholder="Nhập mật khẩu" value="${requestScope.accountPassword}">
+                                            placeholder="Nhập mật khẩu" value="${requestScope.signInAccount.password}">
                                         <p class="message-error error-name"></p>
                                     </div>
                                     <button type="submit" class="btn btn-yellow">Cập Nhật</button>
+                                    <input type="hidden" value="updateCustomerAndAccount" name="action">
+
+                                    <input type="hidden" name="accountID" value="${requestScope.signInAccount.id}">
+                                    <input type="hidden" name="customerID" value="${requestScope.signInCustomer.id}">
+
+
                                 </form>
                             </div>
                         </div>
                     </section>
                 </main>
                 <jsp:include page="component/Footer.jsp" />
-
 
                 <!-- Javascript -->
                 <script src="${pageContext.request.contextPath}/Views/User/dest/jsmain.min.js"></script>
