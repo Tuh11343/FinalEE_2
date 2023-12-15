@@ -97,6 +97,8 @@ public class ItemSearchServlet extends HttpServlet {
                 rangeMax=itemServiceImpl.getItemMaxPrice();
             }
 
+            System.out.println("RangeMin:"+rangeMin);
+            System.out.println("RangeMax:"+rangeMax);
 
             if (req.getParameter("itemCollectionID") != null && !req.getParameter("itemCollectionID").isBlank()) {
                 int itemCollectionID = Integer.parseInt(req.getParameter("itemCollectionID"));
@@ -176,11 +178,10 @@ public class ItemSearchServlet extends HttpServlet {
 
             }
 
-            double minPrice = itemServiceImpl.getItemMinPrice();
-            double maxPrice = itemServiceImpl.getItemMaxPrice();
+            req.setAttribute("minPrice", rangeMin);
+            req.setAttribute("maxPrice", rangeMax);
+            req.setAttribute("","");
 
-            req.setAttribute("minPrice", minPrice);
-            req.setAttribute("maxPrice", maxPrice);
             req.setAttribute("sort", sortBy);
             req.setAttribute("itemSearchList", itemSearchList);
             req.setAttribute("pageList", pageList);

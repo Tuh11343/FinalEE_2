@@ -2,6 +2,7 @@ package FinalEE.Controller.Manage;
 
 import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -10,9 +11,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ManageDiscountCardServlet extends HttpServlet {
+public class ManageStockItemServlet extends HttpServlet {
 
     private AccountServiceImpl accountServiceImpl;
     private CustomerServiceImpl customerServiceImpl;
@@ -34,106 +37,105 @@ public class ManageDiscountCardServlet extends HttpServlet {
 
         initData(req);
 
-        req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+        req.getRequestDispatcher("Views/Admin/ManageStockItem.jsp").forward(req, resp);
     }
-
-
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         System.out.println(action);
         switch (action) {
-            case "addDiscountCard" -> {
+            case "addStockItem" -> {
+                int itemId = Integer.parseInt(req.getParameter("add_stockItemItemID"));
+                String color = req.getParameter("add_stockItemColor");
+                String size = req.getParameter("add_stockItemSize");
+                int amount = Integer.parseInt(req.getParameter("add_stockItemAmount"));
 
-                int customerID = Integer.parseInt(req.getParameter("add_discountCardID"));
-                String name = req.getParameter("add_discountCardName");
-                int discountPercentage = Integer.parseInt(req.getParameter("add_discountCardDiscountPercentage"));
+                Item item = itemServiceImpl.getItem(itemId);
 
-                Customer customer = customerServiceImpl.getCustomer(customerID);
+                StockItem stockItem = new StockItem();
+                stockItem.setAmount(amount);
+                stockItem.setSize(size);
+                stockItem.setColor(color);
+                stockItem.setItem(item);
 
-                DiscountCard discountCard = new DiscountCard();
-                discountCard.setCustomer(customer);
-                discountCard.setDiscount_percentage(discountPercentage);
-                discountCard.setName(name);
-
-                if (discountCardServiceImpl.create(discountCard)) {
-                    resp.getWriter().println("<script>alert('Thêm khách hàng thành công!');</script>");
-
+                if (stockItemServiceImpl.create(stockItem)) {
+                    resp.getWriter().println("<script>alert('Thêm hàng hóa sản phẩm thành công!');</script>");
                 } else {
-                    resp.getWriter().println("<script>alert('Thêm khách hàng thất bại!');</script>");
+                    resp.getWriter().println("<script>alert('Thêm hàng hóa sản phẩm thất bại!');</script>");
                 }
 
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
-
+                resp.sendRedirect("/FinalEE/ManageStockItemServlet");
             }
-            case "updateDiscountCard" -> {
-                int id = Integer.parseInt(req.getParameter("update_discountCardID"));
-                int discountPercentage = Integer.parseInt(req.getParameter("update_discountCardDiscountPercentage"));
-                String name = req.getParameter("update_discountCardName");
-                int customerID = Integer.parseInt(req.getParameter("update_discountCardID"));
+            case "updateStockItem" -> {
+                int id = Integer.parseInt(req.getParameter("update_stockItemID"));
+                int itemId = Integer.parseInt(req.getParameter("update_stockItemItemID"));
+                String color = req.getParameter("update_stockItemColor");
+                String size = req.getParameter("update_stockItemSize");
+                int amount = Integer.parseInt(req.getParameter("update_stockItemAmount"));
 
-                Customer customer = customerServiceImpl.getCustomer(customerID);
+                Item item = itemServiceImpl.getItem(itemId);
 
-                DiscountCard discountCard = new DiscountCard();
-                discountCard.setId(id);
-                discountCard.setCustomer(customer);
-                discountCard.setDiscount_percentage(discountPercentage);
-                discountCard.setName(name);
+                StockItem stockItem = new StockItem();
+                stockItem.setId(id);
+                stockItem.setAmount(amount);
+                stockItem.setSize(size);
+                stockItem.setColor(color);
+                stockItem.setItem(item);
 
-                if (discountCardServiceImpl.create(discountCard)) {
-                    resp.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thành công!');</script>");
-
+                if (stockItemServiceImpl.create(stockItem)) {
+                    resp.getWriter().println("<script>alert('Cập nhật hàng hóa sản phẩm thành công!');</script>");
                 } else {
-                    resp.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thất bại!');</script>");
+                    resp.getWriter().println("<script>alert('Cập nhật hàng hóa sản phẩm thất bại!');</script>");
                 }
 
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
+                resp.sendRedirect("/FinalEE/ManageStockItemServlet");
             }
-            case "deleteDiscountCard" -> {
-                int discountCardID = Integer.parseInt(req.getParameter("discountCardID"));
-                if (discountCardServiceImpl.deleteByID(discountCardID)) {
-                    resp.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thành công!');</script>");
+            case "deleteStockItem" -> {
+                int stockItemID = Integer.parseInt(req.getParameter("stockItemID"));
+                if (stockItemServiceImpl.deleteByID(stockItemID)) {
+                    resp.getWriter().println("<script>alert('Xóa hàng hóa sản phẩm thành công!');</script>");
                 } else {
-                    resp.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thất bại!');</script>");
+                    resp.getWriter().println("<script>alert('Xóa hàng hóa sản phẩm thất bại!');</script>");
                 }
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
+                resp.sendRedirect("/FinalEE/ManageStockItemServlet");
             }
-            case "searchAndSortCustomer"-> {
-                String searchType = req.getParameter("customerSearchType");
-                String customerInputSearch = req.getParameter("customerInputSearch");
+            case "searchAndSortStockItem" -> {
+                String searchType = req.getParameter("stockItemSearchType");
+                String stockItemInputSearch = req.getParameter("stockItemInputSearch");
                 switch (searchType) {
                     case "noData" -> {
 
                     }
                     case "id" -> {
-                        Integer customerID = Integer.parseInt(req.getParameter("customerInputSearch"));
-                        Customer customer = customerServiceImpl.getCustomer(customerID);
-                        List<Customer> customerList = new ArrayList<>();
-                        customerList.add(customer);
+                        Integer stockItemID = Integer.parseInt(req.getParameter("stockItemInputSearch"));
+                        StockItem stockItem = stockItemServiceImpl.getStockItem(stockItemID);
+                        List<StockItem> stockItemList = new ArrayList<>();
+                        stockItemList.add(stockItem);
 
-                        req.setAttribute("customerList", customerList);
-                        req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+                        req.setAttribute("stockItemList", stockItemList);
+                        req.getRequestDispatcher("Views/Admin/ManageStockItem.jsp").forward(req, resp);
 
                     }
-                    case "name" -> {
-                        String customerSortType = req.getParameter("customerSortType");
-                        List<Customer> customerList = null;
-                        if (customerSortType.equals("az")) {
-                            customerList = customerServiceImpl.findAllByNameLike(customerInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
-                        } else if (customerSortType.equals("za")) {
-                            customerList = customerServiceImpl.findAllByNameLike(customerInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+                    case "itemID" -> {
+                        String stockItemSortType = req.getParameter("stockItemSortType");
+                        List<StockItem> stockItemList = null;
+                        if (stockItemSortType.equals("az")) {
+                            stockItemList = stockItemServiceImpl.findAllByItemID(Integer.parseInt(stockItemInputSearch), "item_id", ItemServiceImpl.SortOrder.ASC);
+                        } else if (stockItemSortType.equals("za")) {
+                            stockItemList = stockItemServiceImpl.findAllByItemID(Integer.parseInt(stockItemInputSearch), "item_id", ItemServiceImpl.SortOrder.DESC);
                         }
 
-                        req.setAttribute("customerList", customerList);
-                        req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+                        req.setAttribute("stockItemList", stockItemList);
+                        req.getRequestDispatcher("Views/Admin/ManageStockItem.jsp").forward(req, resp);
                     }
                 }
+
             }
-            case "refreshItem"->{
-                List<Customer> customerList=customerServiceImpl.getAllCustomer();
-                req.setAttribute("customerList", customerList);
-                req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+
+            case "refreshStockItem"->{
+                List<StockItem> stockItemList=stockItemServiceImpl.getAllStockItem();
+                req.setAttribute("stockItemList", stockItemList);
+                req.getRequestDispatcher("Views/Admin/ManageStockItem.jsp").forward(req, resp);
             }
         }
     }

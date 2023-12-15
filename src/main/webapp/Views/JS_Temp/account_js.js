@@ -36,7 +36,6 @@ function showtable() {
 showtable();
 
 
-
 /*Account*/
 function handleAddAccount() {
   var addUser = document.getElementById("account_addTrigger");

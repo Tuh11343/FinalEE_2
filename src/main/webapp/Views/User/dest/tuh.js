@@ -28,7 +28,7 @@ function logInAjaxRequest() {
         },
         success: function (data) {
             if (data.success === 1) {
-                if(!data.accountPermission === 1){
+                if(data.accountPermission !== 1){
                     document.cookie = "signInAccountID=" + data.accountID + "; path=/";
                 }
 

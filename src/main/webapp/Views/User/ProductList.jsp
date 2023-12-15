@@ -130,7 +130,7 @@
 
                                                 <c:set var="counter" value="0" />
                                                 <c:forEach
-                                                    items="${requestScope.itemSearchList.get(itemCount).getImageList()}"
+                                                    items="${requestScope.itemSearchList.get(itemCount).imageList}"
                                                     var="image">
                                                     <c:if test="${counter < 2}">
                                                         <a href="#" class="img"><img src="${image.image_url}"
@@ -200,8 +200,8 @@
                                             action="${pageContext.request.contextPath}/ItemSearchServlet" method="get">
                                             <input type="hidden" name="sort" value="${requestScope.sort}">
                                             <input type="hidden" name="currentPage" value="${page}">
-                                            <input type="hidden" name="priceMin" value="">
-                                            <input type="hidden" name="priceMax" value="">
+                                            <input type="hidden" name="rangeMin" value="${requestScope.minPrice}">
+                                            <input type="hidden" name="rangeMax" value="${requestScope.maxPrice}">
 
                                             <c:if test="${not empty requestScope.itemCollectionID}">
                                                 <input type="hidden" name="itemCollectionID"
@@ -231,13 +231,24 @@
 
                     <script>
 
+                        let minPrice = ${requestScope.minPrice};
+                        let maxPrice = ${requestScope.maxPrice};
+
+                        // Kiểm tra xem minPrice và maxPrice có tồn tại không
+                        if (!minPrice) {
+                            minPrice = 20000; // Giá trị mặc định cho minPrice
+                        }
+                        if (!maxPrice) {
+                            maxPrice = 1000000; // Giá trị mặc định cho maxPrice
+                        }
+
                         var priceSlider = document.getElementById('price-slider');
                         // Check if #price-slider elem is exists if not return
                         // to prevent error logs
                         // if (priceSlider == null) return;
                         noUiSlider.create(priceSlider, {
                             //start la gia tri bat dau va gia tri ket thuc khi moi vao trang wed, nen de min va max cua gia tri
-                            start: [0, 700000],
+                            start: [minPrice,maxPrice],
                             connect: true,
                             //step la gia tri trang len moi khi keo
                             step: 1000,
@@ -245,8 +256,6 @@
                             margin: 2000,
 
                             range: {
-                                // 'min': ${requestScope.minPrice},
-                                // 'max': ${requestScope.maxPrice},
                                 min: [20000],
                                 max: [1000000]
                             },

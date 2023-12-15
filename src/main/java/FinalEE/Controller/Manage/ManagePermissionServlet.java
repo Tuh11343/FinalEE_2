@@ -2,6 +2,7 @@ package FinalEE.Controller.Manage;
 
 import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -10,9 +11,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ManageDiscountCardServlet extends HttpServlet {
+public class ManagePermissionServlet extends HttpServlet {
 
     private AccountServiceImpl accountServiceImpl;
     private CustomerServiceImpl customerServiceImpl;
@@ -34,106 +37,93 @@ public class ManageDiscountCardServlet extends HttpServlet {
 
         initData(req);
 
-        req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+        req.getRequestDispatcher("Views/Admin/ManagePermission.jsp").forward(req, resp);
     }
-
-
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         System.out.println(action);
         switch (action) {
-            case "addDiscountCard" -> {
+            case "permission_btnAdd" -> {
+                int level = Integer.parseInt(req.getParameter("add_permissionLevel"));
+                String name = req.getParameter("add_permissionName");
 
-                int customerID = Integer.parseInt(req.getParameter("add_discountCardID"));
-                String name = req.getParameter("add_discountCardName");
-                int discountPercentage = Integer.parseInt(req.getParameter("add_discountCardDiscountPercentage"));
+                Permission permission = new Permission();
+                permission.setLevel(level);
+                permission.setName(name);
 
-                Customer customer = customerServiceImpl.getCustomer(customerID);
-
-                DiscountCard discountCard = new DiscountCard();
-                discountCard.setCustomer(customer);
-                discountCard.setDiscount_percentage(discountPercentage);
-                discountCard.setName(name);
-
-                if (discountCardServiceImpl.create(discountCard)) {
-                    resp.getWriter().println("<script>alert('Thêm khách hàng thành công!');</script>");
-
+                if (permissionServiceImpl.create(permission)) {
+                    resp.getWriter().println("<script>alert('Thêm quyền thành công!');</script>");
                 } else {
-                    resp.getWriter().println("<script>alert('Thêm khách hàng thất bại!');</script>");
+                    resp.getWriter().println("<script>alert('Thêm quyền thất bại!');</script>");
                 }
 
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
-
+                resp.sendRedirect("/FinalEE/ManagePermissionServlet");
             }
-            case "updateDiscountCard" -> {
-                int id = Integer.parseInt(req.getParameter("update_discountCardID"));
-                int discountPercentage = Integer.parseInt(req.getParameter("update_discountCardDiscountPercentage"));
-                String name = req.getParameter("update_discountCardName");
-                int customerID = Integer.parseInt(req.getParameter("update_discountCardID"));
+            case "permission_btnUpdate" -> {
+                int id = Integer.parseInt(req.getParameter("update_permissionID"));
+                String name = req.getParameter("update_permissionName");
+                int level = Integer.parseInt(req.getParameter("update_permissionLevel"));
 
-                Customer customer = customerServiceImpl.getCustomer(customerID);
+                Permission permission = new Permission();
+                permission.setId(id);
+                permission.setLevel(level);
+                permission.setName(name);
 
-                DiscountCard discountCard = new DiscountCard();
-                discountCard.setId(id);
-                discountCard.setCustomer(customer);
-                discountCard.setDiscount_percentage(discountPercentage);
-                discountCard.setName(name);
-
-                if (discountCardServiceImpl.create(discountCard)) {
-                    resp.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thành công!');</script>");
-
+                if (permissionServiceImpl.create(permission)) {
+                    resp.getWriter().println("<script>alert('Cập nhật quyền thành công!');</script>");
                 } else {
-                    resp.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thất bại!');</script>");
+                    resp.getWriter().println("<script>alert('Cập nhật quyền thất bại!');</script>");
                 }
 
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
+                resp.sendRedirect("/FinalEE/ManagePermissionServlet");
             }
-            case "deleteDiscountCard" -> {
-                int discountCardID = Integer.parseInt(req.getParameter("discountCardID"));
-                if (discountCardServiceImpl.deleteByID(discountCardID)) {
-                    resp.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thành công!');</script>");
+            case "permission_btnDelete" -> {
+                int permissionID = Integer.parseInt(req.getParameter("permissionID"));
+                if (permissionServiceImpl.deleteByID(permissionID)) {
+                    resp.getWriter().println("<script>alert('Xóa vật liệu thành công!');</script>");
                 } else {
-                    resp.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thất bại!');</script>");
+                    resp.getWriter().println("<script>alert('Xóa vật liệu thất bại!');</script>");
                 }
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
+                resp.sendRedirect("/FinalEE/ManagePermissionServlet");
             }
-            case "searchAndSortCustomer"-> {
-                String searchType = req.getParameter("customerSearchType");
-                String customerInputSearch = req.getParameter("customerInputSearch");
+            case "searchAndSortPermission" -> {
+                String searchType = req.getParameter("permissionSearchType");
+                String permissionInputSearch = req.getParameter("permissionInputSearch");
                 switch (searchType) {
                     case "noData" -> {
 
                     }
                     case "id" -> {
-                        Integer customerID = Integer.parseInt(req.getParameter("customerInputSearch"));
-                        Customer customer = customerServiceImpl.getCustomer(customerID);
-                        List<Customer> customerList = new ArrayList<>();
-                        customerList.add(customer);
+                        Integer permissionID = Integer.parseInt(req.getParameter("permissionInputSearch"));
+                        Permission permission = permissionServiceImpl.findByID(permissionID);
+                        List<Permission> permissionList = new ArrayList<>();
+                        permissionList.add(permission);
 
-                        req.setAttribute("customerList", customerList);
-                        req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+                        req.setAttribute("permissionList", permissionList);
+                        req.getRequestDispatcher("Views/Admin/ManagePermission.jsp").forward(req, resp);
 
                     }
                     case "name" -> {
-                        String customerSortType = req.getParameter("customerSortType");
-                        List<Customer> customerList = null;
-                        if (customerSortType.equals("az")) {
-                            customerList = customerServiceImpl.findAllByNameLike(customerInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
-                        } else if (customerSortType.equals("za")) {
-                            customerList = customerServiceImpl.findAllByNameLike(customerInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+                        String permissionSortType = req.getParameter("permissionSortType");
+                        List<Permission> permissionList = null;
+                        if (permissionSortType.equals("az")) {
+                            permissionList = permissionServiceImpl.findAllByNameContains(permissionInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
+                        } else if (permissionSortType.equals("za")) {
+                            permissionList = permissionServiceImpl.findAllByNameContains(permissionInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
                         }
 
-                        req.setAttribute("customerList", customerList);
-                        req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+                        req.setAttribute("permissionList", permissionList);
+                        req.getRequestDispatcher("Views/Admin/ManagePermission.jsp").forward(req, resp);
                     }
                 }
+
             }
-            case "refreshItem"->{
-                List<Customer> customerList=customerServiceImpl.getAllCustomer();
-                req.setAttribute("customerList", customerList);
-                req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+
+            case "refreshPermission"->{
+                List<Permission> permissionList=permissionServiceImpl.getAllPermission();
+                req.setAttribute("permissionList", permissionList);
+                req.getRequestDispatcher("Views/Admin/ManagePermission.jsp").forward(req, resp);
             }
         }
     }

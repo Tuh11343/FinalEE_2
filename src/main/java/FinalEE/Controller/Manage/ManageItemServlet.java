@@ -79,7 +79,7 @@ public class ManageItemServlet extends HttpServlet {
                     resp.getWriter().println("<script>alert('Thêm sản phẩm thất bại!');</script>");
                 }
 
-                req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
+                resp.sendRedirect("/FinalEE/ManageItemServlet");
             }
             case "updateItem" -> {
 
@@ -114,7 +114,7 @@ public class ManageItemServlet extends HttpServlet {
                     resp.getWriter().println("<script>alert('Cập nhật sản phẩm thất bại!');</script>");
                 }
 
-                req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
+                resp.sendRedirect("/FinalEE/ManageItemServlet");
             }
             case "deleteItem" -> {
                 int itemID = Integer.parseInt(req.getParameter("itemID"));
@@ -123,7 +123,7 @@ public class ManageItemServlet extends HttpServlet {
                 } else {
                     resp.getWriter().println("<script>alert('Xóa sản phẩm thất bại!');</script>");
                 }
-                req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
+                resp.sendRedirect("/FinalEE/ManageItemServlet");
             }
             case "searchAndSortItem"-> {
                 String searchType = req.getParameter("itemSearchType");
@@ -139,7 +139,7 @@ public class ManageItemServlet extends HttpServlet {
                         itemList.add(item);
 
                         req.setAttribute("itemList", itemList);
-                        resp.sendRedirect("/FinalEE/ManageItemServlet");
+                        req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
 
                     }
                     case "itemColor" -> {
@@ -152,7 +152,7 @@ public class ManageItemServlet extends HttpServlet {
                         }
 
                         req.setAttribute("itemList", itemList);
-                        resp.sendRedirect("/FinalEE/ManageItemServlet");
+                        req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
                     }
                     case "lowerPrice" -> {
                         String itemSortType = req.getParameter("itemSortType");
@@ -164,7 +164,7 @@ public class ManageItemServlet extends HttpServlet {
                         }
 
                         req.setAttribute("itemList", itemList);
-                        resp.sendRedirect("/FinalEE/ManageItemServlet");
+                        req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
                     }
                     case "higherPrice" -> {
                         String itemSortType = req.getParameter("itemSortType");
@@ -176,7 +176,7 @@ public class ManageItemServlet extends HttpServlet {
                         }
 
                         req.setAttribute("itemList", itemList);
-                        resp.sendRedirect("/FinalEE/ManageItemServlet");
+                        req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
                     }
                 }
             }
@@ -184,7 +184,7 @@ public class ManageItemServlet extends HttpServlet {
             case "refreshItem"->{
                 List<Item> itemList=itemServiceImpl.getAllItem();
                 req.setAttribute("itemList", itemList);
-                resp.sendRedirect("/FinalEE/ManageItemServlet");
+                req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
             }
         }
     }
