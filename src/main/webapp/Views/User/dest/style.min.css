@@ -1801,26 +1801,26 @@ https://flickity.metafizzy.co
   padding-top: 5px;
 }
 .profilepage
-  .warp__order--list
-  .order--item
-  .order--products
-  .products--item:not(:last-child) {
+.warp__order--list
+.order--item
+.order--products
+.products--item:not(:last-child) {
   border-bottom: 1px solid var(--grayop-cl);
 }
 .profilepage
-  .warp__order--list
-  .order--item
-  .order--products
-  .products--item
-  .number__product {
+.warp__order--list
+.order--item
+.order--products
+.products--item
+.number__product {
   width: 5%;
 }
 .profilepage
-  .warp__order--list
-  .order--item
-  .order--products
-  .products--item
-  .name__product {
+.warp__order--list
+.order--item
+.order--products
+.products--item
+.name__product {
   display: -webkit-inline-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -1835,19 +1835,19 @@ https://flickity.metafizzy.co
   width: 18%;
 }
 .profilepage
-  .warp__order--list
-  .order--item
-  .order--products
-  .products--item
-  .price__product {
+.warp__order--list
+.order--item
+.order--products
+.products--item
+.price__product {
   width: 23%;
 }
 .profilepage
-  .warp__order--list
-  .order--item
-  .order--products
-  .products--item
-  .name__product {
+.warp__order--list
+.order--item
+.order--products
+.products--item
+.name__product {
   width: 25%;
 }
 .profilepage .warp__profile {
@@ -2131,7 +2131,7 @@ https://flickity.metafizzy.co
 .forgetpasspage .forgetform .forgetform__panel {
   margin: 0 auto;
   margin-top: 30px;
-  width: 425px;
+  min-width: 425px;
   padding: 20px 30px;
   border-radius: 5px;
   box-shadow: 0px 1px 25px -11px rgba(0, 0, 0, 0.75);
@@ -2159,6 +2159,24 @@ https://flickity.metafizzy.co
   border-radius: 5px;
   padding: 3px 6px;
 }
+.forgetpasspage .forgetform .forgetform__panel .formforget .form-gr .show-password-btn {
+  position: absolute;
+  right: 0;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.1;
+}
+.forgetpasspage
+.forgetform
+.forgetform__panel
+.formforget
+.form-gr
+.show-password-btn:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
 .forgetpasspage .forgetform .forgetform__panel .formforget .form-gr input.error {
   border: red solid 1px;
   color: var(--main-cl);
@@ -2171,3 +2189,4 @@ https://flickity.metafizzy.co
   bottom: -18px;
 }
 /*# sourceMappingURL=style.min.css.map */
+

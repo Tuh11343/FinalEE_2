@@ -617,7 +617,7 @@
                             <div class="flex-center grpbtn">
                                 <a class="btnHD btnDel" type="submit">Xóa</a>
 
-                                <button
+                                <a
                                         class="btnHD btnUpdateItem"
                                         data-itemID="${item.id}"
                                         data-itemName="${item.name}"
@@ -631,7 +631,7 @@
                                         data-itemDescription="${item.description}"
                                 >
                                     Sửa
-                                </button>
+                                </a>
                             </div>
                         </td>
                     </tr>

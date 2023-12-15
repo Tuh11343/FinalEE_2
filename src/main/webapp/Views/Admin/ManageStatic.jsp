@@ -525,7 +525,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             <h2 style="font-size: 30px; text-align: center">Quản lý thống kê</h2>
             <div class="sorttable">
               <div class="sort-search">
-                <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
                 <div class="inputsearch">
                   <input type="text" value="" />
                   <button class="btnHD btnsearch">Tìm</button>

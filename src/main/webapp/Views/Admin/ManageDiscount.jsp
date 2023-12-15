@@ -536,12 +536,12 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             </div>
             <h2 style="font-size: 30px">Quản lý mã giảm giá</h2>
             <form
-              action="${pageContext.request.contextPath}/ManageAccountServlet"
+              action="${pageContext.request.contextPath}/ManageDiscountCardServlet"
               method="post"
             >
               <div class="sorttable">
                 <div class="sort-search">
-                  <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                  <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
                   <div class="inputsearch">
                     <select
                       class="selecttype"
@@ -594,7 +594,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                     <div class="flex-center grpbtn">
                       <a class="btnHD btnDel" type="submit">Xóa</a>
 
-                      <button
+                      <a
                         class="btnHD btnUpdateDiscountCard"
                         data-discountCardID="${discountCard.id}"
                         data-discountCardCustomerID="${discountCard.customer.id}"
@@ -602,7 +602,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                         data-discountCardPercentage="${discountCard.discount_percentage}"
                       >
                         Sửa
-                      </button>
+                      </a>
                       <input
                         type="hidden"
                         name="discountCardID"
@@ -622,7 +622,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
               <h2 class="text-center" style="padding: 16px 0">Cập Nhật Thẻ Khuyến Mãi</h2>
               <form
-                action="${pageContext.request.contextPath}/ManageDiscountServlet"
+                action="${pageContext.request.contextPath}/ManageDiscountCardServlet"
                 method="post"
               >
                 s
@@ -685,7 +685,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             <div class="add-modal">
               <span class="close clsAddDiscountCard">&times;</span>
               <h2 class="text-center" style="padding: 16px 0">Thêm Thẻ Khuyến Mãi</h2>
-              <form class="form__add" action="#" method="post">
+              <form class="form__add" action="${pageContext.request.contextPath}/ManageDiscountCardServlet" method="post">
                 <!--Customer ID-->
                 <div class="form-grp">
                   <label for="add_discountCardCustomerID">Khách Hàng:</label>
@@ -749,7 +749,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
-    <script src="${pageContext.request.contextPath}/Views/JS_Temp/account_js.js"></script>
+    <script src="${pageContext.request.contextPath}/Views/JS_Temp/discountcard_js.js"></script>
 
     <script>
       const adminManagerContextPath = "${pageContext.request.contextPath}";

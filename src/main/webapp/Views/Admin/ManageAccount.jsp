@@ -523,7 +523,7 @@
     <!--Center-->
     <div class="center">
         <!--Account-->
-        <div class="account-data table-data" data-type="accountList">
+        <div class="account-data table-data active" data-type="accountList">
             <div class="header-table">
                 <div class="AddUser">
                     <button
@@ -537,6 +537,13 @@
                     >
                         Xuất Excel
                     </a>
+                    <form action="${pageContext.request.contextPath}/ManageAccountServlet" method="post">
+
+                        <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px">Refresh</button>
+                        <input type="hidden" name="action" value="refreshAccount">
+
+                    </form>
+
                 </div>
                 <h2 style="font-size: 30px">Quản lý tài khoản</h2>
                 <form action="${pageContext.request.contextPath}/ManageAccountServlet" method="post">
@@ -597,13 +604,14 @@
                         <td>
                             <div class="flex-center grpbtn">
 
-                                <form action="${pageContext.request.contextPath}/ManageAccountServlet" method="post">
+                                <form action="${pageContext.request.contextPath}/ManageAccountServlet" method="post"
+                                      onsubmit="return confirmDelete()">
                                     <button class="btnHD btnDel" type="submit">Xóa</button>
                                     <input type="hidden" value="${account.id}" name="accountID">
                                     <input type="hidden" value="deleteAccount" name="action">
                                 </form>
 
-                                <button class="btnHD btnUpdateUser"
+                                <a class="btnHD btnUpdateUser"
                                         id="account_updateTrigger"
                                         data-accountID="${account.id}"
                                         data-customerID="${account.customer.id}"
@@ -611,7 +619,7 @@
                                         data-accountName="${account.name}"
                                         data-accountPassword="${account.password}">
                                     Sửa
-                                </button>
+                                </a>
 
                             </div>
                         </td>

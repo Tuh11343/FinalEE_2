@@ -54,10 +54,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account getAccount(int id) {
         try {
-            Optional<Account> account = accountRepository.findById(id);
-            if (account.get() != null) {
-                return account.get();
-            }
+            return accountRepository.findByID(id);
         } catch (Exception er) {
             er.printStackTrace();
         }
@@ -121,6 +118,16 @@ public class AccountServiceImpl implements AccountService {
     public Account findByCustomerID(Integer customerID) {
         try{
             return accountRepository.findByCustomer_Id(customerID);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Account findByName(String name) {
+        try{
+            return accountRepository.findByName(name);
         }catch (Exception er){
             er.printStackTrace();
         }

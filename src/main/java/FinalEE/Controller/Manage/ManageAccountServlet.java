@@ -45,7 +45,6 @@ public class ManageAccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        System.out.println(action);
         switch (action) {
             /*Account*/
             case "deleteAccount" -> {
@@ -149,6 +148,12 @@ public class ManageAccountServlet extends HttpServlet {
                         req.getRequestDispatcher("Views/Admin/ManageAccount.jsp").forward(req, resp);
                     }
                 }
+            }
+            case "refreshAccount"->{
+                List<Account> accountList=accountServiceImpl.getAllAccount();
+                req.setAttribute("accountList", accountList);
+                System.out.println(accountList.size());
+                req.getRequestDispatcher("Views/Admin/ManageAccount.jsp").forward(req, resp);
             }
         }
     }

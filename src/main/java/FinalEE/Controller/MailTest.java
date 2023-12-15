@@ -10,8 +10,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Base64;
 import java.util.Map;
 
@@ -80,6 +82,13 @@ public class MailTest extends HttpServlet {
                         resp.sendRedirect("/FinalEE/ItemServlet");
                     }
                 }
+                case "forgetPass"->{
+                    if(keyValueData!=null){
+                        Integer accountID=Integer.parseInt(keyValueData.get("accountID").toString());
+                        req.setAttribute("accountID",accountID);
+                        req.getRequestDispatcher("/Views/User/passpage.jsp").forward(req, resp);
+                    }
+                }
             }
         } else {
             System.out.println("Loi");
@@ -87,5 +96,31 @@ public class MailTest extends HttpServlet {
 
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try{
+            String action=req.getParameter("action");
+            switch (action){
+                case "forgetPass"->{
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
+                    String password=req.getParameter("password");
+                    Integer accountID=Integer.parseInt(req.getParameter("accountID"));
+                    Account account=accountServiceImpl.getAccount(accountID);
+                    if(account!=null){
+                        account.setPassword(password);
+                        if(accountServiceImpl.create(account)){
+                            jsonResponse.put("success", true);
+                        }
+                    }
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+            }
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+    }
 }

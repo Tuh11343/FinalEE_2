@@ -544,11 +544,11 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             >
               <div class="sorttable">
                 <div class="sort-search">
-                  <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                  <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
                   <div class="inputsearch">
                     <select
                       class="selecttype"
-                      name="customerSearch"
+                      name="customerSearchType"
                       id="customerSearchType"
                     >
                       <option value="id">ID</option>
@@ -560,7 +560,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                       name="customerInputSearch"
                       id="customerInputSearch"
                     />
-                    <a class="btnHD btnsearch">Tìm</a>
+                    <button class="btnHD btnsearch">Tìm</button>
                   </div>
                 </div>
                 <div class="sort-box">
@@ -599,7 +599,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                     <div class="flex-center grpbtn">
                       <a class="btnHD btnDel" type="submit">Xóa</a>
 
-                      <button
+                      <a
                         class="btnHD btnUpdateCustomer"
                         data-customerID="${customer.id}"
                         data-customerName="${customer.name}"
@@ -608,7 +608,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                         data-customerAddress="${customer.address}"
                       >
                         Sửa
-                      </button>
+                      </a>
                     </div>
                   </td>
                 </tr>
@@ -778,7 +778,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
-    <script src="${pageContext.request.contextPath}/Views/JS_Temp/account_js.js"></script>
+    <script src="${pageContext.request.contextPath}/Views/JS_Temp/customer_js.js"></script>
 
     <script>
       const adminManagerContextPath = "${pageContext.request.contextPath}";

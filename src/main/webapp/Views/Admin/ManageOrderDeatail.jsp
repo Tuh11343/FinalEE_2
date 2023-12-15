@@ -544,21 +544,21 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             >
               <div class="sorttable">
                 <div class="sort-search">
-                  <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                  <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
                   <div class="inputsearch">
-                    <select class="selecttype" name="" id="orderDetailSearchType">
+                    <select class="selecttype" name="orderDetailSearchType" id="orderDetailSearchType">
                       <option value="id">ID</option>
                       <option value="orderID">ID hóa đơn</option>
                       <option value="lowerPrice">Giá thấp hơn</option>
                       <option value="higherPrice">Giá cao ho</option>
                     </select>
-                    <input type="text" id="orderDetailInputSearch" />
-                    <a class="btnHD btnsearch">Tìm</a>
+                    <input type="text" id="orderDetailInputSearch" name="orderDetailInputSearch" />
+                    <button class="btnHD btnsearch">Tìm</button>
                   </div>
                 </div>
                 <div class="sort-box">
                   <label for="">Sắp xếp theo:</label>
-                  <select name="" id="orderDetailSortType">
+                  <select name="orderDetailSortType" id="orderDetailSortType">
                     <option value="" selected>--</option>
                     <option value="az">A-Z</option>
                     <option value="za">Z-A</option>
