@@ -28,7 +28,10 @@ function logInAjaxRequest() {
         },
         success: function (data) {
             if (data.success === 1) {
-                document.cookie = "signInAccountID=" + data.accountID + "; path=/";
+                if(!data.accountPermission === 1){
+                    document.cookie = "signInAccountID=" + data.accountID + "; path=/";
+                }
+
                 if(data.deleteLocalCart===true){
                     localStorage.clear();
                 }
@@ -296,7 +299,6 @@ function order(){
         success: function (data) {
             if(data.success === 1)
             {
-                console.log("Success");
                 localStorage.clear();
                 window.location.reload();
             }

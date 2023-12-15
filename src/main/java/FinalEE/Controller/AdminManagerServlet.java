@@ -771,61 +771,6 @@ public class AdminManagerServlet extends HttpServlet {
                         req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
                     }
 
-                    /*Order Detail*/
-                    case "orderDetail_btnAdd" -> {
-                        int orderID = Integer.parseInt(req.getParameter("add_orderDetailOrderID"));
-                        int itemID = Integer.parseInt(req.getParameter("add_orderDetailItemID"));
-                        int amount = Integer.parseInt(req.getParameter("add_orderDetailAmount"));
-                        String itemColor = req.getParameter("add_orderDetailItemColor");
-                        String itemSize = req.getParameter("add_orderDetailItemSize");
-                        double total = Double.parseDouble(req.getParameter("add_orderDetailTotal"));
-
-                        Item item = itemServiceImpl.getItem(itemID);
-                        Order order = orderServiceImpl.getOrder(orderID);
-
-                        OrderDetail orderDetail = new OrderDetail();
-                        orderDetail.setTotal(total);
-                        orderDetail.setItem(item);
-                        orderDetail.setAmount(amount);
-                        orderDetail.setOrder(order);
-                        orderDetail.setItem_color(itemColor);
-                        orderDetail.setItem_size(itemSize);
-
-                        if (orderDetailServiceImpl.create(orderDetail)) {
-                            response.getWriter().println("<script>alert('Thêm chi tiết hóa đơn thành công!');</script>");
-                        } else {
-                            response.getWriter().println("<script>alert('Thêm chi tiết hóa đơn thất bại!');</script>");
-                        }
-
-                        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, response);
-                    }
-                    case "orderDetail_btnUpdate" -> {
-                        int orderDetailID = Integer.parseInt(req.getParameter("update_orderDetailID"));
-                        int orderID = Integer.parseInt(req.getParameter("update_orderDetailOrderID"));
-                        int itemID = Integer.parseInt(req.getParameter("update_orderDetailItemID"));
-                        int amount = Integer.parseInt(req.getParameter("update_orderDetailAmount"));
-                        String itemColor = req.getParameter("update_orderDetailItemColor");
-                        String itemSize = req.getParameter("update_orderDetailItemSize");
-                        double total = Double.parseDouble(req.getParameter("update_orderDetailTotal"));
-
-                        Item item = itemServiceImpl.getItem(itemID);
-                        Order order = orderServiceImpl.getOrder(orderID);
-
-                        OrderDetail orderDetail = new OrderDetail();
-                        orderDetail.setId(orderDetailID);
-                        orderDetail.setTotal(total);
-                        orderDetail.setItem(item);
-                        orderDetail.setAmount(amount);
-                        orderDetail.setOrder(order);
-                        orderDetail.setItem_color(itemColor);
-                        orderDetail.setItem_size(itemSize);
-
-                        if (orderDetailServiceImpl.create(orderDetail)) {
-                            response.getWriter().println("<script>alert('Cập nhật chi tiết hóa đơn thành công!');</script>");
-                        } else {
-                            response.getWriter().println("<script>alert('Cập nhật chi tiết hóa đơn thất bại!');</script>");
-                        }
-                    }
                     case "orderDetail_btnDelete" -> {
                         int orderDetailID = Integer.parseInt(req.getParameter("orderDetailID"));
                         if (orderDetailServiceImpl.deleteByID(orderDetailID)) {

@@ -43,7 +43,17 @@
         <servlet-name>AdminServlet</servlet-name>
         <servlet-class>FinalEE.Controller.AdminServlet</servlet-class>
     </servlet>
+    
+    <servlet>
+        <servlet-name>ManageAccountServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageAccountServlet</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>ManageAccountServlet</servlet-name>
+        <url-pattern>/ManageAccountServlet</url-pattern>
+    </servlet-mapping>
+    
     <servlet-mapping>
         <servlet-name>AdminManagerServlet</servlet-name>
         <url-pattern>/AdminManagerServlet</url-pattern>

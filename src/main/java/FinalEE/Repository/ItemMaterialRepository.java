@@ -4,6 +4,7 @@ package FinalEE.Repository;
 import FinalEE.Entity.ItemMaterial;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,5 +15,7 @@ public interface ItemMaterialRepository extends JpaRepository<ItemMaterial, Inte
 
     List<ItemMaterial> findAll(Sort sort);
     List<ItemMaterial> findAllByNameContains(String name,Sort sort);
+
+    ItemMaterial findById(int id);
 
 }

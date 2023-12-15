@@ -45,8 +45,7 @@ public class SaleServiceImpl implements SaleService{
     @Override
     public boolean deleteByID(int id) {
         if (saleRepository.existsById(id)) {
-            //saleRepository.deleteById(saleID);
-            System.out.println("Ban da xoa:" + id);
+            saleRepository.deleteById(id);
             return true;
         }
         return false;

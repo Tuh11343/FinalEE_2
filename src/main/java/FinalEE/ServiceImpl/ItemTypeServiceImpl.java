@@ -44,8 +44,7 @@ public class ItemTypeServiceImpl implements ItemTypeService{
     @Override
     public boolean deleteByID(int id) {
         if (itemTypeRepository.existsById(id)) {
-            //itemTypeRepository.deleteById(itemTypeID);
-            System.out.println("Ban da xoa:" + id);
+            itemTypeRepository.deleteById(id);
             return true;
         }
         return false;
@@ -53,7 +52,12 @@ public class ItemTypeServiceImpl implements ItemTypeService{
 
     @Override
     public ItemType getItemType(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            return itemTypeRepository.findById(id);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override

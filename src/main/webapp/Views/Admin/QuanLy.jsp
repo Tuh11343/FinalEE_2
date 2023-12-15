@@ -730,14 +730,14 @@
                                 <option value="customerID">ID Khách hàng</option>
                             </select>
                             <input type="text" value="" id="accountInputSearch"/>
-                            <button class="btnHD btnsearch">Tìm</button>
+                            <a class="btnHD btnsearch" onclick="searchAndSortAccount()">Tìm</a>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
                         <select name="" id="accountSortType">
-                            <option value="">Z-A</option>
-                            <option value="">A-Z</option>
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
                         </select>
                     </div>
                 </div>
@@ -767,16 +767,18 @@
                         <td>${account.password}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <a class="btnHD btnDel" onclick="deleteAccount(${account.id})" type="submit">Xóa</a>
-                                <a class="btnHD btnUpdateUser"
-                                   id="account_updateTrigger"
-                                   data-customerID="${account.customer.id}"
-                                   data-permissionID="${account.permission.id}"
-                                   data-accountName="${account.name}"
-                                   data-accountPassword="${account.password}"
+                                <a class="btnHD btnDel"
+                                   onclick="handleDelete(${account.id},'deleteAccount','tableAccount')" type="submit">Xóa</a>
+                                <button class="btnHD btnUpdateUser"
+                                        id="account_updateTrigger"
+                                        data-accountID="${account.id}"
+                                        data-customerID="${account.customer.id}"
+                                        data-permissionID="${account.permission.id}"
+                                        data-accountName="${account.name}"
+                                        data-accountPassword="${account.password}"
                                 >
                                     Sửa
-                                </a>
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -945,15 +947,15 @@
                                 <option value="">Giá</option>
                             </select>
                             <input type="text" id="itemInputSearch"/>
-                            <button class="btnHD btnsearch">Tìm</button>
+                            <a class="btnHD btnsearch" onclick="searchAndSortItem()">Tìm</a>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
                         <select name="" id="itemSortType">
                             <option value="" selected>--</option>
-                            <option value="">Z-A</option>
-                            <option value="">A-Z</option>
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
 
                         </select>
                     </div>
@@ -975,6 +977,7 @@
                     <th scope="col">Sản Phẩm Hot</th>
                     <th scope="col">Giá</th>
                     <th scope="col">Năm Sản Xuất</th>
+                    <th scope="col">Thông tin sản phẩm</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
@@ -1007,17 +1010,13 @@
 
                         <td>${item.price}</td>
                         <td>${item.year_produce}</td>
+                        <td>${item.description}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <a class="btnHD btnDel" onclick="deleteItem(${item.id})" type="submit">Xóa</a>
-                                    <input type="hidden" name="itemID" value="${item.id}"/>
-                                    <input type="hidden" name="action" value="item_btnDelete"/>
-                                </form>
+
+                                <a class="btnHD btnDel" onclick="handleDelete(${item.id},'deleteItem','tableItem')"
+                                   type="submit">Xóa</a>
+
                                 <button
                                         class="btnHD btnUpdateItem"
                                         data-itemID="${item.id}"
@@ -1029,10 +1028,10 @@
                                         data-itemIsHot="${item.is_hot}"
                                         data-itemPrice="${item.price}"
                                         data-itemYearProduce="${item.year_produce}"
+                                        data-itemDescription="${item.description}"
                                 >
                                     Sửa
                                 </button>
-                                <input type="hidden" name="itemID" value="${item.id}"/>
                             </div>
                         </td>
                     </tr>
@@ -1055,11 +1054,11 @@
 
                         <!--Item Name-->
                         <div class="form-grp">
-                            <label for="update_itemNameID">Tên sản phẩm:</label>
+                            <label for="update_itemName">Tên sản phẩm:</label>
                             <input
                                     type="text"
                                     maxlength="100"
-                                    id="update_itemNameID"
+                                    id="update_itemName"
                                     name="update_itemName"
                                     value=""
                                     placeholder="Nhập vào tên sản phẩm"
@@ -1068,8 +1067,8 @@
 
                         <!--Item Type-->
                         <div class="form-grp">
-                            <label for="update_label_itemTypeID">Loại sản phẩm:</label>
-                            <select id="update_label_itemTypeID" name="update_itemTypeID">
+                            <label for="update_itemItemTypeID">Loại sản phẩm:</label>
+                            <select id="update_itemItemTypeID" name="update_itemItemTypeID">
                                 <c:forEach items="${requestScope.itemTypeList}" var="itemType">
                                     <option value="${itemType.id}">${itemType.name}</option>
                                 </c:forEach>
@@ -1078,10 +1077,10 @@
 
                         <!--Item Collection-->
                         <div class="form-grp">
-                            <label for="update_label_itemCollectionID">Bộ sưu tập:</label>
+                            <label for="update_itemItemCollectionID">Bộ sưu tập:</label>
                             <select
-                                    id="update_label_itemCollectionID"
-                                    name="update_itemCollectionID"
+                                    id="update_itemItemCollectionID"
+                                    name="update_itemItemCollectionID"
                             >
                                 <option value="">Không</option>
                                 <c:forEach
@@ -1095,8 +1094,8 @@
 
                         <!--Item Material-->
                         <div class="form-grp">
-                            <label for="update_label_itemMaterialID">Thành phần:</label>
-                            <select id="update_label_itemMaterialID" name="update_itemMaterialID">
+                            <label for="update_itemItemMaterialID">Thành phần:</label>
+                            <select id="update_itemItemMaterialID" name="update_itemMaterialID">
                                 <c:forEach
                                         items="${requestScope.itemMaterialList}"
                                         var="itemMaterial"
@@ -1110,10 +1109,10 @@
 
                         <!--Is New-->
                         <div class="form-grp">
-                            <label for="update_itemIsNewID">Sản phẩm mới:</label>
+                            <label for="update_itemIsNew">Sản phẩm mới:</label>
                             <input
                                     type="checkbox"
-                                    id="update_itemIsNewID"
+                                    id="update_itemIsNew"
                                     name="update_itemIsNew"
                                     value=""
                             />
@@ -1121,10 +1120,10 @@
 
                         <!--Is Hot-->
                         <div class="form-grp">
-                            <label for="update_itemIsHotID">Sản phẩm hot:</label>
+                            <label for="update_itemIsHot">Sản phẩm hot:</label>
                             <input
                                     type="checkbox"
-                                    id="update_itemIsHotID"
+                                    id="update_itemIsHot"
                                     name="update_itemIsHot"
                                     value=""
                             />
@@ -1132,10 +1131,10 @@
 
                         <!--Item Price-->
                         <div class="form-grp">
-                            <label for="update_itemPriceID">Giá sản phẩm:</label>
+                            <label for="update_itemPrice">Giá sản phẩm:</label>
                             <input
                                     type="number"
-                                    id="update_itemPriceID"
+                                    id="update_itemPrice"
                                     name="update_itemPrice"
                                     value=""
                                     placeholder="Nhập vào giá sản phẩm"
@@ -1144,13 +1143,26 @@
 
                         <!--Item Year Produce-->
                         <div class="form-grp">
-                            <label for="update_itemYearProduceID">Năm sản xuất:</label>
+                            <label for="update_itemYearProduce">Năm sản xuất:</label>
                             <input
                                     type="number"
-                                    id="update_itemYearProduceID"
+                                    id="update_itemYearProduce"
                                     name="update_itemYearProduce"
                                     value=""
                                     placeholder="Nhập vào năm sản xuất"
+                            />
+                        </div>
+
+                        <!--Item Description-->
+                        <div class="form-grp">
+                            <label for="update_itemDescription">Thông tin sản phẩm:</label>
+                            <input
+                                    type="text"
+                                    maxlength="100"
+                                    id="update_itemDescription"
+                                    name="update_itemDescription"
+                                    value=""
+                                    placeholder="Nhập vào thông tin sản phẩm"
                             />
                         </div>
 
@@ -1183,8 +1195,8 @@
 
                         <!--Item Type-->
                         <div class="form-grp">
-                            <label for="add_label_itemTypeID">Loại sản phẩm:</label>
-                            <select id="add_label_itemTypeID" name="add_itemTypeID">
+                            <label for="add_itemItemTypeID">Loại sản phẩm:</label>
+                            <select id="add_itemItemTypeID" name="add_itemTypeID">
                                 <c:forEach items="${requestScope.itemTypeList}" var="itemType">
                                     <option value="${itemType.id}">${itemType.name}</option>
                                 </c:forEach>
@@ -1193,8 +1205,8 @@
 
                         <!--Item Collection-->
                         <div class="form-grp">
-                            <label for="add_label_itemCollectionID">Bộ sưu tập:</label>
-                            <select id="add_label_itemCollectionID" name="add_itemCollectionID">
+                            <label for="add_itemItemCollectionID">Bộ sưu tập:</label>
+                            <select id="add_itemItemCollectionID" name="add_itemCollectionID">
                                 <option value="">Không</option>
                                 <c:forEach
                                         items="${requestScope.itemCollectionList}"
@@ -1207,8 +1219,8 @@
 
                         <!--Item Material-->
                         <div class="form-grp">
-                            <label for="add_label_itemMaterialID">Thành phần:</label>
-                            <select id="add_label_itemMaterialID" name="add_itemMaterialID">
+                            <label for="add_itemItemMaterialID">Thành phần:</label>
+                            <select id="add_itemItemMaterialID" name="add_itemMaterialID">
                                 <c:forEach
                                         items="${requestScope.itemMaterialList}"
                                         var="itemMaterial"
@@ -1222,10 +1234,10 @@
 
                         <!--Is New-->
                         <div class="form-grp">
-                            <label for="add_label_isNewID">Sản phẩm mới:</label>
+                            <label for="add_itemIsNew">Sản phẩm mới:</label>
                             <input
                                     type="checkbox"
-                                    id="add_label_isNewID"
+                                    id="add_itemIsNew"
                                     name="add_itemIsNew"
                                     value=""
                             />
@@ -1233,10 +1245,10 @@
 
                         <!--Is Hot-->
                         <div class="form-grp">
-                            <label for="add_label_isNewID">Sản phẩm hot:</label>
+                            <label for="add_itemIsHot">Sản phẩm hot:</label>
                             <input
                                     type="checkbox"
-                                    id="add_label_isHotID"
+                                    id="add_itemIsHot"
                                     name="add_itemIsHot"
                                     value=""
                             />
@@ -1244,10 +1256,10 @@
 
                         <!--Item Price-->
                         <div class="form-grp">
-                            <label for="add_itemPriceID">Giá sản phẩm:</label>
+                            <label for="add_itemPrice">Giá sản phẩm:</label>
                             <input
                                     type="number"
-                                    id="add_itemPriceID"
+                                    id="add_itemPrice"
                                     name="add_itemPrice"
                                     value=""
                                     placeholder="Nhập vào giá sản phẩm"
@@ -1256,13 +1268,26 @@
 
                         <!--Item Year Produce-->
                         <div class="form-grp">
-                            <label for="add_itemYearProduceID">Năm sản xuất:</label>
+                            <label for="add_itemYearProduce">Năm sản xuất:</label>
                             <input
                                     type="number"
-                                    id="add_itemYearProduceID"
+                                    id="add_itemYearProduce"
                                     name="add_itemYearProduce"
                                     value=""
                                     placeholder="Nhập vào năm sản xuất"
+                            />
+                        </div>
+
+                        <!--Item Description-->
+                        <div class="form-grp">
+                            <label for="add_itemDescription">Thông tin sản phẩm:</label>
+                            <input
+                                    type="text"
+                                    maxlength="100"
+                                    id="add_itemDescription"
+                                    name="add_itemDescription"
+                                    value=""
+                                    placeholder="Nhập vào thông tin sản phẩm"
                             />
                         </div>
 
@@ -1534,8 +1559,8 @@
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
                         <select name="" id="discountCardSortType">
-                            <option value="">Z-A</option>
-                            <option value="">A-Z</option>
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
                         </select>
                     </div>
                 </div>
@@ -1561,24 +1586,10 @@
                         <td>${discountCard.discount_percentage}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                <form
-                                        action="${pageContext.request.contextPath}/AdminManagerServlet"
-                                        method="post"
-                                        onsubmit="handleDelete()"
-                                >
-                                    <a class="btnHD btnDel" onclick="deleteDiscountCard(${discountCard.id})"
-                                       type="submit">Xóa</a>
-                                    <input
-                                            type="hidden"
-                                            name="discountCardID"
-                                            value="${discountCard.id}"
-                                    />
-                                    <input
-                                            type="hidden"
-                                            name="action"
-                                            value="discountCard_btnDelete"
-                                    />
-                                </form>
+
+                                <a class="btnHD btnDel" onclick="deleteDiscountCard(${discountCard.id})"
+                                   type="submit">Xóa</a>
+
                                 <button
                                         class="btnHD btnUpdateDiscountCard"
                                         data-discountCardID="${discountCard.id}"
@@ -1755,8 +1766,8 @@
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
                         <select name="" id="itemCollectionSortType">
-                            <option value="az">Z-A</option>
-                            <option value="za">A-Z</option>
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
 
                         </select>
                     </div>
@@ -2481,7 +2492,8 @@
                     >
                         Thêm
                     </button>
-                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="orderDetailToExcel()"
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                       onclick="orderDetailToExcel()"
                     >
                         Xuất Excel
                     </a>
@@ -2519,10 +2531,8 @@
                 <tr>
                     <th>ID</th>
                     <th>ID Hóa Đơn</th>
-                    <th>ID Sản Phẩm</th>
+                    <th>ID Thông Tin Sản Phẩm</th>
                     <th>Số Lượng</th>
-                    <th>Màu</th>
-                    <th>Size</th>
                     <th>Tổng Tiền</th>
                     <th>Action</th>
                 </tr>
@@ -2532,27 +2542,24 @@
                     <tr>
                         <td>${orderDetail.id}</td>
                         <td>${orderDetail.order.id}</td>
-                        <td>${orderDetail.item.id}</td>
+                        <td>${orderDetail.stockItem.id}</td>
                         <td>${orderDetail.amount}</td>
-                        <td>${orderDetail.item_color}</td>
-                        <td>${orderDetail.item_size}</td>
                         <td>${orderDetail.total}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                    <a class="btnHD btnDel" onclick="handleDelete(${orderDetail.id},'deleteOrderDetail','tableOrderDetail')"
-                                       type="submit">Xóa</a>
-                                <button
-                                        class="btnHD btnUpdateOrderDetail"
-                                        data-orderDetailID="${orderDetail.id}"
-                                        data-orderDetailOrderID="${orderDetail.order.id}"
-                                        data-orderDetailItemID="${orderDetail.item.id}"
-                                        data-orderDetailAmount="${orderDetail.amount}"
-                                        data-orderDetailItemColor="${orderDetail.item_color}"
-                                        data-orderDetailItemSize="${orderDetail.item_size}"
-                                        data-orderDetailTotal="${orderDetail.total}"
-                                >
-                                    Sửa
-                                </button>
+                                <a class="btnHD btnDel"
+                                   onclick="handleDelete(${orderDetail.id},'deleteOrderDetail','tableOrderDetail')"
+                                   type="submit">Xóa</a>
+                                    <%--<button
+                                            class="btnHD btnUpdateOrderDetail"
+                                            data-orderDetailID="${orderDetail.id}"
+                                            data-orderDetailOrderID="${orderDetail.order.id}"
+                                            data-orderDetailItemID="${orderDetail.stockItem.id}"
+                                            data-orderDetailAmount="${orderDetail.amount}"
+                                            data-orderDetailTotal="${orderDetail.total}"
+                                    >
+                                        Sửa
+                                    </button>--%>
                             </div>
                         </td>
                     </tr>
@@ -2560,7 +2567,7 @@
                 </tbody>
             </table>
 
-            <!--Update OrderDetail Modal-->
+            <%--<!--Update OrderDetail Modal-->
             <div id="update-orderDetail" class="modal-update flex-center">
                 <div class="update-modal">
                     <form class="form__update" action="#" method="post">
@@ -2585,15 +2592,15 @@
                             </select>
                         </div>
 
-                        <!--OrderDetail Item ID-->
+                        <!--OrderDetail StockItem ID-->
                         <div class="form-grp">
-                            <label for="update_orderDetailItemID">Sản Phẩm:</label>
+                            <label for="update_orderDetailStockItemID">Thông Tin Sản Phẩm:</label>
                             <select
-                                    id="update_orderDetailItemID"
-                                    name="update_update_orderDetailItemID"
+                                    id="update_orderDetailStockItemID"
+                                    name="update_orderDetailStockItemID"
                             >
-                                <c:forEach items="${requestScope.itemList}" var="item">
-                                    <option value="${item.id}">${item.id} : ${item.name}</option>
+                                <c:forEach items="${requestScope.stockItemList}" var="stockItem">
+                                    <option value="${stockItem.id}">${stockItem.id}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -2609,32 +2616,6 @@
                                     value=""
                                     placeholder="Nhập vào số lượng sản phẩm"
                             />
-                        </div>
-
-                        <!--OrderDetail Item Color-->
-                        <div class="form-grp">
-                            <label for="update_orderDetailItemColor">Màu:</label>
-                            <select
-                                    id="update_orderDetailItemColor"
-                                    name="update_orderDetailItemColor"
-                            >
-                                <c:forEach items="${requestScope.stockItemList}" var="stockItem">
-                                    <option value="${stockItem.color}">${stockItem.color}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <!--OrderDetail Item Size-->
-                        <div class="form-grp">
-                            <label for="update_orderDetailItemSize">Màu:</label>
-                            <select
-                                    id="update_orderDetailItemSize"
-                                    name="update_orderDetailItemSize"
-                            >
-                                <c:forEach items="${requestScope.stockItemList}" var="stockItem">
-                                    <option value="${stockItem.size}">${stockItem.size}</option>
-                                </c:forEach>
-                            </select>
                         </div>
 
                         <!--Order Total-->
@@ -2675,12 +2656,12 @@
                             </select>
                         </div>
 
-                        <!--OrderDetail Item ID-->
+                        <!--OrderDetail Stock Item ID-->
                         <div class="form-grp">
                             <label for="add_orderDetailItemID">Sản Phẩm:</label>
                             <select id="add_orderDetailItemID" name="add_add_orderDetailItemID">
-                                <c:forEach items="${requestScope.itemList}" var="item">
-                                    <option value="${item.id}">${item.id} : ${item.name}</option>
+                                <c:forEach items="${requestScope.stockItemList}" var="stockItem">
+                                    <option value="${stockItem.id}">${stockItem.id}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -2696,26 +2677,6 @@
                                     value=""
                                     placeholder="Nhập vào số lượng sản phẩm"
                             />
-                        </div>
-
-                        <!--OrderDetail Item Color-->
-                        <div class="form-grp">
-                            <label for="add_orderDetailItemColor">Màu:</label>
-                            <select id="add_orderDetailItemColor" name="add_orderDetailItemColor">
-                                <c:forEach items="${requestScope.stockItemList}" var="stockItem">
-                                    <option value="${stockItem.color}">${stockItem.color}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <!--OrderDetail Item Size-->
-                        <div class="form-grp">
-                            <label for="add_orderDetailItemSize">Màu:</label>
-                            <select id="add_orderDetailItemSize" name="add_orderDetailItemSize">
-                                <c:forEach items="${requestScope.stockItemList}" var="stockItem">
-                                    <option value="${stockItem.size}">${stockItem.size}</option>
-                                </c:forEach>
-                            </select>
                         </div>
 
                         <!--Order Total-->
@@ -2739,7 +2700,8 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div>--%>
+
         </div>
 
         <!--Item Type-->
@@ -2799,8 +2761,8 @@
                         <td>${itemType.name}</td>
                         <td>
                             <div class="flex-center grpbtn">
-                                    <a class="btnHD btnDel" onclick="deleteItemType(${itemType.id})"
-                                       type="submit">Xóa</a>
+                                <a class="btnHD btnDel" onclick="deleteItemType(${itemType.id})"
+                                   type="submit">Xóa</a>
                                 <button
                                         class="btnHD btnUpdateItemType"
                                         data-itemTypeID="${itemType.id}"
@@ -2889,34 +2851,33 @@
                     >
                         Thêm
                     </button>
-                    <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="permissionToExcel()"
                     >
                         Xuất Excel
-                    </button>
+                    </a>
+
                 </div>
                 <h2 style="font-size: 30px">Quản lý phân quyền</h2>
                 <div class="sorttable">
                     <div class="sort-search">
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
-                            <select class="selecttype" name="" id="">
+                            <select class="selecttype" name="" id="permissionSearchType">
                                 <option value="" selected>--</option>
                                 <option value="">Tên</option>
                                 <option value="">Giá</option>
                             </select>
-                            <input type="text" value=""/>
-                            <button class="btnHD btnsearch">Tìm</button>
+                            <input type="text" value="" id="permissionInputSearch"/>
+                            <a class="btnHD btnsearch">Tìm</a>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
-                        <select name="" id="">
+                        <select name="" id="permissionSortType">
                             <option value="" selected>--</option>
-                            <option value="">Z-A</option>
-                            <option value="">A-Z</option>
-                            <option value="">Giá tăng</option>
-                            <option value="">Giá giảm</option>
-                            <option value="">Mã sản phẩm</option>
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
+
                         </select>
                     </div>
                 </div>
@@ -2965,6 +2926,10 @@
 
                         <h2 class="text-center" style="padding: 16px 0">Cập Nhật Quyền</h2>
 
+
+                        <div class="form-grp">
+                            <input type="hidden" id="update_permissionID" name="update_permissionID"/>
+                        </div>
                         <!--Permission Name-->
                         <div class="form-grp">
                             <label for="update_permissionName">Tên Quyền:</label>
@@ -3053,34 +3018,33 @@
                     >
                         Thêm
                     </button>
-                    <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="saleToExcel()"
                     >
                         Xuất Excel
-                    </button>
+                    </a>
+
                 </div>
                 <h2 style="font-size: 30px">Quản lý giảm giá</h2>
                 <div class="sorttable">
                     <div class="sort-search">
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
-                            <select class="selecttype" name="" id="">
+                            <select class="selecttype" name="" id="saleSearchType">
                                 <option value="" selected>--</option>
                                 <option value="">Tên</option>
                                 <option value="">Giá</option>
                             </select>
-                            <input type="text" value=""/>
-                            <button class="btnHD btnsearch">Tìm</button>
+                            <input type="text" value="" id="saleInputSearch"/>
+                            <a class="btnHD btnsearch">Tìm</a>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
-                        <select name="" id="">
+                        <select name="" id="saleSortType">
                             <option value="" selected>--</option>
-                            <option value="">Z-A</option>
-                            <option value="">A-Z</option>
-                            <option value="">Giá tăng</option>
-                            <option value="">Giá giảm</option>
-                            <option value="">Mã sản phẩm</option>
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
+
                         </select>
                     </div>
                 </div>
@@ -3137,7 +3101,11 @@
                             Cập Nhật Sản Phẩm Sale
                         </h2>
 
-                        <!--Sale Item ID-->
+                        <!--Sale ID-->
+                        <div class="form-grp">
+                            <input type="hidden" id="update_saleID" name="update_saleID"/>
+                        </div>
+
                         <div class="form-grp">
                             <label for="update_saleItemID">Sản Phẩm:</label>
                             <select id="update_saleItemID" name="update_saleItemID">
@@ -3269,10 +3237,11 @@
                     >
                         Thêm
                     </button>
-                    <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="stockItemToExcel()"
                     >
                         Xuất Excel
-                    </button>
+                    </a>
+
                 </div>
                 <h2 style="font-size: 30px">Quản lý màu sắc kích cỡ số lượng</h2>
                 <div class="sorttable">
@@ -3284,15 +3253,15 @@
                                 <option value="">ID sản phẩm</option>
                             </select>
                             <input type="text" id="stockItemInputSearch"/>
-                            <button class="btnHD btnsearch">Tìm</button>
+                            <a class="btnHD btnsearch">Tìm</a>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="stockItemSortType">Sắp xếp theo:</label>
                         <select name="" id="stockItemSortType">
                             <option value="" selected>--</option>
-                            <option value="">Z-A</option>
-                            <option value="">A-Z</option>
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
                         </select>
                     </div>
                 </div>
@@ -3355,6 +3324,10 @@
 
 
                         <!--StockItem Item ID-->
+                        <div class="form-grp">
+                            <input type="hidden" id="update_stockItemID" name="update_stockItemID"/>
+                        </div>
+
                         <div class="form-grp">
                             <label for="update_stockItemItemID">Sản Phẩm:</label>
                             <select id="update_stockItemItemID" name="update_stockItemItemID">
@@ -3488,31 +3461,33 @@
                     >
                         Thêm
                     </button>
-                    <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
+                       onclick="orderStatusToExcel()"
                     >
                         Xuất Excel
-                    </button>
+                    </a>
+
                 </div>
                 <h2 style="font-size: 30px">Quản lý xác nhận đơn hàng</h2>
                 <div class="sorttable">
                     <div class="sort-search">
                         <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                         <div class="inputsearch">
-                            <select class="selecttype" name="" id="">
+                            <select class="selecttype" name="" id="orderStatusSearchType">
                                 <option value="" selected>--</option>
                                 <option value="">Tên</option>
                                 <option value="">Giá</option>
                             </select>
-                            <input type="text" value=""/>
-                            <button class="btnHD btnsearch">Tìm</button>
+                            <input type="text" value="" id="orderStatusInputSearch"/>
+                            <a class="btnHD btnsearch">Tìm</a>
                         </div>
                     </div>
                     <div class="sort-box">
                         <label for="">Sắp xếp theo:</label>
-                        <select name="" id="">
+                        <select name="" id="orderStatusSortType">
                             <option value="" selected>--</option>
-                            <option value="">Z-A</option>
-                            <option value="">A-Z</option>
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
 
                         </select>
                     </div>
@@ -3538,16 +3513,7 @@
 
                                 <a class="btnHD btnDel" onclick="deleteOrderStatus(${orderStatus.id})"
                                    type="submit">Xóa</a>
-                                <input
-                                        type="hidden"
-                                        name="orderStatusID"
-                                        value="${orderStatus.id}"
-                                />
-                                <input
-                                        type="hidden"
-                                        name="action"
-                                        value="orderStatus_btnDelete"
-                                />
+
                                 <button
                                         class="btnHD btnUpdateOrderStatus"
                                         data-itemMaterialID="${orderStatus.id}"
@@ -3576,6 +3542,10 @@
                         <h2 class="text-center" style="padding: 16px 0">
                             Cập Nhật Xác Nhận Hóa Đơn
                         </h2>
+
+                        <div class="form-grp">
+                            <input type="hidden" id="update_orderStatusID" name="update_orderStatusID"/>
+                        </div>
 
                         <!--Item Material Name-->
                         <div class="form-grp">
@@ -3657,5 +3627,6 @@
 
 </body>
 </html>
+
 
 

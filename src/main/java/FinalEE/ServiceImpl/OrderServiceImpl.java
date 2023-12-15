@@ -47,8 +47,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public boolean deleteByID(int id) {
         if (orderRepository.existsById(id)) {
-            //orderRepository.deleteById(orderID);
-            System.out.println("Ban da xoa:" + id);
+            orderRepository.deleteById(id);
             return true;
         }
         return false;
@@ -57,7 +56,12 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public Order getOrder(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            return orderRepository.findByID(id);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override

@@ -15,5 +15,6 @@ public interface ItemCollectionService {
 
     List<ItemCollection> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
     List<ItemCollection> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
+    ItemCollection findByID(Integer id);
     
 }

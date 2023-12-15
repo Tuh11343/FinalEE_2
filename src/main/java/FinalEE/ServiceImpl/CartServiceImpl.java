@@ -40,14 +40,6 @@ public class CartServiceImpl implements CartService {
                 System.out.println("Cap nhat thanh cong cart:" + existingCart.getId());
             }
 
-            /*Decrease Stock Item Amount*/
-            if (stockItemRepository.findById(cart.getStockItem().getId()).isPresent()) {
-                StockItem stockItem = stockItemRepository.findById(cart.getStockItem().getId()).get();
-                stockItem.setAmount(stockItem.getAmount() - 1);
-                stockItemRepository.save(stockItem);
-                System.out.println("Giam so luong thanh cong stockItem:" + stockItem.getId());
-            }
-
             return true;
         } catch (Exception e) {
             e.printStackTrace();

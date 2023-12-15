@@ -43,8 +43,7 @@ public class ItemMaterialServiceImpl implements ItemMaterialService{
     @Override
     public boolean deleteByID(int id) {
         if (itemMaterialRepository.existsById(id)) {
-            //itemMaterialRepository.deleteById(itemMaterialID);
-            System.out.println("Ban da xoa:" + id);
+            itemMaterialRepository.deleteById(id);
             return true;
         }
         return false;
@@ -52,7 +51,12 @@ public class ItemMaterialServiceImpl implements ItemMaterialService{
 
     @Override
     public ItemMaterial getItemMaterial(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            return itemMaterialRepository.findById(id);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override

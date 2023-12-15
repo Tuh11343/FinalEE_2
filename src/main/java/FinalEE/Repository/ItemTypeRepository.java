@@ -15,4 +15,6 @@ public interface ItemTypeRepository extends JpaRepository<ItemType, Integer>{
     List<ItemType> findAll(Sort sort);
     List<ItemType> findAllByNameContains(String name,Sort sort);
 
+    ItemType findById(int id);
+
 }

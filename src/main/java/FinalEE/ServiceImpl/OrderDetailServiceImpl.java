@@ -1,7 +1,9 @@
 package FinalEE.ServiceImpl;
 
 import FinalEE.Entity.OrderDetail;
+import FinalEE.Entity.StockItem;
 import FinalEE.Repository.OrderDetailRepository;
+import FinalEE.Repository.StockItemRepository;
 import FinalEE.Service.OrderDetailService;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,8 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 
     @Autowired
     private OrderDetailRepository orderDetailRepository;
+    @Autowired
+    private StockItemRepository stockItemRepository;
 
     public OrderDetailServiceImpl() {
 
@@ -31,6 +35,13 @@ public class OrderDetailServiceImpl implements OrderDetailService{
             // Lưu orderDetail và kiểm tra kết quả
             if(orderDetailRepository.save(orderDetail)!=null){
                 System.out.println("Cap nhat thanh cong orderDetail:" + orderDetail.getId());
+                /*Decrease Stock Item Amount*/
+                if (stockItemRepository.findById(orderDetail.getStockItem().getId()).isPresent()) {
+                    StockItem stockItem = orderDetail.getStockItem();
+                    stockItem.setAmount(stockItem.getAmount() - 1);
+                    stockItemRepository.save(stockItem);
+                    System.out.println("Giam so luong thanh cong stockItem:" + stockItem.getId());
+                }
             } else {
                 System.out.println("Them thanh cong orderDetail:" + orderDetail.getId());
             }
@@ -44,8 +55,7 @@ public class OrderDetailServiceImpl implements OrderDetailService{
     @Override
     public boolean deleteByID(int id) {
         if (orderDetailRepository.existsById(id)) {
-            //orderDetailRepository.deleteById(orderDetailID);
-            System.out.println("Ban da xoa:" + id);
+            orderDetailRepository.deleteById(id);
             return true;
         }
         return false;
