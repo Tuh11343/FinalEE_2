@@ -1,7 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib
         uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib
+        uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -87,7 +88,6 @@
                 >${requestScope.accountList[accountIndex].name}</span
                 >
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                     <path
                             d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"
                     />
@@ -105,7 +105,6 @@
                                     height="1em"
                                     viewBox="0 0 512 512"
                             >
-                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                 <path
                                         d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
                                 />
@@ -122,7 +121,6 @@
 <main class="main">
     <aside class="left">
         <div class="accordion" id="accordionFlushExample">
-
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">
                     <button
@@ -487,7 +485,6 @@
                 </div>
             </div>
 
-
             <!--Order Status-->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingFifteen">
@@ -516,13 +513,10 @@
                 </div>
             </div>
         </div>
-
-
     </aside>
 
     <!--Center-->
     <div class="center">
-
         <!--Item-->
         <div class="product-data table-data" data-type="itemList">
             <div class="header-table">
@@ -534,35 +528,42 @@
                     >
                         Thêm
                     </button>
-                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px"
-                       onclick="itemToExcel()"
+                    <a
+                            class="btnHD btnExcel"
+                            style="margin-left: 5px; margin-bottom: 4px"
+                            onclick="itemToExcel()"
                     >
                         Xuất Excel
                     </a>
                 </div>
                 <h2 style="font-size: 30px">Quản lý sản phẩm</h2>
-                <div class="sorttable">
-                    <div class="sort-search">
-                        <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
-                        <div class="inputsearch">
-                            <select class="selecttype" name="itemSearchType" id="itemSearchType">
-                                <option value="id">ID</option>
-                                <option value="name">Tên sản phẩm</option>
+                <form action="${pageContext.request.contextPath}/ManageItemServlet" method="post">
+                    <div class="sorttable">
+                        <div class="sort-search">
+                            <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
+                            <div class="inputsearch">
+                                <select class="selecttype" name="itemSearchType" id="itemSearchType">
+                                    <option value="id">ID</option>
+                                    <option value="color">Màu sản phẩm</option>
+                                    <option value="lowerPrice">Giá nhỏ hơn</option>
+                                    <option value="higherPrice">Giá lớn hơn</option>
+                                </select>
+                                <input type="text" name="itemInputSearch" id="itemInputSearch"/>
+                                <button class="btnHD btnsearch">Tìm</button>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="action" value="searchAndSortItem"/>
+
+                        <div class="sort-box">
+                            <label for="itemSortType">Sắp xếp theo:</label>
+                            <select id="itemSortType" name="itemSortType">
+                                <option value="az">A-Z</option>
+                                <option value="za">Z-A</option>
                             </select>
-                            <input type="text" name="itemInputSearch" id="itemInputSearch"/>
-                            <button class="btnHD btnsearch">Tìm</button>
                         </div>
                     </div>
-
-                    <div class="sort-box">
-                        <label for="itemSortType">Sắp xếp theo:</label>
-                        <select id="itemSortType" name="itemSortType">
-                            <option value="az">A-Z</option>
-                            <option value="za">Z-A</option>
-
-                        </select>
-                    </div>
-                </div>
+                </form>
             </div>
 
             <!--Table Item-->
@@ -614,9 +615,7 @@
                         <td>${item.description}</td>
                         <td>
                             <div class="flex-center grpbtn">
-
-                                <a class="btnHD btnDel" onclick="handleDelete(${item.id},'deleteItem','tableItem')"
-                                   type="submit">Xóa</a>
+                                <a class="btnHD btnDel" type="submit">Xóa</a>
 
                                 <button
                                         class="btnHD btnUpdateItem"
@@ -643,11 +642,10 @@
             <!--Update Item-->
             <div id="update-products" class="modal-update flex-center">
                 <div class="update-modal">
-                    <form class="form__update" action="#" method="post">
-                        <span class="close clsupdateproduct">&times;</span>
+                    <span class="close clsupdateproduct">&times;</span>
 
-                        <h2 class="text-center" style="padding: 16px 0">Cập nhật sản phẩm</h2>
-
+                    <h2 class="text-center" style="padding: 16px 0">Cập nhật sản phẩm</h2>
+                    <form action="${pageContext.request.contextPath}/ManageItemServlet" method="post">
                         <!--Item ID-->
                         <div class="form-grp">
                             <input type="hidden" id="update_itemID" name="update_itemID"/>
@@ -684,10 +682,7 @@
                                     name="update_itemItemCollectionID"
                             >
                                 <option value="">Không</option>
-                                <c:forEach
-                                        items="${requestScope.itemCollectionList}"
-                                        var="itemCollection"
-                                >
+                                <c:forEach items="${requestScope.itemCollectionList}" var="itemCollection">
                                     <option value="${itemCollection.id}">${itemCollection.name}</option>
                                 </c:forEach>
                             </select>
@@ -697,10 +692,7 @@
                         <div class="form-grp">
                             <label for="update_itemItemMaterialID">Thành phần:</label>
                             <select id="update_itemItemMaterialID" name="update_itemMaterialID">
-                                <c:forEach
-                                        items="${requestScope.itemMaterialList}"
-                                        var="itemMaterial"
-                                >
+                                <c:forEach items="${requestScope.itemMaterialList}" var="itemMaterial">
                                     <option value="${itemMaterial.id}">
                                             ${itemMaterial.id} : ${itemMaterial.name}
                                     </option>
@@ -768,8 +760,9 @@
                         </div>
 
                         <div class="flex-center">
-                            <a id="updateItem" onclick="updateItem()" class="btn submit">Cập nhật</a>
+                            <button id="updateItem" class="btn submit">Cập nhật</button>
                         </div>
+                        <input type="hidden" value="updateItem" name="action"/>
                     </form>
                 </div>
             </div>
@@ -777,10 +770,12 @@
             <!--Add Item-->
             <div id="add-products" class="modal-add flex-center modal__addproduct">
                 <div class="add-modal">
-                    <form class="form__add" action="#" method="post">
-                        <span class="close clsaddproduct">&times;</span>
-                        <h2 class="text-center" style="padding: 16px 0">THÊM SẢN PHẨM</h2>
-
+                    <span class="close clsaddproduct">&times;</span>
+                    <h2 class="text-center" style="padding: 16px 0">THÊM SẢN PHẨM</h2>
+                    <form
+                            action="${pageContext.request.contextPath}/ManageItemServlet"
+                            method="post"
+                    >
                         <!--Item Name-->
                         <div class="form-grp">
                             <label for="add_itemNameID">Tên sản phẩm:</label>
@@ -809,10 +804,7 @@
                             <label for="add_itemItemCollectionID">Bộ sưu tập:</label>
                             <select id="add_itemItemCollectionID" name="add_itemCollectionID">
                                 <option value="">Không</option>
-                                <c:forEach
-                                        items="${requestScope.itemCollectionList}"
-                                        var="itemCollection"
-                                >
+                                <c:forEach items="${requestScope.itemCollectionList}" var="itemCollection">
                                     <option value="${itemCollection.id}">${itemCollection.name}</option>
                                 </c:forEach>
                             </select>
@@ -822,10 +814,7 @@
                         <div class="form-grp">
                             <label for="add_itemItemMaterialID">Thành phần:</label>
                             <select id="add_itemItemMaterialID" name="add_itemMaterialID">
-                                <c:forEach
-                                        items="${requestScope.itemMaterialList}"
-                                        var="itemMaterial"
-                                >
+                                <c:forEach items="${requestScope.itemMaterialList}" var="itemMaterial">
                                     <option value="${itemMaterial.id}">
                                             ${itemMaterial.id} : ${itemMaterial.name}
                                     </option>
@@ -893,258 +882,14 @@
                         </div>
 
                         <div class="flex-center">
-                            <a id="addItem" onclick="addItem()" class="btn submit">Thêm</a>
-
-
+                            <button id="addItem" class="btn submit">Thêm</button>
                         </div>
+                        <input type="hidden" value="addItem" name="action"/>
                     </form>
-                </div>
-            </div>
-        </div>
-
-        <!--Account-->
-        <div class="account-data table-data" data-type="accountList">
-            <div class="header-table">
-                <div class="AddUser">
-                    <button
-                            class="btnHD btnAdd"
-                            id="account_addTrigger"
-                            style="margin-bottom: 4px"
-                    >
-                        Thêm
-                    </button>
-                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="accountToExcel()"
-                    >
-                        Xuất Excel
-                    </a>
-                </div>
-                <h2 style="font-size: 30px">Quản lý tài khoản</h2>
-                <div class="sorttable">
-
-                    <form action="${pageContext.request.contextPath}/ManageAccountServlet" method="post">
-
-                        <div class="sort-search">
-
-                            <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
-                            <div class="inputsearch">
-                                <select class="selecttype" name="accountSearchType" id="accountSearchType">
-                                    <option value="id">ID</option>
-                                    <option value="name">Tên</option>
-                                    <option value="customerID">ID Khách hàng</option>
-                                </select>
-                                <input type="text" name="accountInputSearch" id="accountInputSearch"/>
-                                <button class="btnHD btnsearch">Tìm</button>
-                            </div>
-
-                        </div>
-
-                        <input type="hidden" name="action" value="searchAndSortAccount">
-
-                    </form>
-
-                    <div class="sort-box">
-                        <label for="accountSortType">Sắp xếp theo:</label>
-                        <select name="accountSortType" id="accountSortType">
-                            <option value="az">A-Z</option>
-                            <option value="za">Z-A</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!--Add Account Button-->
-
-            <!--Account Table-->
-            <table class="account-table bang">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Permission ID</th>
-                    <th>Customer ID</th>
-                    <th>Name</th>
-                    <th>Password</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody id="tableAccount">
-                <c:forEach items="${requestScope.accountList}" var="account">
-                    <tr>
-                        <td>${account.id}</td>
-                        <td>${account.permission.id}</td>
-                        <td>${account.customer.id}</td>
-                        <td>${account.name}</td>
-                        <td>${account.password}</td>
-                        <td>
-                            <div class="flex-center grpbtn">
-
-                                <form action="${pageContext.request.contextPath}/ManageAccountServlet" method="post">
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input type="hidden" value="${account.id}" name="accountID">
-                                    <input type="hidden" value="deleteAccount" name="action">
-                                </form>
-
-                                <button class="btnHD btnUpdateUser"
-                                        id="account_updateTrigger"
-                                        data-accountID="${account.id}"
-                                        data-customerID="${account.customer.id}"
-                                        data-permissionID="${account.permission.id}"
-                                        data-accountName="${account.name}"
-                                        data-accountPassword="${account.password}">
-                                    Sửa
-                                </button>
-
-                            </div>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-
-            <!--Update Account-->
-            <div id="update-user" class="updatemodal flex-center">
-                <div class="update-modal">
-
-                    <span class="close">&times;</span>
-                    <h2 class="text-center" style="padding: 16px 0">CẬP NHẬT NGƯỜI DÙNG</h2>
-                    <form action="${pageContext.request.contextPath}/ManageAccountServlet" method="post">
-                        <!--Account ID-->
-                        <div class="form-grp">
-                            <input type="hidden" id="update_accountID" name="update_accountID"/>
-                        </div>
-
-                        <!--Account Name-->
-                        <div class="form-grp">
-                            <label for="update_accountName">Tên tài khoản:</label>
-                            <input
-                                    type="text"
-                                    maxlength="100"
-                                    id="update_accountName"
-                                    name="update_accountName"
-                                    value=""
-                                    placeholder="Nhập vào tài khoản"
-                            />
-                        </div>
-
-                        <!--Account Password-->
-                        <div class="form-grp">
-                            <label for="update_accountPassword">Mật khẩu:</label>
-                            <input
-                                    type="password"
-                                    maxlength="100"
-                                    id="update_accountPassword"
-                                    name="update_accountPassword"
-                                    value=""
-                                    placeholder="Nhập vào mật khẩu"
-                            />
-                        </div>
-
-                        <!--Account Permission-->
-                        <div class="form-grp">
-                            <label for="update_accountPermissionID">Permission:</label>
-                            <select
-                                    id="update_accountPermissionID"
-                                    name="update_accountPermissionID"
-                            >
-                                <c:forEach items="${requestScope.permissionList}" var="permission">
-                                    <option value="${permission.id}">${permission.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <!--Account Customer-->
-                        <div class="form-grp">
-                            <label for="update_accountCustomerID">Customer:</label>
-                            <select id="update_accountCustomerID" name="update_accountCustomerID">
-                                <c:forEach items="${requestScope.customerList}" var="customer">
-                                    <option value="${customer.id}">
-                                            ${customer.id} : ${customer.name}
-                                    </option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-
-                        <div class="flex-center">
-                            <button id="updateAccount" class="btn submit">Cập nhật</button>
-                        </div>
-
-                        <input type="hidden" value="updateAccount" name="action">
-                    </form>
-
-
-                </div>
-            </div>
-
-            <!--Add Account-->
-            <div id="modal-add-account" class="addmodal flex-center">
-                <div class="add-modal">
-                    <span class="close clsadduser">&times;</span>
-                    <h2 class="text-center" style="padding: 16px 0">THÊM NGƯỜI DÙNG</h2>
-                    <form action="${pageContext.request.contextPath}/ManageAccountServlet" method="post">
-                        <!--Account Name-->
-                        <div class="form-grp">
-                            <label for="add_accountName">Tên tài khoản:</label>
-                            <input
-                                    type="text"
-                                    maxlength="100"
-                                    id="add_accountName"
-                                    name="add_accountName"
-                                    value=""
-                                    placeholder="Nhập vào tài khoản"
-                            />
-
-                            <!--Account Password-->
-                        </div>
-                        <div class="form-grp">
-                            <label for="add_accountPassword">Mật khẩu:</label>
-                            <input
-                                    type="password"
-                                    maxlength="100"
-                                    id="add_accountPassword"
-                                    name="add_accountPassword"
-                                    value=""
-                                    placeholder="Nhập vào mật khẩu"
-                            />
-                        </div>
-
-                        <!--Account Permission-->
-                        <div class="form-grp">
-                            <label for="add_accountPermissionID">Permission:</label>
-                            <select id="add_accountPermissionID" name="add_accountPermissionID">
-                                <c:forEach items="${requestScope.permissionList}" var="permission">
-                                    <option value="${permission.id}">${permission.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <!--Account Customer-->
-                        <div class="form-grp">
-                            <label for="add_accountCustomerID">Customer:</label>
-                            <select id="add_accountCustomerID" name="add_accountCustomerID">
-                                <c:forEach items="${requestScope.customerList}" var="customer">
-                                    <option value="${customer.id}">
-                                            ${customer.id} : ${customer.name}
-                                    </option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <!--Add Button-->
-
-
-                        <div class="flex-center">
-                            <button id="addAccount" class="btn submit">Thêm</button>
-                        </div>
-
-                        <input type="hidden" value="addAccount" name="action">
-                    </form>
-
-
                 </div>
             </div>
         </div>
     </div>
-
 </main>
 
 <footer class="footer">
@@ -1158,7 +903,7 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"
 ></script>
-<script src="${pageContext.request.contextPath}/Views/Admin/vinh_main.js"></script>
+<script src="${pageContext.request.contextPath}/Views/JS_Temp/item_js.js"></script>
 
 <script>
     const adminManagerContextPath = "${pageContext.request.contextPath}";
@@ -1168,7 +913,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/Views/User/dest/admin.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
-
-
 </body>
 </html>

@@ -52,7 +52,9 @@ public class ManageItemServlet extends HttpServlet {
                 String name = req.getParameter("add_itemName");
                 int itemTypeID = Integer.parseInt(req.getParameter("add_itemTypeID"));
                 int itemMaterialID = Integer.parseInt(req.getParameter("add_itemMaterialID"));
-                int itemCollectionID = Integer.parseInt(req.getParameter("add_itemCollectionID"));
+                Integer itemCollectionID=null;
+                if(!req.getParameter("add_itemCollectionID").isBlank())
+                    itemCollectionID = Integer.parseInt(req.getParameter("add_itemCollectionID"));
                 int isNew = Integer.parseInt(req.getParameter("add_itemIsNew"));
                 int isHot = Integer.parseInt(req.getParameter("add_itemIsHot"));
                 double price = Double.parseDouble(req.getParameter("add_itemPrice"));
