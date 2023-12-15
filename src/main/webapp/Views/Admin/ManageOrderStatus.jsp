@@ -519,7 +519,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       <!--Center-->
       <div class="center">
         <!--Order Status-->
-        <div class="product-data table-data" data-type="orderStatusList">
+        <div class="product-data table-data active" data-type="orderStatusList">
           <form class="header-table">
             <!--Add Item Image Button-->
             <div class="AddOrderStatus">
@@ -537,6 +537,12 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               >
                 Xuất Excel
               </a>
+              <form action="${pageContext.request.contextPath}/ManageOrderStatusServlet" method="post">
+
+                <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px">Refresh</button>
+                <input type="hidden" name="action" value="refreshOrderStatus">
+
+            </form>
             </div>
             <h2 style="font-size: 30px">Quản lý xác nhận đơn hàng</h2>
             <form

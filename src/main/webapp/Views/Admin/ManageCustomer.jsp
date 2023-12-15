@@ -518,7 +518,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
       <!--Center-->
       <div class="center">
-        <div class="customer-data table-data" data-type="customerList">
+        <div class="customer-data table-data active" data-type="customerList">
           <div class="header-table">
             <!--Add Customer Button-->
             <div class="AddCustomer">
@@ -536,6 +536,18 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               >
                 Xuất Excel
               </a>
+              <form
+                action="${pageContext.request.contextPath}/ManageCustomerServlet"
+                method="post"
+              >
+                <button
+                  class="btnHD btnload"
+                  style="margin-left: 5px; margin-bottom: 4px"
+                >
+                  Refresh
+                </button>
+                <input type="hidden" name="action" value="refreshCustomer" />
+              </form>
             </div>
             <h2 style="font-size: 30px">Quản lý khách hàng</h2>
             <form

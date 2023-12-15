@@ -519,7 +519,8 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       <!--Center-->
       <div class="center">
         <!--Item Material-->
-        <div class="product-data table-data" data-type="itemMaterialList">
+        <div class="product-data table-data active" data-type="itemMaterialList">
+          s
           <div class="header-table">
             <!--Add Item Image Button-->
             <div class="AddItemMaterial">
@@ -533,9 +534,21 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px">
                 Xuất Excel
               </a>
+              <form
+                action="${pageContext.request.contextPath}/ManageItemMaterialServlet"
+                method="post"
+              >
+                <button
+                  class="btnHD btnload"
+                  style="margin-left: 5px; margin-bottom: 4px"
+                >
+                  Refresh
+                </button>
+                <input type="hidden" name="action" value="refreshAccount" />
+              </form>
             </div>
             <h2 style="font-size: 30px">Quản lý nguyên liệu</h2>
-            <form
+            <forms
               action="${pageContext.request.contextPath}/ManageItemMaterialServlet"
               method="post"
             >
@@ -568,7 +581,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                 </div>
               </div>
               <input type="hidden" name="action" value="searchAndSortItemMaterial" />
-            </form>
+            </forms>
           </div>
 
           <!--Table Item Material-->

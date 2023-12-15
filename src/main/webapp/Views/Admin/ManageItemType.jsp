@@ -518,7 +518,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
       <!--Center-->
       <div class="center">
-        <div class="itemtype-data table-data" data-type="itemTypeList">
+        <div class="itemtype-data table-data active" data-type="itemTypeList">
           <div class="header-table">
             <!--Add Item Type Button-->
             <div class="AddItemType">
@@ -536,6 +536,18 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               >
                 Xuất Excel
               </a>
+              <form
+                action="${pageContext.request.contextPath}/ManageItemTypeServlet"
+                method="post"
+              >
+                <button
+                  class="btnHD btnload"
+                  style="margin-left: 5px; margin-bottom: 4px"
+                >
+                  Refresh
+                </button>
+                <input type="hidden" name="action" value="refreshItemType" />
+              </form>
             </div>
 
             <h2 style="font-size: 30px">Quản lý kiểu sản phẩm</h2>
