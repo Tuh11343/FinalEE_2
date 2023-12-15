@@ -2,6 +2,7 @@ package FinalEE.Controller.Manage;
 
 import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -10,9 +11,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ManageDiscountCardServlet extends HttpServlet {
+public class ManageItemCollectionServlet extends HttpServlet {
 
     private AccountServiceImpl accountServiceImpl;
     private CustomerServiceImpl customerServiceImpl;
@@ -34,7 +37,7 @@ public class ManageDiscountCardServlet extends HttpServlet {
 
         initData(req);
 
-        req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+        req.getRequestDispatcher("Views/Admin/ManageItemCollection.jsp").forward(req, resp);
     }
 
 
@@ -44,96 +47,83 @@ public class ManageDiscountCardServlet extends HttpServlet {
         String action = req.getParameter("action");
         System.out.println(action);
         switch (action) {
-            case "addDiscountCard" -> {
+            case "addItemCollection" -> {
 
-                int customerID = Integer.parseInt(req.getParameter("add_discountCardID"));
-                String name = req.getParameter("add_discountCardName");
-                int discountPercentage = Integer.parseInt(req.getParameter("add_discountCardDiscountPercentage"));
+                String name = req.getParameter("add_itemCollectionName");
 
-                Customer customer = customerServiceImpl.getCustomer(customerID);
+                ItemCollection itemCollection = new ItemCollection();
+                itemCollection.setName(name);
 
-                DiscountCard discountCard = new DiscountCard();
-                discountCard.setCustomer(customer);
-                discountCard.setDiscount_percentage(discountPercentage);
-                discountCard.setName(name);
-
-                if (discountCardServiceImpl.create(discountCard)) {
-                    resp.getWriter().println("<script>alert('Thêm khách hàng thành công!');</script>");
-
+                if (itemCollectionServiceImpl.create(itemCollection)) {
+                    resp.getWriter().println("<script>alert('Thêm bộ sưu tập thành công!');</script>");
                 } else {
-                    resp.getWriter().println("<script>alert('Thêm khách hàng thất bại!');</script>");
+                    resp.getWriter().println("<script>alert('Thêm bộ sưu tập thất bại!');</script>");
                 }
 
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
-
+                resp.sendRedirect("/FinalEE/ManageItemCollectionServlet");
             }
-            case "updateDiscountCard" -> {
-                int id = Integer.parseInt(req.getParameter("update_discountCardID"));
-                int discountPercentage = Integer.parseInt(req.getParameter("update_discountCardDiscountPercentage"));
-                String name = req.getParameter("update_discountCardName");
-                int customerID = Integer.parseInt(req.getParameter("update_discountCardID"));
+            case "updateItemCollection" -> {
 
-                Customer customer = customerServiceImpl.getCustomer(customerID);
+                int id = Integer.parseInt(req.getParameter("update_itemCollectionID"));
+                String name = req.getParameter("update_itemCollectionName");
 
-                DiscountCard discountCard = new DiscountCard();
-                discountCard.setId(id);
-                discountCard.setCustomer(customer);
-                discountCard.setDiscount_percentage(discountPercentage);
-                discountCard.setName(name);
+                ItemCollection itemCollection = new ItemCollection();
+                itemCollection.setId(id);
+                itemCollection.setName(name);
 
-                if (discountCardServiceImpl.create(discountCard)) {
-                    resp.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thành công!');</script>");
-
+                if (itemCollectionServiceImpl.create(itemCollection)) {
+                    resp.getWriter().println("<script>alert('Cập nhật bộ sưu tập thành công!');</script>");
                 } else {
-                    resp.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thất bại!');</script>");
+                    resp.getWriter().println("<script>alert('Cập nhật sưu tập thất bại!');</script>");
                 }
+                resp.sendRedirect("/FinalEE/ManageItemCollectionServlet");
 
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
             }
-            case "deleteDiscountCard" -> {
-                int discountCardID = Integer.parseInt(req.getParameter("discountCardID"));
-                if (discountCardServiceImpl.deleteByID(discountCardID)) {
-                    resp.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thành công!');</script>");
+            case "deleteItemCollection" -> {
+                int itemCollectionID = Integer.parseInt(req.getParameter("itemCollectionID"));
+                if (itemCollectionServiceImpl.deleteByID(itemCollectionID)) {
+                    resp.getWriter().println("<script>alert('Xóa bộ sưu tập thành công!');</script>");
                 } else {
-                    resp.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thất bại!');</script>");
+                    resp.getWriter().println("<script>alert('Xóa bộ sưu tập thất bại!');</script>");
                 }
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
+                resp.sendRedirect("/FinalEE/ManageItemCollectionServlet");
             }
-            case "searchAndSortCustomer"-> {
-                String searchType = req.getParameter("customerSearchType");
-                String customerInputSearch = req.getParameter("customerInputSearch");
+            case "searchAndSortItemCollection"-> {
+                String searchType = req.getParameter("itemCollectionSearchType");
+                String itemCollectionInputSearch = req.getParameter("itemCollectionInputSearch");
                 switch (searchType) {
                     case "noData" -> {
 
                     }
                     case "id" -> {
-                        Integer customerID = Integer.parseInt(req.getParameter("customerInputSearch"));
-                        Customer customer = customerServiceImpl.getCustomer(customerID);
-                        List<Customer> customerList = new ArrayList<>();
-                        customerList.add(customer);
+                        Integer itemCollectionID = Integer.parseInt(req.getParameter("itemCollectionInputSearch"));
+                        ItemCollection itemCollection = itemCollectionServiceImpl.getItemCollection(itemCollectionID);
+                        List<ItemCollection> itemCollectionList = new ArrayList<>();
+                        itemCollectionList.add(itemCollection);
 
-                        req.setAttribute("customerList", customerList);
-                        req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+                        req.setAttribute("itemCollectionList", itemCollectionList);
+                        req.getRequestDispatcher("Views/Admin/ManageItemCollection.jsp").forward(req, resp);
 
                     }
                     case "name" -> {
-                        String customerSortType = req.getParameter("customerSortType");
-                        List<Customer> customerList = null;
-                        if (customerSortType.equals("az")) {
-                            customerList = customerServiceImpl.findAllByNameLike(customerInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
-                        } else if (customerSortType.equals("za")) {
-                            customerList = customerServiceImpl.findAllByNameLike(customerInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+                        String itemCollectionSortType = req.getParameter("itemCollectionSortType");
+                        List<ItemCollection> itemCollectionList = null;
+                        if (itemCollectionSortType.equals("az")) {
+                            itemCollectionList = itemCollectionServiceImpl.findAllByNameContains(itemCollectionInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
+                        } else if (itemCollectionSortType.equals("za")) {
+                            itemCollectionList = itemCollectionServiceImpl.findAllByNameContains(itemCollectionInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
                         }
 
-                        req.setAttribute("customerList", customerList);
-                        req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+                        req.setAttribute("itemCollectionList", itemCollectionList);
+                        req.getRequestDispatcher("Views/Admin/ManageItemCollection.jsp").forward(req, resp);
                     }
                 }
             }
-            case "refreshItem"->{
-                List<Customer> customerList=customerServiceImpl.getAllCustomer();
-                req.setAttribute("customerList", customerList);
-                req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+
+            case "refreshItemCollection"->{
+                List<ItemCollection> itemCollectionList=itemCollectionServiceImpl.getAllItemCollection();
+                req.setAttribute("itemCollectionList", itemCollectionList);
+                req.getRequestDispatcher("Views/Admin/ManageItemCollection.jsp").forward(req, resp);
             }
         }
     }

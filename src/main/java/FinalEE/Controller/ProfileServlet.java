@@ -105,11 +105,4 @@ public class ProfileServlet extends HttpServlet {
 
         req.getRequestDispatcher("/Views/User/ProfileUser.jsp").forward(req,resp);
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-
-    }
 }

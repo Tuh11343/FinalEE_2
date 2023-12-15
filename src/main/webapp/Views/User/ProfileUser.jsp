@@ -91,20 +91,20 @@
 
                                                     <div class="products--item">
                                                         <span class="number__product">${status.index+1}</span>
-                                                        <img src="${orderDetail.item.imageList.get(5).image_url}"
+                                                        <img src="${orderDetail.stockItem.item.imageList.get(5).image_url}"
                                                             alt="ao-yame">
                                                         <p class="name__product">Tên:
-                                                            <span>${orderDetail.item.name}</span></p>
+                                                            <span>${orderDetail.stockItem.item.name}</span></p>
                                                         <p class="color__product">Màu:
-                                                            <span>${orderDetail.item_color}</span></p>
+                                                            <span>${orderDetail.stockItem.color}</span></p>
 
                                                         <c:if test="${isSale eq true}">
-                                                            <fmt:formatNumber value="${orderDetail.item.price * 0.8}"
+                                                            <fmt:formatNumber value="${orderDetail.stockItem.item.price * 0.8}"
                                                                 pattern="#,###" var="salePrice" />
                                                             <p class="price__product">Giá: <span>${salePrice}</span></p>
                                                         </c:if>
                                                         <c:if test="${isSale eq false}">
-                                                            <fmt:formatNumber value="${orderDetail.item.price}"
+                                                            <fmt:formatNumber value="${orderDetail.stockItem.item.price}"
                                                                 pattern="#,###" var="formattedNumber" />
                                                             <p class="price__product">Giá:
                                                                 <span>${formattedNumber}</span></p>

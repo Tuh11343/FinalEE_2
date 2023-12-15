@@ -2,6 +2,7 @@ package FinalEE.Controller.Manage;
 
 import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -10,9 +11,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ManageDiscountCardServlet extends HttpServlet {
+public class ManageOrderStatusServlet extends HttpServlet {
 
     private AccountServiceImpl accountServiceImpl;
     private CustomerServiceImpl customerServiceImpl;
@@ -28,112 +31,96 @@ public class ManageDiscountCardServlet extends HttpServlet {
     private SaleServiceImpl saleServiceImpl;
     private StockItemServiceImpl stockItemServiceImpl;
     private CartServiceImpl cartServiceImpl;
+    private OrderStatusServiceImpl orderStatusServiceImpl;
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         initData(req);
 
-        req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+        req.getRequestDispatcher("Views/Admin/ManageOrderStatus.jsp").forward(req, resp);
     }
-
-
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         System.out.println(action);
         switch (action) {
-            case "addDiscountCard" -> {
+            case "addOrderStatus" -> {
+                String name = req.getParameter("add_orderStatusName");
 
-                int customerID = Integer.parseInt(req.getParameter("add_discountCardID"));
-                String name = req.getParameter("add_discountCardName");
-                int discountPercentage = Integer.parseInt(req.getParameter("add_discountCardDiscountPercentage"));
+                OrderStatus orderStatus = new OrderStatus();
+                orderStatus.setName(name);
 
-                Customer customer = customerServiceImpl.getCustomer(customerID);
-
-                DiscountCard discountCard = new DiscountCard();
-                discountCard.setCustomer(customer);
-                discountCard.setDiscount_percentage(discountPercentage);
-                discountCard.setName(name);
-
-                if (discountCardServiceImpl.create(discountCard)) {
-                    resp.getWriter().println("<script>alert('Thêm khách hàng thành công!');</script>");
-
+                if (orderStatusServiceImpl.create(orderStatus)) {
+                    resp.getWriter().println("<script>alert('Thêm trạng thái đơn hàng thành công!');</script>");
                 } else {
-                    resp.getWriter().println("<script>alert('Thêm khách hàng thất bại!');</script>");
+                    resp.getWriter().println("<script>alert('Thêm trạng thái đơn hàng thất bại!');</script>");
                 }
 
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
-
+                resp.sendRedirect("/FinalEE/ManageOrderStatusServlet");
             }
-            case "updateDiscountCard" -> {
-                int id = Integer.parseInt(req.getParameter("update_discountCardID"));
-                int discountPercentage = Integer.parseInt(req.getParameter("update_discountCardDiscountPercentage"));
-                String name = req.getParameter("update_discountCardName");
-                int customerID = Integer.parseInt(req.getParameter("update_discountCardID"));
+            case "updateOrderStatus" -> {
+                int id = Integer.parseInt(req.getParameter("update_orderStatusID"));
+                String name = req.getParameter("update_orderStatusName");
 
-                Customer customer = customerServiceImpl.getCustomer(customerID);
+                OrderStatus orderStatus = new OrderStatus();
+                orderStatus.setId(id);
+                orderStatus.setName(name);
 
-                DiscountCard discountCard = new DiscountCard();
-                discountCard.setId(id);
-                discountCard.setCustomer(customer);
-                discountCard.setDiscount_percentage(discountPercentage);
-                discountCard.setName(name);
-
-                if (discountCardServiceImpl.create(discountCard)) {
-                    resp.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thành công!');</script>");
-
+                if (orderStatusServiceImpl.create(orderStatus)) {
+                    resp.getWriter().println("<script>alert('Cập nhật trạng thái đơn hàng thành công!');</script>");
                 } else {
-                    resp.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thất bại!');</script>");
+                    resp.getWriter().println("<script>alert('Cập nhật trạng thái đơn hàng thất bại!');</script>");
                 }
 
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
+                resp.sendRedirect("/FinalEE/ManageOrderStatusServlet");
             }
-            case "deleteDiscountCard" -> {
-                int discountCardID = Integer.parseInt(req.getParameter("discountCardID"));
-                if (discountCardServiceImpl.deleteByID(discountCardID)) {
-                    resp.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thành công!');</script>");
+            case "deleteOrderStatus" -> {
+                int orderStatusID = Integer.parseInt(req.getParameter("orderStatusID"));
+                if (orderStatusServiceImpl.deleteByID(orderStatusID)) {
+                    resp.getWriter().println("<script>alert('Xóa loại sản phẩm thành công!');</script>");
                 } else {
-                    resp.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thất bại!');</script>");
+                    resp.getWriter().println("<script>alert('Xóa loại sản phẩm thất bại!');</script>");
                 }
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
+                resp.sendRedirect("/FinalEE/ManageOrderStatusServlet");
             }
-            case "searchAndSortCustomer"-> {
-                String searchType = req.getParameter("customerSearchType");
-                String customerInputSearch = req.getParameter("customerInputSearch");
+            case "searchAndSortOrderStatus" -> {
+                String searchType = req.getParameter("orderStatusSearchType");
+                String orderStatusInputSearch = req.getParameter("orderStatusInputSearch");
                 switch (searchType) {
                     case "noData" -> {
 
                     }
                     case "id" -> {
-                        Integer customerID = Integer.parseInt(req.getParameter("customerInputSearch"));
-                        Customer customer = customerServiceImpl.getCustomer(customerID);
-                        List<Customer> customerList = new ArrayList<>();
-                        customerList.add(customer);
+                        Integer orderStatusID = Integer.parseInt(req.getParameter("orderStatusInputSearch"));
+                        OrderStatus orderStatus = orderStatusServiceImpl.findById(orderStatusID);
+                        List<OrderStatus> orderStatusList = new ArrayList<>();
+                        orderStatusList.add(orderStatus);
 
-                        req.setAttribute("customerList", customerList);
-                        req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+                        req.setAttribute("orderStatusList", orderStatusList);
+                        req.getRequestDispatcher("Views/Admin/ManageOrderStatus.jsp").forward(req, resp);
 
                     }
                     case "name" -> {
-                        String customerSortType = req.getParameter("customerSortType");
-                        List<Customer> customerList = null;
-                        if (customerSortType.equals("az")) {
-                            customerList = customerServiceImpl.findAllByNameLike(customerInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
-                        } else if (customerSortType.equals("za")) {
-                            customerList = customerServiceImpl.findAllByNameLike(customerInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+                        String orderStatusSortType = req.getParameter("orderStatusSortType");
+                        List<OrderStatus> orderStatusList = null;
+                        if (orderStatusSortType.equals("az")) {
+                            orderStatusList = orderStatusServiceImpl.findAllByNameContains(orderStatusInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
+                        } else if (orderStatusSortType.equals("za")) {
+                            orderStatusList = orderStatusServiceImpl.findAllByNameContains(orderStatusInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
                         }
 
-                        req.setAttribute("customerList", customerList);
-                        req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+                        req.setAttribute("orderStatusList", orderStatusList);
+                        req.getRequestDispatcher("Views/Admin/ManageOrderStatus.jsp").forward(req, resp);
                     }
                 }
+
             }
-            case "refreshItem"->{
-                List<Customer> customerList=customerServiceImpl.getAllCustomer();
-                req.setAttribute("customerList", customerList);
-                req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+
+            case "refreshOrderStatus"->{
+                List<OrderStatus> orderStatusList=orderStatusServiceImpl.getAllOrderStatus();
+                req.setAttribute("orderStatusList", orderStatusList);
+                req.getRequestDispatcher("Views/Admin/ManageOrderStatus.jsp").forward(req, resp);
             }
         }
     }
@@ -155,6 +142,7 @@ public class ManageDiscountCardServlet extends HttpServlet {
         permissionServiceImpl = (PermissionServiceImpl) servletContext.getAttribute("permissionServiceImpl");
         saleServiceImpl = (SaleServiceImpl) servletContext.getAttribute("saleServiceImpl");
         stockItemServiceImpl = (StockItemServiceImpl) servletContext.getAttribute("stockItemServiceImpl");
+        orderStatusServiceImpl= (OrderStatusServiceImpl) servletContext.getAttribute("orderStatusServiceImpl");
 
 
         List<Account> accountList = accountServiceImpl.getAllAccount();
@@ -170,6 +158,7 @@ public class ManageDiscountCardServlet extends HttpServlet {
         List<Permission> permissionList = permissionServiceImpl.getAllPermission();
         List<Sale> saleList = saleServiceImpl.getAllSale();
         List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
+        List<OrderStatus> orderStatusList=orderStatusServiceImpl.getAllOrderStatus();
 
         /*Set Data List*/
         req.setAttribute("accountList", accountList);
@@ -185,6 +174,6 @@ public class ManageDiscountCardServlet extends HttpServlet {
         req.setAttribute("permissionList", permissionList);
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
-        req.setAttribute("cartServiceImpl", cartServiceImpl);
+        req.setAttribute("orderStatusList",orderStatusList);
     }
 }

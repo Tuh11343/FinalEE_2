@@ -37,7 +37,7 @@ public class ManageCustomerServlet extends HttpServlet {
 
         initData(req);
 
-        req.getRequestDispatcher("Views/Admin/Manage_Item.jsp").forward(req, resp);
+        req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
     }
 
 
@@ -70,7 +70,7 @@ public class ManageCustomerServlet extends HttpServlet {
                     resp.getWriter().println("<script>alert('Thêm khách hàng thất bại!');</script>");
                 }
 
-                req.getRequestDispatcher("Views/Admin/ManageCustomer.jsp").forward(req, resp);
+                resp.sendRedirect("/FinalEE/ManageCustomerServlet");
 
             }
             case "customer_btnUpdate" -> {
@@ -95,7 +95,7 @@ public class ManageCustomerServlet extends HttpServlet {
                     resp.getWriter().println("<script>alert('Cập nhật khách hàng thất bại!');</script>");
                 }
 
-                req.getRequestDispatcher("Views/Admin/ManageCustomer.jsp").forward(req, resp);
+                resp.sendRedirect("/FinalEE/ManageCustomerServlet");
 
             }
             case "customer_btnDelete" -> {
@@ -105,7 +105,7 @@ public class ManageCustomerServlet extends HttpServlet {
                 } else {
                     resp.getWriter().println("<script>alert('Xóa khách hàng thất bại!');</script>");
                 }
-                req.getRequestDispatcher("Views/Admin/ManageCustomer.jsp").forward(req, resp);
+                resp.sendRedirect("/FinalEE/ManageCustomerServlet");
             }
             case "searchAndSortCustomer"-> {
                 String searchType = req.getParameter("customerSearchType");
@@ -121,7 +121,7 @@ public class ManageCustomerServlet extends HttpServlet {
                         customerList.add(customer);
 
                         req.setAttribute("customerList", customerList);
-                        resp.sendRedirect("/FinalEE/ManageCustomerServlet");
+                        req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
 
                     }
                     case "name" -> {
@@ -134,14 +134,14 @@ public class ManageCustomerServlet extends HttpServlet {
                         }
 
                         req.setAttribute("customerList", customerList);
-                        resp.sendRedirect("/FinalEE/ManageCustomerServlet");
+                        req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
                     }
                 }
             }
             case "refreshItem"->{
                 List<Customer> customerList=customerServiceImpl.getAllCustomer();
                 req.setAttribute("customerList", customerList);
-                resp.sendRedirect("/FinalEE/ManageCustomerServlet");
+                req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
             }
         }
     }
