@@ -8,18 +8,12 @@ import java.util.List;
 
 public interface StatisticService{
 
-    List<Object[]> productsSoldByMonth(int month,int year);
+    public List<Object[]> getTop10BestSellingProducts();
+    public List<Object[]> getTop5CustomersByRevenue();
+    public List<Object[]> getTop5CustomersByAmount();
+    public List<Object[]> getRecentFiveMonthRevenue();
 
-    List<Object[]> productsSoldByYear(int year);
-
-    List<Object[]> totalProductsSoldByMonth(int month,int year);
-
-    List<Object[]> totalProductsSoldByYear(int year);
-
-    List<Object[]> getRevenueByMonth(int month,int year);
-
-    List<Object[]> getRecentFiveMonthRevenue();
-
+    public List<Object[]> getRevenueByDayOfWeek();
 
     
 }

@@ -96,6 +96,9 @@ public class AdminManagerServlet extends HttpServlet {
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("cartServiceImpl", cartServiceImpl);
 
+        List<Object[]> top10BestSellingProducts=statisticServiceIml.getTop10BestSellingProducts();
+        req.setAttribute("top10BestSellingProducts",top10BestSellingProducts);
+
         req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, resp);
     }
 
@@ -110,7 +113,7 @@ public class AdminManagerServlet extends HttpServlet {
 
                 switch (action) {
 
-                    case "productsSoldByMonth" -> {
+                    /*case "productsSoldByMonth" -> {
 
                         System.out.println("Products Sold By Month");
 
@@ -123,9 +126,9 @@ public class AdminManagerServlet extends HttpServlet {
 
                         List<Object[]> productsSoldByMonth = statisticServiceIml.productsSoldByMonth(month,year);
 
-                    /*for(Object[] result:totalProductsSoldByMonth){
+                    *//*for(Object[] result:totalProductsSoldByMonth){
                         System.out.println(result[0]+" "+result[1]);
-                    }*/
+                    }*//*
 
                         JSONArray jsonArray = new JSONArray();
 
@@ -156,9 +159,9 @@ public class AdminManagerServlet extends HttpServlet {
 
                         List<Object[]> productsSoldByYear = statisticServiceIml.productsSoldByYear(year);
 
-                    /*for(Object[] result:totalProductsSoldByMonth){
+                    *//*for(Object[] result:totalProductsSoldByMonth){
                         System.out.println(result[0]+" "+result[1]);
-                    }*/
+                    }*//*
 
                         JSONArray jsonArray = new JSONArray();
 
@@ -290,7 +293,7 @@ public class AdminManagerServlet extends HttpServlet {
                         }catch (Exception er){
                             er.printStackTrace();
                         }
-                    }
+                    }*/
 
                     default -> {
 

@@ -523,7 +523,38 @@
     <!--Center-->
     <div class="center">
         <!-- Thống kê -->
-        <div class="product-data table-data active" data-type="statistics">
+
+
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${requestScope.top10BestSellingProducts}" var="statistic">
+                <tr>
+                    <td>${statistic[0]}</td>
+                    <td>${statistic[1]}</td>
+                    <td>${statistic[2]}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+
+
+
+
+
+
+
+
+
+
+        <%--<div class="product-data table-data active" data-type="statistics">
             <div class="header-table">
                 <div class="AddProduct">
 
@@ -569,7 +600,7 @@
             </div>
 
             <div id="table-container">
-                <%--5 sản phẩm bán chạy nhất tháng--%>
+                &lt;%&ndash;5 sản phẩm bán chạy nhất tháng&ndash;%&gt;
                 <div
                         id="productsSoldByMonthTable"
                         style="display: none"
@@ -595,7 +626,7 @@
                     </table>
                 </div>
 
-                <%--5 sản phẩm bán chạy nhất năm--%>
+                &lt;%&ndash;5 sản phẩm bán chạy nhất năm&ndash;%&gt;
                 <div class="typetable" style="display: none" data-type="productsSoldByYear">
                     <!-- Table for aothun data -->
 
@@ -615,7 +646,7 @@
                     </table>
                 </div>
 
-                <%--Tổng sản phẩm bán ra theo tháng--%>
+                &lt;%&ndash;Tổng sản phẩm bán ra theo tháng&ndash;%&gt;
                 <div
                         class="typetable"
                         style="display: none"
@@ -636,7 +667,7 @@
                     </table>
                 </div>
 
-                <%--Tổng sản phẩm bán ra theo năm--%>
+                &lt;%&ndash;Tổng sản phẩm bán ra theo năm&ndash;%&gt;
                 <div
                         class="typetable"
                         style="display: none"
@@ -657,7 +688,7 @@
                     </table>
                 </div>
 
-                <%--Tổng doanh thu 5 tháng gần nhất--%>
+                &lt;%&ndash;Tổng doanh thu 5 tháng gần nhất&ndash;%&gt;
                 <div
                         class="typetable"
                         style="display: none"
@@ -678,7 +709,7 @@
                     </table>
                 </div>
 
-                <%--Doanh thu theo tháng--%>
+                &lt;%&ndash;Doanh thu theo tháng&ndash;%&gt;
                 <div class="typetable" style="display: none" data-type="monthRevenue">
                     <label for="sixthDatePicker">Chọn tháng:</label>
                     <input
@@ -701,7 +732,7 @@
                 <canvas id="myChart"></canvas>
             </div>
 
-        </div>
+        </div>--%>
 
         <!--Account-->
         <div class="account-data table-data" data-type="accountList">

@@ -16,18 +16,16 @@ public class StatisticRepository {
     @Autowired
     EntityManager entityManager;
 
-    public List<Object[]> productsSoldByMonth(int month,int year) {
+    public List<Object[]> getTop10BestSellingProducts() {
         try {
-            String sql = "SELECT od.item_id, SUM(od.amount) AS total_quantity\n" +
-                    "    FROM itemorderdetail od\n" +
-                    "    JOIN itemorder o ON od.order_id = o.id\n" +
-                    "    WHERE MONTH(o.date_purchase) = ?1 and YEAR(o.date_purchase)= ?2\n" +
-                    "    GROUP BY od.item_id\n" +
-                    "    ORDER BY total_quantity DESC\n" +
-                    "    LIMIT 5";
+            String sql = "SELECT i.id, i.name, SUM(od.amount) as total " +
+                    "FROM item i " +
+                    "JOIN stockitem si ON i.id = si.item_id " +
+                    "JOIN itemorderdetail od ON si.id = od.stock_item_id " +
+                    "GROUP BY i.id " +
+                    "ORDER BY total DESC " +
+                    "LIMIT 10";
             Query query = entityManager.createNativeQuery(sql);
-            query.setParameter(1, month);
-            query.setParameter(2,year);
             return query.getResultList();
         } catch (Exception er) {
             er.printStackTrace();
@@ -35,86 +33,63 @@ public class StatisticRepository {
         return null;
     }
 
-    public List<Object[]> productsSoldByYear(int year) {
+    public List<Object[]> getTop5CustomersByRevenue() {
         try {
-            String sql = "SELECT od.item_id, SUM(od.amount) AS total_quantity\n" +
-                    "    FROM itemorderdetail od\n" +
-                    "    JOIN itemorder o ON od.order_id = o.id\n" +
-                    "    WHERE YEAR(o.date_purchase) = ?1\n" +
-                    "    GROUP BY od.item_id\n" +
-                    "    ORDER BY total_quantity DESC\n" +
-                    "    LIMIT 5";
-            Query query = entityManager.createNativeQuery(sql);
-            query.setParameter(1, year);
-            return query.getResultList();
-        } catch (Exception er) {
-            er.printStackTrace();
-        }
-        return null;
-    }
-
-    public List<Object[]> totalProductsSoldByMonth(int month,int year) {
-        try {
-            String sql = "SELECT od.item_id, SUM(od.amount) AS total_quantity\n" +
-                    "    FROM itemorderdetail od\n" +
-                    "    JOIN itemorder o ON od.order_id = o.id\n" +
-                    "    WHERE MONTH(o.date_purchase) = ?1 and YEAR(o.date_purchase)= ?2\n" +
-                    "    GROUP BY od.item_id\n" +
-                    "    ORDER BY total_quantity DESC";
-            Query query = entityManager.createNativeQuery(sql);
-            query.setParameter(1, month);
-            query.setParameter(2,year);
-            return query.getResultList();
-        } catch (Exception er) {
-            er.printStackTrace();
-        }
-        return null;
-    }
-
-    public List<Object[]> totalProductsSoldByYear(int year) {
-        try {
-            String sql = "SELECT od.item_id, SUM(od.amount) AS total_quantity\n" +
-                    "    FROM itemorderdetail od\n" +
-                    "    JOIN itemorder o ON od.order_id = o.id\n" +
-                    "    WHERE YEAR(o.date_purchase) = ?1\n" +
-                    "    GROUP BY od.item_id\n" +
-                    "    ORDER BY total_quantity DESC";
-            Query query = entityManager.createNativeQuery(sql);
-            query.setParameter(1, year);
-            return query.getResultList();
-        } catch (Exception er) {
-            er.printStackTrace();
-        }
-        return null;
-    }
-
-    public List<Object[]> getRevenueByMonth(int month,int year) {
-        try {
-            String sql = "SELECT YEAR(io.date_purchase) as year, MONTH(io.date_purchase) as month, SUM(io.total) as revenue\n" +
-                    "FROM ItemOrder as io\n" +
-                    "WHERE MONTH(io.date_purchase) = ? AND YEAR(io.date_purchase) = ?\n" +
-                    "GROUP BY YEAR(io.date_purchase), MONTH(io.date_purchase)\n" +
-                    "ORDER BY YEAR DESC, month DESC";
-            Query query = entityManager.createNativeQuery(sql);
-            query.setParameter(1, month);
-            query.setParameter(2,year);
-            return query.getResultList();
-        } catch (Exception er) {
-            er.printStackTrace();
-        }
-        return null;
-    }
-
-    public List<Object[]> getRecentFiveMonthRevenue(){
-        try{
-            String sql="SELECT YEAR(io.date_purchase) as year, MONTH(io.date_purchase) as month, SUM(io.total) as revenue " +
-                    "FROM ItemOrder as io " +
-                    "GROUP BY YEAR(io.date_purchase), MONTH(io.date_purchase) " +
-                    "ORDER BY YEAR DESC, month DESC " +
+            String sql = "SELECT c.id, c.name, SUM(o.total) as total_revenue " +
+                    "FROM Customer c " +
+                    "JOIN ItemOrder o ON c.id = o.customer_id " +
+                    "GROUP BY c.id " +
+                    "ORDER BY total_revenue DESC " +
                     "LIMIT 5";
-            Query query=entityManager.createNativeQuery(sql);
+            Query query = entityManager.createNativeQuery(sql);
             return query.getResultList();
-        }catch (Exception er){
+        } catch (Exception er) {
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Object[]> getTop5CustomersByAmount() {
+        try {
+            String sql = "SELECT c.id, c.name, SUM(od.amount) as total " +
+                    "FROM Customer c " +
+                    "JOIN ItemOrder o ON c.id = o.customer_id " +
+                    "JOIN OrderDetail od ON o.id = od.order_id " +
+                    "GROUP BY c.id " +
+                    "ORDER BY total DESC " +
+                    "LIMIT 5";
+            Query query = entityManager.createNativeQuery(sql);
+            return query.getResultList();
+        } catch (Exception er) {
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Object[]> getRecentFiveMonthRevenue() {
+        try {
+            String sql = "SELECT YEAR(o.date_purchase) as year, MONTH(o.date_purchase) as month, SUM(o.total) as revenue " +
+                    "FROM ItemOrder o " +
+                    "GROUP BY YEAR(o.date_purchase), MONTH(o.date_purchase) " +
+                    "ORDER BY year DESC, month DESC " +
+                    "LIMIT 5";
+            Query query = entityManager.createNativeQuery(sql);
+            return query.getResultList();
+        } catch (Exception er) {
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Object[]> getRevenueByDayOfWeek() {
+        try {
+            String sql = "SELECT DAYOFWEEK(o.date_purchase) as day_of_week, SUM(o.total) as revenue " +
+                    "FROM ItemOrder o " +
+                    "GROUP BY DAYOFWEEK(o.date_purchase) " +
+                    "ORDER BY revenue DESC";
+            Query query = entityManager.createNativeQuery(sql);
+            return query.getResultList();
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return null;
