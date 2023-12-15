@@ -43,8 +43,7 @@ public class ItemCollectionServiceImpl implements ItemCollectionService{
     @Override
     public boolean deleteByID(int id) {
         if (itemCollectionRepository.existsById(id)) {
-            //itemCollectionRepository.deleteById(itemCollectionID);
-            System.out.println("Ban da xoa:" + id);
+            itemCollectionRepository.deleteById(id);
             return true;
         }
         return false;
@@ -52,7 +51,22 @@ public class ItemCollectionServiceImpl implements ItemCollectionService{
 
     @Override
     public ItemCollection getItemCollection(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            return itemCollectionRepository.findByID(id);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ItemCollection findByID(Integer id) {
+        try{
+            return itemCollectionRepository.findByID(id);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override

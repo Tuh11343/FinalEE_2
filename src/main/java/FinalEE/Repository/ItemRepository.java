@@ -50,4 +50,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
     List<Item> findAllByPriceLessThan(double price,Sort sort);
     List<Item> findAllByPriceGreaterThan(double price,Sort sort);
 
+    @Query("select i from Item i where i.id=?1 or i.id IS NULL")
+    Item findByID(Integer id);
+
 }

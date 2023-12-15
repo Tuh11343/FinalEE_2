@@ -47,8 +47,7 @@ public class ItemImageServiceImpl implements ItemImageService{
     @Override
     public boolean deleteByID(int id) {
         if (itemImageRepository.existsById(id)) {
-            //itemImageRepository.deleteById(itemImageID);
-            System.out.println("Ban da xoa:" + id);
+            itemImageRepository.deleteById(id);
             return true;
         }
         return false;

@@ -113,8 +113,7 @@ public class DiscountCardServiceImpl implements DiscountCardService{
     @Override
     public boolean deleteByID(int id) {
         if (discountCardRepository.existsById(id)) {
-            //discountCardRepository.deleteById(discountCardID);
-            System.out.println("Ban da xoa:" + id);
+            discountCardRepository.deleteById(id);
             return true;
         }
         return false;

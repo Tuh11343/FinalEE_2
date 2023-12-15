@@ -44,8 +44,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean deleteByID(int accountID) {
         if (accountRepository.existsById(accountID)) {
-            //accountRepository.deleteById(accountID);
-            System.out.println("Ban da xoa:" + accountID);
+            accountRepository.deleteById(accountID);
             return true;
         }
         return false;

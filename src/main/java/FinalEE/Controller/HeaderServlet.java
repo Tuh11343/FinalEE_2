@@ -139,10 +139,26 @@ public class HeaderServlet extends HttpServlet {
     private void orderHandle(HttpServletRequest req, JSONObject jsonResponse, PrintWriter out) {
 
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            List<Cart> cartList = mapper.readValue(req.getParameter("cartList"), new TypeReference<>() {
-            });
+            Customer signInCustomer = null;
             Integer discountCardID = null;
+            Integer signInAccountID;
+            List<Cookie> cookieList = List.of(req.getCookies());
+            for (Cookie cookie : cookieList) {
+                if (cookie.getName().equals("signInAccountID")) {
+                    signInAccountID = Integer.parseInt(cookie.getValue());
+                    Account account = accountServiceImpl.findByID(signInAccountID);
+                    signInCustomer = account.getCustomer();
+                }
+            }
+
+            List<Cart> cartList;
+            if(signInCustomer!=null){
+                cartList=cartServiceImpl.findByCustomerID(signInCustomer.getId());
+            }else{
+                ObjectMapper mapper = new ObjectMapper();
+                cartList = mapper.readValue(req.getParameter("cartList"), new TypeReference<>() {});
+            }
+
             if (req.getParameter("discountCardID") != null && !req.getParameter("discountCardID").isBlank()) {
                 discountCardID = Integer.parseInt(req.getParameter("discountCardID"));
             }
@@ -151,7 +167,10 @@ public class HeaderServlet extends HttpServlet {
             double orderTotal = 0f;
             /*Create Oder*/
             Order order = new Order();
-            order.setCustomer(null);
+            if(signInCustomer!=null)
+                order.setCustomer(signInCustomer);
+            else
+                order.setCustomer(null);
             order.setTotal(orderTotal);
             order.setEmail(req.getParameter("email"));
             order.setDate_purchase(new Date());
@@ -171,15 +190,17 @@ public class HeaderServlet extends HttpServlet {
 
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.setOrder(order);
-                orderDetail.setItem_size(cart.getStockItem().getSize());
-                orderDetail.setItem_color(cart.getStockItem().getColor());
                 orderDetail.setAmount(cart.getAmount());
                 orderDetail.setTotal(calculateOrderDetailTotal(cart));
-                orderDetail.setItem(cart.getStockItem().getItem());
+                orderDetail.setStockItem(cart.getStockItem());
 
                 orderDetailServiceImpl.create(orderDetail);
 
                 orderTotal += orderDetail.getTotal();
+            }
+
+            if(signInCustomer!=null){
+                cartServiceImpl.deleteAllByCustomerID(signInCustomer.getId());
             }
 
             //Update Order Total
@@ -262,6 +283,7 @@ public class HeaderServlet extends HttpServlet {
                 jsonResponse.put("success", 1);
                 jsonResponse.put("accountID", account.getId());
                 jsonResponse.put("accountPermission", account.getPermission().getLevel());
+
             } else {
                 System.out.println("No account founded");
                 jsonResponse.put("success", 0);
@@ -304,7 +326,7 @@ public class HeaderServlet extends HttpServlet {
             Map<String, Object> keyValue = new HashMap<>();
             keyValue.put("email", order.getEmail());
             keyValue.put("action", "orderConfirm");
-            keyValue.put("order", order);
+            keyValue.put("orderID", order.getId());
 
             MailServiceImpl mailServiceImpl = new MailServiceImpl();
             String activationLink = mailServiceImpl.mapToJSON(keyValue);

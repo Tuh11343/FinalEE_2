@@ -37,7 +37,7 @@ public class CartServlet extends HttpServlet {
                     double orderTotal = 0.0;
                     Customer signInCustomer = null;
                     Integer discountCardID = null;
-                    Integer signInAccountID = null;
+                    Integer signInAccountID;
 
                     List<Cookie> cookieList = List.of(req.getCookies());
                     for (Cookie cookie : cookieList) {
@@ -82,11 +82,9 @@ public class CartServlet extends HttpServlet {
 
                         OrderDetail orderDetail = new OrderDetail();
                         orderDetail.setOrder(order);
-                        orderDetail.setItem_size(cart.getStockItem().getSize());
-                        orderDetail.setItem_color(cart.getStockItem().getColor());
                         orderDetail.setAmount(cart.getAmount());
                         orderDetail.setTotal(calculateOrderDetailTotal(cart));
-                        orderDetail.setItem(cart.getStockItem().getItem());
+                        orderDetail.setStockItem(cart.getStockItem());
 
                         orderDetailServiceImpl.create(orderDetail);
 
@@ -99,17 +97,16 @@ public class CartServlet extends HttpServlet {
 
                     /*Remove Cart*/
                     cartServiceImpl.deleteAllByCustomerID(signInCustomer.getId());
-                    req.getRequestDispatcher("Views/User/Cart.jsp").forward(req, resp);
+                    resp.sendRedirect("/FinalEE/CartServlet");
 
                 }
                 case "itemDeleteClick" -> {
-                    System.out.println("Ban da nhan vao nut xoa vat pham");
-                    //Remove Item From Cart
-                    Integer deleteCartID = null;
+
+                    Integer deleteCartID;
                     deleteCartID = Integer.parseInt(req.getParameter("deleteCartID"));
                     cartServiceImpl.deleteByID(deleteCartID);
 
-                    req.getRequestDispatcher("Views/User/Cart.jsp").forward(req, resp);
+                    resp.sendRedirect("/FinalEE/CartServlet");
                 }
                 case "addMoreItem" -> {
                     resp.sendRedirect("/FinalEE/ItemServlet");
@@ -126,6 +123,42 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        initData(req);
+
+        Customer signInCustomer = null;
+        List<Cart> cartList = null;
+
+        //Lấy id account
+        List<Cookie> cookieList = List.of(req.getCookies());
+        for (Cookie cookie : cookieList) {
+            if (cookie.getName().equals("signInAccountID")) {
+                Integer signInAccountID = Integer.parseInt(cookie.getValue());
+                Account account = accountServiceImpl.findByID(signInAccountID);
+                signInCustomer = account.getCustomer();
+            }
+        }
+
+        if (signInCustomer != null) {
+            req.setAttribute("signInCustomer", signInCustomer);
+
+            /*Set Customer Discount Card*/
+            List<DiscountCard> customerDiscountCardList = discountCardServiceImpl.findByCustomerID(signInCustomer.getId());
+            req.setAttribute("customerDiscountCardList", customerDiscountCardList);
+            cartList = cartServiceImpl.findByCustomerID(signInCustomer.getId());
+
+            /*Set Order Total*/
+            calculateOrderTotal(cartList, req);
+            req.setAttribute("cartList", cartList);
+
+            req.getRequestDispatcher("/Views/User/Cart.jsp").forward(req, resp);
+        }else{
+            req.getRequestDispatcher("/Views/User/Cart.jsp").forward(req, resp);
+        }
+
+
+    }
+
+    private void initData(HttpServletRequest req) {
         ServletContext servletContext = getServletContext();
 
         accountServiceImpl = (AccountServiceImpl) servletContext.getAttribute("accountServiceImpl");
@@ -174,37 +207,6 @@ public class CartServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("orderStatusList", orderStatusList);
-
-        Customer signInCustomer = null;
-        List<Cart> cartList = null;
-
-        List<Cookie> cookieList = List.of(req.getCookies());
-        for (Cookie cookie : cookieList) {
-            if (cookie.getName().equals("signInAccountID")) {
-                Integer signInAccountID = Integer.parseInt(cookie.getValue());
-                Account account = accountServiceImpl.findByID(signInAccountID);
-                signInCustomer = account.getCustomer();
-            }
-        }
-
-        if (signInCustomer != null) {
-            req.setAttribute("signInCustomer", signInCustomer);
-
-            /*Set Customer Discount Card*/
-            List<DiscountCard> customerDiscountCardList = discountCardServiceImpl.findByCustomerID(signInCustomer.getId());
-            req.setAttribute("customerDiscountCardList", customerDiscountCardList);
-            cartList = cartServiceImpl.findByCustomerID(signInCustomer.getId());
-
-            /*Set Order Total*/
-            calculateOrderTotal(cartList, req);
-            req.setAttribute("cartList", cartList);
-
-            req.getRequestDispatcher("/Views/User/Cart.jsp").forward(req, resp);
-        }else{
-            req.getRequestDispatcher("/Views/User/Cart.jsp").forward(req, resp);
-        }
-
-
     }
 
     private void calculateOrderTotal(List<Cart> cartList, HttpServletRequest req) {
@@ -213,11 +215,6 @@ public class CartServlet extends HttpServlet {
             total += calculateOrderDetailTotal(cart);
         }
         req.setAttribute("orderTotal", total);
-    }
-
-    private double calculateOrderTotal(double orderTotal, DiscountCard discountCard) {
-        double discountPercentage = (double) discountCard.getDiscount_percentage() / 100;
-        return orderTotal - (orderTotal * discountPercentage);
     }
 
     private double calculateOrderDetailTotal(Cart cart) {

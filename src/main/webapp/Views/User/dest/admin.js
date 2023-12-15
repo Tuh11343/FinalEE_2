@@ -1,175 +1,6 @@
 
-/*Customer*/
-function addCustomer() {
-    let name = document.getElementById("add_customerName").value;
-    let phoneNumber = document.getElementById("add_customerPhoneNumber").value;
-    let email = document.getElementById("add_customerEmail").value;
-    let address = document.getElementById("add_customerAddress").value;
+function customerToExcel(tableID) {
     let table = document.getElementById("tableCustomer");
-
-    let customer = {
-        name: name,
-        phone_number: phoneNumber,
-        email: email,
-        address: address,
-    }; //khong dun toi
-
-    $.ajax({
-        type: "POST",
-        url: adminManagerContextPath + "/AdminServlet",
-        data: {
-            action: "addCustomer",
-            name: name,
-            phone_number: phoneNumber,
-            email: email,
-            address: address,
-        },
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        success: function (data) {
-            if (data.success === true) {
-                let customer = data.customer;
-                table.innerHTML +=
-                    "<tr>\n" +
-                    "            <td>" +
-                    customer.id +
-                    "</td>\n" +
-                    "            <td>" +
-                    customer.name +
-                    "</td>\n" +
-                    "            <td>" +
-                    customer.phone_number +
-                    "</td>\n" +
-                    "            <td>" +
-                    customer.email +
-                    "</td>\n" +
-                    "            <td>" +
-                    customer.address +
-                    "</td>\n" +
-                    "            <td>\n" +
-                    '              <div class="flex-center grpbtn">\n' +
-                    '                <a class="btnHD btnDel" type="submit" onclick="deleteCustomer(' +
-                    customer.id +
-                    ')">Xóa</a>\n' +
-                    "                <button\n" +
-                    '                        class="btnHD btnUpdateCustomer"\n' +
-                    "                        data-customerID=" +
-                    customer.id +
-                    "\n" +
-                    "                        data-customerName=" +
-                    customer.name +
-                    "\n" +
-                    "                        data-customerPhoneNumber=" +
-                    customer.phone_number +
-                    "\n" +
-                    "                        data-customerEmail=" +
-                    customer.email +
-                    "\n" +
-                    "                        data-customerAddress=" +
-                    customer.address +
-                    "\n" +
-                    "                >\n" +
-                    "                  Sửa\n" +
-                    "                </button>\n" +
-                    "              </div>\n" +
-                    "            </td>\n" +
-                    "          </tr>";
-                alert("Thêm khách hàng thành công");
-            } else console.log("WTF");
-        },
-        error: function (error) {
-            console.log("error:" + error);
-        },
-    });
-}
-
-function updateCustomer() {
-    let id = document.getElementById("update_customerID").value;
-    let name = document.getElementById("update_customerName").value;
-    let phoneNumber = document.getElementById("update_customerPhoneNumber").value;
-    let email = document.getElementById("update_customerEmail").value;
-    let address = document.getElementById("update_customerAddress").value;
-    let table = document.getElementById("tableCustomer");
-
-    let customer = {
-        id: id,
-        name: name,
-        phone_number: phoneNumber,
-        email: email,
-        address: address,
-    };
-
-    $.ajax({
-        type: "POST",
-        url: adminManagerContextPath + "/AdminServlet",
-        data: {
-            action: "updateCustomer",
-            customer: JSON.stringify(customer),
-        },
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        success: function (data) {
-            if (data.success === true) {
-                let customer = data.customer;
-
-                for (let i = 0, row; (row = table.rows[i]); i++) {
-                    // Lặp qua từng dòng trong bảng
-                    let idCell = row.cells[0]; // Giả sử 'customer.id' là ô đầu tiên trong mỗi dòng
-                    if (idCell.textContent === id) {
-                        row.cells[1].textContent = customer.name; // Cập nhật tên
-                        row.cells[2].textContent = customer.phone_number; // Cập nhật số điện thoại
-                        row.cells[3].textContent = customer.email; // Cập nhật email
-                        row.cells[4].textContent = customer.address; // Cập nhật địa chỉ
-                        break; // Thoát khỏi vòng lặp sau khi cập nhật
-                    }
-                }
-                alert("Cập nhật khách hàng thành công");
-            } else console.log("WTF");
-        },
-        error: function (error) {
-            console.log("error:" + error);
-        },
-    });
-}
-
-function handleDelete(id, action, tableID) {
-    let confirmationResult = false;
-    confirmationResult = confirm("Bạn có chắc chắn muốn xóa?");
-    if (confirmationResult) {
-        $.ajax({
-            type: "POST",
-            url: adminManagerContextPath + "/AdminServlet",
-            data: {
-                action: action,
-                id: id,
-            },
-            headers: {
-                "X-Requested-With": "XMLHttpRequest",
-            },
-            success: function (data) {
-                if (data.success === true) {
-                    let table = document.getElementById(tableID);
-
-                    for (let i = 0, row; (row = table.rows[i]); i++) {
-                        let idCell = row.cells[0]; // Giả sử 'customer.id' là ô đầu tiên trong mỗi dòng
-                        if (idCell.textContent == id) {
-                            table.deleteRow(i);
-                            alert("Xóa thành công");
-                        }
-                    }
-                } else console.log("WTF");
-            },
-            error: function (error) {
-                console.log("error:" + error);
-            },
-        });
-    }
-}
-
-function customerToExcel() {
-    let table = document.getElementById(tableID);
 
     let dataToSend = [];
 
@@ -203,237 +34,8 @@ function customerToExcel() {
 
     XLSX.writeFile(workbook, "customers.xlsx");
 }
-
-function searchAndSortCustomer() {
-    let customerInputSearch = document.getElementById("customerInputSearch").value;
-    let customerSortType = document.getElementById("customerSortType").value;
-    let customerSearchType = document.getElementById("customerSearchType").value;
-
-    $.ajax({
-        type: "POST",
-        url: adminManagerContextPath + "/AdminServlet",
-        data: {
-            action: "searchAndSortCustomer",
-            customerInputSearch: customerInputSearch,
-            customerSortType: customerSortType,
-            customerSearchType: customerSearchType,
-        },
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        success: function (data) {
-            if (data.success === true) {
-                let table = document.getElementById("tableCustomer");
-                table.innerHTML = "";
-
-                let customerList = data.customerList;
-                for (let i = 0; customerList.length; i++) {
-                    let customer = customerList[i];
-                    table.innerHTML +=
-                        "<tr>\n" +
-                        "            <td>" +
-                        customer.id +
-                        "</td>\n" +
-                        "            <td>" +
-                        customer.name +
-                        "</td>\n" +
-                        "            <td>" +
-                        customer.phone_number +
-                        "</td>\n" +
-                        "            <td>" +
-                        customer.email +
-                        "</td>\n" +
-                        "            <td>" +
-                        customer.address +
-                        "</td>\n" +
-                        "            <td>\n" +
-                        '              <div class="flex-center grpbtn">\n' +
-                        '                <a class="btnHD btnDel" type="submit" onclick="deleteCustomer(' +
-                        customer.id +
-                        ')">Xóa</a>\n' +
-                        "                <button\n" +
-                        '                        class="btnHD btnUpdateCustomer"\n' +
-                        "                        data-customerID=" +
-                        customer.id +
-                        "\n" +
-                        "                        data-customerName=" +
-                        customer.name +
-                        "\n" +
-                        "                        data-customerPhoneNumber=" +
-                        customer.phone_number +
-                        "\n" +
-                        "                        data-customerEmail=" +
-                        customer.email +
-                        "\n" +
-                        "                        data-customerAddress=" +
-                        customer.address +
-                        "\n" +
-                        "                >\n" +
-                        "                  Sửa\n" +
-                        "                </button>\n" +
-                        "              </div>\n" +
-                        "            </td>\n" +
-                        "          </tr>";
-                }
-            } else console.log("WTF");
-        },
-        error: function (error) {
-            console.log("error:" + error);
-        },
-    });
-}
-
-//Account
-function addAccount() {
-    let name = document.getElementById("accountNameID").value;
-    let password = document.getElementById("accountPasswordID").value;
-    let permission = document.getElementById("label_permissionID").value;
-    let cusID = document.getElementById("add_accountCustomerID").value;
-
-    let account = {
-        name: name,
-        paswword: password,
-        permission: permission,
-        cusID: cusID,
-    };
-
-    $.ajax({
-        type: "POST",
-        url: adminManagerContextPath + "/AdminServlet",
-        data: {
-            action: "addAccount",
-            account: JSON.stringify(account),
-        },
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        success: function (data) {
-            if (data.success === true) {
-                let account = data.account;
-                table.innerHTML +=
-                    "<tr>\n" +
-                    "                        <td>" +
-                    account.id +
-                    "</td>\n" +
-                    "                        <td>" +
-                    account.permission.id +
-                    "</td>\n" +
-                    "                        <td>" +
-                    account.customer.id +
-                    "</td>\n" +
-                    "                        <td>" +
-                    account.name +
-                    "</td>\n" +
-                    "                        <td>" +
-                    account.password +
-                    "</td>\n" +
-                    "                        <td>\n" +
-                    '                            <div class="flex-center grpbtn">\n' +
-                    "                                <form\n" +
-                    '                                        action="${pageContext.request.contextPath}/AdminManagerServlet"\n' +
-                    '                                        method="post"\n' +
-                    '                                        onsubmit="handleDelete(' + account.id + ',\'deleteAccount\',\'tableAccount\')"\n' +
-                    "                                >\n" +
-                    '                                    <button class="btnHD btnDel" type="submit" onclick="deleteCustomer(' +
-                    account.id +
-                    ')">Xóa</button>\n' +
-                    '                                    <input type="hidden" name="accountID" value="' +
-                    account.id +
-                    '"/>\n' +
-                    '                                    <input type="hidden" name="action" value="account_btnDelete"/>\n' +
-                    "                                </form>\n" +
-                    "                                <button\n" +
-                    '                                        class="btnHD btnUpdateUser"\n' +
-                    '                                        id="account_updateTrigger"\n' +
-                    '                                        data-customerID="' +
-                    account.customer.id +
-                    '"\n' +
-                    '                                        data-permissionID="' +
-                    account.permission.id +
-                    '"\n' +
-                    '                                        data-accountName="' +
-                    account.name +
-                    '"\n' +
-                    '                                        data-accountPassword="' +
-                    account.password +
-                    '"\n' +
-                    "                                >\n" +
-                    "                                    Sửa\n" +
-                    "                                </button>\n" +
-                    '                                <input type="hidden" name="accountID" value="' +
-                    account.id +
-                    '"/>\n' +
-                    "                            </div>\n" +
-                    "                        </td>\n" +
-                    "                    </tr>";
-                alert("Thêm tài khoản thành công");
-            } else {
-                console.log("WTF");
-            }
-        },
-
-        error: function (error) {
-            console.log("error:" + error);
-        },
-    });
-}
-
-function updateAccount() {
-    let id = document.getElementById("update_accountNameID").value;
-    let password = document.getElementById("update_accountPasswordID").value;
-    let permissionId = document.getElementById("update_label_permissionID").value;
-    let customerId = document.getElementById("update_label_customerID").value;
-    let table = document.getElementById("tableAccount");
-
-    let account = {
-        id: id,
-        password: password,
-        permission: {
-            id: permissionId,
-        },
-        customer: {
-            id: customerId,
-        },
-    };
-
-    $.ajax({
-        type: "POST",
-        url: "${pageContext.request.contextPath}/AdminManagerServlet",
-        data: {
-            action: "updateAccount",
-            account: JSON.stringify(account),
-        },
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        success: function (data) {
-            if (data.success === true) {
-                let account = data.account;
-
-                for (let i = 0, row; (row = table.rows[i]); i++) {
-                    // Loop through each row in the table
-                    let idCell = row.cells[0]; // Assume 'account.id' is the first cell in each row
-                    if (idCell.textContent === id) {
-                        row.cells[1].textContent = account.permission.id; // Update permission ID
-                        row.cells[2].textContent = account.customer.id; // Update customer ID
-                        row.cells[3].textContent = account.name; // Update account name
-                        row.cells[4].textContent = account.password; // Update account password
-                        break; // Exit the loop after updating
-                    }
-                }
-                alert("Cập nhật tài khoản thành công");
-            } else {
-                console.log("WTF");
-            }
-        },
-        error: function (error) {
-            console.log("error:" + error);
-        },
-    });
-}
-
 function accountToExcel() {
-    let table = document.getElementById(tableID);
+    let table = document.getElementById("tableAccount");
 
     let dataToSend = [];
 
@@ -451,12 +53,8 @@ function accountToExcel() {
         // Create an object containing information from the current row
         let accountData = {
             id: id,
-            permission: {
-                id: permissionId,
-            },
-            customer: {
-                id: customerId,
-            },
+            permission:  permissionId,
+            customer: customerId,
             name: name,
             password: password,
         };
@@ -470,250 +68,6 @@ function accountToExcel() {
     XLSX.utils.book_append_sheet(workbook, sheet, "Accounts");
 
     XLSX.writeFile(workbook, "accounts.xlsx");
-}
-
-function searchAndSortAccount() {
-    let accountInputSearch = document.getElementById("accountInputSearch").value;
-    let accountSortType = document.getElementById("accountSortType").value;
-    let accountSearchType = document.getElementById("accountSearchType").value;
-
-    $.ajax({
-        type: "POST",
-        url: adminManagerContextPath + "/AdminServlet",
-        data: {
-            action: "searchAndSortAccount",
-            accountInputSearch: accountInputSearch,
-            accountSortType: accountSortType,
-            accountSearchType: accountSearchType,
-        },
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        success: function (data) {
-            if (data.success === true) {
-                let table = document.getElementById("tableAccount");
-                table.innerHTML = "";
-
-                let account = data.account;
-                table.innerHTML +=
-                    "<tr>\n" +
-                    "                        <td>" +
-                    account.id +
-                    "</td>\n" +
-                    "                        <td>" +
-                    account.permission.id +
-                    "</td>\n" +
-                    "                        <td>" +
-                    account.customer.id +
-                    "</td>\n" +
-                    "                        <td>" +
-                    account.name +
-                    "</td>\n" +
-                    "                        <td>" +
-                    account.password +
-                    "</td>\n" +
-                    "                        <td>\n" +
-                    '                            <div class="flex-center grpbtn">\n' +
-                    "                                <form\n" +
-                    '                                        action="${pageContext.request.contextPath}/AdminManagerServlet"\n' +
-                    '                                        method="post"\n' +
-                    '                                        onsubmit="handleDelete()"\n' +
-                    "                                >\n" +
-                    '                                    <button class="btnHD btnDel" type="submit" onclick="deleteCustomer(' +
-                    account.id +
-                    ')">Xóa</button>\n' +
-                    '                                    <input type="hidden" name="accountID" value="' +
-                    account.id +
-                    '"/>\n' +
-                    '                                    <input type="hidden" name="action" value="account_btnDelete"/>\n' +
-                    "                                </form>\n" +
-                    "                                <button\n" +
-                    '                                        class="btnHD btnUpdateUser"\n' +
-                    '                                        id="account_updateTrigger"\n' +
-                    '                                        data-customerID="' +
-                    account.customer.id +
-                    '"\n' +
-                    '                                        data-permissionID="' +
-                    account.permission.id +
-                    '"\n' +
-                    '                                        data-accountName="' +
-                    account.name +
-                    '"\n' +
-                    '                                        data-accountPassword="' +
-                    account.password +
-                    '"\n' +
-                    "                                >\n" +
-                    "                                    Sửa\n" +
-                    "                                </button>\n" +
-                    '                                <input type="hidden" name="accountID" value="' +
-                    account.id +
-                    '"/>\n' +
-                    "                            </div>\n" +
-                    "                        </td>\n" +
-                    "                    </tr>";
-                alert("Thêm tài khoản thành công");
-            } else {
-                console.log("WTF");
-            }
-        },
-        error: function (error) {
-            console.log("error:" + error);
-        },
-    });
-}
-
-//Item
-function addItem() {
-    let itemName = document.getElementById("add_itemNameID").value;
-    let itemTypeID = document.getElementById("add_label_itemTypeID").value;
-    let itemCollectionID = document.getElementById("add_label_itemCollectionID").value;
-    let itemMaterialID = document.getElementById("add_label_itemMaterialID").value;
-    let isNew = document.getElementById("add_label_isNewID").checked ? 1 : 0;
-    let isHot = document.getElementById("add_label_isHotID").checked ? 1 : 0;
-    let itemPrice = document.getElementById("add_itemPriceID").value;
-    let itemYearProduce = document.getElementById("add_itemYearProduceID").value;
-
-    $.ajax({
-        type: "POST",
-        url: "${pageContext.request.contextPath}/AdminManagerServlet",
-        data: {
-            action: "addItem",
-            name: itemName,
-            itemTypeID: itemTypeID,
-            itemCollectionID: itemCollectionID,
-            itemMaterialID: itemMaterialID,
-            is_new: isNew,
-            is_hot: isHot,
-            itemPrice: itemPrice,
-            year_produce: itemYearProduce,
-        },
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        success: function (data) {
-            if (data.success === true) {
-                let item = data.item;
-                let table = document.getElementById("tableItem"); // replace 'yourTableId' with your actual table id
-
-                table.innerHTML += '<tr>\n' +
-                    '                        <td>' + item.id + '</td>\n' +
-                    '                        <td>' + item.name + '</td>\n' +
-                    '                        <td>' + item.itemType.id + '</td>\n' +
-                    '                        <td>' + item.itemCollection.id + '</td>\n' +
-                    '                        <td>' + item.itemMaterial.id + '</td>\n' +
-                    '\n' +
-                    '                        <c:choose>\n' +
-                    '                            <c:when test="${' + item.is_new + '==1}">\n' +
-                    '                                <td>Mới</td>\n' +
-                    '                            </c:when>\n' +
-                    '                            <c:otherwise>\n' +
-                    '                                <td></td>\n' +
-                    '                            </c:otherwise>\n' +
-                    '                        </c:choose>\n' +
-                    '\n' +
-                    '                        <c:choose>\n' +
-                    '                            <c:when test="${' + item.is_hot + '==1}">\n' +
-                    '                                <td>Hot</td>\n' +
-                    '                            </c:when>\n' +
-                    '                            <c:otherwise>\n' +
-                    '                                <td></td>\n' +
-                    '                            </c:otherwise>\n' +
-                    '                        </c:choose>\n' +
-                    '\n' +
-                    '                        <td>' + item.price + '</td>\n' +
-                    '                        <td>' + item.year_produce + '</td>\n' +
-                    '                        <td>\n' +
-                    '                            <div class="flex-center grpbtn">\n' +
-                    '                                    <a class="btnHD btnDel" onclick="handleDelete(' + item.id + ',\'deleteItem\',\'tableItem\')" type="submit">Xóa</a>\n' +
-                    '                                <button\n' +
-                    '                                        class="btnHD btnUpdateItem"\n' +
-                    '                                        data-itemID="' + item.id + '"\n' +
-                    '                                        data-itemName="' + item.name + '"\n' +
-                    '                                        data-itemTypeID="' + item.itemType.id + '"\n' +
-                    '                                        data-itemCollectionID="' + item.itemCollection.id + '"\n' +
-                    '                                        data-itemMaterialID="' + item.itemMaterial.id + '"\n' +
-                    '                                        data-itemIsNew="' + item.is_new + '"\n' +
-                    '                                        data-itemIsHot="' + item.is_hot + '"\n' +
-                    '                                        data-itemPrice="' + item.price + '"\n' +
-                    '                                        data-itemYearProduce="' + item.year_produce + '"\n' +
-                    '                                >\n' +
-                    '                                    Sửa\n' +
-                    '                                </button>\n' +
-                    '                            </div>\n' +
-                    '                        </td>\n' +
-                    '                    </tr>';
-
-                alert("Thêm sản phẩm thành công");
-            } else {
-                console.log("WTF");
-            }
-        },
-        error: function (error) {
-            console.log("error:" + error);
-        },
-    });
-}
-
-function updateItem() {
-    let id = document.getElementById("update_itemNameID").value;
-    let itemTypeID = document.getElementById("update_label_itemTypeID").value;
-    let itemCollectionID = document.getElementById("update_label_itemCollectionID").value;
-    let itemMaterialID = document.getElementById("update_label_itemMaterialID").value;
-    let isNew = document.getElementById("update_itemIsNewID").checked ? 1 : 0;
-    let isHot = document.getElementById("update_itemIsHotID").checked ? 1 : 0;
-    let itemPrice = document.getElementById("update_itemPriceID").value;
-    let itemYearProduce = document.getElementById("update_itemYearProduceID").value;
-    let table = document.getElementById("tableItem"); // replace 'tableItemId' with your actual table id
-
-    let item = {
-        id: id,
-        itemType: itemTypeID,
-        itemCollection: itemCollectionID,
-        itemMaterial: itemMaterialID,
-        is_new: isNew,
-        is_hot: isHot,
-        price: itemPrice,
-        year_produce: itemYearProduce,
-    };
-
-    $.ajax({
-        type: "POST",
-        url: "${pageContext.request.contextPath}/AdminManagerServlet",
-        data: {
-            action: "updateItem",
-            item: JSON.stringify(item),
-        },
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        success: function (data) {
-            if (data.success === true) {
-                let item = data.item;
-
-                for (let i = 0, row; (row = table.rows[i]); i++) {
-                    // Loop through each row in the table
-                    let idCell = row.cells[0]; // Assume 'item.id' is the first cell in each row
-                    if (idCell.textContent === id) {
-                        row.cells[1].textContent = item.name; // Update item name
-                        row.cells[2].textContent = item.itemType.id; // Update item type ID
-                        row.cells[3].textContent = item.itemCollection.id; // Update item collection ID
-                        row.cells[4].textContent = item.itemMaterial.id; // Update item material ID
-                        row.cells[5].textContent = item.is_new === 1 ? "Mới" : ""; // Update is new
-                        row.cells[6].textContent = item.is_hot === 1 ? "Hot" : ""; // Update is hot
-                        row.cells[7].textContent = item.price; // Update item price
-                        row.cells[8].textContent = item.year_produce; // Update year produce
-                        break; // Exit the loop after updating
-                    }
-                }
-                alert("Cập nhật sản phẩm thành công");
-            } else {
-                console.log("WTF");
-            }
-        },
-        error: function (error) {
-            console.log("error:" + error);
-        },
-    });
 }
 
 function itemToExcel() {
@@ -760,185 +114,8 @@ function itemToExcel() {
     XLSX.writeFile(workbook, "products.xlsx");
 }
 
-function searchAndSortItem() {
-    let itemInputSearch = document.getElementById("itemInputSearch").value;
-    let itemSortType = document.getElementById("itemSortType").value;
-    let itemSearchType = document.getElementById("itemSearchType").value;
-
-    $.ajax({
-        type: "POST",
-        url: adminManagerContextPath + "/AdminServlet",
-        data: {
-            action: "searchAndSortItem",
-            itemInputSearch: itemInputSearch,
-            itemSortType: itemSortType,
-            itemSearchType: itemSearchType,
-        },
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        success: function (data) {
-            if (data.success === true) {
-                let table = document.getElementById("tableItem");
-                table.innerHTML = "";
-
-                let itemList = data.itemList;
-                for (let i = 0; i < itemList.length; i++) {
-                    let item = itemList[i];
-                    table.innerHTML += '<tr>\n' +
-                        '                        <td>' + item.id + '</td>\n' +
-                        '                        <td>' + item.name + '</td>\n' +
-                        '                        <td>' + item.itemType.id + '</td>\n' +
-                        '                        <td>' + item.itemCollection.id + '</td>\n' +
-                        '                        <td>' + item.itemMaterial.id + '</td>\n' +
-                        '\n' +
-                        '                        <c:choose>\n' +
-                        '                            <c:when test="${' + item.is_new + '==1}">\n' +
-                        '                                <td>Mới</td>\n' +
-                        '                            </c:when>\n' +
-                        '                            <c:otherwise>\n' +
-                        '                                <td></td>\n' +
-                        '                            </c:otherwise>\n' +
-                        '                        </c:choose>\n' +
-                        '\n' +
-                        '                        <c:choose>\n' +
-                        '                            <c:when test="${' + item.is_hot + '==1}">\n' +
-                        '                                <td>Hot</td>\n' +
-                        '                            </c:when>\n' +
-                        '                            <c:otherwise>\n' +
-                        '                                <td></td>\n' +
-                        '                            </c:otherwise>\n' +
-                        '                        </c:choose>\n' +
-                        '\n' +
-                        '                        <td>' + item.price + '</td>\n' +
-                        '                        <td>' + item.year_produce + '</td>\n' +
-                        '                        <td>\n' +
-                        '                            <div class="flex-center grpbtn">\n' +
-                        '                                    <a class="btnHD btnDel" onclick="handleDelete(' + item.id + ',\'deleteItem\',\'tableItem\')" type="submit">Xóa</a>\n' +
-                        '                                <button\n' +
-                        '                                        class="btnHD btnUpdateItem"\n' +
-                        '                                        data-itemID="' + item.id + '"\n' +
-                        '                                        data-itemName="' + item.name + '"\n' +
-                        '                                        data-itemTypeID="' + item.itemType.id + '"\n' +
-                        '                                        data-itemCollectionID="' + item.itemCollection.id + '"\n' +
-                        '                                        data-itemMaterialID="' + item.itemMaterial.id + '"\n' +
-                        '                                        data-itemIsNew="' + item.is_new + '"\n' +
-                        '                                        data-itemIsHot="' + item.is_hot + '"\n' +
-                        '                                        data-itemPrice="' + item.price + '"\n' +
-                        '                                        data-itemYearProduce="' + item.year_produce + '"\n' +
-                        '                                >\n' +
-                        '                                    Sửa\n' +
-                        '                                </button>\n' +
-                        '                            </div>\n' +
-                        '                        </td>\n' +
-                        '                    </tr>';
-                }
-            } else console.log("WTF");
-        },
-        error: function (error) {
-            console.log("error:" + error);
-        },
-    });
-}
-
-
-///Collection- bo suu tap
-function addItemCollection() {
-    let name = document.getElementById("add_itemCollectionName").value;
-
-    let itemCollection = {
-        name: name,
-    };
-
-    $.ajax({
-        type: "POST",
-        url: adminManagerContextPath + "/AdminServlet",
-        data: {
-            action: "addItemCollection",
-            itemCollection: JSON.stringify(itemCollection),
-        },
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        success: function (data) {
-            if (data.success === true) {
-                let itemCollection = data.itemCollection;
-                let table = document.getElementById("yourTableId"); // Replace with the actual ID of your table
-
-                table.innerHTML +=
-                    "<tr>\n" +
-                    "    <td>" +
-                    itemCollection.id +
-                    "</td>\n" +
-                    "    <td>" +
-                    itemCollection.name +
-                    "</td>\n" +
-                    "    <td>\n" +
-                    '        <div class="flex-center grpbtn">\n' +
-                    '            <button class="btnHD btnUpdateItemCollection" data-itemCollectionID="' +
-                    itemCollection.id +
-                    '" data-itemCollectionName="' +
-                    itemCollection.name +
-                    '">Sửa</button>\n' +
-                    "        </div>\n" +
-                    "    </td>\n" +
-                    "</tr>";
-
-                alert("Thêm bộ sưu tập thành công");
-            } else {
-                console.log("WTF");
-            }
-        },
-        error: function (error) {
-            console.log("error:" + error);
-        },
-    });
-}
-
-function updateItemCollection(id) {
-    let name = document.getElementById("update_itemCollectionName").value;
-    let table = document.getElementById("tableItemCollection"); // Replace with the actual ID of your table
-
-    let itemCollection = {
-        id: id,
-        name: name,
-    };
-
-    $.ajax({
-        type: "POST",
-        url: "${pageContext.request.contextPath}/AdminManagerServlet",
-        data: {
-            action: "updateItemCollection",
-            itemCollection: JSON.stringify(itemCollection),
-        },
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        success: function (data) {
-            if (data.success === true) {
-                let updatedItemCollection = data.itemCollection;
-
-                for (let i = 0, row; (row = table.rows[i]); i++) {
-                    // Loop through each row in the table
-                    let idCell = row.cells[0]; // Assume 'itemCollection.id' is the first cell in each row
-                    if (idCell.textContent === updatedItemCollection.id) {
-                        row.cells[1].textContent = updatedItemCollection.name; // Update item collection name
-                        break; // Exit the loop after updating
-                    }
-                }
-                alert("Cập nhật bộ sưu tập thành công");
-            } else {
-                console.log("WTF");
-            }
-        },
-        error: function (error) {
-            console.log("error:" + error);
-        },
-    });
-}
-
 function collectionToExcel() {
-    let table = document.getElementById(tableID);
+    let table = document.getElementById("tableCollection");
 
     let dataToSend = [];
 
@@ -967,107 +144,8 @@ function collectionToExcel() {
     XLSX.writeFile(workbook, "collection.xlsx");
 }
 
-
-//nguyen lieu- item material
-function addItemMaterial() {
-    let name = document.getElementById("add_itemMaterialName").value;
-
-    let itemMaterial = {
-        name: name,
-    };
-
-    $.ajax({
-        type: "POST",
-        url: adminManagerContextPath + "/AdminServlet",
-        data: {
-            action: "addItemMaterial",
-            itemMaterial: JSON.stringify(itemMaterial),
-        },
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        success: function (data) {
-            if (data.success === true) {
-                let itemMaterial = data.itemMaterial;
-                let table = document.getElementById("yourTableId"); // Replace with the actual ID of your table
-
-                table.innerHTML +=
-                    "<tr>\n" +
-                    "    <td>" +
-                    itemMaterial.id +
-                    "</td>\n" +
-                    "    <td>" +
-                    itemMaterial.name +
-                    "</td>\n" +
-                    "    <td>\n" +
-                    '        <div class="flex-center grpbtn">\n' +
-                    '            <button class="btnHD btnUpdateItemMaterial" data-itemMaterialID="' +
-                    itemMaterial.id +
-                    '" data-itemMaterialName="' +
-                    itemMaterial.name +
-                    '">Sửa</button>\n' +
-                    '            <input type="hidden" name="itemMaterialID" value="' +
-                    itemMaterial.id +
-                    '"/>\n' +
-                    "        </div>\n" +
-                    "    </td>\n" +
-                    "</tr>";
-
-                alert("Thêm vật liệu sản phẩm thành công");
-            } else {
-                console.log("WTF");
-            }
-        },
-        error: function (error) {
-            console.log("error:" + error);
-        },
-    });
-}
-
-function updateItemMaterial(id) {
-    let name = document.getElementById("update_itemMaterialName").value;
-    let table = document.getElementById("tableItemMaterial"); // nho thay doi cho phu hop voi table
-
-    let itemMaterial = {
-        id: id,
-        name: name,
-    };
-
-    $.ajax({
-        type: "POST",
-        url: "${pageContext.request.contextPath}/AdminManagerServlet",
-        data: {
-            action: "updateItemMaterial",
-            itemMaterial: JSON.stringify(itemMaterial),
-        },
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        success: function (data) {
-            if (data.success === true) {
-                let updatedItemMaterial = data.itemMaterial;
-
-                for (let i = 0, row; (row = table.rows[i]); i++) {
-                    // Loop through each row in the table
-                    let idCell = row.cells[0]; // Assume 'itemMaterial.id' is the first cell in each row
-                    if (idCell.textContent === updatedItemMaterial.id) {
-                        row.cells[1].textContent = updatedItemMaterial.name; // Update item material name
-                        break; // Exit the loop after updating
-                    }
-                }
-                alert("Cập nhật vật liệu sản phẩm thành công");
-            } else {
-                console.log("WTF");
-            }
-        },
-        error: function (error) {
-            console.log("error:" + error);
-        },
-    });
-}
-
 function materialToExcel() {
-    let table = document.getElementById(tableID);
+    let table = document.getElementById("tableMaterial");
 
     let dataToSend = [];
 
@@ -1096,6 +174,61 @@ function materialToExcel() {
     XLSX.writeFile(workbook, "ItemMaterial.xlsx");
 }
 
+function searchAndSortItemMaterial() {
+    let itemMaterialInputSearch = document.getElementById("itemMaterialInputSearch").value;
+    let itemMaterialSortType = document.getElementById("itemMaterialSortType").value;
+    let itemMaterialSearchType = document.getElementById("itemMaterialSearchType").value;
+
+    $.ajax({
+        type: "POST",
+        url: adminManagerContextPath + "/AdminServlet",
+        data: {
+            action: "searchAndSortItemMaterial",
+            itemMaterialInputSearch: itemMaterialInputSearch,
+            itemMaterialSortType: itemMaterialSortType,
+            itemMaterialSearchType: itemMaterialSearchType,
+        },
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        success: function (data) {
+            if (data.success === true) {
+                let table = document.getElementById("tableCollection");
+                table.innerHTML = "";
+
+                let itemMaterial = data.itemMaterial;
+                for (let i = 0; i < itemMaterial.length; i++) {
+                    let itemmaterial = itemMaterial[i];
+                    table.innerHTML +=
+                        "<tr>\n" +
+                        "    <td>" +
+                        itemmaterial.id +
+                        "</td>\n" +
+                        "    <td>" +
+                        itemmaterial.name +
+                        "</td>\n" +
+                        "    <td>\n" +
+                        '        <div class="flex-center grpbtn">\n' +
+                        '            <button class="btnHD btnUpdateItemMaterial" data-itemMaterialID="' +
+                        itemmaterial.id +
+                        '" data-itemMaterialName="' +
+                        itemmaterial.name +
+                        '">Sửa</button>\n' +
+                        '            <input type="hidden" name="itemMaterialID" value="' +
+                        itemmaterial.id +
+                        '"/>\n' +
+                        "        </div>\n" +
+                        "    </td>\n" +
+                        "</tr>";
+                }
+            } else console.log("WTF");
+        },
+        error: function (error) {
+            console.log("error:" + error);
+        },
+    });
+}
+
 //Discount
 function addDiscountCard() {
     let customerID = document.getElementById("add_discountCardCustomerID").value;
@@ -1113,7 +246,9 @@ function addDiscountCard() {
         url: adminManagerContextPath + "/AdminServlet",
         data: {
             action: "addDiscountCard",
-            discountCard: JSON.stringify(discountCard),
+            customerID: customerID,
+            name: name,
+            discountPercentage: percentage,
         },
         headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -1121,7 +256,7 @@ function addDiscountCard() {
         success: function (data) {
             if (data.success === true) {
                 let discountCard = data.discountCard;
-                let table = document.getElementById("yourTableId"); // Replace with the actual ID of your table
+                let table = document.getElementById("tableDiscount"); // Replace with the actual ID of your table
 
                 table.innerHTML +=
                     "<tr>\n" +
@@ -1170,7 +305,7 @@ function updateDiscountCard() {
     let id = document.getElementById("update_discountCardCustomerID").value;
     let name = document.getElementById("update_discountCardName").value;
     let percentage = document.getElementById("update_discountCardPercentage").value;
-    let table = document.getElementById("yourTableId"); // thay doi cái nau de có bảng discount
+    let table = document.getElementById("tableDiscount"); // thay doi cái nau de có bảng discount
 
     let discountCard = {
         id: id,
@@ -1180,10 +315,12 @@ function updateDiscountCard() {
 
     $.ajax({
         type: "POST",
-        url: "${pageContext.request.contextPath}/AdminManagerServlet",
+        url: "pageContext.request.contextPath}/AdminManagerServlet",
         data: {
             action: "updateDiscountCard",
-            discountCard: JSON.stringify(discountCard),
+            id: id,
+            name: name,
+            discount_percentage: percentage,
         },
         headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -1214,7 +351,7 @@ function updateDiscountCard() {
 }
 
 function discountCardToExcel() {
-    let table = document.getElementById(tableID);
+    let table = document.getElementById("tableDiscount");
 
     let dataToSend = [];
 
@@ -1247,6 +384,71 @@ function discountCardToExcel() {
     XLSX.writeFile(workbook, "ItemMaterial.xlsx");
 }
 
+function searchAndSortDiscount() {
+    let discountCardInputSearch = document.getElementById("discountCardInputSearch").value;
+    let discountCardSortType = document.getElementById("discountCardSortType").value;
+    let discountCardSearchType = document.getElementById("discountCardSearchType").value;
+
+    $.ajax({
+        type: "POST",
+        url: adminManagerContextPath + "/AdminServlet",
+        data: {
+            action: "searchAndSortDiscount",
+            discountCardInputSearch: discountCardInputSearch,
+            discountCardSortType: discountCardSortType,
+            discountCardSearchType: discountCardSearchType,
+        },
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        success: function (data) {
+            if (data.success === true) {
+                let table = document.getElementById("tableDiscount");
+                table.innerHTML = "";
+
+                let discountCard = data.discountCard;
+                for (let i = 0; i < discountCard.length; i++) {
+                    let discountCard = discountCard[i];
+                    table.innerHTML +=
+                        "<tr>\n" +
+                        "    <td>" +
+                        discountCard.id +
+                        "</td>\n" +
+                        "    <td>" +
+                        discountCard.customer.id +
+                        "</td>\n" +
+                        "    <td>" +
+                        discountCard.name +
+                        "</td>\n" +
+                        "    <td>" +
+                        discountCard.discount_percentage +
+                        "</td>\n" +
+                        "    <td>\n" +
+                        '        <div class="flex-center grpbtn">\n' +
+                        '            <button class="btnHD btnUpdateDiscountCard" data-discountCardID="' +
+                        discountCard.id +
+                        '" data-discountCardCustomerID="' +
+                        discountCard.customer.id +
+                        '" data-discountCardName="' +
+                        discountCard.name +
+                        '" data-discountCardPercentage="' +
+                        discountCard.discount_percentage +
+                        '">Sửa</button>\n' +
+                        '            <input type="hidden" name="discountCardID" value="' +
+                        discountCard.id +
+                        '"/>\n' +
+                        "        </div>\n" +
+                        "    </td>\n" +
+                        "</tr>";
+                }
+            } else console.log("WTF");
+        },
+        error: function (error) {
+            console.log("error:" + error);
+        },
+    });
+}
+
 //SaleProduct
 function addSale() {
     let itemID = document.getElementById("add_saleItemID").value;
@@ -1255,9 +457,7 @@ function addSale() {
     let percentage = document.getElementById("add_salePercentage").value;
 
     let sale = {
-        item: {
-            id: itemID,
-        },
+        item: itemID,
         name: name,
         on_sale: onSale,
         sale_percentage: percentage,
@@ -1268,7 +468,10 @@ function addSale() {
         url: adminManagerContextPath + "/AdminServlet",
         data: {
             action: "addSale",
-            sale: JSON.stringify(sale),
+            item: itemID,
+            name: name,
+            on_sale: onSale,
+            sale_percentage: percentage,
         },
         headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -1349,10 +552,13 @@ function updateSale() {
 
     $.ajax({
         type: "POST",
-        url: "${pageContext.request.contextPath}/AdminManagerServlet",
+        url: "pageContext.request.contextPath}/AdminManagerServlet",
         data: {
             action: "updateSale",
-            sale: JSON.stringify(sale),
+            id: id,
+            item: name,
+            on_sale: onSale,
+            sale_percentage: percentage,
         },
         headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -1385,7 +591,7 @@ function updateSale() {
 }
 
 function saleToExcel() {
-    let table = document.getElementById(tableID);
+    let table = document.getElementById("tableSale");
 
     let dataToSend = [];
 
@@ -1420,7 +626,84 @@ function saleToExcel() {
     XLSX.writeFile(workbook, "SaleProduct.xlsx");
 }
 
+function searchAndSortSale() {
+    let saleInputSearch = document.getElementById("saleInputSearch").value;
+    let saleSortType = document.getElementById("saleSortType").value;
+    let saleSearchType = document.getElementById("saleSearchType").value;
 
+    $.ajax({
+        type: "POST",
+        url: adminManagerContextPath + "/AdminServlet",
+        data: {
+            action: "searchAndSortSale",
+            discountCardInputSearch: discountCardInputSearch,
+            discountCardSortType: discountCardSortType,
+            discountCardSearchType: discountCardSearchType,
+        },
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        success: function (data) {
+            if (data.success === true) {
+                let table = document.getElementById("tableSale");
+                table.innerHTML = "";
+
+                let saleList = data.saleList;
+                for (let i = 0; i < saleList.length; i++) {
+                    let sale = saleList[i];
+                    table.innerHTML +=
+                        "<tr>\n" +
+                        "    <td>" +
+                        sale.id +
+                        "</td>\n" +
+                        "    <td>" +
+                        sale.item.id +
+                        "</td>\n" +
+                        "    <td>" +
+                        sale.name +
+                        "</td>\n" +
+                        "    <td>" +
+                        sale.on_sale +
+                        "</td>\n" +
+                        "    <td>" +
+                        sale.sale_percentage +
+                        "</td>\n" +
+                        "    <td>\n" +
+                        '        <div class="flex-center grpbtn">\n' +
+                        "            <button\n" +
+                        '                    class="btnHD btnUpdateSale"\n' +
+                        '                    data-saleID="' +
+                        sale.id +
+                        '"\n' +
+                        '                    data-saleItemID="' +
+                        sale.item.id +
+                        '"\n' +
+                        '                    data-saleName="' +
+                        sale.name +
+                        '"\n' +
+                        '                    data-saleOnSale="' +
+                        sale.on_sale +
+                        '"\n' +
+                        '                    data-salePercentage="' +
+                        sale.sale_percentage +
+                        '"\n' +
+                        "            >\n" +
+                        "                Sửa\n" +
+                        "            </button>\n" +
+                        '            <input type="hidden" name="saleID" value="' +
+                        sale.id +
+                        '"/>\n' +
+                        "        </div>\n" +
+                        "    </td>\n" +
+                        "</tr>";
+                }
+            } else console.log("WTF");
+        },
+        error: function (error) {
+            console.log("error:" + error);
+        },
+    });
+}
 
 //imageProduct
 function addItemImage() {
@@ -1509,7 +792,7 @@ function updateItemImage() {
 
     $.ajax({
         type: "POST",
-        url: "${pageContext.request.contextPath}/AdminManagerServlet",
+        url: adminManagerContextPath+"/AdminManagerServlet",
         data: {
             action: "updateItemImage",
             itemImage: JSON.stringify(itemImage),
@@ -1643,13 +926,10 @@ function searchAndSortItemImage() {
     });
 }
 
-
-
 //itemType
 function addItemType() {
     let itemTypeName = document.getElementById("add_itemTypeName").value;
     let table = document.getElementById("tableItemType"); // Replace with the actual ID of your table
-
 
     $.ajax({
         type: "POST",
@@ -1746,11 +1026,97 @@ function updateItemType() {
     });
 }
 
+function itemTypeToExcel() {
+    let table = document.getElementById("tableItemType");
 
+    let dataToSend = [];
+
+    // Lặp qua các dòng của bảng và thu thập thông tin từ mỗi ô cột
+    for (let i = 1; i < table.rows.length; i++) {
+        let currentRow = table.rows[i];
+
+        // Thu thập thông tin từ các ô cột trong dòng
+        let id = currentRow.cells[0].textContent;
+        let itemType = currentRow.cells[1].textContent;
+
+        // Tạo đối tượng chứa thông tin từ dòng hiện tại
+        let ItemTypeData = {
+            id: id,
+            name: itemType,
+        };
+
+        // Thêm đối tượng vào mảng dataToSend
+        dataToSend.push(ItemTypeData);
+    }
+
+    const workbook = XLSX.utils.book_new();
+    const sheet = XLSX.utils.json_to_sheet(dataToSend);
+    XLSX.utils.book_append_sheet(workbook, sheet, "ItemType");
+
+    XLSX.writeFile(workbook, "itemtype.xlsx");
+}
+
+function searchAndSortItemType() {
+    let itemTypeInputSearch = document.getElementById("itemTypeInputSearch").value;
+    let itemTypeSortType = document.getElementById("itemTypeSortType").value;
+    let itemTypeSearchType = document.getElementById("itemTypeSearchType").value;
+
+    $.ajax({
+        type: "POST",
+        url: adminManagerContextPath + "/AdminServlet",
+        data: {
+            action: "searchAndSortItemType",
+            itemTypeInputSearch: itemTypeInputSearch,
+            itemTypeSortType: itemTypeSortType,
+            itemTypeSearchType: itemTypeSearchType,
+        },
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        success: function (data) {
+            if (data.success === true) {
+                let table = document.getElementById("tableStockItem");
+                table.innerHTML = "";
+
+                let itemTypeList = data.itemTypeList;
+                for (let i = 0; itemTypeList.length; i++) {
+                    let addedItemType = itemTypeList[i];
+                    table.innerHTML +=
+                        "<tr>\n" +
+                        "                        <td>" +
+                        addedItemType.id +
+                        "</td>\n" +
+                        "                        <td>" +
+                        addedItemType.name +
+                        "</td>\n" +
+                        "                        <td>\n" +
+                        '                            <div class="flex-center grpbtn">\n' +
+                        "                                <button\n" +
+                        '                                        class="btnHD btnUpdateItemType"\n' +
+                        '                                        data-itemTypeID="' +
+                        addedItemType.id +
+                        '"\n' +
+                        '                                        data-itemTypeName="' +
+                        addedItemType.name +
+                        '"\n' +
+                        "                                >\n" +
+                        "                                    Sửa\n" +
+                        "                                </button>\n" +
+                        '"/>\n' +
+                        "                            </div>\n" +
+                        "                        </td>\n" +
+                        "                    </tr>";
+                }
+            } else console.log("WTF");
+        },
+        error: function (error) {
+            console.log("error:" + error);
+        },
+    });
+}
 
 /*StockItem*/
 function addStockItem() {
-
     let itemID = document.getElementById("add_stockItemItemID").value;
     let color = document.getElementById("add_stockItemColor").value;
     let size = document.getElementById("add_stockItemSize").value;
@@ -1774,32 +1140,55 @@ function addStockItem() {
             let stockItem = data.stockItem;
 
             if (data.success === true) {
-                table.innerHTML += '<tr>\n' +
-                    '                        <td>' + stockItem.id + '</td>\n' +
-                    '                        <td>' + stockItem.item.id + '</td>\n' +
-                    '                        <td>' + stockItem.color + '</td>\n' +
-                    '                        <td>' + stockItem.size + '</td>\n' +
-                    '                        <td>' + stockItem.amount + '</td>\n' +
-                    '                        <td>\n' +
+                table.innerHTML +=
+                    "<tr>\n" +
+                    "                        <td>" +
+                    stockItem.id +
+                    "</td>\n" +
+                    "                        <td>" +
+                    stockItem.item.id +
+                    "</td>\n" +
+                    "                        <td>" +
+                    stockItem.color +
+                    "</td>\n" +
+                    "                        <td>" +
+                    stockItem.size +
+                    "</td>\n" +
+                    "                        <td>" +
+                    stockItem.amount +
+                    "</td>\n" +
+                    "                        <td>\n" +
                     '                            <div class="flex-center grpbtn">\n' +
-                    '\n' +
-                    '                                    <a class="btnHD btnDel" onclick="handleDelete(' + stockItem.id + ',\'deleteStockItem\',\'tableStockItem\')"\n' +
+                    "\n" +
+                    '                                    <a class="btnHD btnDel" onclick="handleDelete(' +
+                    stockItem.id +
+                    ",'deleteStockItem','tableStockItem')\"\n" +
                     '                                       type="submit">Xóa</a>\n' +
-                    '\n' +
-                    '                                <button\n' +
+                    "\n" +
+                    "                                <button\n" +
                     '                                        class="btnHD btnUpdateStockItem"\n' +
-                    '                                        data-stockItemID=' + stockItem.id + '\n' +
-                    '                                        data-stockItemItemID=' + stockItem.item_id + '\n' +
-                    '                                        data-stockItemColor=' + stockItem.color + '\n' +
-                    '                                        data-stockItemSize=' + stockItem.size + '\n' +
-                    '                                        data-stockItemAmount=' + stockItem.amount + '\n' +
-                    '                                >\n' +
-                    '                                    Sửa\n' +
-                    '                                </button>\n' +
-                    '\n' +
-                    '                            </div>\n' +
-                    '                        </td>\n' +
-                    '                    </tr>';
+                    "                                        data-stockItemID=" +
+                    stockItem.id +
+                    "\n" +
+                    "                                        data-stockItemItemID=" +
+                    stockItem.item_id +
+                    "\n" +
+                    "                                        data-stockItemColor=" +
+                    stockItem.color +
+                    "\n" +
+                    "                                        data-stockItemSize=" +
+                    stockItem.size +
+                    "\n" +
+                    "                                        data-stockItemAmount=" +
+                    stockItem.amount +
+                    "\n" +
+                    "                                >\n" +
+                    "                                    Sửa\n" +
+                    "                                </button>\n" +
+                    "\n" +
+                    "                            </div>\n" +
+                    "                        </td>\n" +
+                    "                    </tr>";
 
                 alert("Thêm thông tin sản phẩm thành công");
             } else console.log("WTF");
@@ -1857,7 +1246,7 @@ function updateStockItem() {
 }
 
 function stockItemToExcel() {
-    let table = document.getElementById(tableID);
+    let table = document.getElementById("tableStockItem");
 
     let dataToSend = [];
 
@@ -1913,32 +1302,55 @@ function searchAndSortStockItem() {
                 let stockItemList = data.stockItemList;
                 for (let i = 0; stockItemList.length; i++) {
                     let stockItem = stockItemList[i];
-                    table.innerHTML += '<tr>\n' +
-                        '                        <td>' + stockItem.id + '</td>\n' +
-                        '                        <td>' + stockItem.item.id + '</td>\n' +
-                        '                        <td>' + stockItem.color + '</td>\n' +
-                        '                        <td>' + stockItem.size + '</td>\n' +
-                        '                        <td>' + stockItem.amount + '</td>\n' +
-                        '                        <td>\n' +
+                    table.innerHTML +=
+                        "<tr>\n" +
+                        "                        <td>" +
+                        stockItem.id +
+                        "</td>\n" +
+                        "                        <td>" +
+                        stockItem.item.id +
+                        "</td>\n" +
+                        "                        <td>" +
+                        stockItem.color +
+                        "</td>\n" +
+                        "                        <td>" +
+                        stockItem.size +
+                        "</td>\n" +
+                        "                        <td>" +
+                        stockItem.amount +
+                        "</td>\n" +
+                        "                        <td>\n" +
                         '                            <div class="flex-center grpbtn">\n' +
-                        '\n' +
-                        '                                    <a class="btnHD btnDel" onclick="handleDelete(' + stockItem.id + ',\'deleteStockItem\',\'tableStockItem\')"\n' +
+                        "\n" +
+                        '                                    <a class="btnHD btnDel" onclick="handleDelete(' +
+                        stockItem.id +
+                        ",'deleteStockItem','tableStockItem')\"\n" +
                         '                                       type="submit">Xóa</a>\n' +
-                        '\n' +
-                        '                                <button\n' +
+                        "\n" +
+                        "                                <button\n" +
                         '                                        class="btnHD btnUpdateStockItem"\n' +
-                        '                                        data-stockItemID=' + stockItem.id + '\n' +
-                        '                                        data-stockItemItemID=' + stockItem.item_id + '\n' +
-                        '                                        data-stockItemColor=' + stockItem.color + '\n' +
-                        '                                        data-stockItemSize=' + stockItem.size + '\n' +
-                        '                                        data-stockItemAmount=' + stockItem.amount + '\n' +
-                        '                                >\n' +
-                        '                                    Sửa\n' +
-                        '                                </button>\n' +
-                        '\n' +
-                        '                            </div>\n' +
-                        '                        </td>\n' +
-                        '                    </tr>';
+                        "                                        data-stockItemID=" +
+                        stockItem.id +
+                        "\n" +
+                        "                                        data-stockItemItemID=" +
+                        stockItem.item_id +
+                        "\n" +
+                        "                                        data-stockItemColor=" +
+                        stockItem.color +
+                        "\n" +
+                        "                                        data-stockItemSize=" +
+                        stockItem.size +
+                        "\n" +
+                        "                                        data-stockItemAmount=" +
+                        stockItem.amount +
+                        "\n" +
+                        "                                >\n" +
+                        "                                    Sửa\n" +
+                        "                                </button>\n" +
+                        "\n" +
+                        "                            </div>\n" +
+                        "                        </td>\n" +
+                        "                    </tr>";
                 }
             } else console.log("WTF");
         },
@@ -1947,8 +1359,6 @@ function searchAndSortStockItem() {
         },
     });
 }
-
-
 
 /*Permission*/
 function addPermission() {
@@ -1971,24 +1381,39 @@ function addPermission() {
             let permission = data.permission;
 
             if (data.success === true) {
-                table.innerHTML += '<tr>\n' +
-                    '                        <td>' + permission.id + '</td>\n' +
-                    '                        <td>' + permission.name + '</td>\n' +
-                    '                        <td>' + permission.level + '</td>\n' +
-                    '                        <td>\n' +
+                table.innerHTML +=
+                    "<tr>\n" +
+                    "                        <td>" +
+                    permission.id +
+                    "</td>\n" +
+                    "                        <td>" +
+                    permission.name +
+                    "</td>\n" +
+                    "                        <td>" +
+                    permission.level +
+                    "</td>\n" +
+                    "                        <td>\n" +
                     '                            <div class="flex-center grpbtn">\n' +
-                    '                                    <a class="btnHD btnDel" onclick="handleDelete(' + permission.id + ',\'deleteStockItem\',\'tableStockItem\')" type="submit">Xóa</a>\n' +
-                    '                                <button\n' +
+                    '                                    <a class="btnHD btnDel" onclick="handleDelete(' +
+                    permission.id +
+                    ",'deleteStockItem','tableStockItem')\" type=\"submit\">Xóa</a>\n" +
+                    "                                <button\n" +
                     '                                        class="btnHD btnUpdatePermission"\n' +
-                    '                                        data-permissionID="' + permission.id + '"\n' +
-                    '                                        data-permissionName="' + permission.name + '"\n' +
-                    '                                        data-permissionLevel="' + permission.level + '"\n' +
-                    '                                >\n' +
-                    '                                    Sửa\n' +
-                    '                                </button>\n' +
-                    '                            </div>\n' +
-                    '                        </td>\n' +
-                    '                    </tr>';
+                    '                                        data-permissionID="' +
+                    permission.id +
+                    '"\n' +
+                    '                                        data-permissionName="' +
+                    permission.name +
+                    '"\n' +
+                    '                                        data-permissionLevel="' +
+                    permission.level +
+                    '"\n' +
+                    "                                >\n" +
+                    "                                    Sửa\n" +
+                    "                                </button>\n" +
+                    "                            </div>\n" +
+                    "                        </td>\n" +
+                    "                    </tr>";
                 alert("Thêm quyền thành công");
             } else console.log("WTF");
         },
@@ -2038,7 +1463,7 @@ function updatePermission() {
 }
 
 function permissionToExcel() {
-    let table = document.getElementById(tableID);
+    let table = document.getElementById("tablePermission");
 
     let dataToSend = [];
 
@@ -2090,24 +1515,39 @@ function searchAndSortPermission() {
                 let permissionList = data.permissionList;
                 for (let i = 0; i < permissionList.length; i++) {
                     let permission = permissionList[i];
-                    table.innerHTML += '<tr>\n' +
-                        '                        <td>' + permission.id + '</td>\n' +
-                        '                        <td>' + permission.name + '</td>\n' +
-                        '                        <td>' + permission.level + '</td>\n' +
-                        '                        <td>\n' +
+                    table.innerHTML +=
+                        "<tr>\n" +
+                        "                        <td>" +
+                        permission.id +
+                        "</td>\n" +
+                        "                        <td>" +
+                        permission.name +
+                        "</td>\n" +
+                        "                        <td>" +
+                        permission.level +
+                        "</td>\n" +
+                        "                        <td>\n" +
                         '                            <div class="flex-center grpbtn">\n' +
-                        '                                    <a class="btnHD btnDel" onclick="handleDelete(' + permission.id + ',\'deleteStockItem\',\'tableStockItem\')" type="submit">Xóa</a>\n' +
-                        '                                <button\n' +
+                        '                                    <a class="btnHD btnDel" onclick="handleDelete(' +
+                        permission.id +
+                        ",'deleteStockItem','tableStockItem')\" type=\"submit\">Xóa</a>\n" +
+                        "                                <button\n" +
                         '                                        class="btnHD btnUpdatePermission"\n' +
-                        '                                        data-permissionID="' + permission.id + '"\n' +
-                        '                                        data-permissionName="' + permission.name + '"\n' +
-                        '                                        data-permissionLevel="' + permission.level + '"\n' +
-                        '                                >\n' +
-                        '                                    Sửa\n' +
-                        '                                </button>\n' +
-                        '                            </div>\n' +
-                        '                        </td>\n' +
-                        '                    </tr>';
+                        '                                        data-permissionID="' +
+                        permission.id +
+                        '"\n' +
+                        '                                        data-permissionName="' +
+                        permission.name +
+                        '"\n' +
+                        '                                        data-permissionLevel="' +
+                        permission.level +
+                        '"\n' +
+                        "                                >\n" +
+                        "                                    Sửa\n" +
+                        "                                </button>\n" +
+                        "                            </div>\n" +
+                        "                        </td>\n" +
+                        "                    </tr>";
                 }
             } else console.log("WTF");
         },
@@ -2117,4 +1557,305 @@ function searchAndSortPermission() {
     });
 }
 
+//order
+function addOrder() {
+    let orderCustomerID = document.getElementById("add_orderCustomerID").value;
+    let orderDiscountCardID = document.getElementById("add_orderDiscountCardID").value;
+    let orderTotal = document.getElementById("add_orderTotal").value;
+    let orderDatePurchase = document.getElementById("add_orderDatePurchase").value;
+    let orderStatus = document.getElementById("add_orderStatus").value;
+    let orderAddress = document.getElementById("add_orderAddress").value;
+    let orderNote = document.getElementById("add_orderNote").value;
+    let table = document.getElementById("tableOrder");
+
+    $.ajax({
+        type: "POST",
+        url: adminManagerContextPath + "/AdminServlet",
+        data: {
+            action: "addOrder",
+            orderCustomerID: orderCustomerID,
+            orderDiscountCardID: orderDiscountCardID,
+            orderTotal: orderTotal,
+            orderDatePurchase: orderDatePurchase,
+            orderStatus: orderStatus,
+            orderAddress: orderAddress,
+            orderNote: orderNote,
+        },
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        success: function (data) {
+            if (data.success === true) {
+                let order = data.order;
+
+                table.innerHTML +=
+                    "<tr>\n" +
+                    "    <td>" +
+                    order.id +
+                    "</td>\n" +
+                    "    <td>" +
+                    order.customer.id +
+                    "</td>\n" +
+                    "    <td>" +
+                    order.discountCard.id +
+                    "</td>\n" +
+                    "    <td>" +
+                    order.total +
+                    "</td>\n" +
+                    "    <td>" +
+                    order.date_purchase +
+                    "</td>\n" +
+                    "    <td>" +
+                    order.order_status +
+                    "</td>\n" +
+                    "    <td>" +
+                    order.address +
+                    "</td>\n" +
+                    "    <td>" +
+                    order.note +
+                    "</td>\n" +
+                    "    <td>\n" +
+                    '        <div class="flex-center grpbtn">\n' +
+                    '            <a class="btnHD btnDel" onclick="handleDelete(' +
+                    order.id +
+                    ",'deleteOrder','tableOrder')\"\n" +
+                    '               type="submit">Xóa</a>\n' +
+                    '            <button class="btnHD btnUpdateOrder"\n' +
+                    '                    data-orderID="' +
+                    order.id +
+                    '"\n' +
+                    '                    data-orderCustomerID="' +
+                    order.customer.id +
+                    '"\n' +
+                    '                    data-orderTotal="' +
+                    order.total +
+                    '"\n' +
+                    '                    data-orderDatePurchase="' +
+                    order.date_purchase +
+                    '"\n' +
+                    '                    data-orderDiscountCardID="' +
+                    order.discountCard.id +
+                    '"\n' +
+                    '                    data-orderStatus="' +
+                    order.order_status +
+                    '"\n' +
+                    '                    data-orderAddress="' +
+                    order.address +
+                    '"\n' +
+                    '                    data-orderNote="' +
+                    order.note +
+                    '"\n' +
+                    "            >\n" +
+                    "                Sửa\n" +
+                    "            </button>\n" +
+                    "        </div>\n" +
+                    "    </td>\n" +
+                    "</tr>";
+
+                alert("Thêm thông tin hóa đơn thành công");
+            } else {
+                console.log("WTF");
+            }
+        },
+        error: function (error) {
+            console.log("error:" + error);
+        },
+    });
+}
+
+function updateOrder() {
+    let orderID = document.getElementById("update_orderID").value;
+    let customerID = document.getElementById("update_orderCustomerID").value;
+    let discountCardID = document.getElementById("update_orderDiscountCardID").value;
+    let total = document.getElementById("update_orderTotal").value;
+    let datePurchase = document.getElementById("update_orderDatePurchase").value;
+    let status = document.getElementById("update_orderStatus").value;
+    let address = document.getElementById("update_orderAddress").value;
+    let note = document.getElementById("update_orderNote").value;
+
+    $.ajax({
+        type: "POST",
+        url: adminManagerContextPath + "/AdminServlet",
+        data: {
+            action: "updateOrder",
+            orderID: orderID,
+            customerID: customerID,
+            discountCardID: discountCardID,
+            total: total,
+            datePurchase: datePurchase,
+            status: status,
+            address: address,
+            note: note,
+        },
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        success: function (data) {
+            if (data.success === true) {
+                let updatedOrder = data.order;
+
+                // Update table row
+                let table = document.getElementById("tableOrder");
+                for (let i = 0, row; (row = table.rows[i]); i++) {
+                    let idCell = row.cells[0];
+                    if (idCell.textContent == updatedOrder.id) {
+                        row.cells[1].textContent = updatedOrder.customer.id;
+                        row.cells[2].textContent = updatedOrder.discountCard.id;
+                        row.cells[3].textContent = updatedOrder.total;
+                        row.cells[4].textContent = updatedOrder.date_purchase;
+                        row.cells[5].textContent = updatedOrder.order_status;
+                        row.cells[6].textContent = updatedOrder.address;
+                        row.cells[7].textContent = updatedOrder.note;
+                        break;
+                    }
+                }
+
+                // Close the update form
+                // document.querySelector(".clsUpdateOrder").click();
+
+                alert("Cập nhật đơn hàng thành công");
+            } else {
+                console.log("WTF");
+            }
+        },
+        error: function (error) {
+            console.log("error:" + error);
+        },
+    });
+}
+
+function orderToExcel() {
+    let table = document.getElementById("tableOrder");
+
+    let dataToSend = [];
+
+    for (let i = 1; i < table.rows.length; i++) {
+        let currentRow = table.rows[i];
+
+        let id = currentRow.cells[0].textContent;
+        let customerID = currentRow.cells[1].textContent;
+        let discountCard = currentRow.cells[2].textContent;
+        let totalCost = currentRow.cells[3].textContent;
+        let datePurchase = currentRow.cells[4].textContent;
+        let orderStatus = currentRow.cells[5].textContent;
+        let address = currentRow.cells[6].textContent;
+        let note = currentRow.cells[7].textContent;
+
+        let permissionData = {
+            id: id,
+            customerID: customerID,
+            discountCard: discountCard,
+            totalCost: totalCost,
+            datePurchase: datePurchase,
+            orderStatus: orderStatus,
+            address: address,
+            note: note,
+        };
+
+        dataToSend.push(permissionData);
+    }
+
+    const workbook = XLSX.utils.book_new();
+    const sheet = XLSX.utils.json_to_sheet(dataToSend);
+    XLSX.utils.book_append_sheet(workbook, sheet, "Order");
+
+    XLSX.writeFile(workbook, "Order.xlsx");
+}
+
+function searchAndSortOrder() {
+    let orderInputSearch = document.getElementById("orderInputSearch").value;
+    let orderSortType = document.getElementById("orderSortType").value;
+    let orderSearchType = document.getElementById("orderSearchType").value;
+
+    $.ajax({
+        type: "POST",
+        url: adminManagerContextPath + "/AdminServlet",
+        data: {
+            action: "searchAndSortPermission",
+            orderInputSearch: orderInputSearch,
+            orderSortType: orderSortType,
+            orderSearchType: orderSearchType,
+        },
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        success: function (data) {
+            if (data.success === true) {
+                let table = document.getElementById("tableOrder");
+                table.innerHTML = "";
+
+                let orderList = data.orderList;
+                for (let i = 0; i < orderList.length; i++) {
+                    let order = orderList[i];
+                    table.innerHTML +=
+                        "<tr>\n" +
+                        "    <td>" +
+                        order.id +
+                        "</td>\n" +
+                        "    <td>" +
+                        order.customer.id +
+                        "</td>\n" +
+                        "    <td>" +
+                        order.discountCard.id +
+                        "</td>\n" +
+                        "    <td>" +
+                        order.total +
+                        "</td>\n" +
+                        "    <td>" +
+                        order.date_purchase +
+                        "</td>\n" +
+                        "    <td>" +
+                        order.order_status +
+                        "</td>\n" +
+                        "    <td>" +
+                        order.address +
+                        "</td>\n" +
+                        "    <td>" +
+                        order.note +
+                        "</td>\n" +
+                        "    <td>\n" +
+                        '        <div class="flex-center grpbtn">\n' +
+                        '            <a class="btnHD btnDel" onclick="handleDelete(' +
+                        order.id +
+                        ",'deleteOrder','tableOrder')\"\n" +
+                        '               type="submit">Xóa</a>\n' +
+                        '            <button class="btnHD btnUpdateOrder"\n' +
+                        '                    data-orderID="' +
+                        order.id +
+                        '"\n' +
+                        '                    data-orderCustomerID="' +
+                        order.customer.id +
+                        '"\n' +
+                        '                    data-orderTotal="' +
+                        order.total +
+                        '"\n' +
+                        '                    data-orderDatePurchase="' +
+                        order.date_purchase +
+                        '"\n' +
+                        '                    data-orderDiscountCardID="' +
+                        order.discountCard.id +
+                        '"\n' +
+                        '                    data-orderStatus="' +
+                        order.order_status +
+                        '"\n' +
+                        '                    data-orderAddress="' +
+                        order.address +
+                        '"\n' +
+                        '                    data-orderNote="' +
+                        order.note +
+                        '"\n' +
+                        "            >\n" +
+                        "                Sửa\n" +
+                        "            </button>\n" +
+                        "        </div>\n" +
+                        "    </td>\n" +
+                        "</tr>";
+                }
+            } else console.log("WTF");
+        },
+        error: function (error) {
+            console.log("error:" + error);
+        },
+    });
+}
 

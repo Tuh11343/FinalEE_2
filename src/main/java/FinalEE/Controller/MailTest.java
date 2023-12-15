@@ -4,6 +4,7 @@ import FinalEE.Entity.Account;
 import FinalEE.Entity.Customer;
 import FinalEE.Entity.Order;
 import FinalEE.ServiceImpl.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Map;
 
 
@@ -31,7 +33,7 @@ public class MailTest extends HttpServlet {
         customerServiceImpl = (CustomerServiceImpl) servletContext.getAttribute("customerServiceImpl");
         orderServiceImpl = (OrderServiceImpl) servletContext.getAttribute("orderServiceImpl");
         permissionServiceImpl = (PermissionServiceImpl) servletContext.getAttribute("permissionServiceImpl");
-        orderStatusServiceImpl=(OrderStatusServiceImpl) servletContext.getAttribute("orderStatusImpl");
+        orderStatusServiceImpl = (OrderStatusServiceImpl) servletContext.getAttribute("orderStatusServiceImpl");
 
         String encodedData = req.getParameter("data");
 
@@ -43,7 +45,7 @@ public class MailTest extends HttpServlet {
                 case "orderConfirm" -> {
                     if (keyValueData != null) {
 
-                        Order order= (Order) keyValueData.get("order");
+                        Order order=orderServiceImpl.getOrder(Integer.parseInt(keyValueData.get("orderID").toString()));
                         order.setOrder_status(orderStatusServiceImpl.confirmOrder());
                         orderServiceImpl.create(order);
 

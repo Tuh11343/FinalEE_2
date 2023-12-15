@@ -29,15 +29,12 @@ public class OrderDetail implements Serializable {
     private Order order;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "item_id")
-    private Item item;
+    @JoinColumn(name = "stock_item_id")
+    private StockItem stockItem;
 
     @Column(name = "amount")
     private int amount;
-    @Column(name = "item_color")
-    private String item_color;
-    @Column(name = "item_size")
-    private String item_size;
+
     @Column(name = "total")
     private double total;
 }

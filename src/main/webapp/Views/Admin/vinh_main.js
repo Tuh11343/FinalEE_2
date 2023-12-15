@@ -35,17 +35,7 @@ function showtable() {
 }
 showtable();
 
-/*function handleDelete(e) {
-  let confirmationResult = false;
-  const deltabs = document.querySelectorAll(".btnDel");
 
-  confirmationResult = confirm("Bạn có chắc chắn muốn xóa?");
-  document.getElementById("testBtn").value = confirmationResult;
-  console.log(confirmationResult);
-  if (!confirmationResult) {
-    event.preventDefault(); // Ngăn chặn sự kiện submit nếu không đồng ý xóa
-  }
-}*/
 
 /*Account*/
 function handleAddAccount() {
@@ -60,6 +50,7 @@ function handleAddAccount() {
   });
 }
 handleAddAccount();
+
 function handleUpdateAccount() {
   var updateUser = document.querySelectorAll(".btnUpdateUser");
   var modal = document.getElementById("update-user");
@@ -68,18 +59,19 @@ function handleUpdateAccount() {
     item.addEventListener("click", () => {
       modal.style.display = "block";
 
-      var accountCustomer = item.getAttribute("data-customerID");
-      var accountPermission = item.getAttribute("data-permissionID");
+      var accountID=item.getAttribute("data-accountID");
+      var accountCustomerID = item.getAttribute("data-accountCustomerID");
+      var accountPermissionID = item.getAttribute("data-accountPermissionID");
       var accountName = item.getAttribute("data-accountName");
       var accountPass = item.getAttribute("data-accountPassword");
 
-      console.log(accountCustomer, accountPermission, accountName, accountPass);
 
-      document.getElementById("update_accountNameID").value = accountName;
-      document.getElementById("update_accountPasswordID").value = accountPass;
+      document.getElementById("update_accountID").value=accountID;
+      document.getElementById("update_accountName").value = accountName;
+      document.getElementById("update_accountPassword").value = accountPass;
 
       var update_customer_selectElement = document.getElementById(
-          "update_label_customerID"
+          "update_accountCustomerID"
       );
       for (var i = 0; i < update_customer_selectElement.options.length; i++) {
         var option = update_customer_selectElement.options[i];
@@ -92,7 +84,7 @@ function handleUpdateAccount() {
       }
 
       var update_permission_selectElement = document.getElementById(
-          "update_label_permissionID"
+          "update_accountPermissionID"
       );
       for (var i = 0; i < update_permission_selectElement.options.length; i++) {
         var option = update_permission_selectElement.options[i];
@@ -137,6 +129,7 @@ function handleUpdateItem() {
     item.addEventListener("click", () => {
       modal.style.display = "block";
 
+      var itemID=item.getAttribute("data-itemID");
       var itemName = item.getAttribute("data-itemName");
       var itemTypeID = item.getAttribute("data-itemTypeID");
       var itemCollectionID = item.getAttribute("data-itemCollectionID");
@@ -146,6 +139,7 @@ function handleUpdateItem() {
       var price = item.getAttribute("data-itemPrice");
       var yearProduce = item.getAttribute("data-itemYearProduce");
 
+      document.getElementById("update_itemID").value=itemID;
       document.getElementById("update_itemNameID").value = itemName;
       document.getElementById("update_itemIsNewID").checked = isNew === "1";
       document.getElementById("update_itemIsHotID").checked = isHot === "1";
@@ -154,7 +148,7 @@ function handleUpdateItem() {
 
       //          Combobox ItemType
       var update_itemType_selectElement = document.getElementById(
-          "update_label_itemTypeID"
+          "update_itemItemTypeID"
       );
       for (var i = 0; i < update_itemType_selectElement.options.length; i++) {
         var option = update_itemType_selectElement.options[i];
@@ -168,7 +162,7 @@ function handleUpdateItem() {
 
       //          Combobox ItemCollection
       var update_itemCollection_selectElement = document.getElementById(
-          "update_label_itemCollectionID"
+          "update_itemItemCollectionID"
       );
       for (var i = 0; i < update_itemCollection_selectElement.options.length; i++) {
         var option = update_itemCollection_selectElement.options[i];
@@ -182,7 +176,7 @@ function handleUpdateItem() {
 
       //            Combobox ItemMaterial
       var update_itemMaterial_selectElement = document.getElementById(
-          "update_label_itemMaterialID"
+          "update_itemItemMaterialID"
       );
       for (var i = 0; i < update_itemMaterial_selectElement.options.length; i++) {
         var option = update_itemMaterial_selectElement.options[i];
@@ -260,6 +254,7 @@ function handleAddDiscountCard() {
   });
 }
 handleAddDiscountCard();
+
 function handleUpdateDiscountCard() {
   var updateDiscountCard = document.querySelectorAll(".btnUpdateDiscountCard");
   var modal = document.getElementById("update-discountCard");
@@ -269,10 +264,12 @@ function handleUpdateDiscountCard() {
     item.addEventListener("click", () => {
       modal.style.display = "block";
 
+      var id=item.getAttribute("data-discountCardID");
       var customerID = item.getAttribute("data-discountCardCustomerID");
       var name = item.getAttribute("data-discountCardName");
       var discountPercentage = item.getAttribute("data-discountCardPercentage");
 
+      document.getElementById("update_discountCardID").value=id;
       document.getElementById("update_discountCardName").value = name;
       document.getElementById("update_discountCardPercentage").value = discountPercentage;
 
@@ -311,6 +308,7 @@ function handleAddItemCollection() {
   });
 }
 handleAddItemCollection();
+
 function handleUpdateItemCollection() {
   var updateItemCollection = document.querySelectorAll(".btnUpdateItemCollection");
   var modal = document.getElementById("update-itemCollection");
@@ -320,8 +318,10 @@ function handleUpdateItemCollection() {
     item.addEventListener("click", () => {
       modal.style.display = "block";
 
+      var id=item.getAttribute("data-itemCollectionID");
       var name = item.getAttribute("data-itemCollectionName");
 
+      document.getElementById("update_itemCollectionID").value=id;
       document.getElementById("update_itemCollectionName").value = name;
     });
   });
@@ -330,6 +330,8 @@ function handleUpdateItemCollection() {
   });
 }
 handleUpdateItemCollection();
+
+
 
 /*Item Image*/
 function handleAddItemImage() {
@@ -345,6 +347,7 @@ function handleAddItemImage() {
   });
 }
 handleAddItemImage();
+
 function handleUpdateItemImage() {
   var updateItemImage = document.querySelectorAll(".btnUpdateItemImage");
   var modal = document.getElementById("update-itemImage");
@@ -354,9 +357,11 @@ function handleUpdateItemImage() {
     item.addEventListener("click", () => {
       modal.style.display = "block";
 
+      var id=item.getAttribute("data-itemImageID");
       var itemID = item.getAttribute("data-itemImageItemID");
       var imageURL = item.getAttribute("data-itemImageURL");
 
+      document.getElementById("update_itemImageID").value=id;
       document.getElementById("update_itemImageURL").value = imageURL;
 
       /*Combobox CustomerID*/
@@ -379,6 +384,8 @@ function handleUpdateItemImage() {
   });
 }
 handleUpdateItemImage();
+
+
 
 /*Item Material*/
 function handleAddItemMaterial() {
@@ -403,8 +410,10 @@ function handleUpdateItemMaterial() {
     item.addEventListener("click", () => {
       modal.style.display = "block";
 
+      var id=item.getAttribute("data-itemMaterialID");
       var name = item.getAttribute("data-itemMaterialName");
 
+      document.getElementById("update_itemMaterialID").value=id;
       document.getElementById("update_itemMaterialName").value = name;
     });
   });
@@ -413,6 +422,8 @@ function handleUpdateItemMaterial() {
   });
 }
 handleUpdateItemMaterial();
+
+
 
 /*Order*/
 function handleAddOrder() {
@@ -428,6 +439,7 @@ function handleAddOrder() {
   });
 }
 handleAddOrder();
+
 function handleUpdateOrder() {
   var updateOrder = document.querySelectorAll(".btnUpdateOrder");
   var modal = document.getElementById("update-order");
@@ -437,6 +449,7 @@ function handleUpdateOrder() {
     item.addEventListener("click", () => {
       modal.style.display = "block";
 
+      var id=item.getAttribute("data-orderID");
       var customerID = item.getAttribute("data-orderCustomerID");
       var discountCardID = item.getAttribute("data-orderDiscountCardID");
       var total = item.getAttribute("data-orderTotal");
@@ -445,6 +458,7 @@ function handleUpdateOrder() {
       var orderStatus = item.getAttribute("data-orderStatus");
       var note = item.getAttribute("data-note");
 
+      document.getElementById("update_orderID").value=id;
       document.getElementById("update_orderTotal").value = total;
       document.getElementById("update_orderDatePurchase").value = datePurchase;
       document.getElementById("update_orderAddress").value = address;
@@ -484,76 +498,6 @@ function handleUpdateOrder() {
 }
 handleUpdateOrder();
 
-/*OrderDetail*/
-function handleAddOrderDetail() {
-  var addOrderDetail = document.getElementById("orderDetail_addTrigger");
-  var modal = document.getElementById("add-orderDetail");
-  var btnClose = document.querySelector(".clsAddOrderDetail");
-  addOrderDetail.addEventListener("click", function () {
-    modal.classList.add("active");
-    console.log(1);
-  });
-  btnClose.addEventListener("click", function () {
-    modal.classList.remove("active");
-  });
-}
-handleAddOrderDetail();
-function handleUpdateOrderDetail() {
-  var updateOrderDetail = document.querySelectorAll(".btnUpdateOrderDetail");
-  var modal = document.getElementById("update-orderDetail");
-  var btnClose = document.querySelector(".clsUpdateOrderDetail");
-
-  updateOrderDetail.forEach(function (item) {
-    item.addEventListener("click", () => {
-      modal.style.display = "block";
-
-      var orderID = item.getAttribute("data-orderDetailOrderID");
-      var itemID = item.getAttribute("data-orderDetailItemID");
-      var amount = item.getAttribute("data-orderDetailAmount");
-      var itemColor = item.getAttribute("data-orderDetailItemColor");
-      var itemSize = item.getAttribute("data-orderDetailItemSize");
-      var total = item.getAttribute("data-orderDetailTotal");
-
-      document.getElementById("update_orderDetailAmount").value = amount;
-      document.getElementById("update_orderDetailItemColor").value = itemColor;
-      document.getElementById("update_orderDetailItemSize").value = itemSize;
-      document.getElementById("update_orderDetailTotal").value = total;
-
-      /*Combobox CustomerID*/
-      var update_orderDetail_selectElement = document.getElementById(
-          "update_orderDetailOrderID"
-      );
-      for (var i = 0; i < update_orderDetail_selectElement.options.length; i++) {
-        var option = update_orderDetail_selectElement.options[i];
-        // So sánh giá trị tùy chọn với giá trị cần chọn
-        if (option.value === orderID) {
-          // Đánh dấu tùy chọn là "selected"
-          option.selected = true;
-          break; // Thoát khỏi vòng lặp sau khi tìm thấy giá trị cần chọn
-        }
-      }
-
-      /*Combobox DiscountCardID*/
-      var update_orderDetail_selectElement = document.getElementById(
-          "update_orderDetailItemID"
-      );
-      for (var i = 0; i < update_orderDetail_selectElement.options.length; i++) {
-        var option = update_orderDetail_selectElement.options[i];
-        // So sánh giá trị tùy chọn với giá trị cần chọn
-        if (option.value === itemID) {
-          // Đánh dấu tùy chọn là "selected"
-          option.selected = true;
-          break; // Thoát khỏi vòng lặp sau khi tìm thấy giá trị cần chọn
-        }
-      }
-    });
-  });
-  btnClose.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
-}
-handleUpdateOrderDetail();
-
 /*Item Type*/
 function handleAddItemType() {
   var addItemType = document.getElementById("itemType_addTrigger");
@@ -577,8 +521,10 @@ function handleUpdateItemType() {
     item.addEventListener("click", () => {
       modal.style.display = "block";
 
+      var id=item.getAttribute("data-itemTypeID");
       var name = item.getAttribute("data-itemTypeName");
 
+      document.getElementById("update_itemTypeID").value=id;
       document.getElementById("update_itemTypeName").value = name;
     });
   });
@@ -587,6 +533,8 @@ function handleUpdateItemType() {
   });
 }
 handleUpdateItemType();
+
+
 
 /*Permission*/
 function handleAddPermission() {
@@ -611,9 +559,11 @@ function handleUpdatePermission() {
     item.addEventListener("click", () => {
       modal.style.display = "block";
 
+      var id=item.getAttribute("data-permissionID");
       var name = item.getAttribute("data-permissionName");
       var level = item.getAttribute("data-permissionLevel");
 
+      document.getElementById("update_permissionID").value=id;
       document.getElementById("update_permissionName").value = name;
       document.getElementById("update_permissionLevel").value = level;
     });
@@ -623,6 +573,8 @@ function handleUpdatePermission() {
   });
 }
 handleUpdatePermission();
+
+
 
 /*Sale*/
 function handleAddSale() {
@@ -638,6 +590,7 @@ function handleAddSale() {
   });
 }
 handleAddSale();
+
 function handleUpdateSale() {
   var updateSale = document.querySelectorAll(".btnUpdateSale");
   var modal = document.getElementById("update-sale");
@@ -647,11 +600,13 @@ function handleUpdateSale() {
     item.addEventListener("click", () => {
       modal.style.display = "block";
 
+      var id=item.getAttribute("data-saleID");
       var itemID = item.getAttribute("data-saleItemID");
       var name = item.getAttribute("data-saleName");
       var onSale = item.getAttribute("data-saleOnSale");
       var salePercentage = item.getAttribute("data-salePercentage");
 
+      document.getElementById("update_saleID").value=id;
       document.getElementById("update_saleName").value = name;
       document.getElementById("update_saleOnSale").checked = onSale === "1";
       document.getElementById("update_salePercentage").value = salePercentage;
@@ -675,6 +630,8 @@ function handleUpdateSale() {
 }
 handleUpdateSale();
 
+
+
 /*StockItem*/
 function handleAddStockItem() {
   var addStockItem = document.getElementById("stockItem_addTrigger");
@@ -689,6 +646,7 @@ function handleAddStockItem() {
   });
 }
 handleAddStockItem();
+
 function handleUpdateStockItem() {
   var updateStockItem = document.querySelectorAll(".btnUpdateStockItem");
   var modal = document.getElementById("update-stockItem");
@@ -761,6 +719,8 @@ document.addEventListener("scroll", function () {
 
 function showSearchbox() {
   console.log("boxSearch :>> ", boxSearch);
+  console.log(btnSearch);
+
   btnSearch.forEach((item) => {
     item.addEventListener("click", function () {
       var inputSearch = item.nextElementSibling;
@@ -779,8 +739,7 @@ function showSearchbox() {
 showSearchbox();
 
 
-
-/*Item Material*/
+/*Order Status*/
 function handleAddOrderStatus() {
   var addOrderStatus = document.getElementById("orderStatus_addTrigger");
   var modal = document.getElementById("add-orderStatus");
@@ -803,8 +762,10 @@ function handleUpdateOrderStatus() {
     item.addEventListener("click", () => {
       modal.style.display = "block";
 
+      var id=item.getAttribute("data-orderStatusID");
       var name = item.getAttribute("data-orderStatusName");
 
+      document.getElementById("update_orderStatusID").value=id;
       document.getElementById("update_orderStatusName").value = name;
     });
   });
@@ -813,4 +774,65 @@ function handleUpdateOrderStatus() {
   });
 }
 handleUpdateOrderStatus();
+
+
+
+
+
+
+
+
+/*OrderDetail*/
+/*function handleAddOrderDetail() {
+  var addOrderDetail = document.getElementById("orderDetail_addTrigger");
+  var modal = document.getElementById("add-orderDetail");
+  var btnClose = document.querySelector(".clsAddOrderDetail");
+  addOrderDetail.addEventListener("click", function () {
+    modal.classList.add("active");
+    console.log(1);
+  });
+  btnClose.addEventListener("click", function () {
+    modal.classList.remove("active");
+  });
+}
+handleAddOrderDetail();*/
+/*function handleUpdateOrderDetail() {
+  var updateOrderDetail = document.querySelectorAll(".btnUpdateOrderDetail");
+  var modal = document.getElementById("update-orderDetail");
+  var btnClose = document.querySelector(".clsUpdateOrderDetail");
+
+  updateOrderDetail.forEach(function (item) {
+    item.addEventListener("click", () => {
+      modal.style.display = "block";
+
+      var id=item.getAttribute("data-orderDetailID");
+      var orderID = item.getAttribute("data-orderDetailOrderID");
+      var stockItemID = item.getAttribute("data-orderDetailStockItemID");
+      var amount = item.getAttribute("data-orderDetailAmount");
+      var total = item.getAttribute("data-orderDetailTotal");
+
+      document.getElementById("update_orderDetailID").value=id;
+      document.getElementById("update_orderDetailAmount").value = amount;
+      document.getElementById("update_orderDetailTotal").value = total;
+
+      /!*Combobox DiscountCardID*!/
+      var update_orderDetail_selectElement = document.getElementById(
+          "update_orderDetailItemID"
+      );
+      for (var i = 0; i < update_orderDetail_selectElement.options.length; i++) {
+        var option = update_orderDetail_selectElement.options[i];
+        // So sánh giá trị tùy chọn với giá trị cần chọn
+        if (option.value === itemID) {
+          // Đánh dấu tùy chọn là "selected"
+          option.selected = true;
+          break; // Thoát khỏi vòng lặp sau khi tìm thấy giá trị cần chọn
+        }
+      }
+    });
+  });
+  btnClose.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+}
+handleUpdateOrderDetail();*/
 

@@ -45,8 +45,7 @@ public class PermissionServiceImpl implements PermissionService{
     @Override
     public boolean deleteByID(int id) {
         if (permissionRepository.existsById(id)) {
-            //permissionRepository.deleteById(permissionID);
-            System.out.println("Ban da xoa:" + id);
+            permissionRepository.deleteById(id);
             return true;
         }
         return false;

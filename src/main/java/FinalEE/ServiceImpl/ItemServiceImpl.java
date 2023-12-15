@@ -52,11 +52,11 @@ public class ItemServiceImpl implements ItemService {
     public boolean create(Item item) {
         try {
             // Kiểm tra xem item có tồn tại trong database hay không
-            Optional<Item> existingItem = itemRepository.findById(item.getId());
+            Item existingItem = itemRepository.findByID(item.getId());
 
             // Lưu item và kiểm tra kết quả
             itemRepository.save(item);
-            if (existingItem.isPresent()) {
+            if (existingItem!=null) {
                 System.out.println("Cap nhat thanh cong item:" + item.getId());
             } else {
                 System.out.println("Them thanh cong item:" + item.getId());
@@ -72,9 +72,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public boolean deleteByID(int id) {
         if (itemRepository.existsById(id)) {
-            //itemRepository.deleteById(itemID);
-            System.out.println("Ban da xoa:" + id);
-            return true;
+            itemRepository.deleteById(id);
         }
         return false;
     }

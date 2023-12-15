@@ -116,7 +116,6 @@
                                 <div class="gr--img">
                                     <div class="img">
 
-                                            <%--Find 2 Image Of Item--%>
                                         <c:set var="counter" value="0"/>
                                         <c:forEach items="${cart.stockItem.item.imageList}"
                                                    var="image">
@@ -128,13 +127,11 @@
 
                                     </div>
                                     <form action="${pageContext.request.contextPath}/CartServlet"
-                                            method="post">
+                                          method="post">
 
                                         <button class="btn btn-del">Xóa</button>
-                                        <input type="hidden" value="itemDeleteClick"
-                                               name="action">
-                                        <input type="hidden" name="deleteCartID"
-                                               value="${cart.id}">
+                                        <input type="hidden" value="itemDeleteClick" name="action">
+                                        <input type="hidden" name="deleteCartID" value="${cart.id}">
 
                                     </form>
 
@@ -214,7 +211,8 @@
 
             <div class="cart__formgr">
                 <h2 class="title --h5">Người nhận / Mua hàng</h2>
-                <form class="cart__formgr--form">
+                <form class="cart__formgr--form" id="orderClickForm"
+                      action="${pageContext.request.contextPath}/CartServlet" method="post">
                     <div class="form-gr">
                         <label for="fullName">Họ và Tên</label>
                         <input type="text" name="orderCustomerName" id="fullName" placeholder="Họ Tên"

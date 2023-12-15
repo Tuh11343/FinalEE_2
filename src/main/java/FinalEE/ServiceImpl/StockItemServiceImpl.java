@@ -43,8 +43,7 @@ public class StockItemServiceImpl implements StockItemService{
     @Override
     public boolean deleteByID(int id) {
         if (stockItemRepository.existsById(id)) {
-            //stockItemRepository.deleteById(stockItemID);
-            System.out.println("Ban da xoa:" + id);
+            stockItemRepository.deleteById(id);
             return true;
         }
         return false;

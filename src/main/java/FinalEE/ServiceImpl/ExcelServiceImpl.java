@@ -524,56 +524,6 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Override
     public ByteArrayInputStream exportOrderDetailToExcel(List<OrderDetail> orderDetailList) {
-        try (
-                Workbook workbook = new XSSFWorkbook();
-                ByteArrayOutputStream out = new ByteArrayOutputStream()
-        ) {
-            Sheet sheet = workbook.createSheet("OrderDetails");
-
-            // Header
-            Row headerRow = sheet.createRow(0);
-            headerRow.createCell(0).setCellValue("Order Detail ID");
-            headerRow.createCell(1).setCellValue("Order ID");
-            headerRow.createCell(2).setCellValue("Item ID");
-            headerRow.createCell(3).setCellValue("Amount");
-            headerRow.createCell(4).setCellValue("Item Color");
-            headerRow.createCell(5).setCellValue("Item Size");
-            headerRow.createCell(6).setCellValue("Total");
-
-            int rowIdx = 1;
-            for (OrderDetail orderDetail : orderDetailList) {
-                Row row = sheet.createRow(rowIdx++);
-
-                // Order Detail ID
-                row.createCell(0).setCellValue(orderDetail.getId());
-
-                // Order ID
-                if (orderDetail.getOrder() != null && orderDetail.getOrder().getId() != null) {
-                    row.createCell(1).setCellValue(orderDetail.getOrder().getId());
-                }
-
-                // Item ID
-                if (orderDetail.getItem() != null && orderDetail.getItem().getId() != null) {
-                    row.createCell(2).setCellValue(orderDetail.getItem().getId());
-                }
-
-                // Amount
-                row.createCell(3).setCellValue(orderDetail.getAmount());
-
-                // Item Color
-                row.createCell(4).setCellValue(orderDetail.getItem_color());
-
-                // Item Size
-                row.createCell(5).setCellValue(orderDetail.getItem_size());
-
-                // Total
-                row.createCell(6).setCellValue(orderDetail.getTotal());
-            }
-            workbook.write(out);
-            return new ByteArrayInputStream(out.toByteArray());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return null;
     }
 
