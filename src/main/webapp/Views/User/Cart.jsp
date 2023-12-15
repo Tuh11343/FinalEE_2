@@ -41,13 +41,48 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/User/dest/style.min.css/"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/User/dest/fonts.css"/>
 </head>
+<style>
+    .loader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f1f1f1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+}
 
+.loader {
+  border: 16px solid var(--main-cl);
+  border-top: 16px solid #ffffff;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Hide loader when content is loaded */
+.loader-container.loaded {
+  display: none;
+}
+</style>
 <body class="cartpage">
-
+    <div class="loader-container">
+        <div class="loader"></div>
+      </div>
 <jsp:include page="component/Header.jsp"/>
 <jsp:include page="component/ModalLogin.jsp"/>
 
 <main class="main">
+
     <section class="sclocation">
         <div class="container">
             <div class="sclocation__top location-path">
@@ -263,7 +298,15 @@
     </section>
 </main>
 <jsp:include page="component/Footer.jsp"/>
-
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Simulate loading delay (you can remove this in production)
+      setTimeout(function () {
+        // Add loaded class to hide the loader
+        document.querySelector(".loader-container").classList.add("loaded");
+      }, 2000); // Adjust the timeout based on your loading time
+    });
+  </script>
 
 <!-- Javascript -->
 <script src="${pageContext.request.contextPath}/Views/User/dest/jsmain.min.js"></script>

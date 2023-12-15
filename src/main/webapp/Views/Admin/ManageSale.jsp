@@ -519,7 +519,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       <!--Center-->
       <div class="center">
         <!--Sale-->
-        <div class="saleproduct-data table-data" data-type="saleList">
+        <div class="saleproduct-data table-data active" data-type="saleList">
           <div class="header-table">
             <!--Add Sale Button-->
             <div class="AddSale">
@@ -537,6 +537,18 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               >
                 Xuất Excel
               </a>
+              <form
+                action="${pageContext.request.contextPath}/ManageSaleServlet"
+                method="post"
+              >
+                <button
+                  class="btnHD btnload"
+                  style="margin-left: 5px; margin-bottom: 4px"
+                >
+                  Refresh
+                </button>
+                <input type="hidden" name="action" value="refreshSale" />
+              </form>
             </div>
             <h2 style="font-size: 30px">Quản lý giảm giá</h2>
             <form
@@ -552,7 +564,12 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                       <option value="">Tên</option>
                       <option value="">Giá</option>
                     </select>
-                    <input type="text" value="" id="saleInputSearch" name="saleInputSearch" />
+                    <input
+                      type="text"
+                      value=""
+                      id="saleInputSearch"
+                      name="saleInputSearch"
+                    />
                     <button class="btnHD btnsearch">Tìm</button>
                   </div>
                 </div>

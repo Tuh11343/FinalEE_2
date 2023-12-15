@@ -519,7 +519,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       <!--Center-->
       <div class="center">
         <!--Discount Card-->
-        <div class="discount-data table-data" data-type="discountCardList">
+        <div class="discount-data table-data active" data-type="discountCardList">
           <div class="header-table">
             <!--Add Discount Card Button-->
             <div class="AddDiscountCard">
@@ -533,6 +533,18 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px">
                 Xuất Excel
               </a>
+              <form
+                action="${pageContext.request.contextPath}/ManageDiscountServlet"
+                method="post"
+              >
+                <button
+                  class="btnHD btnload"
+                  style="margin-left: 5px; margin-bottom: 4px"
+                >
+                  Refresh
+                </button>
+                <input type="hidden" name="action" value="refreshDiscount" />
+              </form>
             </div>
             <h2 style="font-size: 30px">Quản lý mã giảm giá</h2>
             <form
@@ -685,7 +697,11 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             <div class="add-modal">
               <span class="close clsAddDiscountCard">&times;</span>
               <h2 class="text-center" style="padding: 16px 0">Thêm Thẻ Khuyến Mãi</h2>
-              <form class="form__add" action="${pageContext.request.contextPath}/ManageDiscountCardServlet" method="post">
+              <form
+                class="form__add"
+                action="${pageContext.request.contextPath}/ManageDiscountCardServlet"
+                method="post"
+              >
                 <!--Customer ID-->
                 <div class="form-grp">
                   <label for="add_discountCardCustomerID">Khách Hàng:</label>

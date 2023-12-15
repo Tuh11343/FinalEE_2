@@ -518,7 +518,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
       <!--Center-->
       <div class="center">
-        <div class="order-data table-data" data-type="orderList">
+        <div class="order-data table-data active" data-type="orderList">
           <div class="header-table">
             <div class="AddOrder">
               <button
@@ -535,6 +535,12 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               >
                 Xuất Excel
               </a>
+              <form action="${pageContext.request.contextPath}/ManageOrderServlet" method="post">
+
+                <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px">Refresh</button>
+                <input type="hidden" name="action" value="refreshOrder">
+
+            </form>
             </div>
             <h2 style="font-size: 30px">Quản lý hóa đơn</h2>
             <form

@@ -519,7 +519,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       <!--Center-->
       <div class="center">
         <!--Permission-->
-        <div class="permission-data table-data" data-type="permissionList">
+        <div class="permission-data table-data active" data-type="permissionList">
           <div class="header-table">
             <!--Add Permission-->
             <div class="AddPermission">
@@ -537,6 +537,18 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               >
                 Xuất Excel
               </a>
+              <form
+                action="${pageContext.request.contextPath}/ManagePermissionServlet"
+                method="post"
+              >
+                <button
+                  class="btnHD btnload"
+                  style="margin-left: 5px; margin-bottom: 4px"
+                >
+                  Refresh
+                </button>
+                <input type="hidden" name="action" value="refreshPermission" />
+              </form>
             </div>
             <h2 style="font-size: 30px">Quản lý phân quyền</h2>
             <form

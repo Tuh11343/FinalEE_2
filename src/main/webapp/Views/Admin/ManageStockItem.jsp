@@ -519,7 +519,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       <!--Center-->
       <div class="center">
         <!--Stock Item-->
-        <div class="stockitem-data table-data" data-type="stockItemList">
+        <div class="stockitem-data table-data active" data-type="stockItemList">
           <div class="header-table">
             <!--Add StockItem Button-->
             <div class="AddStockItem">
@@ -537,6 +537,18 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               >
                 Xuất Excel
               </a>
+              <form
+                action="${pageContext.request.contextPath}/ManageStockItemServlet"
+                method="post"
+              >
+                <button
+                  class="btnHD btnload"
+                  style="margin-left: 5px; margin-bottom: 4px"
+                >
+                  Refresh
+                </button>
+                <input type="hidden" name="action" value="refreshStockItem" />
+              </form>
             </div>
             <h2 style="font-size: 30px">Quản lý màu sắc kích cỡ số lượng</h2>
             <form

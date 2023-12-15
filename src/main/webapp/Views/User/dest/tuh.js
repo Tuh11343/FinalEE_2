@@ -59,6 +59,7 @@ function logInAjaxRequest() {
 }
 
 function signUpAjaxRequest() {
+document.querySelector('.loader-container').classList.remove('loaded');
     const customerName = document.getElementById("name-regis").value;
     const email = document.getElementById("email-regis").value;
     const phoneNumber = document.getElementById("phone-regis").value;
@@ -89,6 +90,7 @@ function signUpAjaxRequest() {
                 alert("Loi he thong");
             } else if (data.success === 1) {
                 //Announce
+                document.querySelector('.loader-container').classList.add('loaded');
                 alert("Đăng kí thành công");
                 //hiển thị thông báo
             } else if (data.passwordIncorrect === 1) {

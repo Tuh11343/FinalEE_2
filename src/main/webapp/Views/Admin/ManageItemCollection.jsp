@@ -519,7 +519,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       <!--Center-->
       <div class="center">
         <!--Item Collection-->
-        <div class="collection-data table-data" data-type="itemCollectionList">
+        <div class="collection-data table-data active" data-type="itemCollectionList">
           <!--Add Discount Card Button-->
           <div class="header-table">
             <div class="AddItemCollection">
@@ -537,6 +537,18 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               >
                 Xuất Excel
               </a>
+              <form
+                action="${pageContext.request.contextPath}/ManageItemCollectionServlet"
+                method="post"
+              >
+                <button
+                  class="btnHD btnload"
+                  style="margin-left: 5px; margin-bottom: 4px"
+                >
+                  Refresh
+                </button>
+                <input type="hidden" name="action" value="refreshAccount" />
+              </form>
             </div>
             <h2 style="font-size: 30px">Quản lý bộ sưu tập</h2>
             <form
