@@ -519,7 +519,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       <!--Center-->
       <div class="center">
         <!--Order Detail-->
-        <div class="orderdetail-data table-data" data-type="orderDetailList">
+        <div class="orderdetail-data table-data active" data-type="orderDetailList">
           <div class="header-table">
             <div class="AddOrderDetailDetail">
               <button
@@ -536,6 +536,18 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               >
                 Xuất Excel
               </a>
+              <form
+                action="${pageContext.request.contextPath}/ManageOrderDetailServlet"
+                method="post"
+              >
+                <button
+                  class="btnHD btnload"
+                  style="margin-left: 5px; margin-bottom: 4px"
+                >
+                  Refresh
+                </button>
+                <input type="hidden" name="action" value="refreshOrderDetail" />
+              </form>
             </div>
             <h2 style="font-size: 30px">Quản lý chi tiết hóa đơn</h2>
             <form
@@ -546,13 +558,21 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                 <div class="sort-search">
                   <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
                   <div class="inputsearch">
-                    <select class="selecttype" name="orderDetailSearchType" id="orderDetailSearchType">
+                    <select
+                      class="selecttype"
+                      name="orderDetailSearchType"
+                      id="orderDetailSearchType"
+                    >
                       <option value="id">ID</option>
                       <option value="orderID">ID hóa đơn</option>
                       <option value="lowerPrice">Giá thấp hơn</option>
                       <option value="higherPrice">Giá cao ho</option>
                     </select>
-                    <input type="text" id="orderDetailInputSearch" name="orderDetailInputSearch" />
+                    <input
+                      type="text"
+                      id="orderDetailInputSearch"
+                      name="orderDetailInputSearch"
+                    />
                     <button class="btnHD btnsearch">Tìm</button>
                   </div>
                 </div>

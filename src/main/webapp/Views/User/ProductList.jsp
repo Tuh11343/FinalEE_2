@@ -48,11 +48,47 @@
                     <link rel="stylesheet" href="${pageContext.request.contextPath}/Views/User/dest/fonts.css" />
 
                 </head>
-
-                <jsp:include page="component/Header.jsp" />
-                <jsp:include page="component/ModalLogin.jsp" />
+                <style>
+                    .loader-container {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  height: 100vh;
+                  background-color: #f1f1f1;
+                  position: fixed;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  z-index: 9999;
+                }
+                
+                .loader {
+                  border: 16px solid var(--main-cl);
+                  border-top: 16px solid #ffffff;
+                  border-radius: 50%;
+                  width: 80px;
+                  height: 80px;
+                  animation: spin 1s linear infinite;
+                }
+                
+                @keyframes spin {
+                  0% { transform: rotate(0deg); }
+                  100% { transform: rotate(360deg); }
+                }
+                
+                /* Hide loader when content is loaded */
+                .loader-container.loaded {
+                  display: none;
+                }
+                </style>
+               
 
                 <body class="productpage">
+                    <div class="loader-container">
+                        <div class="loader"></div>
+                      </div>
+                    <jsp:include page="component/Header.jsp" />
+                    <jsp:include page="component/ModalLogin.jsp" />
                     <main class="main">
 
                         <section class="productsearch">

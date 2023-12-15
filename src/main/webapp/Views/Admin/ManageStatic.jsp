@@ -521,7 +521,20 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
         <!-- Thống kê -->
         <div class="product-data table-data active" data-type="statistics">
           <div class="header-table">
-            <div class="AddProduct"></div>
+            <div class="AddProduct">
+              <form
+                action="${pageContext.request.contextPath}/ManageStaticServlet"
+                method="post"
+              >
+                <button
+                  class="btnHD btnload"
+                  style="margin-left: 5px; margin-bottom: 4px"
+                >
+                  Refresh
+                </button>
+                <input type="hidden" name="action" value="refreshStatic" />
+              </form>
+            </div>
             <h2 style="font-size: 30px; text-align: center">Quản lý thống kê</h2>
             <div class="sorttable">
               <div class="sort-search">
