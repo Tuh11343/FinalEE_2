@@ -52,16 +52,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getAccount(int id) {
-        try {
-            return accountRepository.findByID(id);
-        } catch (Exception er) {
-            er.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
     public List<Account> getAllAccount() {
         return accountRepository.findAll();
     }

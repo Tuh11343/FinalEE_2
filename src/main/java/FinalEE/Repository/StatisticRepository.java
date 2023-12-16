@@ -53,8 +53,8 @@ public class StatisticRepository {
         try {
             String sql = "SELECT c.id, c.name, SUM(od.amount) as total " +
                     "FROM Customer c " +
-                    "JOIN ItemOrder o ON c.id = o.customer_id " +
-                    "JOIN OrderDetail od ON o.id = od.order_id " +
+                    "JOIN itemorder o ON c.id = o.customer_id " +
+                    "JOIN itemorderdetail od ON o.id = od.order_id " +
                     "GROUP BY c.id " +
                     "ORDER BY total DESC " +
                     "LIMIT 5";

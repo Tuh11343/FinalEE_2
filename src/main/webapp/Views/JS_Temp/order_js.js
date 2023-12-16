@@ -68,7 +68,8 @@ function handleUpdateOrder() {
       var datePurchase = item.getAttribute("data-orderDatePurchase");
       var address = item.getAttribute("data-orderAddress");
       var orderStatus = item.getAttribute("data-orderStatus");
-      var note = item.getAttribute("data-note");
+      var note = item.getAttribute("data-orderNote");
+      var email = item.getAttribute("data-orderEmail");
 
       document.getElementById("update_orderID").value=id;
       document.getElementById("update_orderTotal").value = total;
@@ -76,6 +77,7 @@ function handleUpdateOrder() {
       document.getElementById("update_orderAddress").value = address;
       document.getElementById("update_orderStatus").value = orderStatus;
       document.getElementById("update_orderNote").value = note;
+      document.getElementById("update_orderEmail").value=email;
 
       /*Combobox CustomerID*/
       var update_order_selectElement = document.getElementById("update_orderCustomerID");

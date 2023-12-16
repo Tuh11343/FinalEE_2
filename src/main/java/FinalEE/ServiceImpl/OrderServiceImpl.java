@@ -55,7 +55,7 @@ public class OrderServiceImpl implements OrderService{
  
 
     @Override
-    public Order getOrder(int id) {
+    public Order findByID(Integer id) {
         try{
             return orderRepository.findByID(id);
         }catch (Exception er){

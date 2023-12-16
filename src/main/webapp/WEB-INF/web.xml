@@ -100,6 +100,10 @@
         <servlet-name>ManageStockItemServlet</servlet-name>
         <servlet-class>FinalEE.Controller.Manage.ManageStockItemServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageStatisticServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageStatisticServlet</servlet-class>
+    </servlet>
 
 
 
@@ -205,6 +209,9 @@
         <servlet-name>ManageStockItemServlet</servlet-name>
         <url-pattern>/ManageStockItemServlet</url-pattern>
     </servlet-mapping>
-
+<servlet-mapping>
+    <servlet-name>ManageStatisticServlet</servlet-name>
+    <url-pattern>/ManageStatisticServlet</url-pattern>
+</servlet-mapping>
     
 </web-app>

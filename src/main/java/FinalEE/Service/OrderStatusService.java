@@ -20,6 +20,5 @@ public interface OrderStatusService {
 
     List<OrderStatus> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
     List<OrderStatus> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
-    OrderStatus findById(int orderStatusID);
 
 }

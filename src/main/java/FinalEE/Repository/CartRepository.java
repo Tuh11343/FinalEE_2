@@ -2,6 +2,7 @@
 package FinalEE.Repository;
 
 
+import FinalEE.Entity.Account;
 import FinalEE.Entity.Cart;
 import FinalEE.Entity.Item;
 import jakarta.transaction.Transactional;
@@ -33,5 +34,8 @@ public interface CartRepository extends JpaRepository<Cart, Integer>{
     void deleteAllByCustomer_Id(Integer customerID);
 
     void deleteById(Integer cartID);
+
+    @Query("select c from Cart c where c.id=?1 or c.id IS NULL")
+    Cart findByID(Integer id);
 
 }

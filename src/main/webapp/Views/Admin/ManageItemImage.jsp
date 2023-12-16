@@ -1,7 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib
         uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib
+        uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -120,7 +121,6 @@
 </header>
 <!--<div class="container" >-->
 <main class="main">
-
     <aside class="left">
         <div class="accordion" id="accordionFlushExample">
 
@@ -158,100 +158,89 @@
 
     <!--Center-->
     <div class="center">
-        <!--Account-->
-        <div class="account-data table-data active" data-type="accountList">
+        <div class="image-data table-data" data-type="itemImageList">
             <div class="header-table">
-                <div class="AddUser listbtn">
-                    <button
-                            class="btnHD btnAdd"
-                            id="account_addTrigger"
-                            style="margin-bottom: 4px"
-                    >
-                        Thêm
-                    </button>
-                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="accountToExcel()"
-                    >
+                <!--Add Item Image Button-->
+                <div class="AddItemImage listbtn">
+                    <button class="btnHD btnAdd" id="itemImage_addTrigger" style="margin-bottom: 4px">Thêm</button>
+
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="itemImageToExcel()">
                         Xuất Excel
                     </a>
-                    <form action="${pageContext.request.contextPath}/ManageAccountServlet" method="post">
 
-                        <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px">Refresh</button>
-                        <input type="hidden" name="action" value="refreshAccount">
-
+                    <form action="${pageContext.request.contextPath}/ManageItemImageServlet" method="post">
+                        <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px">
+                            Refresh
+                        </button>
+                        <input type="hidden" name="action" value="refreshItemImage"/>
                     </form>
 
                 </div>
-                <h2 style="font-size: 30px">Quản lý tài khoản</h2>
-                <form>
+                <h2 style="font-size: 30px">Quản lý hình ảnh sản phẩm</h2>
+
+                <form action="${pageContext.request.contextPath}/ManageItemMaterialServlet" method="post">
+
                     <div class="sorttable">
                         <div class="sort-search">
-
-                            <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
+                            <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
                             <div class="inputsearch">
-                                <select class="selecttype" name="accountSearchType" id="accountSearchType">
+                                <select class="selecttype" name="" id="itemImageSearchType">
                                     <option value="id">ID</option>
-                                    <option value="name">Tên</option>
-                                    <option value="customerID">ID Khách hàng</option>
+                                    <option value="itemID">ID Sản phẩm</option>
                                 </select>
-                                <input type="text" name="accountInputSearch" id="accountInputSearch"/>
-                                <button class="btnHD btnsearch" onclick="searchAndSortAccount()">Tìm</button>
+                                <input type="text" id="itemImageInputSearch"/>
+                                <a class="btnHD btnsearch">Tìm</a>
                             </div>
-
                         </div>
 
-
-                        <input type="hidden" name="action" value="searchAndSortAccount">
-
-
                         <div class="sort-box">
-                            <label for="accountSortType">Sắp xếp theo:</label>
-                            <select name="accountSortType" id="accountSortType">
+                            <label for="itemImageSortType">Sắp xếp theo:</label>
+                            <select name="itemImageSortType" id="itemImageSortType">
                                 <option value="az">A-Z</option>
                                 <option value="za">Z-A</option>
                             </select>
                         </div>
 
                     </div>
+
                 </form>
+
             </div>
 
-            <!--Add Account Button-->
-
-            <!--Account Table-->
-            <table class="account-table bang">
+            <!--Table Item Image-->
+            <table class="item-table bang">
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Permission ID</th>
-                    <th>Customer ID</th>
-                    <th>Name</th>
-                    <th>Password</th>
+                    <th>ID Sản Phẩm</th>
+                    <th>URL Hình Ảnh</th>
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody id="tableAccount">
-                <c:forEach items="${requestScope.accountList}" var="account">
+                <tbody>
+                <c:forEach items="${requestScope.imageList}" var="itemImage">
                     <tr>
-                        <td>${account.id}</td>
-                        <td>${account.permission.id}</td>
-                        <td>${account.customer.id}</td>
-                        <td>${account.name}</td>
-                        <td>${account.password}</td>
+                        <td>${itemImage.id}</td>
+                        <td>${itemImage.item.id}</td>
+                        <td>${itemImage.image_url}</td>
                         <td>
                             <div class="flex-center grpbtn">
 
-                                <a class="btnHD btnDel" onclick="deleteAccount(${account.id})">Xóa</a>
+                                <form action="${pageContext.request.contextPath}/ManageItemImageServlet" method="post"
+                                      onsubmit="return confirmDelete()">
+                                    <a class="btnHD btnDel" type="submit">Xóa</a>
+                                    <input type="hidden" value="${itemImage.id}" name="itemImageID">
+                                    <input type="hidden" value="deleteItemImage" name="action">
+                                </form>
 
-                                <a class="btnHD btnUpdateUser"
-                                        id="account_updateTrigger"
-                                        data-accountID="${account.id}"
-                                        data-customerID="${account.customer.id}"
-                                        data-permissionID="${account.permission.id}"
-                                        data-accountName="${account.name}"
-                                        data-accountPassword="${account.password}">
+                                <a
+                                        class="btnHD btnUpdateItemImage"
+                                        data-itemImageID="${itemImage.id}"
+                                        data-itemImageItemID="${itemImage.item.id}"
+                                        data-itemImageURL="${itemImage.image_url}"
+                                >
                                     Sửa
                                 </a>
-
                             </div>
                         </td>
                     </tr>
@@ -259,151 +248,96 @@
                 </tbody>
             </table>
 
-            <!--Update Account-->
-            <div id="update-user" class="updatemodal flex-center">
+            <!--Update Item Image Modal-->
+            <div id="update-itemImage" class="modal-update flex-center">
                 <div class="update-modal">
+                    <form class="form__update" action="${pageContext.request.contextPath}/ManageItemImageServlet" method="post">
+                        <span class="close clsUpdateItemImage">&times;</span>
 
-                    <span class="close">&times;</span>
-                    <h2 class="text-center" style="padding: 16px 0">CẬP NHẬT NGƯỜI DÙNG</h2>
-                    <form>
-                        <!--Account ID-->
+                        <h2 class="text-center" style="padding: 16px 0">
+                            Cập Nhật Hình Ảnh Sản Phẩm
+                        </h2>
+
+                        <!--Item Image ID-->
                         <div class="form-grp">
-                            <input type="hidden" id="update_accountID" name="update_accountID"/>
+                            <input type="hidden" id="update_itemImageID" name="update_itemImageID"/>
                         </div>
 
-                        <!--Account Name-->
+                        <!--Item ID-->
                         <div class="form-grp">
-                            <label for="update_accountName">Tên tài khoản:</label>
+                            <label for="update_itemImageItemID">Sản Phẩm:</label>
+                            <select id="update_itemImageItemID" name="update_itemImageItemID">
+                                <c:forEach items="${requestScope.itemList}" var="item">
+                                    <option value="${item.id}">${item.id} : ${item.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+                        <!--Item Image URL-->
+                        <div class="form-grp">
+                            <label for="update_itemImageURL">URL Hình Ảnh:</label>
                             <input
                                     type="text"
                                     maxlength="100"
-                                    id="update_accountName"
-                                    name="update_accountName"
+                                    id="update_itemImageURL"
+                                    name="update_itemImageURL"
                                     value=""
-                                    placeholder="Nhập vào tài khoản"
+                                    placeholder="Nhập vào đường dẫn hình ảnh"
                             />
-                        </div>
-
-                        <!--Account Password-->
-                        <div class="form-grp">
-                            <label for="update_accountPassword">Mật khẩu:</label>
-                            <input
-                                    type="password"
-                                    maxlength="100"
-                                    id="update_accountPassword"
-                                    name="update_accountPassword"
-                                    value=""
-                                    placeholder="Nhập vào mật khẩu"
-                            />
-                        </div>
-
-                        <!--Account Permission-->
-                        <div class="form-grp">
-                            <label for="update_accountPermissionID">Permission:</label>
-                            <select
-                                    id="update_accountPermissionID"
-                                    name="update_accountPermissionID"
-                            >
-                                <c:forEach items="${requestScope.permissionList}" var="permission">
-                                    <option value="${permission.id}">${permission.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <!--Account Customer-->
-                        <div class="form-grp">
-                            <label for="update_accountCustomerID">Customer:</label>
-                            <select id="update_accountCustomerID" name="update_accountCustomerID">
-                                <c:forEach items="${requestScope.customerList}" var="customer">
-                                    <option value="${customer.id}">
-                                            ${customer.id} : ${customer.name}
-                                    </option>
-                                </c:forEach>
-                            </select>
                         </div>
 
 
                         <div class="flex-center">
-                            <a id="updateAccount" class="btnHD btnAdd submit" onclick="updateAccount()">Cập nhật</a>
+                            <button id="updateItemImage" class="btnHD btnAdd submit">Cập nhật</button>
                         </div>
 
-                        <input type="hidden" value="updateAccount" name="action">
+                        <input type="hidden" value="updateItemImage" name="action">
                     </form>
-
-
                 </div>
             </div>
 
-            <!--Add Account-->
-            <div id="modal-add-account" class="addmodal flex-center">
+            <!--Add Item Image Modal-->
+            <div id="add-itemImage" class="modal-add flex-center modal__addItemImage">
                 <div class="add-modal">
-                    <span class="close clsadduser">&times;</span>
-                    <h2 class="text-center" style="padding: 16px 0">THÊM NGƯỜI DÙNG</h2>
-                    <form>
-                        <!--Account Name-->
+                    <form class="form__add" action="${pageContext.request.contextPath}/ManageItemImageServlet" method="post">
+                        <span class="close clsAddItemImage">&times;</span>
+                        <h2 class="text-center" style="padding: 16px 0">
+                            Thêm Hình Ảnh Sản Phẩm
+                        </h2>
+
+                        <!--Item ID-->
                         <div class="form-grp">
-                            <label for="add_accountName">Tên tài khoản:</label>
+                            <label for="add_itemImageItemID">Sản Phẩm:</label>
+                            <select id="add_itemImageItemID" name="add_itemImageItemID">
+                                <c:forEach items="${requestScope.itemList}" var="item">
+                                    <option value="${item.id}">${item.id} : ${item.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+                        <!--Item Image URL-->
+                        <div class="form-grp">
+                            <label for="add_itemImageURL">URL Hình Ảnh:</label>
                             <input
                                     type="text"
                                     maxlength="100"
-                                    id="add_accountName"
-                                    name="add_accountName"
+                                    id="add_itemImageURL"
+                                    name="add_itemImageURL"
                                     value=""
-                                    placeholder="Nhập vào tài khoản"
-                            />
-
-                            <!--Account Password-->
-                        </div>
-                        <div class="form-grp">
-                            <label for="add_accountPassword">Mật khẩu:</label>
-                            <input
-                                    type="password"
-                                    maxlength="100"
-                                    id="add_accountPassword"
-                                    name="add_accountPassword"
-                                    value=""
-                                    placeholder="Nhập vào mật khẩu"
+                                    placeholder="Nhập vào đường dẫn hình ảnh"
                             />
                         </div>
-
-                        <!--Account Permission-->
-                        <div class="form-grp">
-                            <label for="add_accountPermissionID">Permission:</label>
-                            <select id="add_accountPermissionID" name="add_accountPermissionID">
-                                <c:forEach items="${requestScope.permissionList}" var="permission">
-                                    <option value="${permission.id}">${permission.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <!--Account Customer-->
-                        <div class="form-grp">
-                            <label for="add_accountCustomerID">Customer:</label>
-                            <select id="add_accountCustomerID" name="add_accountCustomerID">
-                                <c:forEach items="${requestScope.customerList}" var="customer">
-                                    <option value="${customer.id}">
-                                            ${customer.id} : ${customer.name}
-                                    </option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <!--Add Button-->
-
 
                         <div class="flex-center">
-                            <a id="addAccount" class="btnHD btnAdd submit" onclick="addAccount()">Thêm</a>
+                            <button id="addItemImage" class="btnHD btnAdd submit">Thêm</button>
                         </div>
 
-                        <input type="hidden" value="addAccount" name="action">
+                        <input type="hidden" value="addItemImage" name="action"/>
                     </form>
-
-
                 </div>
             </div>
         </div>
     </div>
-
 </main>
 
 <footer class="footer">
@@ -417,7 +351,7 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"
 ></script>
-<script src="${pageContext.request.contextPath}/Views/JS_Temp/account_js.js"></script>
+<script src="${pageContext.request.contextPath}/Views/JS_Temp/itemtype_js.js"></script>
 
 <script>
     const adminManagerContextPath = "${pageContext.request.contextPath}";
@@ -427,6 +361,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/Views/User/dest/admin.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
-
 </body>
 </html>

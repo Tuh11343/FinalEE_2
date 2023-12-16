@@ -11,7 +11,6 @@ public interface DiscountCardService {
     
     boolean create(DiscountCard discountCard);
     boolean deleteByID(int id);
-    DiscountCard getDiscountCard(Integer id);
     List<DiscountCard> getAllDiscountCard();
     List<DiscountCard> findByCustomerID(Integer customerID);
 
@@ -19,5 +18,7 @@ public interface DiscountCardService {
 
     List<DiscountCard> findAllByNameLikeSort(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
     List<DiscountCard> findByCustomerID(Integer id, String sort, ItemServiceImpl.SortOrder sortOrder);
+
+    DiscountCard findByID(Integer id);
     
 }

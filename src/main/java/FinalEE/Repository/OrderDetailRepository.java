@@ -1,6 +1,7 @@
 
 package FinalEE.Repository;
 
+import FinalEE.Entity.Account;
 import FinalEE.Entity.OrderDetail;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,11 +17,13 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Intege
     double getOrderTotal(int orderID);
 
     List<OrderDetail> findAll(Sort sort);
-    OrderDetail findById(int orderDetailID);
     List<OrderDetail> findAllByOrder_Id(Integer orderID,Sort sort);
 
     List<OrderDetail> findAllByTotalIsLessThan(double total,Sort sort);
     List<OrderDetail> findAllByTotalIsGreaterThan(double total,Sort sort);
+
+    @Query("select od from OrderDetail od where od.id=?1 or od.id IS NULL")
+    OrderDetail findByID(Integer id);
 
 
 }

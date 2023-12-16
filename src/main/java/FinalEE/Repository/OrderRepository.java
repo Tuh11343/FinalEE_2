@@ -1,6 +1,7 @@
 
 package FinalEE.Repository;
 
+import FinalEE.Entity.Account;
 import FinalEE.Entity.Order;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Sort;
@@ -13,9 +14,6 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer>{
-
-    @Query("select o from Order o where o.id=?1")
-    Order findByID(Integer id);
 
     List<Order> findAllByCustomer_Id(Integer customerID);
 
@@ -30,5 +28,8 @@ public interface OrderRepository extends JpaRepository<Order, Integer>{
     List<Order> findAllByCustomer_Id(Integer customerID,Sort sort);
     List<Order> findAllByTotalIsGreaterThan(double total,Sort sort);
     List<Order> findAllByTotalIsLessThan(double total,Sort sort);
+
+    @Query("select o from Order o where o.id=?1 or o.id IS NULL")
+    Order findByID(Integer id);
 
 }

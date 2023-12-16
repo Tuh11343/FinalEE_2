@@ -11,7 +11,6 @@ public interface PermissionService {
     
     boolean create(Permission permission);
     boolean deleteByID(int id);
-    Permission getPermission(int id);
     List<Permission> getAllPermission();
 
     Permission findByLevel(int level);
@@ -19,6 +18,6 @@ public interface PermissionService {
     List<Permission> findAll(String sort, ItemServiceImpl.SortOrder sortOrder);
     List<Permission> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
 
-    Permission findByID(int permissionID);
+    Permission findByID(Integer permissionID);
     
 }

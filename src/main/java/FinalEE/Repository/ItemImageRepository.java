@@ -21,4 +21,7 @@ public interface ItemImageRepository extends JpaRepository<ItemImage, Integer>{
 
     List<ItemImage> findAll(Sort sort);
 
+    @Query("select im from ItemImage im where im.id=?1 or im.id IS NULL")
+    ItemImage findByID(Integer id);
+
 }

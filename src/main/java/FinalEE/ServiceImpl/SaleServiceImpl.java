@@ -26,11 +26,11 @@ public class SaleServiceImpl implements SaleService{
     public boolean create(Sale sale) {
         try {
             // Kiểm tra xem sale có tồn tại trong database hay không
-            Optional<Sale> existingSale = saleRepository.findById(sale.getId());
+            Sale existingSale=saleRepository.findByID(sale.getId());
 
             // Lưu sale và kiểm tra kết quả
             saleRepository.save(sale);
-            if (existingSale.isPresent()) {
+            if (existingSale!=null) {
                 System.out.println("Cap nhat thanh cong sale:" + sale.getId());
             } else {
                 System.out.println("Them thanh cong sale:" + sale.getId());
@@ -49,12 +49,6 @@ public class SaleServiceImpl implements SaleService{
             return true;
         }
         return false;
-    }
-    
-
-    @Override
-    public Sale getSale(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -88,6 +82,16 @@ public class SaleServiceImpl implements SaleService{
                 sortBy = Sort.by(sort).ascending();
             }
             return saleRepository.findAllByNameContains(name,sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Sale findBySale(Integer id) {
+        try{
+            return saleRepository.findByID(id);
         }catch (Exception er){
             er.printStackTrace();
         }

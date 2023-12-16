@@ -10,7 +10,6 @@ public interface ItemCollectionService {
     
     boolean create(ItemCollection itemCollection);
     boolean deleteByID(int id);
-    ItemCollection getItemCollection(int id);
     List<ItemCollection> getAllItemCollection();
 
     List<ItemCollection> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);

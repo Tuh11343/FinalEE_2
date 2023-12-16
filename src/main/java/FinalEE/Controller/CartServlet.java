@@ -52,7 +52,7 @@ public class CartServlet extends HttpServlet {
                         discountCardID = Integer.parseInt(req.getParameter("customerDiscountCardID"));
                     }
 
-                    DiscountCard discountCard = discountCardServiceImpl.getDiscountCard(discountCardID);
+                    DiscountCard discountCard = discountCardServiceImpl.findByID(discountCardID);
 
                     if (signInCustomer == null) {
                         signInCustomer = new Customer();

@@ -5,6 +5,7 @@ import FinalEE.ServiceImpl.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,7 +38,7 @@ public class ManageItemTypeServlet extends HttpServlet {
 
         initData(req);
 
-        req.getRequestDispatcher("Views/Admin/ManageItemTypeServlet.jsp").forward(req, resp);
+        req.getRequestDispatcher("Views/Admin/ManageItemType.jsp").forward(req, resp);
     }
 
 
@@ -45,7 +46,7 @@ public class ManageItemTypeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        System.out.println(action);
+        initData(req);
         switch (action) {
             case "addItemType" -> {
                 String name = req.getParameter("add_itemTypeName");
@@ -96,7 +97,7 @@ public class ManageItemTypeServlet extends HttpServlet {
                     }
                     case "id" -> {
                         Integer itemTypeID = Integer.parseInt(req.getParameter("itemTypeInputSearch"));
-                        ItemType itemType = itemTypeServiceImpl.getItemType(itemTypeID);
+                        ItemType itemType = itemTypeServiceImpl.findByID(itemTypeID);
                         List<ItemType> itemTypeList = new ArrayList<>();
                         itemTypeList.add(itemType);
 
@@ -174,5 +175,15 @@ public class ManageItemTypeServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("cartServiceImpl", cartServiceImpl);
+
+        //Lấy id account
+        List<Cookie> cookieList = List.of(req.getCookies());
+        for (Cookie cookie : cookieList) {
+            if (cookie.getName().equals("signInAccountID")) {
+                Integer signInAccountID = Integer.parseInt(cookie.getValue());
+                Account account = accountServiceImpl.findByID(signInAccountID);
+                req.setAttribute("signInAccount",account);
+            }
+        }
     }
 }

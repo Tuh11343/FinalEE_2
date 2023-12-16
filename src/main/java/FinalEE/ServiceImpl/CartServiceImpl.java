@@ -65,12 +65,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart getCart(int id) {
+    public Cart findByID(Integer id) {
         try {
-            Optional<Cart> cart = cartRepository.findById(id);
-            if (cart.get() != null) {
-                return cart.get();
-            }
+            return cartRepository.findByID(id);
         } catch (Exception er) {
             er.printStackTrace();
         }
@@ -94,7 +91,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<Cart> findAll(String sort, ItemServiceImpl.SortOrder sortOrder) {
-        try{
+        try {
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
                 sortBy = Sort.by(sort).descending();
@@ -102,7 +99,7 @@ public class CartServiceImpl implements CartService {
                 sortBy = Sort.by(sort).ascending();
             }
             return cartRepository.findAll(sortBy);
-        }catch (Exception er){
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return null;
@@ -110,15 +107,15 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<Cart> findByCustomerID(Integer customerID, String sort, ItemServiceImpl.SortOrder sortOrder) {
-        try{
+        try {
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
                 sortBy = Sort.by(sort).descending();
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            return cartRepository.findByCustomer_Id(customerID,sortBy);
-        }catch (Exception er){
+            return cartRepository.findByCustomer_Id(customerID, sortBy);
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return null;

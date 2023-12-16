@@ -5,6 +5,7 @@ import FinalEE.ServiceImpl.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,7 +46,7 @@ public class ManageItemMaterialServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        System.out.println(action);
+        initData(req);
         switch (action) {
             case "addItemMaterial" -> {
                 String name = req.getParameter("add_itemMaterialName");
@@ -95,7 +96,7 @@ public class ManageItemMaterialServlet extends HttpServlet {
                     }
                     case "id" -> {
                         Integer itemMaterialID = Integer.parseInt(req.getParameter("itemMaterialInputSearch"));
-                        ItemMaterial itemMaterial = itemMaterialServiceImpl.getItemMaterial(itemMaterialID);
+                        ItemMaterial itemMaterial = itemMaterialServiceImpl.findByID(itemMaterialID);
                         List<ItemMaterial> itemMaterialList = new ArrayList<>();
                         itemMaterialList.add(itemMaterial);
 
@@ -175,5 +176,15 @@ public class ManageItemMaterialServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("cartServiceImpl", cartServiceImpl);
+
+        //Lấy id account
+        List<Cookie> cookieList = List.of(req.getCookies());
+        for (Cookie cookie : cookieList) {
+            if (cookie.getName().equals("signInAccountID")) {
+                Integer signInAccountID = Integer.parseInt(cookie.getValue());
+                Account account = accountServiceImpl.findByID(signInAccountID);
+                req.setAttribute("signInAccount",account);
+            }
+        }
     }
 }

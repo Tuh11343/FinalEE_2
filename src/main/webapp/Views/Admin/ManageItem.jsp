@@ -119,397 +119,36 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     <main class="main">
       <aside class="left">
         <div class="accordion" id="accordionFlushExample">
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingOne">
-              <button
-                class="accordion-button collapsed text"
-                data-type="accountList"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseOne"
-                aria-expanded="false"
-                aria-controls="flush-collapseOne"
-              >
-                Quản lý tài khoản
-              </button>
-            </h2>
-            <div
-              id="flush-collapseOne"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingOne"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">Đây là nơi quản lý <code>tài khoản</code></div>
-            </div>
-          </div>
 
-          <!--Item-->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingTwo">
-              <button
-                class="accordion-button collapsed text"
-                data-type="itemList"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseTwo"
-                aria-expanded="false"
-                aria-controls="flush-collapseTwo"
-              >
-                Quản lý sản phẩm
-              </button>
-            </h2>
-            <div
-              id="flush-collapseTwo"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingTwo"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">Đây là nơi quản lý <code>sản phẩm</code></div>
-            </div>
-          </div>
+          <c:if test="${requestScope.signInAccount.permission.level eq 1}">
+            <a href="${pageContext.request.contextPath}/ManageAccountServlet">Quản lý tài khoản</a>
+            <a href="${pageContext.request.contextPath}/ManageStatisticServlet">Quản lý thống kê</a>
+            <a href="${pageContext.request.contextPath}/ManagePermissionServlet">Quản lý quyền tài khoản</a>
+            <a href="${pageContext.request.contextPath}/ManageDiscountCardServlet">Quản lý mã giảm giá khách
+              hàng</a>
+            <a href="${pageContext.request.contextPath}/ManageOrderDetailServlet">Quản lý chi tiết hóa đơn</a>
+            <a href="${pageContext.request.contextPath}/ManageSaleServlet">Quản lý khuyến mãi sản phẩm</a>
+          </c:if>
 
-          <!--Statistic-->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingThree">
-              <button
-                class="accordion-button collapsed text"
-                data-type="statistics"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseThree"
-                aria-expanded="false"
-                aria-controls="flush-collapseThree"
-              >
-                Quản lý thống kê
-              </button>
-            </h2>
-            <div
-              id="flush-collapseThree"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingThree"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">Đây là nơi quản lý <code>thống kê</code></div>
-            </div>
-          </div>
 
-          <!--Customer-->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingFour">
-              <button
-                class="accordion-button collapsed text"
-                data-type="customerList"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseFour"
-                aria-expanded="false"
-                aria-controls="flush-collapseFour"
-              >
-                Quản lý khách hàng
-              </button>
-            </h2>
-            <div
-              id="flush-collapseFour"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingFour"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">Đây là nơi quản lý <code>khách hàng</code></div>
-            </div>
-          </div>
+          <a href="${pageContext.request.contextPath}/ManageItemServlet">Quản lý sản phẩm</a>
 
-          <!--Coupon-->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingFive">
-              <button
-                class="accordion-button collapsed text"
-                data-type="discountCardList"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseFive"
-                aria-expanded="false"
-                aria-controls="flush-collapseFive"
-              >
-                Quản lý mã giảm giá
-              </button>
-            </h2>
-            <div
-              id="flush-collapseFive"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingFive"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">
-                Đây là nơi quản lý <code>mã giảm giá</code>
-              </div>
-            </div>
-          </div>
+          <a href="${pageContext.request.contextPath}/ManageCustomerServlet">Quản lý khách hàng</a>
 
-          <!--Item collection-->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingSix">
-              <button
-                class="accordion-button collapsed text"
-                data-type="itemCollectionList"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseSix"
-                aria-expanded="false"
-                aria-controls="flush-collapseSix"
-              >
-                Quản lý bộ sưu tập
-              </button>
-            </h2>
-            <div
-              id="flush-collapseSix"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingSix"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">Đây là nơi quản lý <code>bộ sưu tập</code></div>
-            </div>
-          </div>
+          <a href="${pageContext.request.contextPath}/ManageItemCollectionServlet">Quản lý bộ sưu tập</a>
 
-          <!--Item image-->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingSeven">
-              <button
-                class="accordion-button collapsed text"
-                data-type="itemImageList"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseSeven"
-                aria-expanded="false"
-                aria-controls="flush-collapseSeven"
-              >
-                Quản lý hình ảnh
-              </button>
-            </h2>
-            <div
-              id="flush-collapseSeven"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingSeven"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">
-                Đây là nơi quản lý <code> hình ảnh của sản phẩm</code>
-              </div>
-            </div>
-          </div>
+          <a href="${pageContext.request.contextPath}/ManageItemImageServlet">Quản lý hình ảnh sản phẩm</a>
 
-          <!--Item Material-->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingEight">
-              <button
-                class="accordion-button collapsed text"
-                data-type="itemMaterialList"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseEight"
-                aria-expanded="false"
-                aria-controls="flush-collapseEight"
-              >
-                Quản lý nguyên liệu
-              </button>
-            </h2>
-            <div
-              id="flush-collapseEight"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingEight"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">
-                Đây là nơi quản lý <code> nguyên liệu của sản phẩm</code>
-              </div>
-            </div>
-          </div>
+          <a href="${pageContext.request.contextPath}/ManageItemMaterialServlet">Quản lý vật liệu sản phẩm</a>
 
-          <!--Item Order-->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingNine">
-              <button
-                class="accordion-button collapsed text"
-                data-type="orderList"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseNine"
-                aria-expanded="false"
-                aria-controls="flush-collapseNine"
-              >
-                Quản lý hóa đơn
-              </button>
-            </h2>
-            <div
-              id="flush-collapseNine"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingNine"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">Đây là nơi quản lý <code> hóa đơn</code></div>
-            </div>
-          </div>
+          <a href="${pageContext.request.contextPath}/ManageOrderServlet">Quản lý hóa đơn</a>
 
-          <!--Item Order Detail-->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingTen">
-              <button
-                class="accordion-button collapsed text"
-                data-type="orderDetailList"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseTen"
-                aria-expanded="false"
-                aria-controls="flush-collapseTen"
-              >
-                Quản lý chi tiết hóa đơn
-              </button>
-            </h2>
-            <div
-              id="flush-collapseTen"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingTen"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">
-                Đây là nơi quản lý <code> chi tiết hóa đơn</code>
-              </div>
-            </div>
-          </div>
+          <a href="${pageContext.request.contextPath}/ManageItemTypeServlet">Quản lý loại sản phẩm</a>
 
-          <!--Item Type-->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingEleven">
-              <button
-                class="accordion-button collapsed text"
-                data-type="itemTypeList"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseEleven"
-                aria-expanded="false"
-                aria-controls="flush-collapseEleven"
-              >
-                Quản lý kiểu sản phẩm
-              </button>
-            </h2>
-            <div
-              id="flush-collapseEleven"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingEleven"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">
-                Đây là nơi quản lý <code> loại sản phẩm</code>
-              </div>
-            </div>
-          </div>
+          <a href="${pageContext.request.contextPath}/ManageStockItemServlet">Quản lý thông tin sản phẩm</a>
 
-          <!--Permission-->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingTwelve">
-              <button
-                class="accordion-button collapsed text"
-                data-type="permissionList"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseTwelve"
-                aria-expanded="false"
-                aria-controls="flush-collapseTwelve"
-              >
-                Quản lý phân quyền
-              </button>
-            </h2>
-            <div
-              id="flush-collapseTwelve"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingTwelve"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">
-                Đây là nơi quản lý <code> phân quyền</code>
-              </div>
-            </div>
-          </div>
+          <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
 
-          <!--Sale-->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingThirdteen">
-              <button
-                class="accordion-button collapsed text"
-                data-type="saleList"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseThirdteen"
-                aria-expanded="false"
-                aria-controls="flush-collapseThirdteen"
-              >
-                Quản lý giảm giá
-              </button>
-            </h2>
-            <div
-              id="flush-collapseThirdteen"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingThirdteen"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">Đây là nơi quản lý <code> giảm giá</code></div>
-            </div>
-          </div>
-
-          <!--Stock item-->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingFourteen">
-              <button
-                class="accordion-button collapsed text"
-                data-type="stockItemList"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseFourteen"
-                aria-expanded="false"
-                aria-controls="flush-collapseFourteen"
-              >
-                Quản lý màu sắc kích cỡ + số lượng
-              </button>
-            </h2>
-            <div
-              id="flush-collapseFourteen"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingFourteen"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">
-                Đây là nơi quản lý
-                <code> quản lý màu sắc kích cỡ + số lượng</code>
-              </div>
-            </div>
-          </div>
-
-          <!--Order Status-->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingFifteen">
-              <button
-                class="accordion-button collapsed text"
-                data-type="orderStatusList"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseFifteen"
-                aria-expanded="false"
-                aria-controls="flush-collapseFifteen"
-              >
-                Quản lý xác nhận đơn hàng
-              </button>
-            </h2>
-            <div
-              id="flush-collapseFifteen"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingFifteen"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <div class="accordion-body">
-                Đây là nơi quản lý
-                <code> xác nhận đơn hàng</code>
-              </div>
-            </div>
-          </div>
         </div>
       </aside>
 
@@ -518,7 +157,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
         <!--Item-->
         <div class="product-data table-data active" data-type="itemList">
           <div class="header-table">
-            <div class="AddProduct">
+            <div class="AddProduct listbtn">
               <button
                 class="btnHD btnAdd"
                 id="item_addTrigger"
@@ -534,7 +173,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                 Xuất Excel
               </a>
               <form
-                action="${pageContext.request.contextPath}/ManageItemServletServlet"
+                action="${pageContext.request.contextPath}/ManageItemServlet"
                 method="post"
               >
                 <button
@@ -557,7 +196,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                   <div class="inputsearch">
                     <select class="selecttype" name="itemSearchType" id="itemSearchType">
                       <option value="id">ID</option>
-                      <option value="color">Màu sản phẩm</option>
+                      <option value="itemColor">Màu sản phẩm</option>
                       <option value="lowerPrice">Giá nhỏ hơn</option>
                       <option value="higherPrice">Giá lớn hơn</option>
                     </select>
@@ -628,7 +267,13 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                   <td>${item.description}</td>
                   <td>
                     <div class="flex-center grpbtn">
-                      <a class="btnHD btnDel" type="submit">Xóa</a>
+
+                      <form action="${pageContext.request.contextPath}/ManageItemServlet" method="post"
+                            onsubmit="return confirmDelete()">
+                        <button class="btnHD btnDel" type="submit">Xóa</button>
+                        <input type="hidden" value="${item.id}" name="itemID">
+                        <input type="hidden" value="deleteItem" name="action">
+                      </form>
 
                       <a
                         class="btnHD btnUpdateItem"
@@ -677,6 +322,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                     name="update_itemName"
                     value=""
                     placeholder="Nhập vào tên sản phẩm"
+                    required
                   />
                 </div>
 
@@ -697,7 +343,6 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                     id="update_itemItemCollectionID"
                     name="update_itemItemCollectionID"
                   >
-                    <option value="">Không</option>
                     <c:forEach
                       items="${requestScope.itemCollectionList}"
                       var="itemCollection"
@@ -753,6 +398,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                     name="update_itemPrice"
                     value=""
                     placeholder="Nhập vào giá sản phẩm"
+                    required
                   />
                 </div>
 
@@ -765,6 +411,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                     name="update_itemYearProduce"
                     value=""
                     placeholder="Nhập vào năm sản xuất"
+                    required
                   />
                 </div>
 
@@ -778,11 +425,12 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                     name="update_itemDescription"
                     value=""
                     placeholder="Nhập vào thông tin sản phẩm"
+                    required
                   />
                 </div>
 
                 <div class="flex-center">
-                  <button id="updateItem" class="btn submit">Cập nhật</button>
+                  <button id="updateItem" class="btnHD btnAdd submit">Cập nhật</button>
                 </div>
                 <input type="hidden" value="updateItem" name="action" />
               </form>
@@ -808,6 +456,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                     name="add_itemName"
                     value=""
                     placeholder="Nhập vào tên sản phẩm"
+                    required
                   />
                 </div>
 
@@ -825,7 +474,6 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                 <div class="form-grp">
                   <label for="add_itemItemCollectionID">Bộ sưu tập:</label>
                   <select id="add_itemItemCollectionID" name="add_itemCollectionID">
-                    <option value="">Không</option>
                     <c:forEach
                       items="${requestScope.itemCollectionList}"
                       var="itemCollection"
@@ -881,6 +529,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                     name="add_itemPrice"
                     value=""
                     placeholder="Nhập vào giá sản phẩm"
+                    required
                   />
                 </div>
 
@@ -893,6 +542,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                     name="add_itemYearProduce"
                     value=""
                     placeholder="Nhập vào năm sản xuất"
+                    required
                   />
                 </div>
 
@@ -906,11 +556,12 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                     name="add_itemDescription"
                     value=""
                     placeholder="Nhập vào thông tin sản phẩm"
+                    required
                   />
                 </div>
 
                 <div class="flex-center">
-                  <button id="addItem" class="btn submit">Thêm</button>
+                  <button id="addItem" class="btnHD btnAdd submit">Thêm</button>
                 </div>
                 <input type="hidden" value="addItem" name="action" />
               </form>

@@ -36,16 +36,14 @@ function logInAjaxRequest() {
         },
         success: function (data) {
             if (data.success === 1) {
-                if(data.accountPermission !== 1 && data.accountPermission !==2){
-                    document.cookie = "signInAccountID=" + data.accountID + "; path=/";
-                }
+                document.cookie = "signInAccountID=" + data.accountID + "; path=/";
 
                 if(data.deleteLocalCart===true){
                     localStorage.clear();
                 }
 
                 if (data.accountPermission === 1 || data.accountPermission === 2) {
-                    window.location.href = contextPath + "/AdminServlet";
+                    window.location.href = contextPath + "/AdminManagerServlet";
                 } else {
                     location.reload();
                 }

@@ -5,6 +5,7 @@ import FinalEE.ServiceImpl.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,13 +46,13 @@ public class ManageItemImageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        System.out.println(action);
+        initData(req);
         switch (action) {
             case "addItemImage" -> {
                 int itemID = Integer.parseInt(req.getParameter("add_itemImageItemID"));
                 String url = req.getParameter("add_itemImageURL");
 
-                Item item = itemServiceImpl.getItem(itemID);
+                Item item = itemServiceImpl.findByID(itemID);
 
                 ItemImage itemImage = new ItemImage();
                 itemImage.setImage_url(url);
@@ -70,7 +71,7 @@ public class ManageItemImageServlet extends HttpServlet {
                 int itemID = Integer.parseInt(req.getParameter("update_itemImageItemID"));
                 String url = req.getParameter("update_itemImageURL");
 
-                Item item = itemServiceImpl.getItem(itemID);
+                Item item = itemServiceImpl.findByID(itemID);
 
                 ItemImage itemImage = new ItemImage();
                 itemImage.setId(id);
@@ -103,7 +104,7 @@ public class ManageItemImageServlet extends HttpServlet {
                     }
                     case "id" -> {
                         Integer itemImageID = Integer.parseInt(req.getParameter("itemImageInputSearch"));
-                        ItemImage itemImage = itemImageServiceImpl.getItemImage(itemImageID);
+                        ItemImage itemImage = itemImageServiceImpl.findByID(itemImageID);
                         List<ItemImage> itemImageList = new ArrayList<>();
                         itemImageList.add(itemImage);
 
@@ -182,5 +183,15 @@ public class ManageItemImageServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("cartServiceImpl", cartServiceImpl);
+
+        //Lấy id account
+        List<Cookie> cookieList = List.of(req.getCookies());
+        for (Cookie cookie : cookieList) {
+            if (cookie.getName().equals("signInAccountID")) {
+                Integer signInAccountID = Integer.parseInt(cookie.getValue());
+                Account account = accountServiceImpl.findByID(signInAccountID);
+                req.setAttribute("signInAccount",account);
+            }
+        }
     }
 }

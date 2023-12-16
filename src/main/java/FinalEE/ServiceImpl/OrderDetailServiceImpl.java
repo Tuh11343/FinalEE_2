@@ -30,7 +30,7 @@ public class OrderDetailServiceImpl implements OrderDetailService{
     public boolean create(OrderDetail orderDetail) {
         try {
             // Kiểm tra xem orderDetail có tồn tại trong database hay không
-            OrderDetail existingOrderDetail = orderDetailRepository.findById(orderDetail.getId());
+            OrderDetail existingOrderDetail = orderDetailRepository.findByID(orderDetail.getId());
 
             // Lưu orderDetail và kiểm tra kết quả
             if(orderDetailRepository.save(orderDetail)!=null){
@@ -62,8 +62,13 @@ public class OrderDetailServiceImpl implements OrderDetailService{
     }
 
     @Override
-    public OrderDetail getOrderDetail(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public OrderDetail findByID(Integer id) {
+        try{
+            return orderDetailRepository.findByID(id);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -86,16 +91,6 @@ public class OrderDetailServiceImpl implements OrderDetailService{
                 sortBy = Sort.by(sort).ascending();
             }
             return orderDetailRepository.findAll(sortBy);
-        }catch (Exception er){
-            er.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public OrderDetail findByID(int id) {
-        try{
-            return orderDetailRepository.findById(id);
         }catch (Exception er){
             er.printStackTrace();
         }

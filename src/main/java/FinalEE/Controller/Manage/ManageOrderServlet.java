@@ -5,6 +5,7 @@ import FinalEE.ServiceImpl.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,13 +31,14 @@ public class ManageOrderServlet extends HttpServlet {
     private SaleServiceImpl saleServiceImpl;
     private StockItemServiceImpl stockItemServiceImpl;
     private CartServiceImpl cartServiceImpl;
+    private OrderStatusServiceImpl orderStatusServiceImpl;
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         initData(req);
 
-        req.getRequestDispatcher("Views/Admin/ManageOrderServlet.jsp").forward(req, resp);
+        req.getRequestDispatcher("Views/Admin/ManageOrder.jsp").forward(req, resp);
     }
 
 
@@ -44,14 +46,19 @@ public class ManageOrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        System.out.println(action);
+        initData(req);
         switch (action) {
             /*Order*/
             case "addOrder" -> {
                 int customerID = Integer.parseInt(req.getParameter("add_orderCustomerID"));
-                int discountCardID = Integer.parseInt(req.getParameter("add_orderDiscountCardID"));
-                double total = Double.parseDouble(req.getParameter("add_orderTotal"));
+
+                Integer discountCardID=null;
+                if(req.getParameter("add_orderDiscountCardID")!=null&&!req.getParameter("add_orderDiscountCardID").isBlank()){
+                    discountCardID=Integer.parseInt(req.getParameter("add_orderDiscountCardID"));
+                }
+                double total = 0;
                 String datePurchase = req.getParameter("add_orderDatePurchase");
+                String email=req.getParameter("add_orderEmail");
 
                 /*Xử lý định dạng date*/
                 SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -62,8 +69,8 @@ public class ManageOrderServlet extends HttpServlet {
                     e.printStackTrace();
                 }
 
-                Customer customer = customerServiceImpl.getCustomer(customerID);
-                DiscountCard discountCard = discountCardServiceImpl.getDiscountCard(discountCardID);
+                Customer customer = customerServiceImpl.findByID(customerID);
+                DiscountCard discountCard = discountCardServiceImpl.findByID(discountCardID);
 
 
                 Order order = new Order();
@@ -71,6 +78,8 @@ public class ManageOrderServlet extends HttpServlet {
                 order.setTotal(total);
                 order.setDate_purchase(datePurchaseFormatted);
                 order.setDiscountCard(discountCard);
+                order.setEmail(email);
+
 
                 if (orderServiceImpl.create(order)) {
                     resp.getWriter().println("<script>alert('Thêm hóa đơn thành công!');</script>");
@@ -78,14 +87,18 @@ public class ManageOrderServlet extends HttpServlet {
                     resp.getWriter().println("<script>alert('Thêm hóa đơn thất bại!');</script>");
                 }
 
-                req.getRequestDispatcher("Views/Admin/ManageOrderServlet.jsp").forward(req, resp);
+                resp.sendRedirect("/FinalEE/ManageOrderServlet");
             }
             case "order_btnUpdate" -> {
                 int id = Integer.parseInt(req.getParameter("update_orderID"));
                 int customerID = Integer.parseInt(req.getParameter("update_orderCustomerID"));
-                int discountCardID = Integer.parseInt(req.getParameter("update_orderDiscountCardID"));
+                Integer discountCardID=null;
+                if(req.getParameter("update_orderDiscountCardID")!=null&&!req.getParameter("update_orderDiscountCardID").isBlank()){
+                    discountCardID=Integer.parseInt(req.getParameter("update_orderDiscountCardID"));
+                }
                 double total = Double.parseDouble(req.getParameter("update_orderTotal"));
                 String datePurchase = req.getParameter("update_orderDatePurchase");
+                String email=req.getParameter("update_orderEmail");
 
                 /*Xử lý định dạng date*/
                 SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -96,8 +109,8 @@ public class ManageOrderServlet extends HttpServlet {
                     e.printStackTrace();
                 }
 
-                Customer customer = customerServiceImpl.getCustomer(customerID);
-                DiscountCard discountCard = discountCardServiceImpl.getDiscountCard(discountCardID);
+                Customer customer = customerServiceImpl.findByID(customerID);
+                DiscountCard discountCard = discountCardServiceImpl.findByID(discountCardID);
 
                 Order order = new Order();
                 order.setId(id);
@@ -105,6 +118,7 @@ public class ManageOrderServlet extends HttpServlet {
                 order.setTotal(total);
                 order.setDate_purchase(datePurchaseFormatted);
                 order.setDiscountCard(discountCard);
+                order.setEmail(email);
 
                 if (orderServiceImpl.create(order)) {
                     resp.getWriter().println("<script>alert('Cập nhật hóa đơn thành công!');</script>");
@@ -112,7 +126,7 @@ public class ManageOrderServlet extends HttpServlet {
                     resp.getWriter().println("<script>alert('Cập nhật hóa đơn thất bại!');</script>");
                 }
 
-                req.getRequestDispatcher("Views/Admin/ManageOrderServlet.jsp").forward(req, resp);
+                resp.sendRedirect("/FinalEE/ManageOrderServlet");
             }
             case "order_btnDelete" -> {
                 int orderID = Integer.parseInt(req.getParameter("orderID"));
@@ -121,7 +135,7 @@ public class ManageOrderServlet extends HttpServlet {
                 } else {
                     resp.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thất bại!');</script>");
                 }
-                req.getRequestDispatcher("Views/Admin/ManageOrderServlet.jsp").forward(req, resp);
+                resp.sendRedirect("/FinalEE/ManageOrderServlet");
             }
             case "searchAndSortOrder"-> {
                 String searchType = req.getParameter("orderSearchType");
@@ -132,7 +146,7 @@ public class ManageOrderServlet extends HttpServlet {
                     }
                     case "id" -> {
                         Integer orderID = Integer.parseInt(req.getParameter("orderInputSearch"));
-                        Order order = orderServiceImpl.getOrder(orderID);
+                        Order order = orderServiceImpl.findByID(orderID);
                         List<Order> orderList = new ArrayList<>();
                         orderList.add(order);
 
@@ -203,6 +217,7 @@ public class ManageOrderServlet extends HttpServlet {
         permissionServiceImpl = (PermissionServiceImpl) servletContext.getAttribute("permissionServiceImpl");
         saleServiceImpl = (SaleServiceImpl) servletContext.getAttribute("saleServiceImpl");
         stockItemServiceImpl = (StockItemServiceImpl) servletContext.getAttribute("stockItemServiceImpl");
+        orderStatusServiceImpl=(OrderStatusServiceImpl) servletContext.getAttribute("orderStatusServiceImpl");
 
 
         List<Account> accountList = accountServiceImpl.getAllAccount();
@@ -218,6 +233,7 @@ public class ManageOrderServlet extends HttpServlet {
         List<Permission> permissionList = permissionServiceImpl.getAllPermission();
         List<Sale> saleList = saleServiceImpl.getAllSale();
         List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
+        List<OrderStatus> orderStatusList=orderStatusServiceImpl.getAllOrderStatus();
 
         /*Set Data List*/
         req.setAttribute("accountList", accountList);
@@ -234,5 +250,16 @@ public class ManageOrderServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("cartServiceImpl", cartServiceImpl);
+        req.setAttribute("orderStatusList", orderStatusList);
+
+        //Lấy id account
+        List<Cookie> cookieList = List.of(req.getCookies());
+        for (Cookie cookie : cookieList) {
+            if (cookie.getName().equals("signInAccountID")) {
+                Integer signInAccountID = Integer.parseInt(cookie.getValue());
+                Account account = accountServiceImpl.findByID(signInAccountID);
+                req.setAttribute("signInAccount",account);
+            }
+        }
     }
 }

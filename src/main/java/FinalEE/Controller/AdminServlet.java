@@ -1,3 +1,4 @@
+/*
 package FinalEE.Controller;
 
 import FinalEE.Entity.*;
@@ -70,7 +71,9 @@ public class AdminServlet extends HttpServlet {
         List<Sale> saleList = saleServiceImpl.getAllSale();
         List<StockItem> stockItemList = stockItemServiceImpl.getAllStockItem();
 
-        /*Set Data List*/
+        */
+/*Set Data List*//*
+
         req.setAttribute("accountList", accountList);
         req.setAttribute("customerList", customerList);
         req.setAttribute("discountCardList", discountCardList);
@@ -94,7 +97,9 @@ public class AdminServlet extends HttpServlet {
         try {
             String action = req.getParameter("action");
             switch (action) {
-                /*Customer*/
+                */
+/*Customer*//*
+
                 case "addCustomer" -> {
                     System.out.println("Thêm khách hàng");
 
@@ -228,7 +233,9 @@ public class AdminServlet extends HttpServlet {
 
                 }
 
-                /*Account*/
+                */
+/*Account*//*
+
                 case "addAccount" -> {
                     String name = req.getParameter("name");
                     String password = req.getParameter("password");
@@ -382,7 +389,9 @@ public class AdminServlet extends HttpServlet {
 
                 }
 
-                /*Cart*/
+                */
+/*Cart*//*
+
                 case "addCart" -> {
                     System.out.println("Thêm giỏ hàng");
 
@@ -497,7 +506,9 @@ public class AdminServlet extends HttpServlet {
 
                 }
 
-                /*Discount Card*/
+                */
+/*Discount Card*//*
+
                 case "addDiscountCard" -> {
                     System.out.println("Thêm thẻ khuyến mãi");
 
@@ -650,7 +661,9 @@ public class AdminServlet extends HttpServlet {
 
                 }
 
-                /*ItemCollection*/
+                */
+/*ItemCollection*//*
+
                 case "addItemCollection" -> {
                     String name = req.getParameter("name");
 
@@ -768,7 +781,9 @@ public class AdminServlet extends HttpServlet {
 
                 }
 
-                /*ItemImage*/
+                */
+/*ItemImage*//*
+
                 case "addItemImage" -> {
                     int itemID = Integer.parseInt(req.getParameter("itemID"));
                     String url = req.getParameter("imageURL");
@@ -894,7 +909,9 @@ public class AdminServlet extends HttpServlet {
 
                 }
 
-                /*ItemMaterial*/
+                */
+/*ItemMaterial*//*
+
                 case "addItemMaterial" -> {
                     String name = req.getParameter("name");
 
@@ -1012,7 +1029,9 @@ public class AdminServlet extends HttpServlet {
 
                 }
 
-                /*ItemType*/
+                */
+/*ItemType*//*
+
                 case "addItemType" -> {
                     String name = req.getParameter("name");
 
@@ -1243,7 +1262,9 @@ public class AdminServlet extends HttpServlet {
 
                 }
 
-                /*Order*/
+                */
+/*Order*//*
+
                 case "updateOrder" -> {
                     int orderID = Integer.parseInt(req.getParameter("id"));
                     int customerID = Integer.parseInt(req.getParameter("customerID"));
@@ -1255,7 +1276,9 @@ public class AdminServlet extends HttpServlet {
                     String note = req.getParameter("Note");
                     String email = req.getParameter("Email");
 
-                    /*Xử lý định dạng date*/
+                    */
+/*Xử lý định dạng date*//*
+
                     SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
                     Date datePurchaseFormatted = null;
                     try {
@@ -1408,7 +1431,9 @@ public class AdminServlet extends HttpServlet {
 
                 }
 
-                /*Permission*/
+                */
+/*Permission*//*
+
                 case "addPermission" -> {
                     int level = Integer.parseInt(req.getParameter("level"));
                     String name = req.getParameter("name");
@@ -1530,7 +1555,9 @@ public class AdminServlet extends HttpServlet {
 
                 }
 
-                /*Sale*/
+                */
+/*Sale*//*
+
                 case "addSale" -> {
                     int itemId = Integer.parseInt(req.getParameter("itemID"));
                     String name = req.getParameter("name");
@@ -1664,7 +1691,9 @@ public class AdminServlet extends HttpServlet {
 
                 }
 
-                /*StockItem*/
+                */
+/*StockItem*//*
+
                 case "addStockItem" -> {
                     int itemId = Integer.parseInt(req.getParameter("id"));
                     String color = req.getParameter("color");
@@ -1798,7 +1827,9 @@ public class AdminServlet extends HttpServlet {
 
                 }
 
-                /*Item*/
+                */
+/*Item*//*
+
                 case "addItem" -> {
                     String name = req.getParameter("name");
                     Integer itemCollectionID = null;
@@ -2002,7 +2033,9 @@ public class AdminServlet extends HttpServlet {
 
                 }
 
-                /*OrderStatus*/
+                */
+/*OrderStatus*//*
+
                 case "addOrderStatus" -> {
                     String name = req.getParameter("name");
 
@@ -2127,3 +2160,4 @@ public class AdminServlet extends HttpServlet {
         }
     }
 }
+*/

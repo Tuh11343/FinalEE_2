@@ -22,17 +22,15 @@ public class ItemImageServiceImpl implements ItemImageService{
         
     }
     
-    
-    
     @Override
     public boolean create(ItemImage itemImage) {
         try {
             // Kiểm tra xem itemImage có tồn tại trong database hay không
-            Optional<ItemImage> existingItemImage = itemImageRepository.findById(itemImage.getId());
+            ItemImage existingItemImage=itemImageRepository.findByID(itemImage.getId());
 
             // Lưu itemImage và kiểm tra kết quả
             itemImageRepository.save(itemImage);
-            if (existingItemImage.isPresent()) {
+            if (existingItemImage!=null) {
                 System.out.println("Cap nhat thanh cong itemImage:" + itemImage.getId());
             } else {
                 System.out.println("Them thanh cong itemImage:" + itemImage.getId());
@@ -51,11 +49,6 @@ public class ItemImageServiceImpl implements ItemImageService{
             return true;
         }
         return false;
-    }
-
-    @Override
-    public ItemImage getItemImage(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -94,6 +87,16 @@ public class ItemImageServiceImpl implements ItemImageService{
                 sortBy = Sort.by(sort).ascending();
             }
             return itemImageRepository.findAll(sortBy);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ItemImage findByID(Integer id) {
+        try{
+            return itemImageRepository.findByID(id);
         }catch (Exception er){
             er.printStackTrace();
         }

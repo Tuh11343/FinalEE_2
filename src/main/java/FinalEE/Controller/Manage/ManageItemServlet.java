@@ -5,6 +5,7 @@ import FinalEE.ServiceImpl.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,7 +46,7 @@ public class ManageItemServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        System.out.println(action);
+        initData(req);
         switch (action) {
             case "addItem" -> {
 
@@ -55,14 +56,19 @@ public class ManageItemServlet extends HttpServlet {
                 Integer itemCollectionID=null;
                 if(!req.getParameter("add_itemCollectionID").isBlank())
                     itemCollectionID = Integer.parseInt(req.getParameter("add_itemCollectionID"));
-                int isNew = Integer.parseInt(req.getParameter("add_itemIsNew"));
-                int isHot = Integer.parseInt(req.getParameter("add_itemIsHot"));
+                int isNew = 0;
+                if(req.getParameter("add_itemIsNew")!=null&&!req.getParameter("add_itemIsNew").isBlank())
+                    isNew= 1;
+                int isHot = 0;
+                if(req.getParameter("add_itemIsNew")!=null&&!req.getParameter("add_itemIsNew").isBlank())
+                    isHot= 1;
                 double price = Double.parseDouble(req.getParameter("add_itemPrice"));
                 int yearProduce = Integer.parseInt(req.getParameter("add_itemYearProduce"));
 
-                ItemCollection itemCollection = itemCollectionServiceImpl.getItemCollection(itemCollectionID);
-                ItemMaterial itemMaterial = itemMaterialServiceImpl.getItemMaterial(itemMaterialID);
-                ItemType itemType = itemTypeServiceImpl.getItemType(itemTypeID);
+                ItemCollection itemCollection = itemCollectionServiceImpl.findByID(itemCollectionID);
+                ItemMaterial itemMaterial = itemMaterialServiceImpl.findByID(itemMaterialID);
+                ItemType itemType = itemTypeServiceImpl.findByID(itemTypeID);
+                String description=req.getParameter("add_itemDescription");
 
                 Item item = new Item();
                 item.setIs_hot(isHot);
@@ -73,6 +79,7 @@ public class ManageItemServlet extends HttpServlet {
                 item.setName(name);
                 item.setPrice(price);
                 item.setYear_produce(yearProduce);
+                item.setDescription(description);
 
                 if (itemServiceImpl.create(item)) {
                     resp.getWriter().println("<script>alert('Thêm sản phẩm thành công!');</script>");
@@ -90,14 +97,19 @@ public class ManageItemServlet extends HttpServlet {
                 int itemTypeID = Integer.parseInt(req.getParameter("update_itemTypeID"));
                 int itemMaterialID = Integer.parseInt(req.getParameter("update_itemMaterialID"));
                 int itemCollectionID = Integer.parseInt(req.getParameter("update_itemCollectionID"));
-                int isNew = Integer.parseInt(req.getParameter("update_itemIsNew"));
-                int isHot = Integer.parseInt(req.getParameter("update_itemIsHot"));
+                int isNew = 0;
+                if(req.getParameter("update_itemIsNew")!=null&&!req.getParameter("update_itemIsNew").isBlank())
+                    isNew= 1;
+                int isHot = 0;
+                if(req.getParameter("update_itemIsNew")!=null&&!req.getParameter("update_itemIsNew").isBlank())
+                    isHot= 1;
                 double price = Double.parseDouble(req.getParameter("update_itemPrice"));
                 int yearProduce = Integer.parseInt(req.getParameter("update_itemYearProduce"));
+                String description=req.getParameter("update_itemDescription");
 
-                ItemCollection itemCollection = itemCollectionServiceImpl.getItemCollection(itemCollectionID);
-                ItemMaterial itemMaterial = itemMaterialServiceImpl.getItemMaterial(itemMaterialID);
-                ItemType itemType = itemTypeServiceImpl.getItemType(itemTypeID);
+                ItemCollection itemCollection = itemCollectionServiceImpl.findByID(itemCollectionID);
+                ItemMaterial itemMaterial = itemMaterialServiceImpl.findByID(itemMaterialID);
+                ItemType itemType = itemTypeServiceImpl.findByID(itemTypeID);
 
                 Item item = new Item();
                 item.setId(id);
@@ -109,6 +121,7 @@ public class ManageItemServlet extends HttpServlet {
                 item.setName(name);
                 item.setPrice(price);
                 item.setYear_produce(yearProduce);
+                item.setDescription(description);
 
                 if (itemServiceImpl.create(item)) {
                     resp.getWriter().println("<script>alert('Cập nhật sản phẩm thành công!');</script>");
@@ -136,7 +149,7 @@ public class ManageItemServlet extends HttpServlet {
                     }
                     case "id" -> {
                         Integer itemID = Integer.parseInt(req.getParameter("itemInputSearch"));
-                        Item item = itemServiceImpl.getItem(itemID);
+                        Item item = itemServiceImpl.findByID(itemID);
                         List<Item> itemList = new ArrayList<>();
                         itemList.add(item);
 
@@ -239,5 +252,15 @@ public class ManageItemServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("cartServiceImpl", cartServiceImpl);
+
+        //Lấy id account
+        List<Cookie> cookieList = List.of(req.getCookies());
+        for (Cookie cookie : cookieList) {
+            if (cookie.getName().equals("signInAccountID")) {
+                Integer signInAccountID = Integer.parseInt(cookie.getValue());
+                Account account = accountServiceImpl.findByID(signInAccountID);
+                req.setAttribute("signInAccount",account);
+            }
+        }
     }
 }

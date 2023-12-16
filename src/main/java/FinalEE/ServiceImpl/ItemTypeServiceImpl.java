@@ -25,11 +25,11 @@ public class ItemTypeServiceImpl implements ItemTypeService{
     public boolean create(ItemType itemType) {
         try {
             // Kiểm tra xem itemType có tồn tại trong database hay không
-            Optional<ItemType> existingItemType = itemTypeRepository.findById(itemType.getId());
+            ItemType existingItemType=findByID(itemType.getId());
 
             // Lưu itemType và kiểm tra kết quả
             itemTypeRepository.save(itemType);
-            if (existingItemType.isPresent()) {
+            if (existingItemType!=null) {
                 System.out.println("Cap nhat thanh cong itemType:" + itemType.getId());
             } else {
                 System.out.println("Them thanh cong itemType:" + itemType.getId());
@@ -51,9 +51,9 @@ public class ItemTypeServiceImpl implements ItemTypeService{
     }
 
     @Override
-    public ItemType getItemType(int id) {
+    public ItemType findByID(Integer id) {
         try{
-            return itemTypeRepository.findById(id);
+            return itemTypeRepository.findByID(id);
         }catch (Exception er){
             er.printStackTrace();
         }

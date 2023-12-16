@@ -5,6 +5,7 @@ import FinalEE.ServiceImpl.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,7 +46,7 @@ public class ManageItemCollectionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        System.out.println(action);
+        initData(req);
         switch (action) {
             case "addItemCollection" -> {
 
@@ -97,7 +98,7 @@ public class ManageItemCollectionServlet extends HttpServlet {
                     }
                     case "id" -> {
                         Integer itemCollectionID = Integer.parseInt(req.getParameter("itemCollectionInputSearch"));
-                        ItemCollection itemCollection = itemCollectionServiceImpl.getItemCollection(itemCollectionID);
+                        ItemCollection itemCollection = itemCollectionServiceImpl.findByID(itemCollectionID);
                         List<ItemCollection> itemCollectionList = new ArrayList<>();
                         itemCollectionList.add(itemCollection);
 
@@ -176,5 +177,15 @@ public class ManageItemCollectionServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("cartServiceImpl", cartServiceImpl);
+
+        //Lấy id account
+        List<Cookie> cookieList = List.of(req.getCookies());
+        for (Cookie cookie : cookieList) {
+            if (cookie.getName().equals("signInAccountID")) {
+                Integer signInAccountID = Integer.parseInt(cookie.getValue());
+                Account account = accountServiceImpl.findByID(signInAccountID);
+                req.setAttribute("signInAccount",account);
+            }
+        }
     }
 }
