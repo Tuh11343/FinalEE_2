@@ -5,6 +5,7 @@ import FinalEE.ServiceImpl.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -42,7 +43,7 @@ public class ManageStockItemServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        System.out.println(action);
+        initData(req);
         switch (action) {
             case "addStockItem" -> {
                 int itemId = Integer.parseInt(req.getParameter("add_stockItemItemID"));
@@ -50,7 +51,7 @@ public class ManageStockItemServlet extends HttpServlet {
                 String size = req.getParameter("add_stockItemSize");
                 int amount = Integer.parseInt(req.getParameter("add_stockItemAmount"));
 
-                Item item = itemServiceImpl.getItem(itemId);
+                Item item = itemServiceImpl.findByID(itemId);
 
                 StockItem stockItem = new StockItem();
                 stockItem.setAmount(amount);
@@ -73,7 +74,7 @@ public class ManageStockItemServlet extends HttpServlet {
                 String size = req.getParameter("update_stockItemSize");
                 int amount = Integer.parseInt(req.getParameter("update_stockItemAmount"));
 
-                Item item = itemServiceImpl.getItem(itemId);
+                Item item = itemServiceImpl.findByID(itemId);
 
                 StockItem stockItem = new StockItem();
                 stockItem.setId(id);
@@ -108,7 +109,7 @@ public class ManageStockItemServlet extends HttpServlet {
                     }
                     case "id" -> {
                         Integer stockItemID = Integer.parseInt(req.getParameter("stockItemInputSearch"));
-                        StockItem stockItem = stockItemServiceImpl.getStockItem(stockItemID);
+                        StockItem stockItem = stockItemServiceImpl.findByID(stockItemID);
                         List<StockItem> stockItemList = new ArrayList<>();
                         stockItemList.add(stockItem);
 
@@ -188,5 +189,15 @@ public class ManageStockItemServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("cartServiceImpl", cartServiceImpl);
+
+        //Lấy id account
+        List<Cookie> cookieList = List.of(req.getCookies());
+        for (Cookie cookie : cookieList) {
+            if (cookie.getName().equals("signInAccountID")) {
+                Integer signInAccountID = Integer.parseInt(cookie.getValue());
+                Account account = accountServiceImpl.findByID(signInAccountID);
+                req.setAttribute("signInAccount",account);
+            }
+        }
     }
 }

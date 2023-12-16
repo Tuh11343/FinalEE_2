@@ -264,7 +264,15 @@
                     </main>
 
                     <jsp:include page="component/Footer.jsp" />
-
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            // Simulate loading delay (you can remove this in production)
+                            setTimeout(function () {
+                                // Add loaded class to hide the loader
+                                document.querySelector(".loader-container").classList.add("loaded");
+                            }, 2000); // Adjust the timeout based on your loading time
+                        });
+                    </script>
                     <script>
 
                         let minPrice = ${requestScope.minPrice};

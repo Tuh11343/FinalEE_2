@@ -154,188 +154,69 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
         </div>
       </aside>
 
-      <!--Center-->
-      <div class="center">
-        <!--Order Status-->
-        <div class="product-data table-data active" data-type="orderStatusList">
-          <div class="header-table">
-            <!--Add Item Image Button-->
-            <div class="AddOrderStatus listbtn">
-              <button
-                class="btnHD btnAdd"
-                id="orderStatus_addTrigger"
-                style="margin-bottom: 4px"
+      <div class="center static ">
+        <!-- Thống kê -->
+        <div class="w-100 row gap-5">
+          <div class="bestsaling cardtstatic col-md-7">
+            <div class="row bestsaling__header">
+              <span class="bestsaling__header--id col-1">Mã</span>
+              <span
+                      class="bestsaling__header--name name col-9 justify-content-center d-flex"
+              >Tên sản phẩm</span
               >
-                Thêm
-              </button>
-              <a
-                class="btnHD btnExcel"
-                style="margin-left: 5px; margin-bottom: 4px"
-                onclick="orderStatusToExcel()"
-              >
-                Xuất Excel
-              </a>
-              <form action="${pageContext.request.contextPath}/ManageOrderStatusServlet" method="post">
-
-                <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px">Refresh</button>
-                <input type="hidden" name="action" value="refreshOrderStatus">
-
-            </form>
+              <span class="bestsaling__header--number col-2">Số lượng</span>
             </div>
-            <h2 style="font-size: 30px">Quản lý xác nhận đơn hàng</h2>
-            <form
-            action="${pageContext.request.contextPath}/ManageOrderStatusServlet"
-            method="post"
-          >
-            <div class="sorttable">
-              <div class="sort-search">
-                <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
-                <div class="inputsearch">
-                  <select
-                    class="selecttype"
-                    name="orderStatusSearchType"
-                    id="orderStatusSearchType"
-                  >
-                    <option value="id">ID</option>
-                    <option value="name">Name</option>
-                  </select>
-                  <input
-                    type="text"
-                    value=""
-                    name="orderStatusInputSearch"
-                    id="orderStatusInputSearch"
-                  />
-                  <button class="btnHD btnsearch">Tìm</button>
+              <c:forEach items="${requestScope.top10BestSellingProducts}" var="statistic">
+                <div class="row align-items-center">
+                  <span class="col-1">${statistic[0]}</span>
+                  <span class="col-9">${statistic[1]}</span>
+                  <span class="col-2">${statistic[2]}</span>
                 </div>
-              </div>
-              <div class="sort-box">
-                <label for="orderStatusSortType">Sắp xếp theo:</label>
-                <select name="orderStatusSortType" id="orderStatusSortType">
-                  <option value="az">A-Z</option>
-                  <option value="za">Z-A</option>
-                </select>
-              </div>
-              <input type="hidden" name="action" value="searchAndSortOrderStatus" />
-            </div>
-        </form>
-          </div>
-
-          <!--Table Order Status-->
-          <table class="item-table bang">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Tên đơn hàng</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="tableOrderStatus">
-              <c:forEach items="${requestScope.orderStatusList}" var="orderStatus">
-                <tr>
-                  <td>${orderStatus.id}</td>
-                  <td>${orderStatus.name}</td>
-                  <td>
-                    <div class="flex-center grpbtn">
-
-                      <form action="${pageContext.request.contextPath}/ManageOrderStatusServlet" method="post"
-                            onsubmit="return confirmDelete()">
-                        <button class="btnHD btnDel" type="submit">Xóa</button>
-                        <input type="hidden" value="${orderStatus.id}" name="orderStatusID">
-                        <input type="hidden" value="deleteOrderStatus" name="action">
-                      </form>
-
-                      <a
-                        class="btnHD btnUpdateOrderStatus"
-                        data-itemMaterialID="${orderStatus.id}"
-                        data-itemMaterialName="${orderStatus.name}"
-                      >
-                        Sửa
-                      </a>
-                      <input
-                        type="hidden"
-                        name="orderStatusID"
-                        value="${orderStatus.id}"
-                      />
-                    </div>
-                  </td>
-                </tr>
               </c:forEach>
-            </tbody>
-          </table>
-
-          <!--Update Order Status Modal-->
-          <div id="update-orderStatus" class="modal-update flex-center">
-            <div class="update-modal">
-                <span class="close clsOrderStatus">&times;</span>
-
-                <h2 class="text-center" style="padding: 16px 0">
-                  Cập Nhật Xác Nhận Hóa Đơn
-                </h2>
-                <form
-                action="${pageContext.request.contextPath}/ManageOrderStatusServlet"
-                method="post"
-              >
-                <div class="form-grp">
-                  <input
-                    type="hidden"
-                    id="update_orderStatusID"
-                    name="update_orderStatusID"
-                  />
-                </div>
-
-                <!--Order Status Name-->
-                <div class="form-grp">
-                  <label for="update_OrderStatusName">Tên Tình Trạng:</label>
-                  <input
-                    type="text"
-                    maxlength="100"
-                    id="update_orderStatusName"
-                    name="update_orderStatusName"
-                    value=""
-                    placeholder="Nhập vào tên vật liệu sản phẩm"
-                  />
-                </div>
-
-                <div class="flex-center">
-                  <button id="updateOrderStatus" class="btnHD btnAdd submit">Cập nhật</button>
-                </div>
-                <input type="hidden" name="action" value="updateOrderStatus">
-
-              </form>
-            </div>
           </div>
-
-          <!--Add Order Status Modal-->
-          <div id="add-orderStatus" class="modal-add flex-center modal__addOrderStatus">
-            <div class="add-modal">
-              <span class="close clsAddOrderStatus">&times;</span>
-              <h2 class="text-center" style="padding: 16px 0">Thêm Vật Liệu Sản Phẩm</h2>
-              <form
-                action="${pageContext.request.contextPath}/ManageOrderStatusServlet"
-                method="post"
+          <div class="revenue cardtstatic col-md-4">
+            <div class="row bestsaling__header d-flex justify-content-between">
+              <span
+                      class="bestsaling__header--name name col-md-8 justify-content-center d-flex"
+              >Tên người dùng</span
               >
-                <!--Order Status Name-->
-                <div class="form-grp">
-                  <label for="add_orderStatusName">Tên Tình Trạng:</label>
-                  <input
-                    type="text"
-                    maxlength="100"
-                    id="add_orderStatusName"
-                    name="add_orderStatusName"
-                    value=""
-                    placeholder="Nhập vào tên vật liệu sản phẩm"
-                  />
-                </div>
-
-                <div class="flex-center">
-                  <button id="addOrderStatus" class="btnHD btnAdd submit">
-                    Thêm
-                  </button>
-                </div>
-                <input type="hidden" name="action" value="addOrderStatus">
-
-              </form>
+              <span class="bestsaling__header--number col-md-3">Doanh thu</span>
             </div>
+              <c:forEach items="${requestScope.top5CustomersByRevenue}" var="statistic">
+                <div class="row align-items-center d-flex justify-content-between">
+                  <span class="col-md-8 justify-content-center d-flex"
+                  >${statistic[1]}</span
+                  >
+                  <span class="col-md-3">${statistic[2]}</span>
+                </div>
+              </c:forEach>
+          </div>
+        </div>
+        <div class="row gap-5 ">
+          <div class="revenueforfiveyear cardtstatic col-md-4">
+
+            <div class="revenueforfiveyearheader row">
+              <span class=" col-md-3 text-center">Tháng</span>
+              <span class=" col-md-9  text-center">Doanh thu</span>
+            </div>
+              <c:forEach items="${requestScope.recentFiveMonthRevenue}" var="statistic">
+                <div class="row align-items-center text-center">
+                  <span class="col-md-3 text-center ">${statistic[1]}</span>
+                  <span class="col-md-9 text-center">${statistic[2]}</span>
+                </div>
+              </c:forEach>
+          </div>
+          <div class="prodcutbyquantity cardtstatic col-md-7">
+            <div class="prodcutbyquantity__header row   ">
+              <span class=" col-md-3 text-center">Tên khach hang</span>
+              <span class=" col-md-9  text-center">Số lượng</span>
+            </div>
+              <c:forEach items="${requestScope.top5CustomersByAmount}" var="statistic">
+                <div  class="row" >
+                <span class=" col-md-3 text-center">${statistic[1]}</span>
+                <span class=" col-md-9  text-center">${statistic[0]}</span>
+                </div>
+              </c:forEach>
           </div>
         </div>
       </div>
@@ -352,7 +233,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
-    <script src="${pageContext.request.contextPath}/Views/JS_Temp/orderstatus_js.js"></script>
+    <script src="${pageContext.request.contextPath}/Views/JS_Temp/account_js.js"></script>
 
     <script>
       const adminManagerContextPath = "${pageContext.request.contextPath}";

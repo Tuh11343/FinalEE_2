@@ -10,9 +10,10 @@ public interface ItemMaterialService {
     
     boolean create(ItemMaterial itemMaterial);
     boolean deleteByID(int id);
-    ItemMaterial getItemMaterial(int id);
     List<ItemMaterial> getAllItemMaterial();
 
     List<ItemMaterial> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder);
     List<ItemMaterial> findAllByNameContains(String name, String sort, ItemServiceImpl.SortOrder sortOrder);
+
+    ItemMaterial findByID(Integer id);
 }

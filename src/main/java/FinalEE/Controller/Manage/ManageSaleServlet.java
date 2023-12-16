@@ -5,6 +5,7 @@ import FinalEE.ServiceImpl.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -42,7 +43,7 @@ public class ManageSaleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        System.out.println(action);
+        initData(req);
         switch (action) {
             case "addSale" -> {
                 int itemId = Integer.parseInt(req.getParameter("add_saleItemID"));
@@ -50,7 +51,7 @@ public class ManageSaleServlet extends HttpServlet {
                 int onSale = Integer.parseInt(req.getParameter("add_saleOnSale"));
                 int salePercentage = Integer.parseInt(req.getParameter("add_salePercentage"));
 
-                Item item = itemServiceImpl.getItem(itemId);
+                Item item = itemServiceImpl.findByID(itemId);
 
                 Sale sale = new Sale();
                 sale.setSale_percentage(salePercentage);
@@ -73,7 +74,7 @@ public class ManageSaleServlet extends HttpServlet {
                 int onSale = Integer.parseInt(req.getParameter("update_saleOnSale"));
                 int salePercentage = Integer.parseInt(req.getParameter("update_salePercentage"));
 
-                Item item = itemServiceImpl.getItem(itemId);
+                Item item = itemServiceImpl.findByID(itemId);
 
                 Sale sale = new Sale();
                 sale.setId(id);
@@ -108,7 +109,7 @@ public class ManageSaleServlet extends HttpServlet {
                     }
                     case "id" -> {
                         Integer saleID = Integer.parseInt(req.getParameter("saleInputSearch"));
-                        Sale sale = saleServiceImpl.getSale(saleID);
+                        Sale sale = saleServiceImpl.findBySale(saleID);
                         List<Sale> saleList = new ArrayList<>();
                         saleList.add(sale);
 
@@ -187,5 +188,15 @@ public class ManageSaleServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("cartServiceImpl", cartServiceImpl);
+
+        //Lấy id account
+        List<Cookie> cookieList = List.of(req.getCookies());
+        for (Cookie cookie : cookieList) {
+            if (cookie.getName().equals("signInAccountID")) {
+                Integer signInAccountID = Integer.parseInt(cookie.getValue());
+                Account account = accountServiceImpl.findByID(signInAccountID);
+                req.setAttribute("signInAccount",account);
+            }
+        }
     }
 }

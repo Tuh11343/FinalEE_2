@@ -37,163 +37,8 @@ showtable();
 
 
 
-/*Account*/
-function handleAddAccount() {
-  var addUser = document.getElementById("account_addTrigger");
-  var modal = document.getElementById("modal-add-account");
-  var btnClose = document.querySelector(".clsadduser");
-  addUser.addEventListener("click", function () {
-    modal.classList.add("active");
-  });
-  btnClose.addEventListener("click", function () {
-    modal.classList.remove("active");
-  });
-}
-handleAddAccount();
-
-function handleUpdateAccount() {
-  var updateUser = document.querySelectorAll(".btnUpdateUser");
-  var modal = document.getElementById("update-user");
-
-  updateUser.forEach(function (item) {
-    item.addEventListener("click", () => {
-      modal.style.display = "block";
-
-      var accountID=item.getAttribute("data-accountID");
-      var accountCustomerID = item.getAttribute("data-accountCustomerID");
-      var accountPermissionID = item.getAttribute("data-accountPermissionID");
-      var accountName = item.getAttribute("data-accountName");
-      var accountPass = item.getAttribute("data-accountPassword");
 
 
-      document.getElementById("update_accountID").value=accountID;
-      document.getElementById("update_accountName").value = accountName;
-      document.getElementById("update_accountPassword").value = accountPass;
-
-      var update_customer_selectElement = document.getElementById(
-          "update_accountCustomerID"
-      );
-      for (var i = 0; i < update_customer_selectElement.options.length; i++) {
-        var option = update_customer_selectElement.options[i];
-        // So sánh giá trị tùy chọn với giá trị cần chọn
-        if (option.value === accountCustomerID) {
-          // Đánh dấu tùy chọn là "selected"
-          option.selected = true;
-          break; // Thoát khỏi vòng lặp sau khi tìm thấy giá trị cần chọn
-        }
-      }
-
-      var update_permission_selectElement = document.getElementById(
-          "update_accountPermissionID"
-      );
-      for (var i = 0; i < update_permission_selectElement.options.length; i++) {
-        var option = update_permission_selectElement.options[i];
-        // So sánh giá trị tùy chọn với giá trị cần chọn
-        if (option.value === accountPermissionID) {
-          // Đánh dấu tùy chọn là "selected"
-          option.selected = true;
-          break; // Thoát khỏi vòng lặp sau khi tìm thấy giá trị cần chọn
-        }
-      }
-    });
-  });
-  function closeModal() {
-    modal.style.display = "none";
-  }
-  var closeBtn = document.getElementsByClassName("close")[0];
-  closeBtn.addEventListener("click", closeModal);
-}
-handleUpdateAccount();
-
-/*Item*/
-function handleAddItem() {
-  var addProducts = document.getElementById("item_addTrigger");
-  var modal = document.getElementById("add-products");
-  var btnClose = document.querySelector(".clsaddproduct");
-  addProducts.addEventListener("click", function () {
-    modal.classList.add("active");
-    console.log(1);
-  });
-  btnClose.addEventListener("click", function () {
-    modal.classList.remove("active");
-  });
-}
-handleAddItem();
-function handleUpdateItem() {
-  var updateItem = document.querySelectorAll(".btnUpdateItem");
-  var modal = document.getElementById("update-products");
-  var btnClose = document.querySelector(".clsupdateproduct");
-  console.log(btnClose);
-
-  updateItem.forEach(function (item) {
-    item.addEventListener("click", () => {
-      modal.style.display = "block";
-
-      var itemID=item.getAttribute("data-itemID");
-      var itemName = item.getAttribute("data-itemName");
-      var itemTypeID = item.getAttribute("data-itemTypeID");
-      var itemCollectionID = item.getAttribute("data-itemCollectionID");
-      var itemMaterialID = item.getAttribute("data-itemMaterialID");
-      var isNew = item.getAttribute("data-itemIsNew");
-      var isHot = item.getAttribute("data-itemIsHot");
-      var price = item.getAttribute("data-itemPrice");
-      var yearProduce = item.getAttribute("data-itemYearProduce");
-
-      document.getElementById("update_itemID").value=itemID;
-      document.getElementById("update_itemNameID").value = itemName;
-      document.getElementById("update_itemIsNewID").checked = isNew === "1";
-      document.getElementById("update_itemIsHotID").checked = isHot === "1";
-      document.getElementById("update_itemPriceID").value = price;
-      document.getElementById("update_itemYearProduceID").value = yearProduce;
-
-      //          Combobox ItemType
-      var update_itemType_selectElement = document.getElementById(
-          "update_itemItemTypeID"
-      );
-      for (var i = 0; i < update_itemType_selectElement.options.length; i++) {
-        var option = update_itemType_selectElement.options[i];
-        // So sánh giá trị tùy chọn với giá trị cần chọn
-        if (option.value === itemTypeID) {
-          // Đánh dấu tùy chọn là "selected"
-          option.selected = true;
-          break; // Thoát khỏi vòng lặp sau khi tìm thấy giá trị cần chọn
-        }
-      }
-
-      //          Combobox ItemCollection
-      var update_itemCollection_selectElement = document.getElementById(
-          "update_itemItemCollectionID"
-      );
-      for (var i = 0; i < update_itemCollection_selectElement.options.length; i++) {
-        var option = update_itemCollection_selectElement.options[i];
-        // So sánh giá trị tùy chọn với giá trị cần chọn
-        if (option.value === itemCollectionID) {
-          // Đánh dấu tùy chọn là "selected"
-          option.selected = true;
-          break; // Thoát khỏi vòng lặp sau khi tìm thấy giá trị cần chọn
-        }
-      }
-
-      //            Combobox ItemMaterial
-      var update_itemMaterial_selectElement = document.getElementById(
-          "update_itemItemMaterialID"
-      );
-      for (var i = 0; i < update_itemMaterial_selectElement.options.length; i++) {
-        var option = update_itemMaterial_selectElement.options[i];
-        // So sánh giá trị tùy chọn với giá trị cần chọn
-        if (option.value === itemMaterialID) {
-          // Đánh dấu tùy chọn là "selected"
-          option.selected = true;
-          break; // Thoát khỏi vòng lặp sau khi tìm thấy giá trị cần chọn
-        }
-      }
-    });
-  });
-  btnClose.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
-}
-handleUpdateItem();
 
 /*Customer*/
 function handleAddCustomer() {
@@ -455,15 +300,19 @@ function handleUpdateOrder() {
       var total = item.getAttribute("data-orderTotal");
       var datePurchase = item.getAttribute("data-orderDatePurchase");
       var address = item.getAttribute("data-orderAddress");
-      var orderStatus = item.getAttribute("data-orderStatus");
-      var note = item.getAttribute("data-note");
+      var orderStatusID = item.getAttribute("data-orderStatusID");
+      var note = item.getAttribute("data-orderNote");
+      var email = item.getAttribute("data-orderEmail");
 
       document.getElementById("update_orderID").value=id;
       document.getElementById("update_orderTotal").value = total;
       document.getElementById("update_orderDatePurchase").value = datePurchase;
       document.getElementById("update_orderAddress").value = address;
-      document.getElementById("update_orderStatus").value = orderStatus;
+      document.getElementById("update_orderStatus").value = orderStatusID;
       document.getElementById("update_orderNote").value = note;
+      document.getElementById("update_orderEmail").value=email;
+
+      console.log(1);
 
       /*Combobox CustomerID*/
       var update_order_selectElement = document.getElementById("update_orderCustomerID");

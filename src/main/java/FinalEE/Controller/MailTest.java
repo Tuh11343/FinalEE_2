@@ -47,7 +47,7 @@ public class MailTest extends HttpServlet {
                 case "orderConfirm" -> {
                     if (keyValueData != null) {
 
-                        Order order=orderServiceImpl.getOrder(Integer.parseInt(keyValueData.get("orderID").toString()));
+                        Order order=orderServiceImpl.findByID(Integer.parseInt(keyValueData.get("orderID").toString()));
                         order.setOrder_status(orderStatusServiceImpl.confirmOrder());
                         orderServiceImpl.create(order);
 
@@ -107,7 +107,7 @@ public class MailTest extends HttpServlet {
 
                     String password=req.getParameter("password");
                     Integer accountID=Integer.parseInt(req.getParameter("accountID"));
-                    Account account=accountServiceImpl.getAccount(accountID);
+                    Account account=accountServiceImpl.findByID(accountID);
                     if(account!=null){
                         account.setPassword(password);
                         if(accountServiceImpl.create(account)){

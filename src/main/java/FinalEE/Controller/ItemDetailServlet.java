@@ -54,14 +54,14 @@ public class ItemDetailServlet extends HttpServlet {
                     }
                 }
 
-                StockItem stockItem = stockItemServiceImpl.getStockItem(stockItemID);
+                StockItem stockItem = stockItemServiceImpl.findByID(stockItemID);
 
                 Cart cart = new Cart();
                 cart.setStockItem(stockItem);
                 cart.setAmount(1);
 
                 if (isLogIn) {
-                    Customer customer = customerServiceImpl.getCustomer(customerID);
+                    Customer customer = customerServiceImpl.findByID(customerID);
                     cart.setCustomer(customer);
                     cartServiceImpl.create(cart);
                 } else {
@@ -142,7 +142,7 @@ public class ItemDetailServlet extends HttpServlet {
         if (req.getParameter("itemClickID") != null) {
             itemClickID = Integer.parseInt(req.getParameter("itemClickID"));
         }
-        Item itemClick = itemServiceImpl.getItem(itemClickID);
+        Item itemClick = itemServiceImpl.findByID(itemClickID);
         req.setAttribute("itemClick", itemClick);
 
         req.getRequestDispatcher("/Views/User/ItemDetail.jsp").forward(req, resp);

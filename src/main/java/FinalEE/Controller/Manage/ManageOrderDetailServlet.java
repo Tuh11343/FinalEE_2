@@ -4,6 +4,7 @@ import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,7 +38,7 @@ public class ManageOrderDetailServlet extends HttpServlet {
 
         initData(req);
 
-        req.getRequestDispatcher("Views/Admin/ManageOrderDetailServlet.jsp").forward(req, resp);
+        req.getRequestDispatcher("Views/Admin/ManageOrderDetail.jsp").forward(req, resp);
     }
 
 
@@ -45,7 +46,7 @@ public class ManageOrderDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        System.out.println(action);
+        initData(req);
         switch (action) {
             /*Order*/
             case "addOrder" -> {
@@ -63,8 +64,8 @@ public class ManageOrderDetailServlet extends HttpServlet {
                     e.printStackTrace();
                 }
 
-                Customer customer = customerServiceImpl.getCustomer(customerID);
-                DiscountCard discountCard = discountCardServiceImpl.getDiscountCard(discountCardID);
+                Customer customer = customerServiceImpl.findByID(customerID);
+                DiscountCard discountCard = discountCardServiceImpl.findByID(discountCardID);
 
 
                 Order order = new Order();
@@ -79,7 +80,7 @@ public class ManageOrderDetailServlet extends HttpServlet {
                     resp.getWriter().println("<script>alert('Thêm hóa đơn thất bại!');</script>");
                 }
 
-                req.getRequestDispatcher("Views/Admin/ManageOrderServlet.jsp").forward(req, resp);
+                resp.sendRedirect("/FinalEE/ManageOrderDetailServlet");
             }
             case "order_btnUpdate" -> {
                 int id = Integer.parseInt(req.getParameter("update_orderID"));
@@ -97,8 +98,8 @@ public class ManageOrderDetailServlet extends HttpServlet {
                     e.printStackTrace();
                 }
 
-                Customer customer = customerServiceImpl.getCustomer(customerID);
-                DiscountCard discountCard = discountCardServiceImpl.getDiscountCard(discountCardID);
+                Customer customer = customerServiceImpl.findByID(customerID);
+                DiscountCard discountCard = discountCardServiceImpl.findByID(discountCardID);
 
                 Order order = new Order();
                 order.setId(id);
@@ -113,7 +114,7 @@ public class ManageOrderDetailServlet extends HttpServlet {
                     resp.getWriter().println("<script>alert('Cập nhật hóa đơn thất bại!');</script>");
                 }
 
-                req.getRequestDispatcher("Views/Admin/ManageOrderServlet.jsp").forward(req, resp);
+                resp.sendRedirect("/FinalEE/ManageOrderDetailServlet");
             }
             case "order_btnDelete" -> {
                 int orderID = Integer.parseInt(req.getParameter("orderID"));
@@ -122,7 +123,7 @@ public class ManageOrderDetailServlet extends HttpServlet {
                 } else {
                     resp.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thất bại!');</script>");
                 }
-                req.getRequestDispatcher("Views/Admin/ManageOrderServlet.jsp").forward(req, resp);
+                resp.sendRedirect("/FinalEE/ManageOrderDetailServlet");
             }
             case "searchAndSortOrder"-> {
                 String searchType = req.getParameter("orderSearchType");
@@ -133,7 +134,7 @@ public class ManageOrderDetailServlet extends HttpServlet {
                     }
                     case "id" -> {
                         Integer orderID = Integer.parseInt(req.getParameter("orderInputSearch"));
-                        Order order = orderServiceImpl.getOrder(orderID);
+                        Order order = orderServiceImpl.findByID(orderID);
                         List<Order> orderList = new ArrayList<>();
                         orderList.add(order);
 
@@ -235,5 +236,15 @@ public class ManageOrderDetailServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("cartServiceImpl", cartServiceImpl);
+
+        //Lấy id account
+        List<Cookie> cookieList = List.of(req.getCookies());
+        for (Cookie cookie : cookieList) {
+            if (cookie.getName().equals("signInAccountID")) {
+                Integer signInAccountID = Integer.parseInt(cookie.getValue());
+                Account account = accountServiceImpl.findByID(signInAccountID);
+                req.setAttribute("signInAccount",account);
+            }
+        }
     }
 }

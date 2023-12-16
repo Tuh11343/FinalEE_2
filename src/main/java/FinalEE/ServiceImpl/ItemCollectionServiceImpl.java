@@ -24,11 +24,11 @@ public class ItemCollectionServiceImpl implements ItemCollectionService{
     public boolean create(ItemCollection itemCollection) {
         try {
             // Kiểm tra xem itemCollection có tồn tại trong database hay không
-            Optional<ItemCollection> existingItemCollection = itemCollectionRepository.findById(itemCollection.getId());
+            ItemCollection existingItemCollection=itemCollectionRepository.findByID(itemCollection.getId());
 
             // Lưu itemCollection và kiểm tra kết quả
             itemCollectionRepository.save(itemCollection);
-            if (existingItemCollection.isPresent()) {
+            if (existingItemCollection!=null) {
                 System.out.println("Cap nhat thanh cong itemCollection:" + itemCollection.getId());
             } else {
                 System.out.println("Them thanh cong itemCollection:" + itemCollection.getId());
@@ -47,16 +47,6 @@ public class ItemCollectionServiceImpl implements ItemCollectionService{
             return true;
         }
         return false;
-    }
-
-    @Override
-    public ItemCollection getItemCollection(int id) {
-        try{
-            return itemCollectionRepository.findByID(id);
-        }catch (Exception er){
-            er.printStackTrace();
-        }
-        return null;
     }
 
     @Override

@@ -5,6 +5,7 @@ import FinalEE.ServiceImpl.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -42,9 +43,9 @@ public class ManagePermissionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        System.out.println(action);
+        initData(req);
         switch (action) {
-            case "permission_btnAdd" -> {
+            case "addPermission" -> {
                 int level = Integer.parseInt(req.getParameter("add_permissionLevel"));
                 String name = req.getParameter("add_permissionName");
 
@@ -60,7 +61,7 @@ public class ManagePermissionServlet extends HttpServlet {
 
                 resp.sendRedirect("/FinalEE/ManagePermissionServlet");
             }
-            case "permission_btnUpdate" -> {
+            case "updatePermission" -> {
                 int id = Integer.parseInt(req.getParameter("update_permissionID"));
                 String name = req.getParameter("update_permissionName");
                 int level = Integer.parseInt(req.getParameter("update_permissionLevel"));
@@ -78,7 +79,7 @@ public class ManagePermissionServlet extends HttpServlet {
 
                 resp.sendRedirect("/FinalEE/ManagePermissionServlet");
             }
-            case "permission_btnDelete" -> {
+            case "deletePermission" -> {
                 int permissionID = Integer.parseInt(req.getParameter("permissionID"));
                 if (permissionServiceImpl.deleteByID(permissionID)) {
                     resp.getWriter().println("<script>alert('Xóa vật liệu thành công!');</script>");
@@ -176,5 +177,15 @@ public class ManagePermissionServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("cartServiceImpl", cartServiceImpl);
+
+        //Lấy id account
+        List<Cookie> cookieList = List.of(req.getCookies());
+        for (Cookie cookie : cookieList) {
+            if (cookie.getName().equals("signInAccountID")) {
+                Integer signInAccountID = Integer.parseInt(cookie.getValue());
+                Account account = accountServiceImpl.findByID(signInAccountID);
+                req.setAttribute("signInAccount",account);
+            }
+        }
     }
 }

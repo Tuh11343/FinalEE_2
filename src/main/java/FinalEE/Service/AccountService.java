@@ -11,7 +11,7 @@ public interface AccountService {
     
     boolean create(Account account);
     boolean deleteByID(int accountID);
-    Account getAccount(int id);
+
     List<Account> getAllAccount();
 
     Account findByID(Integer accountID);

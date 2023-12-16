@@ -119,15 +119,5 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         return null;
     }
 
-    @Override
-    public OrderStatus findById(int orderStatusID) {
-        try{
-            return orderStatusRepository.findById(orderStatusID);
-        }catch (Exception er){
-            er.printStackTrace();
-        }
-        return null;
-    }
-
 
 }

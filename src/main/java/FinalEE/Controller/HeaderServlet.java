@@ -165,7 +165,7 @@ public class HeaderServlet extends HttpServlet {
             if (req.getParameter("discountCardID") != null && !req.getParameter("discountCardID").isBlank()) {
                 discountCardID = Integer.parseInt(req.getParameter("discountCardID"));
             }
-            DiscountCard discountCard = discountCardServiceImpl.getDiscountCard(discountCardID);
+            DiscountCard discountCard = discountCardServiceImpl.findByID(discountCardID);
 
             double orderTotal = 0f;
             /*Create Oder*/

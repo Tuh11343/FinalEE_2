@@ -10,7 +10,6 @@ public interface ItemService {
     
     boolean create(Item item);
     boolean deleteByID(int id);
-    Item getItem(int id);
     List<Item> getAllItem();
     List<Item> findByItemCollectionID(int itemCollectionID);
     List<Item> findByItemMaterialID(int itemMaterialID);
@@ -37,6 +36,8 @@ public interface ItemService {
 
     List<Item> findAllByPriceLessThan(double price, String sort, ItemServiceImpl.SortOrder sortOrder);
     List<Item> findAllByPriceGreaterThan(double price, String sort, ItemServiceImpl.SortOrder sortOrder);
+
+    Item findByID(Integer id);
 
     
 }

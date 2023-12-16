@@ -23,7 +23,7 @@ public class DiscountCardServiceImpl implements DiscountCardService{
     
     
     @Override
-    public DiscountCard getDiscountCard(Integer id) {
+    public DiscountCard findByID(Integer id) {
         try{
             return discountCardRepository.findByID(id);
         }catch (Exception er){

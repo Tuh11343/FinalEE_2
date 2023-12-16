@@ -1,6 +1,7 @@
 
 package FinalEE.Repository;
 
+import FinalEE.Entity.Account;
 import FinalEE.Entity.OrderStatus;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,11 +14,11 @@ import java.util.List;
 @Repository
 public interface OrderStatusRepository extends JpaRepository<OrderStatus, Integer>{
 
-    @Query("select o from OrderStatus o where o.id=?1")
-    OrderStatus findByID(Integer id);
-
     List<OrderStatus> findAll(Sort sort);
     List<OrderStatus> findAllByNameContains(String name,Sort sort);
     OrderStatus findById(int orderStatusID);
+
+    @Query("select od from OrderStatus od where od.id=?1 or od.id IS NULL")
+    OrderStatus findByID(Integer id);
 
 }

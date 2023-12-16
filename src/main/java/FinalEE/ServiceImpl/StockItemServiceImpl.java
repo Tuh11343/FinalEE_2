@@ -24,11 +24,11 @@ public class StockItemServiceImpl implements StockItemService{
     public boolean create(StockItem stockItem) {
         try {
             // Kiểm tra xem stockItem có tồn tại trong database hay không
-            Optional<StockItem> existingStockItem = stockItemRepository.findById(stockItem.getId());
+            StockItem existingStockItem=stockItemRepository.findByID(stockItem.getId());
 
             // Lưu stockItem và kiểm tra kết quả
             stockItemRepository.save(stockItem);
-            if (existingStockItem.isPresent()) {
+            if (existingStockItem!=null) {
                 System.out.println("Cap nhat thanh cong stockItem:" + stockItem.getId());
             } else {
                 System.out.println("Them thanh cong stockItem:" + stockItem.getId());
@@ -51,9 +51,13 @@ public class StockItemServiceImpl implements StockItemService{
     
 
     @Override
-    public StockItem getStockItem(int id) {
-        Optional<StockItem> stockItem=stockItemRepository.findById(id);
-        return stockItem.orElse(null);
+    public StockItem findByID(Integer id) {
+        try{
+            return stockItemRepository.findByID(id);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override

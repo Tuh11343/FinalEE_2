@@ -21,7 +21,6 @@ public interface DiscountCardRepository extends JpaRepository<DiscountCard, Inte
     @Query("select d from DiscountCard d where d.id=?1 or d.id IS NULL")
     DiscountCard findByID(Integer id);
 
-
     List<DiscountCard> findAll(Sort sort);
     List<DiscountCard> findAllByNameContains(String name,Sort sort);
     List<DiscountCard> findByCustomer_Id(Integer customerID,Sort sort);

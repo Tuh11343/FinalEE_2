@@ -78,9 +78,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item getItem(int id) {
-        Optional<Item> item = itemRepository.findById(id);
-        return item.orElse(null);
+    public Item findByID(Integer id) {
+        try{
+            return itemRepository.findByID(id);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
     }
 
     @Override

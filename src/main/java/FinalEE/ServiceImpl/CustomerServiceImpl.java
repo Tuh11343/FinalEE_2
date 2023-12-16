@@ -20,7 +20,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomer(Integer id) {
+    public Customer findByID(Integer id) {
         try{
             return customerRepository.findByID(id);
         }catch (Exception er){
@@ -70,7 +70,7 @@ public class CustomerServiceImpl implements CustomerService {
     public boolean create(Customer customer) {
         try {
             // Kiểm tra xem customer có tồn tại trong database hay không
-            Customer existingCustomer=getCustomer(customer.getId());
+            Customer existingCustomer=findByID(customer.getId());
 
             // Lưu customer và kiểm tra kết quả
             customerRepository.save(customer);

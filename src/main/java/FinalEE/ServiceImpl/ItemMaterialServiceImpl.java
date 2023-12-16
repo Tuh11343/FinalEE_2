@@ -50,9 +50,9 @@ public class ItemMaterialServiceImpl implements ItemMaterialService{
     }
 
     @Override
-    public ItemMaterial getItemMaterial(int id) {
+    public ItemMaterial findByID(Integer id) {
         try{
-            return itemMaterialRepository.findById(id);
+            return itemMaterialRepository.findByID(id);
         }catch (Exception er){
             er.printStackTrace();
         }

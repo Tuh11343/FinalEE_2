@@ -118,6 +118,7 @@ body {
   font-size: var(--fs-body);
   line-height: var(--lh-body);
 }
+
 /*
 body.--disable-scroll {
     height: 100vh;
@@ -151,12 +152,15 @@ body .main {
 body .main section {
   padding: var(--pd-section) 0;
 }
+
 ::-webkit-scrollbar {
   width: 5px;
 }
+
 ::-webkit-scrollbar-track {
   background-color: var(--gray-cl);
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: var(--main-cl);
 }
@@ -173,6 +177,7 @@ img {
   outline: 0;
   object-fit: contain;
 }
+
 /*
 img.--center {
     margin: 0 auto;
@@ -187,6 +192,7 @@ a {
 strong {
   font-family: ab;
 }
+
 /*
 .--hidden {
     display: none
@@ -346,18 +352,21 @@ https://flickity.metafizzy.co
   position: relative;
   z-index: 50;
 }
+
 .header.scroll {
   height: 40px;
   position: sticky;
   top: 0;
   left: 0;
 }
+
 .header .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 100%;
 }
+
 .header .container-fluid {
   display: flex;
   justify-content: space-between;
@@ -365,27 +374,34 @@ https://flickity.metafizzy.co
   height: 100%;
   position: relative;
 }
+
 .header__left {
   height: 100%;
 }
+
 .header__left .logo {
   height: 100%;
 }
+
 .header__left .logo img {
   height: 100%;
 }
+
 .header__center {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 }
+
 .header__center .title {
   color: var(--main-cl);
   text-transform: uppercase;
 }
+
 .header__right {
   height: 100%;
 }
+
 .header__right--account {
   height: 100%;
   display: flex;
@@ -395,6 +411,7 @@ https://flickity.metafizzy.co
   cursor: pointer;
   position: relative;
 }
+
 .header__right--account .accdopdown {
   position: absolute;
   right: -15px;
@@ -413,6 +430,7 @@ https://flickity.metafizzy.co
   -o-transition: var(--t);
   margin-bottom: 10px;
 }
+
 .header__right--account:hover .accdopdown {
   opacity: 1;
   visibility: visible;
@@ -425,6 +443,7 @@ https://flickity.metafizzy.co
   margin-bottom: 0;
   border-radius: 2px;
 }
+
 .header__right--account .accdopdown a:hover {
   color: var(--main-cl);
   transition: var(--t);
@@ -433,6 +452,7 @@ https://flickity.metafizzy.co
   -ms-transition: var(--t);
   -o-transition: var(--t);
 }
+
 .header__right--account .accdopdown a:hover svg {
   fill: var(--main-cl);
   transition: var(--t);
@@ -441,6 +461,7 @@ https://flickity.metafizzy.co
   -ms-transition: var(--t);
   -o-transition: var(--t);
 }
+
 /*# sourceMappingURL=style.min.css.map */
 #add_itemImageItemID,
 #update_itemImageItemID,
@@ -453,14 +474,18 @@ https://flickity.metafizzy.co
   max-width: 100px;
   text-overflow: ellipsis;
 }
+
 .accordion-body {
 }
+
 .text {
   font-size: 20px;
 }
+
 .accordion-item {
   margin-bottom: 6px;
 }
+
 .main {
   display: flex;
   flex-direction: row;
@@ -473,20 +498,51 @@ https://flickity.metafizzy.co
   border-right: 1px solid #000;
   display: block;
 }
+
 .left .accordion {
   width: 100%;
   position: sticky;
   top: 40px;
   left: 0;
-  background-color: #f2f2f2;
+  background-color: #ffffff;
   text-align: left;
-  display: block;
+
   overflow-y: auto;
   height: calc(100vh - 70px);
+  display: flex;
+  flex-direction: column;
 }
+
+.left .accordion a {
+  padding: 10px 5px;
+  /* border-bottom: 1px solid var(--gray-cl); */
+  color: var(--black-cl);
+
+  transition: var(--t);
+  -webkit-transition: var(--t);
+  -moz-transition: var(--t);
+  -ms-transition: var(--t);
+  -o-transition: var(--t);
+  display: inline-block;
+  text-decoration: none;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+.left .accordion a:hover {
+  background-color: var(--main-cl);
+  color: var(--white-cl);
+  transition: var(--t);
+  -webkit-transition: var(--t);
+  -moz-transition: var(--t);
+  -ms-transition: var(--t);
+  -o-transition: var(--t);
+  background-position: -100% 0;
+}
+
 .left .accordion.scroll {
   height: calc(100vh - 40px);
 }
+
 .center {
   width: calc(100% - 17%);
   flex: 1;
@@ -495,16 +551,19 @@ https://flickity.metafizzy.co
   justify-content: center;
   flex: 1;
 }
+
 .bang {
   width: 100%;
   max-height: 100vh;
   overflow-x: scroll;
   overflow-y: scroll;
 }
+
 .table-data {
   display: none;
   width: 100%;
 }
+
 .table-data .header-table {
   display: flex;
   justify-content: space-between;
@@ -513,21 +572,25 @@ https://flickity.metafizzy.co
   position: relative;
   background: #fff;
 }
-.table-data .header-table .AddUser{
+
+.table-data .header-table .AddUser {
   display: flex;
 
-justify-content: center;
-align-items: center
+  justify-content: center;
+  align-items: center;
 }
+
 .table-data .header-table .sorttable {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
 }
+
 .table-data .header-table .sorttable .sort-search {
   position: relative;
 }
+
 .table-data .header-table .sorttable .sort-search .inputsearch {
   position: absolute;
   top: 50px;
@@ -547,6 +610,7 @@ align-items: center
   pointer-events: none;
   transition: var(--t);
 }
+
 .table-data .header-table .sorttable .sort-search .inputsearch.active {
   visibility: visible;
   opacity: 1;
@@ -554,10 +618,12 @@ align-items: center
   transition: var(--t);
   margin-top: 0;
 }
+
 .table-data .header-table .sorttable .sort-search .inputsearch input {
   padding: 2px 5px;
   padding-left: 10px;
 }
+
 .table-data .header-table .sorttable .sort-search .inputsearch .selecttype {
   padding: 2px 5px;
   border-top-right-radius: 50px;
@@ -565,8 +631,10 @@ align-items: center
   font-size: 15px;
   border-bottom-right-radius: 50px;
 }
+
 .table-data .header-table .sorttable .sort-search .inputsearch .selecttypeoption {
 }
+
 .table-data .header-table.scroll {
   position: sticky;
   top: 40px;
@@ -575,9 +643,11 @@ align-items: center
   -webkit-box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.36);
   -moz-box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.36);
 }
+
 .table-data > h2 {
   text-align: center;
 }
+
 /*.account-table,
 .report-table{
     display:none;
@@ -586,18 +656,22 @@ th {
   text-align: left;
   padding: 10px;
 }
+
 .bang th,
 .bang td {
   border: 1px solid black;
   padding: 5px;
   text-align: center;
 }
+
 .table-data.active {
   display: block;
 }
+
 .bang tr td {
   text-align: center;
 }
+
 /*.bang thead tr th:nth-child(1) {
     width: 20%;
 }
@@ -622,6 +696,7 @@ th {
   padding: 10px;
   cursor: pointer;
 }
+
 .btnHD {
   width: 100px;
   max-height: 100px;
@@ -630,31 +705,41 @@ th {
   color: #fff;
   transition: 0.2s;
 }
+
 .btnHD:hover {
   opacity: 0.9;
 }
+
 .grpbtn {
   gap: 5px;
   display: flex;
 }
+
 .btnsearch {
   background-color: var(--main-cl);
 }
+
 .btngreen {
   background-color: var(--blue-cl);
 }
+
 .btnAdd {
-  background-color: green;
+  background-color: var(--blue-cl);
+  text-align: center;
 }
+
 .btnDel {
   background-color: red;
 }
+
 .btnExcel {
   background-color: var(--green-cl);
 }
-.btnload{
+
+.btnload {
   background-color: var(--blue-cl);
 }
+
 .btnUpdateUser,
 .btnUpdateItem,
 .btnUpdateCustomer,
@@ -689,6 +774,7 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #modal-add-account.active {
   display: block;
 }
@@ -700,31 +786,35 @@ button:hover {
   font-weight: bold;
   cursor: pointer;
 }
+
 .form__add {
   margin: 16px;
 }
+
 #modal-add-account input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
-#modal-add-account a {
 
+#modal-add-account a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
-  font-size: 1.5rem;
+  font-size: 1.9rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #modal-add-account a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #modal-add-account > label {
   width: 100%;
   height: 100%;
@@ -754,31 +844,35 @@ button:hover {
   font-weight: bold;
   cursor: pointer;
 }
+
 .form__update {
   margin: 16px;
 }
+
 #update-user input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
-#update-user a {
 
+#update-user a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #update-user a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #update-user > label {
   width: 100%;
   height: 100%;
@@ -801,6 +895,7 @@ button:hover {
   height: 615px;
   max-width: 600px;
 }
+
 #update-products {
   /*    display:none;
         position:fixed;
@@ -822,28 +917,31 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #update-products input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
-#update-products a {
 
+#update-products a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #update-products a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #update-products > label {
   width: 100%;
   height: 100%;
@@ -856,6 +954,7 @@ button:hover {
 .form__add {
   margin: 16px;
 }
+
 #add-products {
   display: block;
   position: fixed;
@@ -867,6 +966,7 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #add-products.active {
   display: block;
 }
@@ -877,22 +977,24 @@ button:hover {
   height: 100%;
   padding: 0 5px;
 }
-#add-products a {
 
+#add-products a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #add-products a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #add-products > label {
   width: 100%;
   height: 100%;
@@ -900,21 +1002,24 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 .add-modal {
   background-color: var(--bg-color);
   margin: 0 auto;
   margin-top: 16px;
   padding: 20px;
   border: 1px solid #888;
-  height: 615px;
-  max-width: 600px; /* Giới hạn chiều rộng tối đa */
+  max-width: 600px;
+  /* Giới hạn chiều rộng tối đa */
 }
+
 .modal__addproduct {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: 0.4s;
 }
+
 .modal__addproduct.active {
   opacity: 1;
   visibility: visible;
@@ -944,6 +1049,7 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #update-customers input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
@@ -951,22 +1057,24 @@ button:hover {
   padding: 0 5px;
   width: 300px;
 }
-#update-customers a {
 
+#update-customers a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #update-customers a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #update-customers > label {
   width: 100%;
   height: 100%;
@@ -987,29 +1095,34 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #add-customer.active {
   display: block;
 }
+
 #add-customer input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
+
 #add-customer a {
   font-size: 1.5rem;
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
-  padding:10px 20px;
-  min-width:150px;
+  padding: 10px 20px;
+  min-width: 150px;
   border-radius: 10px;
 }
+
 #add-customer a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #add-customer > label {
   width: 100%;
   height: 100%;
@@ -1017,12 +1130,14 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 .modal__addCustomer {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: 0.4s;
 }
+
 .modal__addCustomer.active {
   opacity: 1;
   visibility: visible;
@@ -1052,6 +1167,7 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #update-discountCard input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
@@ -1059,6 +1175,7 @@ button:hover {
   padding: 0 5px;
   width: 300px;
 }
+
 #update-discountCard a {
   color: #fff;
   background-color: var(--submit-color);
@@ -1067,14 +1184,16 @@ button:hover {
 
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #update-discountCard a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #update-discountCard > label {
   width: 100%;
   height: 100%;
@@ -1095,31 +1214,35 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #add-discountCard.active {
   display: block;
 }
+
 #add-discountCard input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
-#add-discountCard a {
 
+#add-discountCard a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #add-discountCard a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #add-discountCard > label {
   width: 100%;
   height: 100%;
@@ -1127,12 +1250,14 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 .modal__addDiscountCard {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: 0.4s;
 }
+
 .modal__addDiscountCard.active {
   opacity: 1;
   visibility: visible;
@@ -1162,6 +1287,7 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #update-itemCollection input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
@@ -1169,22 +1295,24 @@ button:hover {
   padding: 0 5px;
   width: 300px;
 }
-#update-itemCollection a {
 
+#update-itemCollection a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #update-itemCollection a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #update-itemCollection > label {
   width: 100%;
   height: 100%;
@@ -1205,31 +1333,35 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #add-itemCollection.active {
   display: block;
 }
+
 #add-itemCollection input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
-#add-itemCollection a {
 
+#add-itemCollection a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #add-itemCollection a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #add-itemCollection > label {
   width: 100%;
   height: 100%;
@@ -1237,12 +1369,14 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 .modal__addItemCollection {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: 0.4s;
 }
+
 .modal__addItemCollection.active {
   opacity: 1;
   visibility: visible;
@@ -1272,6 +1406,7 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #update-itemImage input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
@@ -1279,22 +1414,24 @@ button:hover {
   padding: 0 5px;
   width: 300px;
 }
-#update-itemImage a {
 
+#update-itemImage a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #update-itemImage a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #update-itemImage > label {
   width: 100%;
   height: 100%;
@@ -1302,6 +1439,7 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 /*Add Image*/
 #add-itemImage {
   display: block;
@@ -1314,31 +1452,35 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #add-itemImage.active {
   display: block;
 }
+
 #add-itemImage input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
-#add-itemImage a {
 
+#add-itemImage a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #add-itemImage a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #add-itemImage > label {
   width: 100%;
   height: 100%;
@@ -1346,12 +1488,14 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 .modal__addItemImage {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: 0.4s;
 }
+
 .modal__addItemImage.active {
   opacity: 1;
   visibility: visible;
@@ -1381,6 +1525,7 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #update-itemMaterial input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
@@ -1388,22 +1533,24 @@ button:hover {
   padding: 0 5px;
   width: 300px;
 }
-#update-itemMaterial a {
 
+#update-itemMaterial a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #update-itemMaterial a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #update-itemMaterial > label {
   width: 100%;
   height: 100%;
@@ -1411,6 +1558,7 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 /*Add Material*/
 #add-itemMaterial {
   display: block;
@@ -1423,31 +1571,35 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #add-itemMaterial.active {
   display: block;
 }
+
 #add-itemMaterial input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
-#add-itemMaterial a {
 
+#add-itemMaterial a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #add-itemMaterial a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #add-itemMaterial > label {
   width: 100%;
   height: 100%;
@@ -1455,12 +1607,14 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 .modal__addItemMaterial {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: 0.4s;
 }
+
 .modal__addItemMaterial.active {
   opacity: 1;
   visibility: visible;
@@ -1490,6 +1644,7 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #update-order input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
@@ -1497,22 +1652,24 @@ button:hover {
   padding: 0 5px;
   width: 300px;
 }
-#update-order a {
 
+#update-order a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #update-order a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #update-order > label {
   width: 100%;
   height: 100%;
@@ -1520,6 +1677,7 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 /*Add Order*/
 #add-order {
   display: block;
@@ -1532,31 +1690,35 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #add-order.active {
   display: block;
 }
+
 #add-order input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
-#add-order a {
 
+#add-order a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #add-order a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #add-order > label {
   width: 100%;
   height: 100%;
@@ -1564,12 +1726,14 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 .modal__addOrder {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: 0.4s;
 }
+
 .modal__addOrder.active {
   opacity: 1;
   visibility: visible;
@@ -1599,6 +1763,7 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #update-orderDetail input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
@@ -1606,22 +1771,24 @@ button:hover {
   padding: 0 5px;
   width: 300px;
 }
-#update-orderDetail a {
 
+#update-orderDetail a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #update-order a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #update-orderDetail > label {
   width: 100%;
   height: 100%;
@@ -1629,6 +1796,7 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 /*Add OrderDetail*/
 #add-orderDetail {
   display: block;
@@ -1641,31 +1809,35 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #add-orderDetail.active {
   display: block;
 }
+
 #add-orderDetail input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
-#add-orderDetail a {
 
+#add-orderDetail a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #add-orderDetail a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #add-orderDetail > label {
   width: 100%;
   height: 100%;
@@ -1673,12 +1845,14 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 .modal__addOrderDetail {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: 0.4s;
 }
+
 .modal__addOrderDetail.active {
   opacity: 1;
   visibility: visible;
@@ -1708,6 +1882,7 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #update-itemType input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
@@ -1715,22 +1890,24 @@ button:hover {
   padding: 0 5px;
   width: 300px;
 }
-#update-itemType a {
 
+#update-itemType a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #update-itemType a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #update-itemType > label {
   width: 100%;
   height: 100%;
@@ -1738,6 +1915,7 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 /*Add ItemType*/
 #add-itemType {
   display: block;
@@ -1750,19 +1928,22 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #add-itemType.active {
   display: block;
 }
+
 #add-itemType input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
+
 #add-itemType a {
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   color: #fff;
   background-color: var(--submit-color);
@@ -1770,14 +1951,16 @@ button:hover {
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #add-itemType a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #add-itemType > label {
   width: 100%;
   height: 100%;
@@ -1785,12 +1968,14 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 .modal__addItemType {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: 0.4s;
 }
+
 .modal__addItemType.active {
   opacity: 1;
   visibility: visible;
@@ -1820,6 +2005,7 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #update-permission input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
@@ -1827,22 +2013,24 @@ button:hover {
   padding: 0 5px;
   width: 300px;
 }
-#update-permission a {
 
+#update-permission a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #update-permission a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #update-permission > label {
   width: 100%;
   height: 100%;
@@ -1850,6 +2038,7 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 /*Add Permission*/
 #add-permission {
   display: block;
@@ -1862,31 +2051,35 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #add-permission.active {
   display: block;
 }
+
 #add-permission input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
-#add-permission a {
 
+#add-permission a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #add-permission a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #add-permission > label {
   width: 100%;
   height: 100%;
@@ -1894,12 +2087,14 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 .modal__addPermission {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: 0.4s;
 }
+
 .modal__addPermission.active {
   opacity: 1;
   visibility: visible;
@@ -1929,28 +2124,31 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #update-sale input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
-#update-sale a {
 
+#update-sale a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #update-sale a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #update-sale > label {
   width: 100%;
   height: 100%;
@@ -1958,6 +2156,7 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 /*Add Sale*/
 #add-sale {
   display: block;
@@ -1970,31 +2169,35 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #add-sale.active {
   display: block;
 }
+
 #add-sale input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
-#add-sale a {
 
+#add-sale a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #add-sale a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #add-sale > label {
   width: 100%;
   height: 100%;
@@ -2002,12 +2205,14 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 .modal__addSale {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: 0.4s;
 }
+
 .modal__addSale.active {
   opacity: 1;
   visibility: visible;
@@ -2037,6 +2242,7 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #update-stockItem input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
@@ -2044,22 +2250,24 @@ button:hover {
   padding: 0 5px;
   width: 300px;
 }
-#update-stockItem a {
 
+#update-stockItem a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #update-stockItem a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #update-stockItem > label {
   width: 100%;
   height: 100%;
@@ -2067,6 +2275,7 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 /*Add Sale*/
 #add-stockItem {
   display: block;
@@ -2079,31 +2288,35 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #add-stockItem.active {
   display: block;
 }
+
 #add-stockItem input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
-#add-stockItem a {
 
+#add-stockItem a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #add-stockItem a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #add-stockItem > label {
   width: 100%;
   height: 100%;
@@ -2111,12 +2324,14 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 .modal__addStockItem {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: 0.4s;
 }
+
 .modal__addStockItem.active {
   opacity: 1;
   visibility: visible;
@@ -2146,6 +2361,7 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #update-orderStatus input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
@@ -2153,22 +2369,24 @@ button:hover {
   padding: 0 5px;
   width: 300px;
 }
-#update-orderStatus a {
 
+#update-orderStatus a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
 
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #update-orderStatus a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #update-orderStatus > label {
   width: 100%;
   height: 100%;
@@ -2176,6 +2394,7 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 /*Add Material*/
 #add-orderStatus {
   display: block;
@@ -2188,29 +2407,34 @@ button:hover {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 #add-orderStatus.active {
   display: block;
 }
+
 #add-orderStatus input {
   border-bottom: 1px solid var(--title-color);
   background: transparent;
   height: 100%;
   padding: 0 5px;
 }
+
 #add-orderStatus a {
   color: #fff;
   background-color: var(--submit-color);
   align-items: center;
   margin: 16px;
   font-size: 1.5rem;
-  padding:10px 20px;
+  padding: 10px 20px;
   min-width: 150px;
   border-radius: 10px;
 }
+
 #add-orderStatus a:hover {
   background: #ccc;
   color: #000000;
 }
+
 #add-orderStatus > label {
   width: 100%;
   height: 100%;
@@ -2218,12 +2442,14 @@ button:hover {
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 .modal__addOrderStatus {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: 0.4s;
 }
+
 .modal__addOrderStatus.active {
   opacity: 1;
   visibility: visible;
@@ -2231,3 +2457,44 @@ button:hover {
   transition: 0.4;
 }
 
+.center.static {
+  background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.center .cardtstatic {
+  background: #fff;
+  border-radius: 7px;
+  background-clip: padding-box;
+  box-shadow: 0 0.375rem 1rem 0 rgba(58, 53, 65, 0.12);
+  padding: 10px;
+}
+.center .cardtstatic .bestsaling__header {
+  /* display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px; */
+  margin-bottom: 5px;
+}
+.center .cardtstatic .bestsaling__list .row:not(:last-child) {
+  border-bottom: 1px solid var(--gray-cl);
+}
+/* .center .cardtstatic .bestsaling__header .bestsaling__header--id {
+  width: 10%;
+} */
+.center .cardtstatic .bestsaling__list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+}
+
+.listbtn{
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+}

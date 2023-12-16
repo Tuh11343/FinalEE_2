@@ -5,6 +5,7 @@ import FinalEE.ServiceImpl.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -43,7 +44,7 @@ public class ManageOrderStatusServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        System.out.println(action);
+        initData(req);
         switch (action) {
             case "addOrderStatus" -> {
                 String name = req.getParameter("add_orderStatusName");
@@ -93,7 +94,7 @@ public class ManageOrderStatusServlet extends HttpServlet {
                     }
                     case "id" -> {
                         Integer orderStatusID = Integer.parseInt(req.getParameter("orderStatusInputSearch"));
-                        OrderStatus orderStatus = orderStatusServiceImpl.findById(orderStatusID);
+                        OrderStatus orderStatus = orderStatusServiceImpl.findByID(orderStatusID);
                         List<OrderStatus> orderStatusList = new ArrayList<>();
                         orderStatusList.add(orderStatus);
 
@@ -175,5 +176,15 @@ public class ManageOrderStatusServlet extends HttpServlet {
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("orderStatusList",orderStatusList);
+
+        //Lấy id account
+        List<Cookie> cookieList = List.of(req.getCookies());
+        for (Cookie cookie : cookieList) {
+            if (cookie.getName().equals("signInAccountID")) {
+                Integer signInAccountID = Integer.parseInt(cookie.getValue());
+                Account account = accountServiceImpl.findByID(signInAccountID);
+                req.setAttribute("signInAccount",account);
+            }
+        }
     }
 }

@@ -26,11 +26,11 @@ public class PermissionServiceImpl implements PermissionService{
     public boolean create(Permission permission) {
         try {
             // Kiểm tra xem permission có tồn tại trong database hay không
-            Optional<Permission> existingPermission = permissionRepository.findById(permission.getId());
+            Permission existingPermission=permissionRepository.findByID(permission.getId());
 
             // Lưu permission và kiểm tra kết quả
             permissionRepository.save(permission);
-            if (existingPermission.isPresent()) {
+            if (existingPermission!=null) {
                 System.out.println("Cap nhat thanh cong permission:" + permission.getId());
             } else {
                 System.out.println("Them thanh cong permission:" + permission.getId());
@@ -49,17 +49,6 @@ public class PermissionServiceImpl implements PermissionService{
             return true;
         }
         return false;
-    }
-    
-
-    @Override
-    public Permission getPermission(int id) {
-        try{
-            return permissionRepository.findById(id);
-        }catch (Exception er){
-            er.printStackTrace();
-        }
-        return null;
     }
 
     @Override
@@ -105,9 +94,9 @@ public class PermissionServiceImpl implements PermissionService{
     }
 
     @Override
-    public Permission findByID(int permissionID) {
+    public Permission findByID(Integer permissionID) {
         try{
-            return permissionRepository.findById(permissionID);
+            return permissionRepository.findByID(permissionID);
         }catch (Exception er){
             er.printStackTrace();
         }
