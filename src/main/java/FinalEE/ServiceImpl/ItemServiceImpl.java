@@ -73,6 +73,7 @@ public class ItemServiceImpl implements ItemService {
     public boolean deleteByID(int id) {
         if (itemRepository.existsById(id)) {
             itemRepository.deleteById(id);
+            return true;
         }
         return false;
     }

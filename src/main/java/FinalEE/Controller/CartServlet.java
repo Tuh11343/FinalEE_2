@@ -34,7 +34,6 @@ public class CartServlet extends HttpServlet {
             String action = req.getParameter("action");
             switch (action) {
                 case "orderClick" -> {
-                    double orderTotal = 0.0;
                     Customer signInCustomer = null;
                     Integer discountCardID = null;
                     Integer signInAccountID;
@@ -64,7 +63,7 @@ public class CartServlet extends HttpServlet {
                     /*Create Oder*/
                     Order order = new Order();
                     order.setCustomer(signInCustomer);
-                    order.setTotal(orderTotal);
+                    order.setTotal(0);
                     order.setDate_purchase(new Date());
                     order.setDiscountCard(discountCard);
                     order.setNote(req.getParameter("orderNote"));
@@ -83,17 +82,11 @@ public class CartServlet extends HttpServlet {
                         OrderDetail orderDetail = new OrderDetail();
                         orderDetail.setOrder(order);
                         orderDetail.setAmount(cart.getAmount());
-                        orderDetail.setTotal(calculateOrderDetailTotal(cart));
+                        orderDetail.setTotal(orderDetailServiceImpl.calculateOrderDetailTotal(orderDetail));
                         orderDetail.setStockItem(cart.getStockItem());
 
                         orderDetailServiceImpl.create(orderDetail);
-
-                        orderTotal += orderDetail.getTotal();
                     }
-
-                    //Update Order Total
-                    order.setTotal(orderTotal);
-                    orderServiceImpl.create(order);
 
                     /*Remove Cart*/
                     cartServiceImpl.deleteAllByCustomerID(signInCustomer.getId());

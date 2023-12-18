@@ -9,8 +9,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,162 +47,169 @@ public class ManageItemServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        initData(req);
-        switch (action) {
-            case "addItem" -> {
+        try{
+            String action = req.getParameter("action");
+            initData(req);
+            switch (action) {
+                case "addItem" -> {
 
-                String name = req.getParameter("add_itemName");
-                int itemTypeID = Integer.parseInt(req.getParameter("add_itemTypeID"));
-                int itemMaterialID = Integer.parseInt(req.getParameter("add_itemMaterialID"));
-                Integer itemCollectionID=null;
-                if(!req.getParameter("add_itemCollectionID").isBlank())
-                    itemCollectionID = Integer.parseInt(req.getParameter("add_itemCollectionID"));
-                int isNew = 0;
-                if(req.getParameter("add_itemIsNew")!=null&&!req.getParameter("add_itemIsNew").isBlank())
-                    isNew= 1;
-                int isHot = 0;
-                if(req.getParameter("add_itemIsNew")!=null&&!req.getParameter("add_itemIsNew").isBlank())
-                    isHot= 1;
-                double price = Double.parseDouble(req.getParameter("add_itemPrice"));
-                int yearProduce = Integer.parseInt(req.getParameter("add_itemYearProduce"));
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
-                ItemCollection itemCollection = itemCollectionServiceImpl.findByID(itemCollectionID);
-                ItemMaterial itemMaterial = itemMaterialServiceImpl.findByID(itemMaterialID);
-                ItemType itemType = itemTypeServiceImpl.findByID(itemTypeID);
-                String description=req.getParameter("add_itemDescription");
+                    String name = req.getParameter("add_itemName");
+                    int itemTypeID = Integer.parseInt(req.getParameter("add_itemItemTypeID"));
+                    int itemMaterialID = Integer.parseInt(req.getParameter("add_itemItemMaterialID"));
+                    Integer itemCollectionID=null;
+                    if(!req.getParameter("add_itemItemCollectionID").isBlank())
+                        itemCollectionID = Integer.parseInt(req.getParameter("add_itemItemCollectionID"));
+                    int isNew=Integer.parseInt(req.getParameter("add_itemIsNew"));
+                    int isHot=Integer.parseInt(req.getParameter("add_itemIsHot"));
+                    double price = Double.parseDouble(req.getParameter("add_itemPrice"));
+                    int yearProduce = Integer.parseInt(req.getParameter("add_itemYearProduce"));
+                    String description=req.getParameter("add_itemDescription");
 
-                Item item = new Item();
-                item.setIs_hot(isHot);
-                item.setIs_new(isNew);
-                item.setItemCollection(itemCollection);
-                item.setItemMaterial(itemMaterial);
-                item.setItemType(itemType);
-                item.setName(name);
-                item.setPrice(price);
-                item.setYear_produce(yearProduce);
-                item.setDescription(description);
+                    ItemCollection itemCollection = itemCollectionServiceImpl.findByID(itemCollectionID);
+                    ItemMaterial itemMaterial = itemMaterialServiceImpl.findByID(itemMaterialID);
+                    ItemType itemType = itemTypeServiceImpl.findByID(itemTypeID);
 
-                if (itemServiceImpl.create(item)) {
-                    resp.getWriter().println("<script>alert('Thêm sản phẩm thành công!');</script>");
+                    Item item = new Item();
+                    item.setIs_hot(isHot);
+                    item.setIs_new(isNew);
+                    item.setItemCollection(itemCollection);
+                    item.setItemMaterial(itemMaterial);
+                    item.setItemType(itemType);
+                    item.setName(name);
+                    item.setPrice(price);
+                    item.setYear_produce(yearProduce);
+                    item.setDescription(description);
 
-                } else {
-                    resp.getWriter().println("<script>alert('Thêm sản phẩm thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManageItemServlet");
-            }
-            case "updateItem" -> {
-
-                int id = Integer.parseInt(req.getParameter("update_itemID"));
-                String name = req.getParameter("update_itemName");
-                int itemTypeID = Integer.parseInt(req.getParameter("update_itemTypeID"));
-                int itemMaterialID = Integer.parseInt(req.getParameter("update_itemMaterialID"));
-                int itemCollectionID = Integer.parseInt(req.getParameter("update_itemCollectionID"));
-                int isNew = 0;
-                if(req.getParameter("update_itemIsNew")!=null&&!req.getParameter("update_itemIsNew").isBlank())
-                    isNew= 1;
-                int isHot = 0;
-                if(req.getParameter("update_itemIsNew")!=null&&!req.getParameter("update_itemIsNew").isBlank())
-                    isHot= 1;
-                double price = Double.parseDouble(req.getParameter("update_itemPrice"));
-                int yearProduce = Integer.parseInt(req.getParameter("update_itemYearProduce"));
-                String description=req.getParameter("update_itemDescription");
-
-                ItemCollection itemCollection = itemCollectionServiceImpl.findByID(itemCollectionID);
-                ItemMaterial itemMaterial = itemMaterialServiceImpl.findByID(itemMaterialID);
-                ItemType itemType = itemTypeServiceImpl.findByID(itemTypeID);
-
-                Item item = new Item();
-                item.setId(id);
-                item.setIs_hot(isHot);
-                item.setIs_new(isNew);
-                item.setItemCollection(itemCollection);
-                item.setItemMaterial(itemMaterial);
-                item.setItemType(itemType);
-                item.setName(name);
-                item.setPrice(price);
-                item.setYear_produce(yearProduce);
-                item.setDescription(description);
-
-                if (itemServiceImpl.create(item)) {
-                    resp.getWriter().println("<script>alert('Cập nhật sản phẩm thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Cập nhật sản phẩm thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManageItemServlet");
-            }
-            case "deleteItem" -> {
-                int itemID = Integer.parseInt(req.getParameter("itemID"));
-                if (itemServiceImpl.deleteByID(itemID)) {
-                    resp.getWriter().println("<script>alert('Xóa sản phẩm thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Xóa sản phẩm thất bại!');</script>");
-                }
-                resp.sendRedirect("/FinalEE/ManageItemServlet");
-            }
-            case "searchAndSortItem"-> {
-                String searchType = req.getParameter("itemSearchType");
-                String itemInputSearch = req.getParameter("itemInputSearch");
-                switch (searchType) {
-                    case "noData" -> {
-
+                    if (itemServiceImpl.create(item)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "id" -> {
-                        Integer itemID = Integer.parseInt(req.getParameter("itemInputSearch"));
-                        Item item = itemServiceImpl.findByID(itemID);
-                        List<Item> itemList = new ArrayList<>();
-                        itemList.add(item);
 
-                        req.setAttribute("itemList", itemList);
-                        req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "updateItem" -> {
 
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    int id = Integer.parseInt(req.getParameter("update_itemID"));
+                    String name = req.getParameter("update_itemName");
+                    int itemTypeID = Integer.parseInt(req.getParameter("update_itemItemTypeID"));
+                    int itemMaterialID = Integer.parseInt(req.getParameter("update_itemItemMaterialID"));
+                    Integer itemCollectionID=null;
+                    if(!req.getParameter("update_itemItemCollectionID").isBlank()){
+                        itemCollectionID=Integer.parseInt(req.getParameter("update_itemItemCollectionID"));
                     }
-                    case "itemColor" -> {
-                        String itemSortType = req.getParameter("itemSortType");
-                        List<Item> itemList = null;
-                        if (itemSortType.equals("az")) {
-                            itemList = itemServiceImpl.findItemListByColor(itemInputSearch, "item_id", ItemServiceImpl.SortOrder.ASC);
-                        } else if (itemSortType.equals("za")) {
-                            itemList = itemServiceImpl.findItemListByColor(itemInputSearch, "item_id", ItemServiceImpl.SortOrder.DESC);
+                    int isNew=Integer.parseInt(req.getParameter("update_itemIsNew"));
+                    int isHot=Integer.parseInt(req.getParameter("update_itemIsHot"));
+                    double price = Double.parseDouble(req.getParameter("update_itemPrice"));
+                    int yearProduce = Integer.parseInt(req.getParameter("update_itemYearProduce"));
+                    String description=req.getParameter("update_itemDescription");
+
+                    ItemCollection itemCollection = itemCollectionServiceImpl.findByID(itemCollectionID);
+                    ItemMaterial itemMaterial = itemMaterialServiceImpl.findByID(itemMaterialID);
+                    ItemType itemType = itemTypeServiceImpl.findByID(itemTypeID);
+
+                    Item item = new Item();
+                    item.setId(id);
+                    item.setIs_hot(isHot);
+                    item.setIs_new(isNew);
+                    item.setItemCollection(itemCollection);
+                    item.setItemMaterial(itemMaterial);
+                    item.setItemType(itemType);
+                    item.setName(name);
+                    item.setPrice(price);
+                    item.setYear_produce(yearProduce);
+                    item.setDescription(description);
+
+                    if (itemServiceImpl.create(item)) {
+                        jsonResponse.put("success", true);
+                    }
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "deleteItem" -> {
+
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+                    int itemID = Integer.parseInt(req.getParameter("itemID"));
+                    if (itemServiceImpl.deleteByID(itemID)) {
+                        jsonResponse.put("success", true);
+                    }
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "searchAndSortItem"-> {
+                    String searchType = req.getParameter("itemSearchType");
+                    String itemInputSearch = req.getParameter("itemInputSearch");
+                    switch (searchType) {
+                        case "noData" -> {
+
                         }
+                        case "id" -> {
+                            Integer itemID = Integer.parseInt(req.getParameter("itemInputSearch"));
+                            Item item = itemServiceImpl.findByID(itemID);
+                            List<Item> itemList = new ArrayList<>();
+                            itemList.add(item);
 
-                        req.setAttribute("itemList", itemList);
-                        req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
-                    }
-                    case "lowerPrice" -> {
-                        String itemSortType = req.getParameter("itemSortType");
-                        List<Item> itemList = null;
-                        if (itemSortType.equals("az")) {
-                            itemList = itemServiceImpl.findAllByPriceLessThan(Double.parseDouble(itemInputSearch), "total", ItemServiceImpl.SortOrder.ASC);
-                        } else if (itemSortType.equals("za")) {
-                            itemList = itemServiceImpl.findAllByPriceLessThan(Double.parseDouble(itemInputSearch), "total", ItemServiceImpl.SortOrder.DESC);
+                            initData(req);
+                            req.setAttribute("itemList", itemList);
+                            req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
+
                         }
+                        case "itemColor" -> {
+                            String itemSortType = req.getParameter("itemSortType");
+                            List<Item> itemList = null;
+                            if (itemSortType.equals("az")) {
+                                itemList = itemServiceImpl.findItemListByColor(itemInputSearch, "item_id", ItemServiceImpl.SortOrder.ASC);
+                            } else if (itemSortType.equals("za")) {
+                                itemList = itemServiceImpl.findItemListByColor(itemInputSearch, "item_id", ItemServiceImpl.SortOrder.DESC);
+                            }
 
-                        req.setAttribute("itemList", itemList);
-                        req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
-                    }
-                    case "higherPrice" -> {
-                        String itemSortType = req.getParameter("itemSortType");
-                        List<Item> itemList = null;
-                        if (itemSortType.equals("az")) {
-                            itemList = itemServiceImpl.findAllByPriceGreaterThan(Double.parseDouble(itemInputSearch), "total", ItemServiceImpl.SortOrder.ASC);
-                        } else if (itemSortType.equals("za")) {
-                            itemList = itemServiceImpl.findAllByPriceGreaterThan(Double.parseDouble(itemInputSearch), "total", ItemServiceImpl.SortOrder.DESC);
+                            initData(req);
+                            req.setAttribute("itemList", itemList);
+                            req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
                         }
+                        case "lowerPrice" -> {
+                            String itemSortType = req.getParameter("itemSortType");
+                            List<Item> itemList = null;
+                            if (itemSortType.equals("az")) {
+                                itemList = itemServiceImpl.findAllByPriceLessThan(Double.parseDouble(itemInputSearch), "total", ItemServiceImpl.SortOrder.ASC);
+                            } else if (itemSortType.equals("za")) {
+                                itemList = itemServiceImpl.findAllByPriceLessThan(Double.parseDouble(itemInputSearch), "total", ItemServiceImpl.SortOrder.DESC);
+                            }
 
-                        req.setAttribute("itemList", itemList);
-                        req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
+                            initData(req);
+                            req.setAttribute("itemList", itemList);
+                            req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
+                        }
+                        case "higherPrice" -> {
+                            String itemSortType = req.getParameter("itemSortType");
+                            List<Item> itemList = null;
+                            if (itemSortType.equals("az")) {
+                                itemList = itemServiceImpl.findAllByPriceGreaterThan(Double.parseDouble(itemInputSearch), "total", ItemServiceImpl.SortOrder.ASC);
+                            } else if (itemSortType.equals("za")) {
+                                itemList = itemServiceImpl.findAllByPriceGreaterThan(Double.parseDouble(itemInputSearch), "total", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            initData(req);
+                            req.setAttribute("itemList", itemList);
+                            req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
+                        }
                     }
                 }
-            }
 
-            case "refreshItem"->{
-                List<Item> itemList=itemServiceImpl.getAllItem();
-                req.setAttribute("itemList", itemList);
-                req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
             }
+        }catch (Exception er){
+            er.printStackTrace();
         }
     }
 

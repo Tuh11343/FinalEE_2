@@ -1,8 +1,11 @@
 package FinalEE.ServiceImpl;
 
+import FinalEE.Entity.Item;
+import FinalEE.Entity.Order;
 import FinalEE.Entity.OrderDetail;
 import FinalEE.Entity.StockItem;
 import FinalEE.Repository.OrderDetailRepository;
+import FinalEE.Repository.OrderRepository;
 import FinalEE.Repository.StockItemRepository;
 import FinalEE.Service.OrderDetailService;
 import java.util.List;
@@ -19,6 +22,8 @@ public class OrderDetailServiceImpl implements OrderDetailService{
     private OrderDetailRepository orderDetailRepository;
     @Autowired
     private StockItemRepository stockItemRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
     public OrderDetailServiceImpl() {
 
@@ -29,18 +34,21 @@ public class OrderDetailServiceImpl implements OrderDetailService{
     @Override
     public boolean create(OrderDetail orderDetail) {
         try {
-            // Kiểm tra xem orderDetail có tồn tại trong database hay không
             OrderDetail existingOrderDetail = orderDetailRepository.findByID(orderDetail.getId());
+            orderDetailRepository.save(orderDetail);
+            Order order=orderRepository.findByID(orderDetail.getOrder().getId());
+            order.setTotal(calculateOrderTotal(order));
 
-            // Lưu orderDetail và kiểm tra kết quả
-            if(orderDetailRepository.save(orderDetail)!=null){
+            if(existingOrderDetail!=null){
                 System.out.println("Cap nhat thanh cong orderDetail:" + orderDetail.getId());
                 /*Decrease Stock Item Amount*/
                 if (stockItemRepository.findById(orderDetail.getStockItem().getId()).isPresent()) {
                     StockItem stockItem = orderDetail.getStockItem();
-                    stockItem.setAmount(stockItem.getAmount() - 1);
+                    stockItem.setAmount(stockItem.getAmount() - orderDetail.getAmount());
                     stockItemRepository.save(stockItem);
                     System.out.println("Giam so luong thanh cong stockItem:" + stockItem.getId());
+                }else{
+                    System.out.println("Giảm số lượng that bai stockItem:"+ orderDetail.getStockItem().getId());
                 }
             } else {
                 System.out.println("Them thanh cong orderDetail:" + orderDetail.getId());
@@ -143,6 +151,31 @@ public class OrderDetailServiceImpl implements OrderDetailService{
             er.printStackTrace();
         }
         return null;
+    }
+
+    public double calculateOrderDetailTotal(OrderDetail orderDetail){
+        Item item=orderDetail.getStockItem().getItem();
+        int amount=orderDetail.getAmount();
+        if(item.getSale()!=null){
+            return (item.getPrice()-(1- item.getSale().getSale_percentage()/100))*amount;
+        }else{
+            return item.getPrice()*amount;
+        }
+    }
+
+    public double calculateOrderTotal(Order order){
+        List<OrderDetail> orderDetailList=orderDetailRepository.findAllByOrder_Id(order.getId());
+        if(orderDetailList!=null&&!orderDetailList.isEmpty()){
+            double orderTotal=0;
+            for(OrderDetail orderDetail:orderDetailList){
+                orderTotal+=calculateOrderDetailTotal(orderDetail);
+            }
+            if(order.getDiscountCard()!=null){
+                return orderTotal-(1- (double) order.getDiscountCard().getDiscount_percentage() /100);
+            }else
+                return orderTotal;
+        }
+        return 0;
     }
 
 

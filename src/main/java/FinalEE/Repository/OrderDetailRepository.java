@@ -18,6 +18,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Intege
 
     List<OrderDetail> findAll(Sort sort);
     List<OrderDetail> findAllByOrder_Id(Integer orderID,Sort sort);
+    List<OrderDetail> findAllByOrder_Id(Integer orderID);
 
     List<OrderDetail> findAllByTotalIsLessThan(double total,Sort sort);
     List<OrderDetail> findAllByTotalIsGreaterThan(double total,Sort sort);

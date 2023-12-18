@@ -94,11 +94,11 @@ public class DiscountCardServiceImpl implements DiscountCardService{
     public boolean create(DiscountCard discountCard) {
         try {
             // Kiểm tra xem discountCard có tồn tại trong database hay không
-            Optional<DiscountCard> existingDiscountCard = discountCardRepository.findById(discountCard.getId());
+            DiscountCard existingDiscountCard = discountCardRepository.findByID(discountCard.getId());
 
             // Lưu discountCard và kiểm tra kết quả
             discountCardRepository.save(discountCard);
-            if (existingDiscountCard.isPresent()) {
+            if (existingDiscountCard!=null) {
                 System.out.println("Cap nhat thanh cong discountCard:" + discountCard.getId());
             } else {
                 System.out.println("Them thanh cong discountCard:" + discountCard.getId());

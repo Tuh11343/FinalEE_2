@@ -80,11 +80,61 @@
 <body class="homepage">
     <div class="loader-container">
         <div class="loader"></div>
-      </div>
+    </div>
+    <script type="module">
+        import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+        Chatbot.init({
+            chatflowid: "b37b17a7-1937-4abf-b137-37968501c993",
+            apiHost: "https://dashboard.langflux.space",
+            chatflowConfig: {
+                // topK: 2
+            },
+            theme: {
+                button: {
+                    backgroundColor: "#ee4266",
+                    right: 20,
+                    bottom: 20,
+                    size: "medium",
+                    iconColor: "#fff",
+                    height:30,
+                    customIconSrc: "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
+                },
+                chatWindow: {
+                    welcomeMessage: "Chào bạn! Bạn cần hỗ trợ gì??",
+                    backgroundColor: "#ffffff",
+                    height: 450,
+                    width: 100,
+                    fontSize: 14,
+                    poweredByTextColor: "transparent",
+                    botMessage: {
+                        backgroundColor: "#f7f8ff",
+                        textColor: "#303235",
+                        showAvatar: true,
+                        avatarSrc: "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
+                    },
+                    userMessage: {
+                        backgroundColor: "#3B81F6",
+                        textColor: "#ffffff",
+                        showAvatar: true,
+                        avatarSrc: "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png",
+                    },
+                    textInput: {
+                        height: 30,
+                        placeholder: "Nhập câu hỏi",
+                        backgroundColor: "#ffffff",
+                        textColor: "#303235",
+                        sendButtonColor: "#3B81F6",
+                    }
+                }
+            }
+        })
+    </script>
 <main class="main">
     <section class="hero">
-        <div class="container">
-            <img src="${pageContext.request.contextPath}/Views/User/img/sale.jpg" alt="">
+        <div class="container slider">
+            <img src="${pageContext.request.contextPath}/Views/User/img/sale.jpg"  class="slider-item" alt="">
+            <img src="${pageContext.request.contextPath}/Views/User/img/banner1.jpg"  class="slider-item" alt="">
+            <img src="${pageContext.request.contextPath}/Views/User/img/banner2.jpg"  class="slider-item" alt="">
         </div>
     </section>
     <section class="sale">

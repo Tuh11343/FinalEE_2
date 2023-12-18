@@ -9,8 +9,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,103 +43,116 @@ public class ManageStockItemServlet extends HttpServlet {
         req.getRequestDispatcher("Views/Admin/ManageStockItem.jsp").forward(req, resp);
     }
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        initData(req);
-        switch (action) {
-            case "addStockItem" -> {
-                int itemId = Integer.parseInt(req.getParameter("add_stockItemItemID"));
-                String color = req.getParameter("add_stockItemColor");
-                String size = req.getParameter("add_stockItemSize");
-                int amount = Integer.parseInt(req.getParameter("add_stockItemAmount"));
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+        try{
 
-                Item item = itemServiceImpl.findByID(itemId);
+            String action = req.getParameter("action");
+            initData(req);
+            switch (action) {
+                case "addStockItem" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
-                StockItem stockItem = new StockItem();
-                stockItem.setAmount(amount);
-                stockItem.setSize(size);
-                stockItem.setColor(color);
-                stockItem.setItem(item);
+                    int itemId = Integer.parseInt(req.getParameter("add_stockItemItemID"));
+                    String color = req.getParameter("add_stockItemColor");
+                    String size = req.getParameter("add_stockItemSize");
+                    int amount = Integer.parseInt(req.getParameter("add_stockItemAmount"));
 
-                if (stockItemServiceImpl.create(stockItem)) {
-                    resp.getWriter().println("<script>alert('Thêm hàng hóa sản phẩm thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Thêm hàng hóa sản phẩm thất bại!');</script>");
-                }
+                    Item item = itemServiceImpl.findByID(itemId);
 
-                resp.sendRedirect("/FinalEE/ManageStockItemServlet");
-            }
-            case "updateStockItem" -> {
-                int id = Integer.parseInt(req.getParameter("update_stockItemID"));
-                int itemId = Integer.parseInt(req.getParameter("update_stockItemItemID"));
-                String color = req.getParameter("update_stockItemColor");
-                String size = req.getParameter("update_stockItemSize");
-                int amount = Integer.parseInt(req.getParameter("update_stockItemAmount"));
+                    StockItem stockItem = new StockItem();
+                    stockItem.setAmount(amount);
+                    stockItem.setSize(size);
+                    stockItem.setColor(color);
+                    stockItem.setItem(item);
 
-                Item item = itemServiceImpl.findByID(itemId);
-
-                StockItem stockItem = new StockItem();
-                stockItem.setId(id);
-                stockItem.setAmount(amount);
-                stockItem.setSize(size);
-                stockItem.setColor(color);
-                stockItem.setItem(item);
-
-                if (stockItemServiceImpl.create(stockItem)) {
-                    resp.getWriter().println("<script>alert('Cập nhật hàng hóa sản phẩm thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Cập nhật hàng hóa sản phẩm thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManageStockItemServlet");
-            }
-            case "deleteStockItem" -> {
-                int stockItemID = Integer.parseInt(req.getParameter("stockItemID"));
-                if (stockItemServiceImpl.deleteByID(stockItemID)) {
-                    resp.getWriter().println("<script>alert('Xóa hàng hóa sản phẩm thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Xóa hàng hóa sản phẩm thất bại!');</script>");
-                }
-                resp.sendRedirect("/FinalEE/ManageStockItemServlet");
-            }
-            case "searchAndSortStockItem" -> {
-                String searchType = req.getParameter("stockItemSearchType");
-                String stockItemInputSearch = req.getParameter("stockItemInputSearch");
-                switch (searchType) {
-                    case "noData" -> {
-
+                    if (stockItemServiceImpl.create(stockItem)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "id" -> {
-                        Integer stockItemID = Integer.parseInt(req.getParameter("stockItemInputSearch"));
-                        StockItem stockItem = stockItemServiceImpl.findByID(stockItemID);
-                        List<StockItem> stockItemList = new ArrayList<>();
-                        stockItemList.add(stockItem);
 
-                        req.setAttribute("stockItemList", stockItemList);
-                        req.getRequestDispatcher("Views/Admin/ManageStockItem.jsp").forward(req, resp);
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
 
+                }
+                case "updateStockItem" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    int id = Integer.parseInt(req.getParameter("update_stockItemID"));
+                    int itemId = Integer.parseInt(req.getParameter("update_stockItemItemID"));
+                    String color = req.getParameter("update_stockItemColor");
+                    String size = req.getParameter("update_stockItemSize");
+                    int amount = Integer.parseInt(req.getParameter("update_stockItemAmount"));
+
+                    Item item = itemServiceImpl.findByID(itemId);
+
+                    StockItem stockItem = new StockItem();
+                    stockItem.setId(id);
+                    stockItem.setAmount(amount);
+                    stockItem.setSize(size);
+                    stockItem.setColor(color);
+                    stockItem.setItem(item);
+
+                    if (stockItemServiceImpl.create(stockItem)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "itemID" -> {
-                        String stockItemSortType = req.getParameter("stockItemSortType");
-                        List<StockItem> stockItemList = null;
-                        if (stockItemSortType.equals("az")) {
-                            stockItemList = stockItemServiceImpl.findAllByItemID(Integer.parseInt(stockItemInputSearch), "item_id", ItemServiceImpl.SortOrder.ASC);
-                        } else if (stockItemSortType.equals("za")) {
-                            stockItemList = stockItemServiceImpl.findAllByItemID(Integer.parseInt(stockItemInputSearch), "item_id", ItemServiceImpl.SortOrder.DESC);
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "deleteStockItem" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    int stockItemID = Integer.parseInt(req.getParameter("stockItemID"));
+                    if (stockItemServiceImpl.deleteByID(stockItemID)) {
+                        jsonResponse.put("success", true);
+                    }
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "searchAndSortStockItem" -> {
+                    String searchType = req.getParameter("stockItemSearchType");
+                    String stockItemInputSearch = req.getParameter("stockItemInputSearch");
+                    switch (searchType) {
+                        case "noData" -> {
+
                         }
+                        case "id" -> {
+                            Integer stockItemID = Integer.parseInt(req.getParameter("stockItemInputSearch"));
+                            StockItem stockItem = stockItemServiceImpl.findByID(stockItemID);
+                            List<StockItem> stockItemList = new ArrayList<>();
+                            stockItemList.add(stockItem);
 
-                        req.setAttribute("stockItemList", stockItemList);
-                        req.getRequestDispatcher("Views/Admin/ManageStockItem.jsp").forward(req, resp);
+                            initData(req);
+                            req.setAttribute("stockItemList", stockItemList);
+                            req.getRequestDispatcher("Views/Admin/ManageStockItem.jsp").forward(req, resp);
+
+                        }
+                        case "itemID" -> {
+                            String stockItemSortType = req.getParameter("stockItemSortType");
+                            List<StockItem> stockItemList = null;
+                            if (stockItemSortType.equals("az")) {
+                                stockItemList = stockItemServiceImpl.findAllByItemID(Integer.parseInt(stockItemInputSearch), "item_id", ItemServiceImpl.SortOrder.ASC);
+                            } else if (stockItemSortType.equals("za")) {
+                                stockItemList = stockItemServiceImpl.findAllByItemID(Integer.parseInt(stockItemInputSearch), "item_id", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            initData(req);
+                            req.setAttribute("stockItemList", stockItemList);
+                            req.getRequestDispatcher("Views/Admin/ManageStockItem.jsp").forward(req, resp);
+                        }
                     }
+
                 }
-
             }
 
-            case "refreshStockItem"->{
-                List<StockItem> stockItemList=stockItemServiceImpl.getAllStockItem();
-                req.setAttribute("stockItemList", stockItemList);
-                req.getRequestDispatcher("Views/Admin/ManageStockItem.jsp").forward(req, resp);
-            }
+        }catch (Exception er){
+            er.printStackTrace();
         }
     }
 

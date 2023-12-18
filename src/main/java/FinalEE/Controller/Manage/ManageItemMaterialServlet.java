@@ -9,8 +9,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,86 +47,95 @@ public class ManageItemMaterialServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        initData(req);
-        switch (action) {
-            case "addItemMaterial" -> {
-                String name = req.getParameter("add_itemMaterialName");
+        try{
+            String action = req.getParameter("action");
+            initData(req);
+            switch (action) {
+                case "addItemMaterial" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
-                ItemMaterial itemMaterial = new ItemMaterial();
-                itemMaterial.setName(name);
+                    String name = req.getParameter("add_itemMaterialName");
 
-                if (itemMaterialServiceImpl.create(itemMaterial)) {
-                    resp.getWriter().println("<script>alert('Thêm vật liệu thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Thêm vật liệu thất bại!');</script>");
-                }
+                    ItemMaterial itemMaterial = new ItemMaterial();
+                    itemMaterial.setName(name);
 
-                resp.sendRedirect("/FinalEE/ManageItemMaterialServlet");
-            }
-            case "updateItemMaterial" -> {
-                int id = Integer.parseInt(req.getParameter("update_itemMaterialID"));
-                String name = req.getParameter("update_itemMaterialName");
-
-                ItemMaterial itemMaterial = new ItemMaterial();
-                itemMaterial.setId(id);
-                itemMaterial.setName(name);
-
-                if (itemMaterialServiceImpl.create(itemMaterial)) {
-                    resp.getWriter().println("<script>alert('Cập nhật vật liệu thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Cập nhật vật liệu thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManageItemMaterialServlet");
-            }
-            case "itemMaterial_btnDelete" -> {
-                int itemMaterialID = Integer.parseInt(req.getParameter("itemMaterialID"));
-                if (itemMaterialServiceImpl.deleteByID(itemMaterialID)) {
-                    resp.getWriter().println("<script>alert('Xóa vật liệu thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Xóa vật liệu thất bại!');</script>");
-                }
-                resp.sendRedirect("/FinalEE/ManageItemMaterialServlet");
-            }
-            case "searchAndSortItemMaterial"-> {
-                String searchType = req.getParameter("itemMaterialSearchType");
-                String itemMaterialInputSearch = req.getParameter("itemMaterialInputSearch");
-                switch (searchType) {
-                    case "noData" -> {
-
+                    if (itemMaterialServiceImpl.create(itemMaterial)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "id" -> {
-                        Integer itemMaterialID = Integer.parseInt(req.getParameter("itemMaterialInputSearch"));
-                        ItemMaterial itemMaterial = itemMaterialServiceImpl.findByID(itemMaterialID);
-                        List<ItemMaterial> itemMaterialList = new ArrayList<>();
-                        itemMaterialList.add(itemMaterial);
 
-                        req.setAttribute("itemMaterialList", itemMaterialList);
-                        req.getRequestDispatcher("Views/Admin/ManageItemMaterial.jsp").forward(req, resp);
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "updateItemMaterial" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
+                    int id = Integer.parseInt(req.getParameter("update_itemMaterialID"));
+                    String name = req.getParameter("update_itemMaterialName");
+
+                    ItemMaterial itemMaterial = new ItemMaterial();
+                    itemMaterial.setId(id);
+                    itemMaterial.setName(name);
+
+                    if (itemMaterialServiceImpl.create(itemMaterial)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "name" -> {
-                        String itemMaterialSortType = req.getParameter("itemMaterialSortType");
-                        List<ItemMaterial> itemMaterialList = null;
-                        if (itemMaterialSortType.equals("az")) {
-                            itemMaterialList = itemMaterialServiceImpl.findAllByNameContains(itemMaterialInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
-                        } else if (itemMaterialSortType.equals("za")) {
-                            itemMaterialList = itemMaterialServiceImpl.findAllByNameContains(itemMaterialInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "itemMaterial_btnDelete" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    int itemMaterialID = Integer.parseInt(req.getParameter("itemMaterialID"));
+                    if (itemMaterialServiceImpl.deleteByID(itemMaterialID)) {
+                        jsonResponse.put("success", true);
+                    }
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "searchAndSortItemMaterial"-> {
+                    String searchType = req.getParameter("itemMaterialSearchType");
+                    String itemMaterialInputSearch = req.getParameter("itemMaterialInputSearch");
+                    switch (searchType) {
+                        case "noData" -> {
+
                         }
+                        case "id" -> {
+                            Integer itemMaterialID = Integer.parseInt(req.getParameter("itemMaterialInputSearch"));
+                            ItemMaterial itemMaterial = itemMaterialServiceImpl.findByID(itemMaterialID);
+                            List<ItemMaterial> itemMaterialList = new ArrayList<>();
+                            itemMaterialList.add(itemMaterial);
 
-                        req.setAttribute("itemMaterialList", itemMaterialList);
-                        req.getRequestDispatcher("Views/Admin/ManageItemMaterial.jsp").forward(req, resp);
+                            initData(req);
+                            req.setAttribute("itemMaterialList", itemMaterialList);
+                            req.getRequestDispatcher("Views/Admin/ManageItemMaterial.jsp").forward(req, resp);
+
+                        }
+                        case "name" -> {
+                            String itemMaterialSortType = req.getParameter("itemMaterialSortType");
+                            List<ItemMaterial> itemMaterialList = null;
+                            if (itemMaterialSortType.equals("az")) {
+                                itemMaterialList = itemMaterialServiceImpl.findAllByNameContains(itemMaterialInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
+                            } else if (itemMaterialSortType.equals("za")) {
+                                itemMaterialList = itemMaterialServiceImpl.findAllByNameContains(itemMaterialInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            initData(req);
+                            req.setAttribute("itemMaterialList", itemMaterialList);
+                            req.getRequestDispatcher("Views/Admin/ManageItemMaterial.jsp").forward(req, resp);
+                        }
                     }
                 }
             }
-
-            case "refreshItem"->{
-                List<ItemMaterial> itemMaterialList=itemMaterialServiceImpl.getAllItemMaterial();
-                req.setAttribute("itemMaterialList", itemMaterialList);
-                req.getRequestDispatcher("Views/Admin/ManageItemMaterial.jsp").forward(req, resp);
-            }
-
+        }catch (Exception er){
+            er.printStackTrace();
         }
     }
 

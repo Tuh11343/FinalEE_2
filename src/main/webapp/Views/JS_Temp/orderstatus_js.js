@@ -121,3 +121,121 @@ function showSearchbox() {
   });
 }
 showSearchbox();
+
+function addOrderStatus() {
+
+  let add_orderStatusName = document.getElementById("add_orderStatusName").value;
+
+  if (add_orderStatusName == null || add_orderStatusName == "") {
+    alert("Không thể để dữ liệu trống");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageOrderStatusServlet",
+      data: {
+        action: "addOrderStatus",
+        add_orderStatusName:add_orderStatusName,
+      }, headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      success: function (data) {
+
+        data = JSON.parse(data);
+        if (data.success === true) {
+
+          alert("Thêm tình trạng đơn hàng thành công");
+          location.href = adminManagerContextPath + "/ManageOrderStatusServlet";
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  }
+}
+
+function deleteOrderStatus(orderStatusID) {
+  // Trả về true nếu người dùng đã xác nhận, ngược lại trả về false
+  if (confirm('Bạn có chắc chắn xóa không?')) {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageOrderStatusServlet",
+      data: {
+        action: "deleteOrderStatus",
+        orderStatusID: orderStatusID,
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data.success === true) {
+          alert("Xóa tình trạng đơn hàng thành công");
+          location.href = adminManagerContextPath + "/ManageOrderStatusServlet";
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  } else {
+    alert("a")
+  }
+}
+
+function updateOrderStatus() {
+  let update_orderStatusID=document.getElementById("update_orderStatusID").value;
+  let update_orderStatusName=document.getElementById("update_orderStatusName").value;
+
+  if (update_orderStatusName == null || update_orderStatusName == "") {
+    alert("Không thể để dữ liệu trống");
+  }  else {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageOrderStatusServlet",
+      data: {
+        action: "updateOrderStatus",
+        update_orderStatusID:update_orderStatusID,
+        update_orderStatusName:update_orderStatusName,
+      }, headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      success: function (data) {
+
+        data = JSON.parse(data);
+        if (data.success === true) {
+
+          alert("Cập nhật tình trạng đơn hàng thành công");
+          refreshOrderStatus();
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  }
+}
+
+function searchAndSortOrderStatus() {
+  let orderStatusSearchType = document.getElementById("orderStatusSearchType").value;
+  let orderStatusInputSearch = document.getElementById("orderStatusInputSearch").value;
+  let orderStatusSortType = document.getElementById("orderStatusSortType").value;
+
+  if (orderStatusSearchType == null || orderStatusSearchType == "" || orderStatusInputSearch == null || orderStatusInputSearch == "" ||
+      orderStatusSortType == null || orderStatusSortType == "") {
+    alert("Không thể để dữ liệu trống");
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function refreshOrderStatus() {
+  location.href = adminManagerContextPath + "/ManageOrderStatusServlet";
+}

@@ -9,8 +9,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,96 +44,103 @@ public class ManageItemImageServlet extends HttpServlet {
     }
 
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        initData(req);
-        switch (action) {
-            case "addItemImage" -> {
-                int itemID = Integer.parseInt(req.getParameter("add_itemImageItemID"));
-                String url = req.getParameter("add_itemImageURL");
+        try{
+            String action = req.getParameter("action");
+            initData(req);
+            switch (action) {
+                case "addItemImage" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
-                Item item = itemServiceImpl.findByID(itemID);
+                    int itemID = Integer.parseInt(req.getParameter("add_itemImageItemID"));
+                    String url = req.getParameter("add_itemImageURL");
 
-                ItemImage itemImage = new ItemImage();
-                itemImage.setImage_url(url);
-                itemImage.setItem(item);
+                    Item item = itemServiceImpl.findByID(itemID);
 
-                if (itemImageServiceImpl.create(itemImage)) {
-                    resp.getWriter().println("<script>alert('Thêm ảnh cho sản phẩm thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Thêm ảnh cho sản phẩm thất bại!');</script>");
-                }
+                    ItemImage itemImage = new ItemImage();
+                    itemImage.setImage_url(url);
+                    itemImage.setItem(item);
 
-                resp.sendRedirect("/FinalEE/ManageItemImageServlet");
-            }
-            case "updateItemImage" -> {
-                int id = Integer.parseInt(req.getParameter("update_itemImageID"));
-                int itemID = Integer.parseInt(req.getParameter("update_itemImageItemID"));
-                String url = req.getParameter("update_itemImageURL");
-
-                Item item = itemServiceImpl.findByID(itemID);
-
-                ItemImage itemImage = new ItemImage();
-                itemImage.setId(id);
-                itemImage.setImage_url(url);
-                itemImage.setItem(item);
-
-                if (itemImageServiceImpl.create(itemImage)) {
-                    resp.getWriter().println("<script>alert('Cập nhật ảnh cho sản phẩm thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Cập nhật ảnh cho sản phẩm thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManageItemImageServlet");
-            }
-            case "itemImage_btnDelete" -> {
-                int itemImageID = Integer.parseInt(req.getParameter("itemImageID"));
-                if (itemImageServiceImpl.deleteByID(itemImageID)) {
-                    resp.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thất bại!');</script>");
-                }
-                resp.sendRedirect("/FinalEE/ManageItemImageServlet");
-            }
-            case "searchAndSortItemImage"-> {
-                String searchType = req.getParameter("itemImageSearchType");
-                String itemImageInputSearch = req.getParameter("itemImageInputSearch");
-                switch (searchType) {
-                    case "noData" -> {
-
+                    if (itemImageServiceImpl.create(itemImage)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "id" -> {
-                        Integer itemImageID = Integer.parseInt(req.getParameter("itemImageInputSearch"));
-                        ItemImage itemImage = itemImageServiceImpl.findByID(itemImageID);
-                        List<ItemImage> itemImageList = new ArrayList<>();
-                        itemImageList.add(itemImage);
 
-                        req.setAttribute("itemImageList", itemImageList);
-                        req.getRequestDispatcher("Views/Admin/ManageItemImage.jsp").forward(req, resp);
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
 
+                }
+                case "updateItemImage" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+                    int id = Integer.parseInt(req.getParameter("update_itemImageID"));
+                    int itemID = Integer.parseInt(req.getParameter("update_itemImageItemID"));
+                    String url = req.getParameter("update_itemImageURL");
+
+                    Item item = itemServiceImpl.findByID(itemID);
+
+                    ItemImage itemImage = new ItemImage();
+                    itemImage.setId(id);
+                    itemImage.setImage_url(url);
+                    itemImage.setItem(item);
+
+                    if (itemImageServiceImpl.create(itemImage)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "itemID" -> {
-                        String itemImageSortType = req.getParameter("itemImageSortType");
-                        List<ItemImage> itemImageList = null;
-                        if (itemImageSortType.equals("az")) {
-                            itemImageList = itemImageServiceImpl.findAllByItemID(Integer.parseInt(itemImageInputSearch), "item_id", ItemServiceImpl.SortOrder.ASC);
-                        } else if (itemImageSortType.equals("za")) {
-                            itemImageList = itemImageServiceImpl.findAllByItemID(Integer.parseInt(itemImageInputSearch), "item_id", ItemServiceImpl.SortOrder.DESC);
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "itemImage_btnDelete" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+                    int itemImageID = Integer.parseInt(req.getParameter("itemImageID"));
+                    if (itemImageServiceImpl.deleteByID(itemImageID)) {
+                        jsonResponse.put("success", true);
+                    }
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "searchAndSortItemImage" -> {
+                    String searchType = req.getParameter("itemImageSearchType");
+                    String itemImageInputSearch = req.getParameter("itemImageInputSearch");
+                    switch (searchType) {
+                        case "noData" -> {
+
                         }
+                        case "id" -> {
+                            Integer itemImageID = Integer.parseInt(req.getParameter("itemImageInputSearch"));
+                            ItemImage itemImage = itemImageServiceImpl.findByID(itemImageID);
+                            List<ItemImage> itemImageList = new ArrayList<>();
+                            itemImageList.add(itemImage);
 
-                        req.setAttribute("itemImageList", itemImageList);
-                        req.getRequestDispatcher("Views/Admin/ManageItemImage.jsp").forward(req, resp);
+                            initData(req);
+                            req.setAttribute("itemImageList", itemImageList);
+                            req.getRequestDispatcher("Views/Admin/ManageItemImage.jsp").forward(req, resp);
+
+                        }
+                        case "itemID" -> {
+                            String itemImageSortType = req.getParameter("itemImageSortType");
+                            List<ItemImage> itemImageList = null;
+                            if (itemImageSortType.equals("az")) {
+                                itemImageList = itemImageServiceImpl.findAllByItemID(Integer.parseInt(itemImageInputSearch), "item_id", ItemServiceImpl.SortOrder.ASC);
+                            } else if (itemImageSortType.equals("za")) {
+                                itemImageList = itemImageServiceImpl.findAllByItemID(Integer.parseInt(itemImageInputSearch), "item_id", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            initData(req);
+                            req.setAttribute("itemImageList", itemImageList);
+                            req.getRequestDispatcher("Views/Admin/ManageItemImage.jsp").forward(req, resp);
+                        }
                     }
                 }
             }
-
-            case "refreshItemImage"->{
-                List<ItemImage> itemImageList=itemImageServiceImpl.getAllItemImage();
-                req.setAttribute("itemImageList", itemImageList);
-                req.getRequestDispatcher("Views/Admin/ManageItemImage.jsp").forward(req, resp);
-            }
+        }catch (Exception er){
+            er.printStackTrace();
         }
     }
 
@@ -190,7 +199,7 @@ public class ManageItemImageServlet extends HttpServlet {
             if (cookie.getName().equals("signInAccountID")) {
                 Integer signInAccountID = Integer.parseInt(cookie.getValue());
                 Account account = accountServiceImpl.findByID(signInAccountID);
-                req.setAttribute("signInAccount",account);
+                req.setAttribute("signInAccount", account);
             }
         }
     }

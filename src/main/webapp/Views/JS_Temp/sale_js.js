@@ -140,3 +140,135 @@ function showSearchbox() {
   });
 }
 showSearchbox();
+
+function addSale() {
+
+  let add_saleName = document.getElementById("add_saleName").value;
+  let add_salePercentage=document.getElementById("add_salePercentage").value;
+  let add_saleOnSale=document.getElementById("add_saleOnSale").checked ? 1:0;
+  let add_saleItemID=document.getElementById("add_saleItemID").value;
+
+  if (add_saleName == null || add_saleName == "" || add_salePercentage == null || add_salePercentage == "" ||
+  add_saleOnSale == null || add_saleOnSale == "" || add_saleItemID == null || add_saleItemID == "") {
+    alert("Không thể để dữ liệu trống");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageSaleServlet",
+      data: {
+        action: "addSale",
+        add_saleName:add_saleName,
+        add_salePercentage:add_salePercentage,
+        add_saleOnSale:add_saleOnSale,
+        add_saleItemID:add_saleItemID,
+      }, headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      success: function (data) {
+
+        data = JSON.parse(data);
+        if (data.success === true) {
+
+          alert("Thêm sản phẩm giảm giá thành công");
+          location.href = adminManagerContextPath + "/ManageSaleServlet";
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  }
+}
+
+function deleteSale(saleID) {
+  // Trả về true nếu người dùng đã xác nhận, ngược lại trả về false
+  if (confirm('Bạn có chắc chắn xóa không?')) {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageSaleServlet",
+      data: {
+        action: "deleteSale",
+        saleID: saleID,
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data.success === true) {
+          alert("Xóa giảm giá sản phẩm thành công");
+          location.href = adminManagerContextPath + "/ManageSaleServlet";
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  } else {
+    alert("a")
+  }
+}
+
+function updateSale() {
+  let update_saleID=document.getElementById("update_saleID").value;
+  let update_saleName = document.getElementById("update_saleName").value;
+  let update_salePercentage=document.getElementById("update_salePercentage").value;
+  let update_saleOnSale=document.getElementById("update_saleOnSale").checked ? 1:0;
+  let update_saleItemID=document.getElementById("update_saleItemID").value;
+
+  if (update_saleName == null || update_saleName == "" || update_salePercentage == null || update_salePercentage == "" ||
+      update_saleOnSale == null || update_saleOnSale == "" || update_saleItemID == null || update_saleItemID == "") {
+    alert("Không thể để dữ liệu trống");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageSaleServlet",
+      data: {
+        action: "updateSale",
+        update_sale:update_saleID,
+        update_saleName:update_saleName,
+        update_salePercentage:update_salePercentage,
+        update_saleOnSale:update_saleOnSale,
+        update_saleItemID:update_saleItemID,
+      }, headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      success: function (data) {
+
+        data = JSON.parse(data);
+        if (data.success === true) {
+
+          alert("Cập nhật giảm giá sản phẩm thành công");
+          refreshSale();
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  }
+}
+
+function searchAndSortSale() {
+  let saleSearchType = document.getElementById("saleSearchType").value;
+  let saleInputSearch = document.getElementById("saleInputSearch").value;
+  let saleSortType = document.getElementById("saleSortType").value;
+
+  if (saleSearchType == null || saleSearchType == "" || saleInputSearch == null || saleInputSearch == "" ||
+      saleSortType == null || saleSortType == "") {
+    alert("Không thể để dữ liệu trống");
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function refreshSale() {
+  location.href = adminManagerContextPath + "/ManageSaleServlet";
+}

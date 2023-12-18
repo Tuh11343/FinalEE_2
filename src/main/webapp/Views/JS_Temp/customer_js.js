@@ -131,3 +131,135 @@ function showSearchbox() {
   });
 }
 showSearchbox();
+
+function addCustomer() {
+
+  let add_customerName = document.getElementById("add_customerName").value;
+  let add_customerPhoneNumber = document.getElementById("add_customerPhoneNumber").value;
+  let add_customerEmail = document.getElementById("add_customerEmail").value;
+  let add_customerAddress = document.getElementById("add_customerAddress").value;
+
+  if (add_customerName == null || add_customerName == "" || add_customerPhoneNumber == null || add_customerPhoneNumber == ""
+      || add_customerEmail == null || add_customerEmail == "" || add_customerAddress == null || add_customerAddress == "") {
+    alert("Không thể để dữ liệu trống");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageCustomerServlet",
+      data: {
+        action: "addCustomer",
+        add_customerName: add_customerName,
+        add_customerPhoneNumber: add_customerPhoneNumber,
+        add_customerEmail: add_customerEmail,
+        add_customerAddress: add_customerAddress,
+      }, headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      success: function (data) {
+
+        data = JSON.parse(data);
+        if (data.success === true) {
+
+          alert("Thêm khách hàng thành công");
+          location.href = adminManagerContextPath + "/ManageCustomerServlet";
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  }
+}
+
+function deleteCustomer(customerID) {
+  // Trả về true nếu người dùng đã xác nhận, ngược lại trả về false
+  if (confirm('Bạn có chắc chắn xóa không?')) {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageCustomerServlet",
+      data: {
+        action: "deleteCustomer",
+        customerID: customerID,
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data.success === true) {
+          alert("Xóa khách hàng thành công");
+          location.href = adminManagerContextPath + "/ManageCustomerServlet";
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  } else {
+    alert("a")
+  }
+}
+
+function updateCustomer(){
+  let update_customerID = document.getElementById("update_customerID").value;
+  let update_customerName = document.getElementById("update_customerName").value;
+  let update_customerPhoneNumber = document.getElementById("update_customerPhoneNumber").value;
+  let update_customerEmail = document.getElementById("update_customerEmail").value;
+  let update_customerAddress = document.getElementById("update_customerAddress").value;
+
+  if (update_customerName == null || update_customerName == "" || update_customerPhoneNumber == null || update_customerPhoneNumber == ""
+      || update_customerEmail == null || update_customerEmail == "" || update_customerAddress == null || update_customerAddress == "") {
+    alert("Không thể để dữ liệu trống");
+  }else {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageCustomerServlet",
+      data: {
+        action: "updateCustomer",
+        update_customerID:update_customerID,
+        update_customerName: update_customerName,
+        update_customerPhoneNumber: update_customerPhoneNumber,
+        update_customerEmail: update_customerEmail,
+        update_customerAddress: update_customerAddress,
+      }, headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      success: function (data) {
+
+        data = JSON.parse(data);
+        if (data.success === true) {
+
+          alert("Cập nhật khách hàng thành công");
+          refreshCustomer();
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  }
+}
+
+function searchAndSortCustomer(){
+  let customerSearchType=document.getElementById("customerSearchType").value;
+  let customerInputSearch=document.getElementById("customerInputSearch").value;
+  let customerSortType= document.getElementById("customerSortType").value;
+
+  if (customerSearchType == null || customerSearchType == "" || customerInputSearch == null || customerInputSearch == "" ||
+      customerSortType == null || customerSortType == "") {
+    alert("Không thể để dữ liệu trống");
+    return false;
+  }else{
+    return true;
+  }
+}
+
+function refreshCustomer(){
+  location.href=adminManagerContextPath+"/ManageCustomerServlet";
+}

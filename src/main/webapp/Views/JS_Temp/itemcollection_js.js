@@ -123,3 +123,121 @@ function showSearchbox() {
   });
 }
 showSearchbox();
+
+function addItemCollection() {
+
+  let add_itemCollectionName = document.getElementById("add_itemCollectionName").value;
+
+  if (add_itemCollectionName == null || add_itemCollectionName == "") {
+    alert("Không thể để dữ liệu trống");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageItemCollectionServlet",
+      data: {
+        action: "addItemCollection",
+        add_itemCollectionName:add_itemCollectionName,
+      }, headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      success: function (data) {
+
+        data = JSON.parse(data);
+        if (data.success === true) {
+
+          alert("Thêm bộ sưu tập thành công");
+          location.href = adminManagerContextPath + "/ManageItemCollectionServlet";
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  }
+}
+
+function deleteItemCollection(itemCollectionID) {
+  // Trả về true nếu người dùng đã xác nhận, ngược lại trả về false
+  if (confirm('Bạn có chắc chắn xóa không?')) {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageItemCollectionServlet",
+      data: {
+        action: "deleteItemCollection",
+        itemCollectionID: itemCollectionID,
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data.success === true) {
+          alert("Xóa bộ sưu tập thành công");
+          location.href = adminManagerContextPath + "/ManageItemCollectionServlet";
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  } else {
+    alert("a")
+  }
+}
+
+function updateItemCollection() {
+  let update_itemCollectionID=document.getElementById("update_itemCollectionID").value;
+  let update_itemCollectionName=document.getElementById("update_itemCollectionName").value;
+
+  if (update_itemCollectionName == null || update_itemCollectionName == "") {
+    alert("Không thể để dữ liệu trống");
+  }  else {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageItemCollectionServlet",
+      data: {
+        action: "updateItemCollection",
+        update_itemCollectionID:update_itemCollectionID,
+        update_itemCollectionName:update_itemCollectionName,
+      }, headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      success: function (data) {
+
+        data = JSON.parse(data);
+        if (data.success === true) {
+
+          alert("Cập nhật bộ sưu tập thành công");
+          refreshItemCollection();
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  }
+}
+
+function searchAndSortItemCollection() {
+  let itemCollectionSearchType = document.getElementById("itemCollectionSearchType").value;
+  let itemCollectionInputSearch = document.getElementById("itemCollectionInputSearch").value;
+  let itemCollectionSortType = document.getElementById("itemCollectionSortType").value;
+
+  if (itemCollectionSearchType == null || itemCollectionSearchType == "" || itemCollectionInputSearch == null || itemCollectionInputSearch == "" ||
+      itemCollectionSortType == null || itemCollectionSortType == "") {
+    alert("Không thể để dữ liệu trống");
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function refreshItemCollection() {
+  location.href = adminManagerContextPath + "/ManageItemCollectionServlet";
+}

@@ -138,3 +138,124 @@ function showSearchbox() {
   });
 }
 showSearchbox();
+
+function addItemImage() {
+
+  let add_itemImageItemID = document.getElementById("add_itemImageItemID").value;
+  let add_itemImageURL = document.getElementById("add_itemImageURL").value;
+
+  if (add_itemImageItemID == null || add_itemImageItemID == "" || add_itemImageURL== null || add_itemImageURL == "") {
+    alert("Không thể để dữ liệu trống");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageItemImageServlet",
+      data: {
+        action: "addItemImage",
+        add_itemImageItemID:add_itemImageItemID,
+        add_itemImageURL:add_itemImageURL,
+      }, headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      success: function (data) {
+
+        data = JSON.parse(data);
+        if (data.success === true) {
+
+          alert("Thêm hình ảnh sản phẩm thành công");
+          location.href = adminManagerContextPath + "/ManageItemImageServlet";
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  }
+}
+
+function deleteItemImage(itemImageID) {
+  // Trả về true nếu người dùng đã xác nhận, ngược lại trả về false
+  if (confirm('Bạn có chắc chắn xóa không?')) {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageItemImageServlet",
+      data: {
+        action: "deleteItemImage",
+        itemImageID: itemImageID,
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data.success === true) {
+          alert("Xóa hình ảnh sản phẩm thành công");
+          location.href = adminManagerContextPath + "/ManageItemImageServlet";
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  } else {
+    alert("a")
+  }
+}
+
+function updateItemImage() {
+  let update_itemImageID=document.getElementById("update_itemImageID").value;
+  let update_itemImageItemID = document.getElementById("update_itemImageItemID").value;
+  let update_itemImageURL = document.getElementById("update_itemImageURL").value;
+
+  if (update_itemImageItemID == null || update_itemImageItemID == "" || update_itemImageURL== null || update_itemImageURL == "") {
+    alert("Không thể để dữ liệu trống");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageItemImageServlet",
+      data: {
+        action: "updateItemImage",
+        update_itemImageID:update_itemImageID,
+        update_itemImageItemID:update_itemImageItemID,
+        update_itemImageURL:update_itemImageURL,
+      }, headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      success: function (data) {
+
+        data = JSON.parse(data);
+        if (data.success === true) {
+
+          alert("Cập nhật hình ảnh sản phẩm thành công");
+          refreshItemImage();
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  }
+}
+
+function searchAndSortItemImage() {
+  let itemImageSearchType = document.getElementById("itemImageSearchType").value;
+  let itemImageInputSearch = document.getElementById("itemImageInputSearch").value;
+  let itemImageSortType = document.getElementById("itemImageSortType").value;
+
+  if (itemImageSearchType == null || itemImageSearchType == "" || itemImageInputSearch == null || itemImageInputSearch == "" ||
+      itemImageSortType == null || itemImageSortType == "") {
+    alert("Không thể để dữ liệu trống");
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function refreshItemImage() {
+  location.href = adminManagerContextPath + "/ManageItemImageServlet";
+}
