@@ -130,6 +130,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               hàng</a>
             <a href="${pageContext.request.contextPath}/ManageOrderDetailServlet">Quản lý chi tiết hóa đơn</a>
             <a href="${pageContext.request.contextPath}/ManageSaleServlet">Quản lý khuyến mãi sản phẩm</a>
+            <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
           </c:if>
 
 
@@ -148,8 +149,6 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
           <a href="${pageContext.request.contextPath}/ManageItemTypeServlet">Quản lý loại sản phẩm</a>
 
           <a href="${pageContext.request.contextPath}/ManageStockItemServlet">Quản lý thông tin sản phẩm</a>
-
-          <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
 
         </div>
       </aside>
@@ -174,13 +173,10 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               >
                 Xuất Excel
               </a>
-              <form
-                action="${pageContext.request.contextPath}/ManageCustomerServlet"
-                method="post"
-              >
+              <form>
                 <button
                   class="btnHD btnload"
-                  style="margin-left: 5px; margin-bottom: 4px"
+                  style="margin-left: 5px; margin-bottom: 4px" onclick="refreshCustomer()"
                 >
                   Refresh
                 </button>
@@ -190,7 +186,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             <h2 style="font-size: 30px">Quản lý khách hàng</h2>
             <form
               action="${pageContext.request.contextPath}/ManageCustomerServlet"
-              method="post"
+              method="post" onsubmit="return searchAndSortCustomer()"
             >
               <div class="sorttable">
                 <div class="sort-search">
@@ -247,14 +243,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                   <td>${customer.address}</td>
                   <td>
                     <div class="flex-center grpbtn">
-
-                      <form action="${pageContext.request.contextPath}/ManageAccountServlet" method="post"
-                            onsubmit="return confirmDelete()">
-                        <button class="btnHD btnDel" type="submit">Xóa</button>
-                        <input type="hidden" value="${customer.id}" name="customerID">
-                        <input type="hidden" value="deleteCustomer" name="action">
-                      </form>
-
+                        <button class="btnHD btnDel" type="submit" onclick="deleteCustomer()">Xóa</button>
                       <a
                         class="btnHD btnUpdateCustomer"
                         data-customerID="${customer.id}"
@@ -278,10 +267,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               <span class="close clsUpdateCustomer">&times;</span>
 
               <h2 class="text-center" style="padding: 16px 0">Cập Nhật Khách Hàng</h2>
-              <form
-                action="${pageContext.request.contextPath}/ManageCustomerServlet"
-                method="post"
-              >
+              <form>
                 <!--Customer ID-->
                 <div class="form-grp">
                   <input
@@ -344,9 +330,9 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                 </div>
 
                 <div class="flex-center">
-                  <button id="updateCustomer" class="btnAdd submit">Cập nhật</button>
+                  <button id="updateCustomer" class="btnAdd submit" onclick="updateCustomer()">Cập nhật</button>
                 </div>
-                <input type="hidden" value="updateCustomer" name="action" />
+
               </form>
             </div>
           </div>
@@ -356,10 +342,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             <div class="add-modal">
               <span class="close clsAddCustomer">&times;</span>
               <h2 class="text-center" style="padding: 16px 0">Thêm Khách Hàng</h2>
-              <form
-                action="${pageContext.request.contextPath}/ManageCustomerServlet"
-                method="post"
-              >
+              <form>
                 <!--Customer Name-->
                 <div class="form-grp">
                   <label for="add_customerName">Tên khách hàng:</label>
@@ -413,7 +396,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                 </div>
 
                 <div class="flex-center">
-                  <button id="addCustomer" class="btnAdd submit">Thêm</button>
+                  <button id="addCustomer" class="btnAdd submit" onclick="addCustomer()">Thêm</button>
                 </div>
                 <input type="hidden" value="addCustomer" name="action" />
               </form>

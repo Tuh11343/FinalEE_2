@@ -130,6 +130,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               hàng</a>
             <a href="${pageContext.request.contextPath}/ManageOrderDetailServlet">Quản lý chi tiết hóa đơn</a>
             <a href="${pageContext.request.contextPath}/ManageSaleServlet">Quản lý khuyến mãi sản phẩm</a>
+            <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
           </c:if>
 
 
@@ -148,8 +149,6 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
           <a href="${pageContext.request.contextPath}/ManageItemTypeServlet">Quản lý loại sản phẩm</a>
 
           <a href="${pageContext.request.contextPath}/ManageStockItemServlet">Quản lý thông tin sản phẩm</a>
-
-          <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
 
         </div>
       </aside>
@@ -175,13 +174,11 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               >
                 Xuất Excel
               </button>
-              <form
-                action="${pageContext.request.contextPath}/ManagePermissionServlet"
-                method="post"
-              >
+              <form>
                 <button
                   class="btnHD btnload"
                   style="margin-left: 5px; margin-bottom: 4px"
+                  onclick="refreshPermission()"
                 >
                   Refresh
                 </button>
@@ -191,7 +188,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             <h2 style="font-size: 30px">Quản lý phân quyền</h2>
             <form
               action="${pageContext.request.contextPath}/ManagePermissionServlet"
-              method="post"
+              method="post" onsubmit="return searchAndSortPermission()"
             >
               <div class="sorttable">
                 <div class="sort-search">
@@ -244,12 +241,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                   <td>
                     <div class="flex-center grpbtn">
 
-                      <form action="${pageContext.request.contextPath}/ManagePermissionServlet" method="post"
-                            onsubmit="return confirmDelete()">
-                        <button class="btnHD btnDel" type="submit">Xóa</button>
-                        <input type="hidden" value="${permission.id}" name="permissionID">
-                        <input type="hidden" value="deletePermission" name="action">
-                      </form>
+                      <button class="btnHD btnDel" type="submit" onclick="deletePermission(${permission.id})">Xóa</button>
 
                       <a
                         class="btnHD btnUpdatePermission"
@@ -272,10 +264,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               <span class="close clsUpdatePermission">&times;</span>
 
               <h2 class="text-center" style="padding: 16px 0">Cập Nhật Quyền</h2>
-              <form
-                action="${pageContext.request.contextPath}/ManagePermissionServlet"
-                method="post"
-              >
+              <form>
                 <div class="form-grp">
                   <input
                     type="hidden"
@@ -310,7 +299,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                 </div>
 
                 <div class="flex-center">
-                  <button id="updatePermission" class="btnHD btnAdd submit">Cập nhật</button>
+                  <a id="updatePermission" class="btnHD btnAdd submit" onclick="updatePermission()">Cập nhật</a>
                 </div>
                 <input type="hidden" value="updatePermission" name="action" />
               </form>
@@ -322,10 +311,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             <div class="add-modal">
               <span class="close clsAddPermission">&times;</span>
               <h2 class="text-center" style="padding: 16px 0">Thêm Quyền</h2>
-              <form
-                action="${pageContext.request.contextPath}/ManagePermissionServlet"
-                method="post"
-              >
+              <form>
                 <!--Permission Name-->
                 <div class="form-grp">
                   <label for="add_permissionName">Tên Quyền:</label>
@@ -353,7 +339,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                 </div>
 
                 <div class="flex-center">
-                  <button id="addPermission" class="btnHD btnAdd submit"> Thêm </button>
+                  <a id="addPermission" class="btnHD btnAdd submit" onclick="addPermission()"> Thêm </a>
                 </div>
                 <input type="hidden" value="addPermission" name="action" />
               </form>
@@ -382,7 +368,6 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="${pageContext.request.contextPath}/Views/User/dest/tuh.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/Views/User/dest/admin.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
   </body>
 </html>

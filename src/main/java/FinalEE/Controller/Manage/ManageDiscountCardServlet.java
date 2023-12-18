@@ -8,8 +8,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,101 +43,124 @@ public class ManageDiscountCardServlet extends HttpServlet {
 
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        initData(req);
-        switch (action) {
-            case "addDiscountCard" -> {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+        try{
+            String action = req.getParameter("action");
+            initData(req);
+            switch (action) {
+                case "addDiscountCard" -> {
 
-                int customerID = Integer.parseInt(req.getParameter("add_discountCardID"));
-                String name = req.getParameter("add_discountCardName");
-                int discountPercentage = Integer.parseInt(req.getParameter("add_discountCardDiscountPercentage"));
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
-                Customer customer = customerServiceImpl.findByID(customerID);
+                    int customerID = Integer.parseInt(req.getParameter("add_discountCardCustomerID"));
+                    String name = req.getParameter("add_discountCardName");
+                    int discountPercentage = Integer.parseInt(req.getParameter("add_discountCardDiscountPercentage"));
 
-                DiscountCard discountCard = new DiscountCard();
-                discountCard.setCustomer(customer);
-                discountCard.setDiscount_percentage(discountPercentage);
-                discountCard.setName(name);
+                    Customer customer = customerServiceImpl.findByID(customerID);
 
-                if (discountCardServiceImpl.create(discountCard)) {
-                    resp.getWriter().println("<script>alert('Thêm khách hàng thành công!');</script>");
+                    DiscountCard discountCard = new DiscountCard();
+                    discountCard.setCustomer(customer);
+                    discountCard.setDiscount_percentage(discountPercentage);
+                    discountCard.setName(name);
 
-                } else {
-                    resp.getWriter().println("<script>alert('Thêm khách hàng thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
-
-            }
-            case "updateDiscountCard" -> {
-                int id = Integer.parseInt(req.getParameter("update_discountCardID"));
-                int discountPercentage = Integer.parseInt(req.getParameter("update_discountCardDiscountPercentage"));
-                String name = req.getParameter("update_discountCardName");
-                int customerID = Integer.parseInt(req.getParameter("update_discountCardID"));
-
-                Customer customer = customerServiceImpl.findByID(customerID);
-
-                DiscountCard discountCard = new DiscountCard();
-                discountCard.setId(id);
-                discountCard.setCustomer(customer);
-                discountCard.setDiscount_percentage(discountPercentage);
-                discountCard.setName(name);
-
-                if (discountCardServiceImpl.create(discountCard)) {
-                    resp.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thành công!');</script>");
-
-                } else {
-                    resp.getWriter().println("<script>alert('Cập nhật thẻ khuyến mãi thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
-            }
-            case "deleteDiscountCard" -> {
-                int discountCardID = Integer.parseInt(req.getParameter("discountCardID"));
-                if (discountCardServiceImpl.deleteByID(discountCardID)) {
-                    resp.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Xóa thẻ khuyến mãi thất bại!');</script>");
-                }
-                resp.sendRedirect("/FinalEE/ManageAccountServlet");
-            }
-            case "searchAndSortCustomer"-> {
-                String searchType = req.getParameter("customerSearchType");
-                String customerInputSearch = req.getParameter("customerInputSearch");
-                switch (searchType) {
-                    case "noData" -> {
-
+                    if (discountCardServiceImpl.create(discountCard)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "id" -> {
-                        Integer customerID = Integer.parseInt(req.getParameter("customerInputSearch"));
-                        Customer customer = customerServiceImpl.findByID(customerID);
-                        List<Customer> customerList = new ArrayList<>();
-                        customerList.add(customer);
 
-                        req.setAttribute("customerList", customerList);
-                        req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
 
+                }
+                case "updateDiscountCard" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    int id = Integer.parseInt(req.getParameter("update_discountCardID"));
+                    int discountPercentage = Integer.parseInt(req.getParameter("update_discountCardDiscountPercentage"));
+                    String name = req.getParameter("update_discountCardName");
+                    int customerID = Integer.parseInt(req.getParameter("update_discountCardID"));
+
+                    Customer customer = customerServiceImpl.findByID(customerID);
+
+                    DiscountCard discountCard = new DiscountCard();
+                    discountCard.setId(id);
+                    discountCard.setCustomer(customer);
+                    discountCard.setDiscount_percentage(discountPercentage);
+                    discountCard.setName(name);
+
+                    if (discountCardServiceImpl.create(discountCard)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "name" -> {
-                        String customerSortType = req.getParameter("customerSortType");
-                        List<Customer> customerList = null;
-                        if (customerSortType.equals("az")) {
-                            customerList = customerServiceImpl.findAllByNameLike(customerInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
-                        } else if (customerSortType.equals("za")) {
-                            customerList = customerServiceImpl.findAllByNameLike(customerInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "deleteDiscountCard" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    int discountCardID = Integer.parseInt(req.getParameter("discountCardID"));
+                    if (discountCardServiceImpl.deleteByID(discountCardID)) {
+                        jsonResponse.put("success", true);
+                    }
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "searchAndSortDiscountCard" -> {
+                    String searchType = req.getParameter("discountCardSearchType");
+                    String discountCardInputSearch = req.getParameter("discountCardInputSearch");
+                    switch (searchType) {
+                        case "noData" -> {
+
                         }
+                        case "id" -> {
+                            Integer discountCardID = Integer.parseInt(req.getParameter("discountCardInputSearch"));
+                            DiscountCard discountCard = discountCardServiceImpl.findByID(discountCardID);
+                            List<DiscountCard> discountCardList = new ArrayList<>();
+                            discountCardList.add(discountCard);
 
-                        req.setAttribute("customerList", customerList);
-                        req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+                            initData(req);
+                            req.setAttribute("discountCardList",discountCardList);
+                            req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+
+                        }
+                        case "name" -> {
+                            String discountCardSortType = req.getParameter("discountCardSortType");
+                            List<DiscountCard> discountCardList = null;
+                            if (discountCardSortType.equals("az")) {
+                                discountCardList = discountCardServiceImpl.findAllByNameLikeSort(discountCardInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
+                            } else if (discountCardSortType.equals("za")) {
+                                discountCardList = discountCardServiceImpl.findAllByNameLikeSort(discountCardInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            initData(req);
+                            req.setAttribute("discountCardList",discountCardList);
+                            req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+                        }
+                        case "customerID" -> {
+                            String discountCardSortType = req.getParameter("discountCardSortType");
+                            List<DiscountCard> discountCardList = null;
+                            if (discountCardSortType.equals("az")) {
+                                discountCardList = discountCardServiceImpl.findByCustomerID(Integer.parseInt(discountCardInputSearch), "customer_id", ItemServiceImpl.SortOrder.ASC);
+                            } else if (discountCardSortType.equals("za")) {
+                                discountCardList = discountCardServiceImpl.findByCustomerID(Integer.parseInt(discountCardInputSearch), "customer_id", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            initData(req);
+                            req.setAttribute("discountCardList",discountCardList);
+                            req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
+                        }
                     }
+
                 }
             }
-            case "refreshItem"->{
-                List<Customer> customerList=customerServiceImpl.getAllCustomer();
-                req.setAttribute("customerList", customerList);
-                req.getRequestDispatcher("Views/Admin/ManageDiscountCard.jsp").forward(req, resp);
-            }
+        }catch (Exception er){
+            er.printStackTrace();
         }
     }
 

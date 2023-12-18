@@ -9,8 +9,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,90 +44,97 @@ public class ManageItemCollectionServlet extends HttpServlet {
     }
 
 
-
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        initData(req);
-        switch (action) {
-            case "addItemCollection" -> {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            String action = req.getParameter("action");
+            initData(req);
+            switch (action) {
+                case "addItemCollection" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
-                String name = req.getParameter("add_itemCollectionName");
+                    String name = req.getParameter("add_itemCollectionName");
 
-                ItemCollection itemCollection = new ItemCollection();
-                itemCollection.setName(name);
+                    ItemCollection itemCollection = new ItemCollection();
+                    itemCollection.setName(name);
 
-                if (itemCollectionServiceImpl.create(itemCollection)) {
-                    resp.getWriter().println("<script>alert('Thêm bộ sưu tập thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Thêm bộ sưu tập thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManageItemCollectionServlet");
-            }
-            case "updateItemCollection" -> {
-
-                int id = Integer.parseInt(req.getParameter("update_itemCollectionID"));
-                String name = req.getParameter("update_itemCollectionName");
-
-                ItemCollection itemCollection = new ItemCollection();
-                itemCollection.setId(id);
-                itemCollection.setName(name);
-
-                if (itemCollectionServiceImpl.create(itemCollection)) {
-                    resp.getWriter().println("<script>alert('Cập nhật bộ sưu tập thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Cập nhật sưu tập thất bại!');</script>");
-                }
-                resp.sendRedirect("/FinalEE/ManageItemCollectionServlet");
-
-            }
-            case "deleteItemCollection" -> {
-                int itemCollectionID = Integer.parseInt(req.getParameter("itemCollectionID"));
-                if (itemCollectionServiceImpl.deleteByID(itemCollectionID)) {
-                    resp.getWriter().println("<script>alert('Xóa bộ sưu tập thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Xóa bộ sưu tập thất bại!');</script>");
-                }
-                resp.sendRedirect("/FinalEE/ManageItemCollectionServlet");
-            }
-            case "searchAndSortItemCollection"-> {
-                String searchType = req.getParameter("itemCollectionSearchType");
-                String itemCollectionInputSearch = req.getParameter("itemCollectionInputSearch");
-                switch (searchType) {
-                    case "noData" -> {
-
+                    if (itemCollectionServiceImpl.create(itemCollection)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "id" -> {
-                        Integer itemCollectionID = Integer.parseInt(req.getParameter("itemCollectionInputSearch"));
-                        ItemCollection itemCollection = itemCollectionServiceImpl.findByID(itemCollectionID);
-                        List<ItemCollection> itemCollectionList = new ArrayList<>();
-                        itemCollectionList.add(itemCollection);
 
-                        req.setAttribute("itemCollectionList", itemCollectionList);
-                        req.getRequestDispatcher("Views/Admin/ManageItemCollection.jsp").forward(req, resp);
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "updateItemCollection" -> {
 
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    int id = Integer.parseInt(req.getParameter("update_itemCollectionID"));
+                    String name = req.getParameter("update_itemCollectionName");
+
+                    ItemCollection itemCollection = new ItemCollection();
+                    itemCollection.setId(id);
+                    itemCollection.setName(name);
+
+                    if (itemCollectionServiceImpl.create(itemCollection)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "name" -> {
-                        String itemCollectionSortType = req.getParameter("itemCollectionSortType");
-                        List<ItemCollection> itemCollectionList = null;
-                        if (itemCollectionSortType.equals("az")) {
-                            itemCollectionList = itemCollectionServiceImpl.findAllByNameContains(itemCollectionInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
-                        } else if (itemCollectionSortType.equals("za")) {
-                            itemCollectionList = itemCollectionServiceImpl.findAllByNameContains(itemCollectionInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+
+                }
+                case "deleteItemCollection" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    int itemCollectionID = Integer.parseInt(req.getParameter("itemCollectionID"));
+                    if (itemCollectionServiceImpl.deleteByID(itemCollectionID)) {
+                        jsonResponse.put("success", true);
+                    }
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "searchAndSortItemCollection" -> {
+                    String searchType = req.getParameter("itemCollectionSearchType");
+                    String itemCollectionInputSearch = req.getParameter("itemCollectionInputSearch");
+                    switch (searchType) {
+                        case "noData" -> {
+
                         }
+                        case "id" -> {
+                            Integer itemCollectionID = Integer.parseInt(req.getParameter("itemCollectionInputSearch"));
+                            ItemCollection itemCollection = itemCollectionServiceImpl.findByID(itemCollectionID);
+                            List<ItemCollection> itemCollectionList = new ArrayList<>();
+                            itemCollectionList.add(itemCollection);
 
-                        req.setAttribute("itemCollectionList", itemCollectionList);
-                        req.getRequestDispatcher("Views/Admin/ManageItemCollection.jsp").forward(req, resp);
+                            initData(req);
+                            req.setAttribute("itemCollectionList", itemCollectionList);
+                            req.getRequestDispatcher("Views/Admin/ManageItemCollection.jsp").forward(req, resp);
+
+                        }
+                        case "name" -> {
+                            String itemCollectionSortType = req.getParameter("itemCollectionSortType");
+                            List<ItemCollection> itemCollectionList = null;
+                            if (itemCollectionSortType.equals("az")) {
+                                itemCollectionList = itemCollectionServiceImpl.findAllByNameContains(itemCollectionInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
+                            } else if (itemCollectionSortType.equals("za")) {
+                                itemCollectionList = itemCollectionServiceImpl.findAllByNameContains(itemCollectionInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            initData(req);
+                            req.setAttribute("itemCollectionList", itemCollectionList);
+                            req.getRequestDispatcher("Views/Admin/ManageItemCollection.jsp").forward(req, resp);
+                        }
                     }
                 }
             }
-
-            case "refreshItemCollection"->{
-                List<ItemCollection> itemCollectionList=itemCollectionServiceImpl.getAllItemCollection();
-                req.setAttribute("itemCollectionList", itemCollectionList);
-                req.getRequestDispatcher("Views/Admin/ManageItemCollection.jsp").forward(req, resp);
-            }
+        } catch (Exception er) {
+            er.printStackTrace();
         }
     }
 
@@ -184,7 +193,7 @@ public class ManageItemCollectionServlet extends HttpServlet {
             if (cookie.getName().equals("signInAccountID")) {
                 Integer signInAccountID = Integer.parseInt(cookie.getValue());
                 Account account = accountServiceImpl.findByID(signInAccountID);
-                req.setAttribute("signInAccount",account);
+                req.setAttribute("signInAccount", account);
             }
         }
     }

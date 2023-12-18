@@ -288,7 +288,6 @@ function order(){
     let note=document.getElementById("note").value;
     let address=document.getElementById("address").value;
     let email=document.getElementById("emailOrder").value;
-    console.log(email);
 
     $.ajax({
         type: "POST",
@@ -305,7 +304,11 @@ function order(){
             "X-Requested-With": "XMLHttpRequest",
         },
         success: function (data) {
-            if(data.success === 1)
+            if(data.outOfStock){
+
+                console.log(data.itemList);
+
+            } else if(data.success === 1)
             {
                 localStorage.clear();
                 window.location.reload();

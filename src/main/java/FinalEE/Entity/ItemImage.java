@@ -24,7 +24,7 @@ public class ItemImage implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)

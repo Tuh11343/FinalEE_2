@@ -9,8 +9,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,90 +44,100 @@ public class ManagePermissionServlet extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        initData(req);
-        switch (action) {
-            case "addPermission" -> {
-                int level = Integer.parseInt(req.getParameter("add_permissionLevel"));
-                String name = req.getParameter("add_permissionName");
+        try{
+            String action = req.getParameter("action");
+            initData(req);
+            switch (action) {
+                case "addPermission" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
-                Permission permission = new Permission();
-                permission.setLevel(level);
-                permission.setName(name);
+                    int level = Integer.parseInt(req.getParameter("add_permissionLevel"));
+                    String name = req.getParameter("add_permissionName");
 
-                if (permissionServiceImpl.create(permission)) {
-                    resp.getWriter().println("<script>alert('Thêm quyền thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Thêm quyền thất bại!');</script>");
-                }
+                    Permission permission = new Permission();
+                    permission.setLevel(level);
+                    permission.setName(name);
 
-                resp.sendRedirect("/FinalEE/ManagePermissionServlet");
-            }
-            case "updatePermission" -> {
-                int id = Integer.parseInt(req.getParameter("update_permissionID"));
-                String name = req.getParameter("update_permissionName");
-                int level = Integer.parseInt(req.getParameter("update_permissionLevel"));
-
-                Permission permission = new Permission();
-                permission.setId(id);
-                permission.setLevel(level);
-                permission.setName(name);
-
-                if (permissionServiceImpl.create(permission)) {
-                    resp.getWriter().println("<script>alert('Cập nhật quyền thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Cập nhật quyền thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManagePermissionServlet");
-            }
-            case "deletePermission" -> {
-                int permissionID = Integer.parseInt(req.getParameter("permissionID"));
-                if (permissionServiceImpl.deleteByID(permissionID)) {
-                    resp.getWriter().println("<script>alert('Xóa vật liệu thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Xóa vật liệu thất bại!');</script>");
-                }
-                resp.sendRedirect("/FinalEE/ManagePermissionServlet");
-            }
-            case "searchAndSortPermission" -> {
-                String searchType = req.getParameter("permissionSearchType");
-                String permissionInputSearch = req.getParameter("permissionInputSearch");
-                switch (searchType) {
-                    case "noData" -> {
-
+                    if (permissionServiceImpl.create(permission)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "id" -> {
-                        Integer permissionID = Integer.parseInt(req.getParameter("permissionInputSearch"));
-                        Permission permission = permissionServiceImpl.findByID(permissionID);
-                        List<Permission> permissionList = new ArrayList<>();
-                        permissionList.add(permission);
 
-                        req.setAttribute("permissionList", permissionList);
-                        req.getRequestDispatcher("Views/Admin/ManagePermission.jsp").forward(req, resp);
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "updatePermission" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
+                    int id = Integer.parseInt(req.getParameter("update_permissionID"));
+                    String name = req.getParameter("update_permissionName");
+                    int level = Integer.parseInt(req.getParameter("update_permissionLevel"));
+
+                    Permission permission = new Permission();
+                    permission.setId(id);
+                    permission.setLevel(level);
+                    permission.setName(name);
+
+                    if (permissionServiceImpl.create(permission)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "name" -> {
-                        String permissionSortType = req.getParameter("permissionSortType");
-                        List<Permission> permissionList = null;
-                        if (permissionSortType.equals("az")) {
-                            permissionList = permissionServiceImpl.findAllByNameContains(permissionInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
-                        } else if (permissionSortType.equals("za")) {
-                            permissionList = permissionServiceImpl.findAllByNameContains(permissionInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "deletePermission" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    int permissionID = Integer.parseInt(req.getParameter("permissionID"));
+                    if (permissionServiceImpl.deleteByID(permissionID)) {
+                        jsonResponse.put("success", true);
+                    }
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "searchAndSortPermission" -> {
+                    String searchType = req.getParameter("permissionSearchType");
+                    String permissionInputSearch = req.getParameter("permissionInputSearch");
+                    switch (searchType) {
+                        case "noData" -> {
+
                         }
+                        case "id" -> {
+                            Integer permissionID = Integer.parseInt(req.getParameter("permissionInputSearch"));
+                            Permission permission = permissionServiceImpl.findByID(permissionID);
+                            List<Permission> permissionList = new ArrayList<>();
+                            permissionList.add(permission);
 
-                        req.setAttribute("permissionList", permissionList);
-                        req.getRequestDispatcher("Views/Admin/ManagePermission.jsp").forward(req, resp);
+                            initData(req);
+                            req.setAttribute("permissionList", permissionList);
+                            req.getRequestDispatcher("Views/Admin/ManagePermission.jsp").forward(req, resp);
+
+                        }
+                        case "name" -> {
+                            String permissionSortType = req.getParameter("permissionSortType");
+                            List<Permission> permissionList = null;
+                            if (permissionSortType.equals("az")) {
+                                permissionList = permissionServiceImpl.findAllByNameContains(permissionInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
+                            } else if (permissionSortType.equals("za")) {
+                                permissionList = permissionServiceImpl.findAllByNameContains(permissionInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            initData(req);
+                            req.setAttribute("permissionList", permissionList);
+                            req.getRequestDispatcher("Views/Admin/ManagePermission.jsp").forward(req, resp);
+                        }
                     }
+
                 }
-
             }
-
-            case "refreshPermission"->{
-                List<Permission> permissionList=permissionServiceImpl.getAllPermission();
-                req.setAttribute("permissionList", permissionList);
-                req.getRequestDispatcher("Views/Admin/ManagePermission.jsp").forward(req, resp);
-            }
+        }catch (Exception er){
+            er.printStackTrace();
         }
     }
 

@@ -139,7 +139,7 @@ function updateAccount(){
                 if (data.success === true) {
 
                     alert("Cập nhật tài khoản thành công");
-                    location.href = adminManagerContextPath + "/ManageAccountServlet";
+                    refreshAccount();
 
                 } else {
                     alert("Có lỗi xảy trong hệ thống");
@@ -157,38 +157,17 @@ function searchAndSortAccount(){
     let accountInputSearch=document.getElementById("accountInputSearch").value;
     let accountSortType= document.getElementById("accountSortType").value;
 
-    if (searchType == null || searchType == "" || accountInputSearch == null || accountInputSearch == "" ||
+    if (accountSearchType == null || accountSearchType == "" || accountInputSearch == null || accountInputSearch == "" ||
         accountSortType == null || accountSortType == "") {
         alert("Không thể để dữ liệu trống");
-    } else {
-        $.ajax({
-            type: "POST",
-            url: adminManagerContextPath + "/ManageAccountServlet",
-            data: {
-                action: "searchAndSortAccount",
-                accountSearchType:accountSearchType,
-                accountInputSearch:accountInputSearch,
-                accountSortType:accountSortType,
-            }, headers: {
-                "X-Requested-With": "XMLHttpRequest",
-            },
-            success: function (data) {
-
-                data = JSON.parse(data);
-                if (data.success === true) {
-
-                    alert("Cập nhật tài khoản thành công");
-                    location.reload();
-
-                } else {
-                    alert("Có lỗi xảy trong hệ thống");
-                }
-            },
-            error: function (error) {
-                console.log("error :>> ", error);
-            },
-        });
+        return false;
+    }else{
+        return true;
     }
+}
+
+function refreshAccount(){
+    location.href=adminManagerContextPath+"/ManageAccountServlet";
 }
 
 

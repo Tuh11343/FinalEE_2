@@ -123,10 +123,6 @@ public class ManageAccountServlet extends HttpServlet {
                     out.close();
                 }
                 case "searchAndSortAccount" -> {
-
-                    PrintWriter out = resp.getWriter();
-                    JSONObject jsonResponse = new JSONObject();
-
                     String searchType = req.getParameter("accountSearchType");
                     String accountInputSearch = req.getParameter("accountInputSearch");
                     switch (searchType) {
@@ -139,11 +135,9 @@ public class ManageAccountServlet extends HttpServlet {
                             List<Account> accountList = new ArrayList<>();
                             accountList.add(account);
 
+                            initData(req);
                             req.setAttribute("accountList", accountList);
-                            jsonResponse.put("success",true);
-                            out.print(jsonResponse);
-                            out.flush();
-                            out.close();
+                            req.getRequestDispatcher("Views/Admin/ManageAccount.jsp").forward(req, resp);
 
                         }
                         case "name" -> {
@@ -155,11 +149,10 @@ public class ManageAccountServlet extends HttpServlet {
                                 accountList = accountServiceImpl.findAllByNameContainsSort(accountInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
                             }
 
+                            initData(req);
                             req.setAttribute("accountList", accountList);
-                            jsonResponse.put("success",true);
-                            out.print(jsonResponse);
-                            out.flush();
-                            out.close();
+                            req.getRequestDispatcher("Views/Admin/ManageAccount.jsp").forward(req, resp);
+
                         }
                         case "customerID" -> {
                             Integer customerID = Integer.parseInt(req.getParameter("accountInputSearch"));
@@ -167,23 +160,12 @@ public class ManageAccountServlet extends HttpServlet {
                             List<Account> accountList = new ArrayList<>();
                             accountList.add(account);
 
+                            initData(req);
                             req.setAttribute("accountList", accountList);
-                            jsonResponse.put("success",true);
-                            out.print(jsonResponse);
-                            out.flush();
-                            out.close();
+                            req.getRequestDispatcher("Views/Admin/ManageAccount.jsp").forward(req, resp);
+
                         }
                     }
-                }
-                case "refreshAccount" -> {
-
-                    PrintWriter out = resp.getWriter();
-                    JSONObject jsonResponse = new JSONObject();
-
-                    List<Account> accountList = accountServiceImpl.getAllAccount();
-                    req.setAttribute("accountList", accountList);
-
-                    req.getRequestDispatcher("Views/Admin/ManageAccount.jsp").forward(req, resp);
                 }
             }
 

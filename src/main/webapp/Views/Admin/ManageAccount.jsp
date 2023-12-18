@@ -173,16 +173,14 @@
                     >
                         Xuất Excel
                     </a>
-                    <form action="${pageContext.request.contextPath}/ManageAccountServlet" method="post">
-
-                        <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px">Refresh</button>
-                        <input type="hidden" name="action" value="refreshAccount">
-
+                    <form>
+                        <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px" onclick="refreshAccount()">Refresh</button>
                     </form>
 
                 </div>
                 <h2 style="font-size: 30px">Quản lý tài khoản</h2>
-                <form>
+                <form action="${pageContext.request.contextPath}/ManageAccountServlet"
+                      method="post" onsubmit="return searchAndSortAccount()">
                     <div class="sorttable">
                         <div class="sort-search">
 
@@ -194,11 +192,10 @@
                                     <option value="customerID">ID Khách hàng</option>
                                 </select>
                                 <input type="text" name="accountInputSearch" id="accountInputSearch"/>
-                                <button class="btnHD btnsearch" onclick="searchAndSortAccount()">Tìm</button>
+                                <button class="btnHD btnsearch">Tìm</button>
                             </div>
 
                         </div>
-
 
                         <input type="hidden" name="action" value="searchAndSortAccount">
 

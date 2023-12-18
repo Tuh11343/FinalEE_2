@@ -142,3 +142,135 @@ function showSearchbox() {
   });
 }
 showSearchbox();
+
+function addStockItem() {
+
+  let add_stockItemColor=document.getElementById("add_stockItemColor").value;
+  let add_stockItemSize=document.getElementById("add_stockItemSize").value;
+  let add_stockItemAmount=document.getElementById("add_stockItemAmount").value;
+  let add_stockItemItemID=document.getElementById("add_stockItemItemID").value;
+
+  if (add_stockItemItemID==null || add_stockItemItemID == "" || add_stockItemSize==null || add_stockItemSize == ""
+  || add_stockItemAmount==null || add_stockItemAmount == "" || add_stockItemColor == null || add_stockItemColor == "") {
+    alert("Không thể để dữ liệu trống");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageStockItemServlet",
+      data: {
+        action: "addStockItem",
+        add_stockItemItemID:add_stockItemColor,
+        add_stockItemSize:add_stockItemSize,
+        add_stockItemColor:add_stockItemColor,
+        add_stockItemAmount:add_stockItemAmount,
+      }, headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      success: function (data) {
+
+        data = JSON.parse(data);
+        if (data.success === true) {
+
+          alert("Thêm thông tin sản phẩm thành công");
+          location.href = adminManagerContextPath + "/ManageStockItemServlet";
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  }
+}
+
+function deleteStockItem(stockItemID) {
+  // Trả về true nếu người dùng đã xác nhận, ngược lại trả về false
+  if (confirm('Bạn có chắc chắn xóa không?')) {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageStockItemServlet",
+      data: {
+        action: "deleteStockItem",
+        stockItemID: stockItemID,
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data.success === true) {
+          alert("Xóa thông tin sản phẩm thành công");
+          location.href = adminManagerContextPath + "/ManageStockItemServlet";
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  } else {
+    alert("a")
+  }
+}
+
+function updateStockItem() {
+  let update_stockItemID= document.getElementById("update_stockItemID").value;
+  let update_stockItemColor=document.getElementById("update_stockItemColor").value;
+  let update_stockItemSize=document.getElementById("update_stockItemSize").value;
+  let update_stockItemAmount=document.getElementById("update_stockItemAmount").value;
+  let update_stockItemItemID=document.getElementById("update_stockItemItemID").value;
+
+  if (update_stockItemItemID==null || update_stockItemItemID == "" || update_stockItemSize==null || update_stockItemSize == ""
+      || update_stockItemAmount==null || update_stockItemAmount == "" || update_stockItemColor == null || update_stockItemColor == "") {
+    alert("Không thể để dữ liệu trống");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageStockItemServlet",
+      data: {
+        action: "updateStockItem",
+        update_stockItemID:update_stockItemID,
+        update_stockItemItemID:update_stockItemColor,
+        update_stockItemSize:update_stockItemSize,
+        update_stockItemColor:update_stockItemColor,
+        update_stockItemAmount:update_stockItemAmount,
+      }, headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      success: function (data) {
+
+        data = JSON.parse(data);
+        if (data.success === true) {
+
+          alert("Cập nhật thông tin sản phẩm thành công");
+          refreshStockItem();
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  }
+}
+
+function searchAndSortStockItem() {
+  let stockItemSearchType = document.getElementById("stockItemSearchType").value;
+  let stockItemInputSearch = document.getElementById("stockItemInputSearch").value;
+  let stockItemSortType = document.getElementById("stockItemSortType").value;
+
+  if (stockItemSearchType == null || stockItemSearchType == "" || stockItemInputSearch == null || stockItemInputSearch == "" ||
+      stockItemSortType == null || stockItemSortType == "") {
+    alert("Không thể để dữ liệu trống");
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function refreshStockItem() {
+  location.href = adminManagerContextPath + "/ManageStockItemServlet";
+}

@@ -9,8 +9,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,85 +47,96 @@ public class ManageItemTypeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        initData(req);
-        switch (action) {
-            case "addItemType" -> {
-                String name = req.getParameter("add_itemTypeName");
 
-                ItemType itemType = new ItemType();
-                itemType.setName(name);
+        try{
+            String action = req.getParameter("action");
+            initData(req);
+            switch (action) {
+                case "addItemType" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
-                if (itemTypeServiceImpl.create(itemType)) {
-                    resp.getWriter().println("<script>alert('Thêm loại sản phẩm thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Thêm loại sản phẩm thất bại!');</script>");
-                }
+                    String name = req.getParameter("add_itemTypeName");
 
-                resp.sendRedirect("/FinalEE/ManageItemTypeServlet");
-            }
-            case "updateItemType" -> {
-                int id = Integer.parseInt(req.getParameter("update_itemTypeID"));
-                String name = req.getParameter("update_itemTypeName");
+                    ItemType itemType = new ItemType();
+                    itemType.setName(name);
 
-                ItemType itemType = new ItemType();
-                itemType.setId(id);
-                itemType.setName(name);
-
-                if (itemTypeServiceImpl.create(itemType)) {
-                    resp.getWriter().println("<script>alert('Cập nhật loại sản phẩm thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Cập nhật loại sản phẩm thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManageItemTypeServlet");
-            }
-            case "deleteItemType" -> {
-                int itemTypeID = Integer.parseInt(req.getParameter("itemTypeID"));
-                if (itemTypeServiceImpl.deleteByID(itemTypeID)) {
-                    resp.getWriter().println("<script>alert('Xóa loại sản phẩm thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Xóa loại sản phẩm thất bại!');</script>");
-                }
-                resp.sendRedirect("/FinalEE/ManageItemTypeServlet");
-
-            }
-            case "searchAndSortItemType"-> {
-                String searchType = req.getParameter("itemTypeSearchType");
-                String itemTypeInputSearch = req.getParameter("itemTypeInputSearch");
-                switch (searchType) {
-                    case "noData" -> {
-
+                    if (itemTypeServiceImpl.create(itemType)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "id" -> {
-                        Integer itemTypeID = Integer.parseInt(req.getParameter("itemTypeInputSearch"));
-                        ItemType itemType = itemTypeServiceImpl.findByID(itemTypeID);
-                        List<ItemType> itemTypeList = new ArrayList<>();
-                        itemTypeList.add(itemType);
 
-                        req.setAttribute("itemTypeList", itemTypeList);
-                        req.getRequestDispatcher("Views/Admin/ManageItemType.jsp").forward(req, resp);
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "updateItemType" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
+                    int id = Integer.parseInt(req.getParameter("update_itemTypeID"));
+                    String name = req.getParameter("update_itemTypeName");
+
+                    ItemType itemType = new ItemType();
+                    itemType.setId(id);
+                    itemType.setName(name);
+
+                    if (itemTypeServiceImpl.create(itemType)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "name" -> {
-                        String itemTypeSortType = req.getParameter("itemTypeSortType");
-                        List<ItemType> itemTypeList = null;
-                        if (itemTypeSortType.equals("az")) {
-                            itemTypeList = itemTypeServiceImpl.findAllByNameContains(itemTypeInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
-                        } else if (itemTypeSortType.equals("za")) {
-                            itemTypeList = itemTypeServiceImpl.findAllByNameContains(itemTypeInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "deleteItemType" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    int itemTypeID = Integer.parseInt(req.getParameter("itemTypeID"));
+                    if (itemTypeServiceImpl.deleteByID(itemTypeID)) {
+                        jsonResponse.put("success", true);
+                    }
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "searchAndSortItemType"-> {
+                    String searchType = req.getParameter("itemTypeSearchType");
+                    String itemTypeInputSearch = req.getParameter("itemTypeInputSearch");
+                    switch (searchType) {
+                        case "noData" -> {
+
                         }
+                        case "id" -> {
+                            Integer itemTypeID = Integer.parseInt(req.getParameter("itemTypeInputSearch"));
+                            ItemType itemType = itemTypeServiceImpl.findByID(itemTypeID);
+                            List<ItemType> itemTypeList = new ArrayList<>();
+                            itemTypeList.add(itemType);
 
-                        req.setAttribute("itemTypeList", itemTypeList);
-                        req.getRequestDispatcher("Views/Admin/ManageItemType.jsp").forward(req, resp);
+                            initData(req);
+                            req.setAttribute("itemTypeList", itemTypeList);
+                            req.getRequestDispatcher("Views/Admin/ManageItemType.jsp").forward(req, resp);
+
+                        }
+                        case "name" -> {
+                            String itemTypeSortType = req.getParameter("itemTypeSortType");
+                            List<ItemType> itemTypeList = null;
+                            if (itemTypeSortType.equals("az")) {
+                                itemTypeList = itemTypeServiceImpl.findAllByNameContains(itemTypeInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
+                            } else if (itemTypeSortType.equals("za")) {
+                                itemTypeList = itemTypeServiceImpl.findAllByNameContains(itemTypeInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            initData(req);
+                            req.setAttribute("itemTypeList", itemTypeList);
+                            req.getRequestDispatcher("Views/Admin/ManageItemType.jsp").forward(req, resp);
+                        }
                     }
                 }
             }
-            case "refreshItemType"->{
-                List<ItemType> itemTypeList=itemTypeServiceImpl.getAllItemType();
-                req.setAttribute("itemTypeList", itemTypeList);
-                req.getRequestDispatcher("Views/Admin/ManageItemType.jsp").forward(req, resp);
-            }
+        }catch (Exception er){
+            er.printStackTrace();
         }
     }
 

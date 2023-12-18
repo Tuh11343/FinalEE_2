@@ -122,3 +122,122 @@ function showSearchbox() {
   });
 }
 showSearchbox();
+
+
+function addItemMaterial() {
+
+  let add_itemMaterialName = document.getElementById("add_itemMaterialName").value;
+
+  if (add_itemMaterialName == null || add_itemMaterialName == "") {
+    alert("Không thể để dữ liệu trống");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageItemMaterialServlet",
+      data: {
+        action: "addItemMaterial",
+        add_itemMaterialName:add_itemMaterialName,
+      }, headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      success: function (data) {
+
+        data = JSON.parse(data);
+        if (data.success === true) {
+
+          alert("Thêm vật liệu sản phẩm thành công");
+          location.href = adminManagerContextPath + "/ManageItemMaterialServlet";
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  }
+}
+
+function deleteItemMaterial(itemMaterialID) {
+  // Trả về true nếu người dùng đã xác nhận, ngược lại trả về false
+  if (confirm('Bạn có chắc chắn xóa không?')) {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageItemMaterialServlet",
+      data: {
+        action: "deleteItemMaterial",
+        itemMaterialID: itemMaterialID,
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data.success === true) {
+          alert("Xóa vật liệu sản phẩm thành công");
+          location.href = adminManagerContextPath + "/ManageItemMaterialServlet";
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  } else {
+    alert("a")
+  }
+}
+
+function updateItemMaterial() {
+  let update_itemMaterialID=document.getElementById("update_itemMaterialID").value;
+  let update_itemMaterialName=document.getElementById("update_itemMaterialName").value;
+
+  if (update_itemMaterialName == null || update_itemMaterialName == "") {
+    alert("Không thể để dữ liệu trống");
+  }  else {
+    $.ajax({
+      type: "POST",
+      url: adminManagerContextPath + "/ManageItemMaterialServlet",
+      data: {
+        action: "updateItemMaterial",
+        update_itemMaterialID:update_itemMaterialID,
+        update_itemMaterialName:update_itemMaterialName,
+      }, headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      success: function (data) {
+
+        data = JSON.parse(data);
+        if (data.success === true) {
+
+          alert("Cập nhật vật liệu sản phẩm thành công");
+          refreshItemMaterial();
+
+        } else {
+          alert("Có lỗi xảy trong hệ thống");
+        }
+      },
+      error: function (error) {
+        console.log("error :>> ", error);
+      },
+    });
+  }
+}
+
+function searchAndSortItemMaterial() {
+  let itemMaterialSearchType = document.getElementById("itemMaterialSearchType").value;
+  let itemMaterialInputSearch = document.getElementById("itemMaterialInputSearch").value;
+  let itemMaterialSortType = document.getElementById("itemMaterialSortType").value;
+
+  if (itemMaterialSearchType == null || itemMaterialSearchType == "" || itemMaterialInputSearch == null || itemMaterialInputSearch == "" ||
+      itemMaterialSortType == null || itemMaterialSortType == "") {
+    alert("Không thể để dữ liệu trống");
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function refreshItemMaterial() {
+  location.href = adminManagerContextPath + "/ManageItemMaterialServlet";
+}

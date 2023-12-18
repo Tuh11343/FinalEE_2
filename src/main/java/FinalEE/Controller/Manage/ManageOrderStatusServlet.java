@@ -9,8 +9,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,87 +44,98 @@ public class ManageOrderStatusServlet extends HttpServlet {
         req.getRequestDispatcher("Views/Admin/ManageOrderStatus.jsp").forward(req, resp);
     }
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        initData(req);
-        switch (action) {
-            case "addOrderStatus" -> {
-                String name = req.getParameter("add_orderStatusName");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+        try{
+            String action = req.getParameter("action");
+            initData(req);
+            switch (action) {
+                case "addOrderStatus" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
-                OrderStatus orderStatus = new OrderStatus();
-                orderStatus.setName(name);
+                    String name = req.getParameter("add_orderStatusName");
 
-                if (orderStatusServiceImpl.create(orderStatus)) {
-                    resp.getWriter().println("<script>alert('Thêm trạng thái đơn hàng thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Thêm trạng thái đơn hàng thất bại!');</script>");
-                }
+                    OrderStatus orderStatus = new OrderStatus();
+                    orderStatus.setName(name);
 
-                resp.sendRedirect("/FinalEE/ManageOrderStatusServlet");
-            }
-            case "updateOrderStatus" -> {
-                int id = Integer.parseInt(req.getParameter("update_orderStatusID"));
-                String name = req.getParameter("update_orderStatusName");
-
-                OrderStatus orderStatus = new OrderStatus();
-                orderStatus.setId(id);
-                orderStatus.setName(name);
-
-                if (orderStatusServiceImpl.create(orderStatus)) {
-                    resp.getWriter().println("<script>alert('Cập nhật trạng thái đơn hàng thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Cập nhật trạng thái đơn hàng thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManageOrderStatusServlet");
-            }
-            case "deleteOrderStatus" -> {
-                int orderStatusID = Integer.parseInt(req.getParameter("orderStatusID"));
-                if (orderStatusServiceImpl.deleteByID(orderStatusID)) {
-                    resp.getWriter().println("<script>alert('Xóa loại sản phẩm thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Xóa loại sản phẩm thất bại!');</script>");
-                }
-                resp.sendRedirect("/FinalEE/ManageOrderStatusServlet");
-            }
-            case "searchAndSortOrderStatus" -> {
-                String searchType = req.getParameter("orderStatusSearchType");
-                String orderStatusInputSearch = req.getParameter("orderStatusInputSearch");
-                switch (searchType) {
-                    case "noData" -> {
-
+                    if (orderStatusServiceImpl.create(orderStatus)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "id" -> {
-                        Integer orderStatusID = Integer.parseInt(req.getParameter("orderStatusInputSearch"));
-                        OrderStatus orderStatus = orderStatusServiceImpl.findByID(orderStatusID);
-                        List<OrderStatus> orderStatusList = new ArrayList<>();
-                        orderStatusList.add(orderStatus);
 
-                        req.setAttribute("orderStatusList", orderStatusList);
-                        req.getRequestDispatcher("Views/Admin/ManageOrderStatus.jsp").forward(req, resp);
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "updateOrderStatus" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
+                    int id = Integer.parseInt(req.getParameter("update_orderStatusID"));
+                    String name = req.getParameter("update_orderStatusName");
+
+                    OrderStatus orderStatus = new OrderStatus();
+                    orderStatus.setId(id);
+                    orderStatus.setName(name);
+
+                    if (orderStatusServiceImpl.create(orderStatus)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "name" -> {
-                        String orderStatusSortType = req.getParameter("orderStatusSortType");
-                        List<OrderStatus> orderStatusList = null;
-                        if (orderStatusSortType.equals("az")) {
-                            orderStatusList = orderStatusServiceImpl.findAllByNameContains(orderStatusInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
-                        } else if (orderStatusSortType.equals("za")) {
-                            orderStatusList = orderStatusServiceImpl.findAllByNameContains(orderStatusInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "deleteOrderStatus" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    int orderStatusID = Integer.parseInt(req.getParameter("orderStatusID"));
+                    if (orderStatusServiceImpl.deleteByID(orderStatusID)) {
+                        jsonResponse.put("success", true);
+                    }
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "searchAndSortOrderStatus" -> {
+                    String searchType = req.getParameter("orderStatusSearchType");
+                    String orderStatusInputSearch = req.getParameter("orderStatusInputSearch");
+                    switch (searchType) {
+                        case "noData" -> {
+
                         }
+                        case "id" -> {
+                            Integer orderStatusID = Integer.parseInt(req.getParameter("orderStatusInputSearch"));
+                            OrderStatus orderStatus = orderStatusServiceImpl.findByID(orderStatusID);
+                            List<OrderStatus> orderStatusList = new ArrayList<>();
+                            orderStatusList.add(orderStatus);
 
-                        req.setAttribute("orderStatusList", orderStatusList);
-                        req.getRequestDispatcher("Views/Admin/ManageOrderStatus.jsp").forward(req, resp);
+                            initData(req);
+                            req.setAttribute("orderStatusList", orderStatusList);
+                            req.getRequestDispatcher("Views/Admin/ManageOrderStatus.jsp").forward(req, resp);
+
+                        }
+                        case "name" -> {
+                            String orderStatusSortType = req.getParameter("orderStatusSortType");
+                            List<OrderStatus> orderStatusList = null;
+                            if (orderStatusSortType.equals("az")) {
+                                orderStatusList = orderStatusServiceImpl.findAllByNameContains(orderStatusInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
+                            } else if (orderStatusSortType.equals("za")) {
+                                orderStatusList = orderStatusServiceImpl.findAllByNameContains(orderStatusInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            initData(req);
+                            req.setAttribute("orderStatusList", orderStatusList);
+                            req.getRequestDispatcher("Views/Admin/ManageOrderStatus.jsp").forward(req, resp);
+                        }
                     }
+
                 }
-
             }
 
-            case "refreshOrderStatus"->{
-                List<OrderStatus> orderStatusList=orderStatusServiceImpl.getAllOrderStatus();
-                req.setAttribute("orderStatusList", orderStatusList);
-                req.getRequestDispatcher("Views/Admin/ManageOrderStatus.jsp").forward(req, resp);
-            }
+        }catch (Exception er){
+            er.printStackTrace();
         }
     }
 

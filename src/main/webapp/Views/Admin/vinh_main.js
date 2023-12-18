@@ -114,6 +114,8 @@ function handleUpdateDiscountCard() {
       var name = item.getAttribute("data-discountCardName");
       var discountPercentage = item.getAttribute("data-discountCardPercentage");
 
+      console.log(id);
+
       document.getElementById("update_discountCardID").value=id;
       document.getElementById("update_discountCardName").value = name;
       document.getElementById("update_discountCardPercentage").value = discountPercentage;

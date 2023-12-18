@@ -92,6 +92,23 @@ function submitSort() {
       selecTed = document.querySelector(".sortinp");
   formSort.submit();
 }
+
+function sliderBanner() {
+  var elem = document.querySelector(".hero .slider");
+  console.log(elem);
+  var flkty = new Flickity(elem, {
+    // options
+    cellAlign: "left",
+    contain: true,
+    prevNextButtons: false,
+    pageDots: false,
+    wrapAround: true,
+    autoPlay: 2000,
+    imagesLoaded: true,
+  });
+}
+sliderBanner();
+
 const handleModal = () => {
   const btn_close = document.querySelector(".btn-close"),
       modal = document.querySelector(".modal"),
@@ -152,4 +169,6 @@ const handleModal = () => {
   });
 };
 handleModal();
+
+
 

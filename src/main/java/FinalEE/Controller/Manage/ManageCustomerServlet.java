@@ -9,8 +9,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,106 +46,112 @@ public class ManageCustomerServlet extends HttpServlet {
 
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        initData(req);
-        switch (action) {
-            /*Customer Handle*/
-            case "customer_btnAdd" -> {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+        try{
+            String action = req.getParameter("action");
+            initData(req);
+            switch (action) {
+                /*Customer Handle*/
+                case "customer_btnAdd" -> {
 
-                System.out.println("Thêm khách hàng");
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
-                String name = req.getParameter("add_customerName");
-                String phoneNumber = req.getParameter("add_customerPhoneNumber");
-                String email = req.getParameter("add_customerEmail");
-                String address = req.getParameter("add_customerAddress");
+                    String name = req.getParameter("add_customerName");
+                    String phoneNumber = req.getParameter("add_customerPhoneNumber");
+                    String email = req.getParameter("add_customerEmail");
+                    String address = req.getParameter("add_customerAddress");
 
-                Customer customer = new Customer();
-                customer.setAddress(address);
-                customer.setEmail(email);
-                customer.setName(name);
-                customer.setPhone_number(phoneNumber);
+                    Customer customer = new Customer();
+                    customer.setAddress(address);
+                    customer.setEmail(email);
+                    customer.setName(name);
+                    customer.setPhone_number(phoneNumber);
 
-                if (customerServiceImpl.create(customer)) {
-                    resp.getWriter().println("<script>alert('Thêm khách hàng thành công!');</script>");
-
-                } else {
-                    resp.getWriter().println("<script>alert('Thêm khách hàng thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManageCustomerServlet");
-
-            }
-            case "customer_btnUpdate" -> {
-
-                int id = Integer.parseInt(req.getParameter("update_customerID"));
-                String name = req.getParameter("update_customerName");
-                String phoneNumber = req.getParameter("update_customerPhoneNumber");
-                String email = req.getParameter("update_customerEmail");
-                String address = req.getParameter("update_customerAddress");
-
-                Customer customer = new Customer();
-                customer.setId(id);
-                customer.setAddress(address);
-                customer.setEmail(email);
-                customer.setName(name);
-                customer.setPhone_number(phoneNumber);
-
-                if (customerServiceImpl.create(customer)) {
-                    resp.getWriter().println("<script>alert('Cập nhật khách hàng thành công!');</script>");
-
-                } else {
-                    resp.getWriter().println("<script>alert('Cập nhật khách hàng thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManageCustomerServlet");
-
-            }
-            case "customer_btnDelete" -> {
-                int customerID = Integer.parseInt(req.getParameter("customerID"));
-                if (customerServiceImpl.deleteByID(customerID)) {
-                    resp.getWriter().println("<script>alert('Xóa khách hàng thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Xóa khách hàng thất bại!');</script>");
-                }
-                resp.sendRedirect("/FinalEE/ManageCustomerServlet");
-            }
-            case "searchAndSortCustomer"-> {
-                String searchType = req.getParameter("customerSearchType");
-                String customerInputSearch = req.getParameter("customerInputSearch");
-                switch (searchType) {
-                    case "noData" -> {
-
+                    if (customerServiceImpl.create(customer)) {
+                        jsonResponse.put("success", true);
                     }
-                    case "id" -> {
-                        Integer customerID = Integer.parseInt(req.getParameter("customerInputSearch"));
-                        Customer customer = customerServiceImpl.findByID(customerID);
-                        List<Customer> customerList = new ArrayList<>();
-                        customerList.add(customer);
 
-                        req.setAttribute("customerList", customerList);
-                        req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "customer_btnUpdate" -> {
 
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    int id = Integer.parseInt(req.getParameter("update_customerID"));
+                    String name = req.getParameter("update_customerName");
+                    String phoneNumber = req.getParameter("update_customerPhoneNumber");
+                    String email = req.getParameter("update_customerEmail");
+                    String address = req.getParameter("update_customerAddress");
+
+                    Customer customer = new Customer();
+                    customer.setId(id);
+                    customer.setAddress(address);
+                    customer.setEmail(email);
+                    customer.setName(name);
+                    customer.setPhone_number(phoneNumber);
+
+                    if (customerServiceImpl.create(customer)) {
+                        jsonResponse.put("success",true);
                     }
-                    case "name" -> {
-                        String customerSortType = req.getParameter("customerSortType");
-                        List<Customer> customerList = null;
-                        if (customerSortType.equals("az")) {
-                            customerList = customerServiceImpl.findAllByNameLike(customerInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
-                        } else if (customerSortType.equals("za")) {
-                            customerList = customerServiceImpl.findAllByNameLike(customerInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+
+                }
+                case "customer_btnDelete" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    int customerID = Integer.parseInt(req.getParameter("customerID"));
+                    if (customerServiceImpl.deleteByID(customerID)) {
+                        jsonResponse.put("success",true);
+                    }
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "searchAndSortCustomer"-> {
+                    String searchType = req.getParameter("customerSearchType");
+                    String customerInputSearch = req.getParameter("customerInputSearch");
+                    switch (searchType) {
+                        case "noData" -> {
+
                         }
+                        case "id" -> {
+                            Integer customerID = Integer.parseInt(req.getParameter("customerInputSearch"));
+                            Customer customer = customerServiceImpl.findByID(customerID);
+                            List<Customer> customerList = new ArrayList<>();
+                            customerList.add(customer);
 
-                        req.setAttribute("customerList", customerList);
-                        req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
+                            initData(req);
+                            req.setAttribute("customerList", customerList);
+                            req.getRequestDispatcher("Views/Admin/ManageCustomer.jsp").forward(req, resp);
+
+
+                        }
+                        case "name" -> {
+                            String customerSortType = req.getParameter("customerSortType");
+                            List<Customer> customerList = null;
+                            if (customerSortType.equals("az")) {
+                                customerList = customerServiceImpl.findAllByNameLike(customerInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
+                            } else if (customerSortType.equals("za")) {
+                                customerList = customerServiceImpl.findAllByNameLike(customerInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            initData(req);
+                            req.setAttribute("customerList", customerList);
+                            req.getRequestDispatcher("Views/Admin/ManageCustomer.jsp").forward(req, resp);
+                        }
                     }
                 }
             }
-            case "refreshItem"->{
-                List<Customer> customerList=customerServiceImpl.getAllCustomer();
-                req.setAttribute("customerList", customerList);
-                req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
-            }
+        }catch (Exception er){
+            er.printStackTrace();
         }
     }
 
