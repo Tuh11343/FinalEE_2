@@ -168,7 +168,7 @@ public class HeaderServlet extends HttpServlet {
                 jsonResponse.put("outOfStock",true);
                 ObjectMapper objectMapper = new ObjectMapper();
                 String json = objectMapper.writeValueAsString(itemList);
-                jsonResponse.put(json,itemList);
+                jsonResponse.put("itemList",json);
             } else {
                 if (req.getParameter("discountCardID") != null && !req.getParameter("discountCardID").isBlank()) {
                     discountCardID = Integer.parseInt(req.getParameter("discountCardID"));

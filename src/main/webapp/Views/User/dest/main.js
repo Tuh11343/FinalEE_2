@@ -107,7 +107,7 @@ function sliderBanner() {
     imagesLoaded: true,
   });
 }
-sliderBanner();
+/*sliderBanner();*/
 
 const handleModal = () => {
   const btn_close = document.querySelector(".btn-close"),

@@ -306,7 +306,10 @@ function order(){
         success: function (data) {
             if(data.outOfStock){
 
-                console.log(data.itemList);
+                var itemList=JSON.parse(data.itemList);
+                for(let i=0;i<itemList.length;i++){
+                    alert("Sản phẩm:"+itemList[i].name+" vượt quá số lượng");
+                }
 
             } else if(data.success === 1)
             {
