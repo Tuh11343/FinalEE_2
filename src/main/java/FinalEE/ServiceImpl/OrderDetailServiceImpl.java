@@ -31,75 +31,20 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     }
 
-    /*@Override
+    @Override
     public boolean create(OrderDetail orderDetail) {
         try {
             OrderDetail existingOrderDetail = orderDetailRepository.findByID(orderDetail.getId());
             orderDetailRepository.save(orderDetail);
-
-            Order order = orderRepository.findByID(orderDetail.getOrder().getId());
-            order.setTotal(calculateOrderTotal(order));
-            orderRepository.save(order);
-            System.out.println(order.getTotal());
-
-            if (stockItemRepository.findById(orderDetail.getStockItem().getId()).isPresent()) {
-                StockItem stockItem = orderDetail.getStockItem();
-                if (existingOrderDetail != null) {
-                    int oldAmount = existingOrderDetail.getAmount();
-                    int newAmount = orderDetail.getAmount();
-                    if (oldAmount > newAmount) {
-                        int increase = oldAmount - newAmount;
-                        stockItem.setAmount(stockItem.getAmount() + increase);
-                    } else if (oldAmount < newAmount) {
-                        int decrease = newAmount - oldAmount;
-                        stockItem.setAmount(stockItem.getAmount() - decrease);
-                    }
-                } else {
-                    stockItem.setAmount(stockItem.getAmount() - orderDetail.getAmount());
-                }
-                stockItemRepository.save(stockItem);
-                System.out.println("Giam so luong thanh cong stockItem:" + stockItem.getId());
-            } else {
-                System.out.println("Giảm số lượng that bai stockItem:" + orderDetail.getStockItem().getId());
-            }
-
-            if (existingOrderDetail != null) {
-                System.out.println("Cap nhat thanh cong orderDetail:" + orderDetail.getId());
-            } else {
-                System.out.println("Them thanh cong orderDetail:" + orderDetail.getId());
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }*/
-
-    @Override
-    public boolean create(OrderDetail orderDetail) {
-        try {
-            OrderDetail existingOrderDetail = orderDetailRepository.findByIdAndStockItemId(orderDetail.getId(), orderDetail.getStockItem().getId());
             if(existingOrderDetail!=null){
-                StockItem stockItem=existingOrderDetail.getStockItem();
-                int oldAmount=existingOrderDetail.getAmount();
-                int newAmount=orderDetail.getAmount();
-                if (oldAmount > newAmount) {
-                    int increase = oldAmount - newAmount;
-                    stockItem.setAmount(stockItem.getAmount() + increase);
-                } else if (oldAmount < newAmount) {
-                    int decrease = newAmount - oldAmount;
-                    stockItem.setAmount(stockItem.getAmount() - decrease);
-                }
-                existingOrderDetail.setAmount(newAmount);
-                orderDetailRepository.save(existingOrderDetail);
                 System.out.println("Cap nhat thanh cong orderDetail:" + existingOrderDetail.getId());
             }else{
-                StockItem stockItem=orderDetail.getStockItem();
-                stockItem.setAmount(stockItem.getAmount() - orderDetail.getAmount());
-                stockItemRepository.save(stockItem);
-                orderDetailRepository.save(orderDetail);
                 System.out.println("Them thanh cong orderDetail:" + orderDetail.getId());
             }
+
+            StockItem stockItem=orderDetail.getStockItem();
+            stockItem.setAmount(stockItem.getAmount() - orderDetail.getAmount());
+            stockItemRepository.save(stockItem);
 
             Order order = orderRepository.findByID(orderDetail.getOrder().getId());
             order.setTotal(calculateOrderTotal(order));
@@ -132,9 +77,9 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     }
 
     @Override
-    public OrderDetail findByIDAndStockItemID(Integer orderDetailID, Integer stockItemID) {
+    public OrderDetail findByIDAndStockItemID(Integer orderID, Integer stockItemID) {
         try {
-            return orderDetailRepository.findByIdAndStockItemId(orderDetailID, stockItemID);
+            return orderDetailRepository.findByOrderIdAndStockItemId(orderID, stockItemID);
         } catch (Exception er) {
             er.printStackTrace();
         }
