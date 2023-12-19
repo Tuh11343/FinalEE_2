@@ -53,7 +53,7 @@ function handleAddOrder() {
     });
 }
 
-handleAddOrder();
+/*handleAddOrder();*/
 
 function handleUpdateOrder() {
     var updateOrder = document.querySelectorAll(".btnUpdateOrder");
@@ -329,7 +329,7 @@ function updateOrder() {
                 data = JSON.parse(data);
                 if (data.success === true) {
 
-                    alert("Cập nhật chi tiết hóa đơn thành công");
+                    alert("Cập nhật hóa đơn thành công");
                     refreshOrder();
 
                 } else {

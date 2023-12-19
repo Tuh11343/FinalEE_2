@@ -20,4 +20,5 @@ public interface SaleRepository extends JpaRepository<Sale, Integer>{
     @Query("select s from Sale s where s.id=?1 or s.id IS NULL")
     Sale findByID(Integer id);
 
+    Sale findByItem_Id(Integer itemID);
 }

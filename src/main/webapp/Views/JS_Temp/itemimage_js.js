@@ -199,8 +199,6 @@ function deleteItemImage(itemImageID) {
         console.log("error :>> ", error);
       },
     });
-  } else {
-    alert("a")
   }
 }
 
@@ -252,7 +250,7 @@ function searchAndSortItemImage() {
     alert("Không thể để dữ liệu trống");
     return false;
   }
-     if (itemImageSortType == "id") {
+     if (itemImageSearchType == "id" || itemImageSearchType == "itemID") {
           var num = parseFloat(itemImageInputSearch);
           if (Number.isInteger(num)) {
                return true;

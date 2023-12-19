@@ -24,11 +24,11 @@ public class ItemMaterialServiceImpl implements ItemMaterialService{
     public boolean create(ItemMaterial itemMaterial) {
         try {
             // Kiểm tra xem itemMaterial có tồn tại trong database hay không
-            Optional<ItemMaterial> existingItemMaterial = itemMaterialRepository.findById(itemMaterial.getId());
+            ItemMaterial existingItemMaterial=itemMaterialRepository.findByID(itemMaterial.getId());
 
             // Lưu itemMaterial và kiểm tra kết quả
             itemMaterialRepository.save(itemMaterial);
-            if (existingItemMaterial.isPresent()) {
+            if (existingItemMaterial!=null) {
                 System.out.println("Cap nhat thanh cong itemMaterial:" + itemMaterial.getId());
             } else {
                 System.out.println("Them thanh cong itemMaterial:" + itemMaterial.getId());

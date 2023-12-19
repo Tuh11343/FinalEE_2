@@ -166,13 +166,13 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               >
                 Thêm
               </button>
-              <a
+              <button
                 class="btnHD btnExcel"
                 style="margin-left: 5px; margin-bottom: 4px"
                 onclick="customerToExcel()"
               >
                 Xuất Excel
-              </a>
+              </button>
               <form>
                 <button
                   class="btnHD btnload"
@@ -245,7 +245,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                     <td>${customer.address}</td>
                     <td>
                       <div class="flex-center grpbtn">
-                        <button class="btnHD btnDel" type="submit" onclick="deleteCustomer()">Xóa</button>
+                        <button class="btnHD btnDel" type="submit" onclick="deleteCustomer(${customer.id})">Xóa</button>
                         <a
                                 class="btnHD btnUpdateCustomer"
                                 data-customerID="${customer.id}"
@@ -334,7 +334,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                 </div>
 
                 <div class="flex-center">
-                  <button id="updateCustomer" class="btnAdd submit" onclick="updateCustomer()">Cập nhật</button>
+                  <a id="updateCustomer" class="btnAdd submit" onclick="updateCustomer()">Cập nhật</a>
                 </div>
 
               </form>
@@ -400,7 +400,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                 </div>
 
                 <div class="flex-center">
-                  <button id="addCustomer" class="btnAdd submit" onclick="addCustomer()">Thêm</button>
+                  <a id="addCustomer" class="btnAdd submit" onclick="addCustomer()">Thêm</a>
                 </div>
                 <input type="hidden" value="addCustomer" name="action" />
               </form>

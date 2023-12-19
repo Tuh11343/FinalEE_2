@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
         <servlet-name>ItemServlet</servlet-name>
         <servlet-class>FinalEE.Controller.ItemServlet</servlet-class>
@@ -13,12 +14,12 @@
         <servlet-name>ItemDetailServlet</servlet-name>
         <servlet-class>FinalEE.Controller.ItemDetailServlet</servlet-class>
     </servlet>
-    
+
     <servlet>
         <servlet-name>CartServlet</servlet-name>
         <servlet-class>FinalEE.Controller.CartServlet</servlet-class>
     </servlet>
-    
+
     <servlet>
         <servlet-name>ItemSearchServlet</servlet-name>
         <servlet-class>FinalEE.Controller.ItemSearchServlet</servlet-class>
@@ -28,7 +29,7 @@
         <servlet-name>HeaderServlet</servlet-name>
         <servlet-class>FinalEE.Controller.HeaderServlet</servlet-class>
     </servlet>
-    
+
     <servlet>
         <servlet-name>ProfileUserServlet</servlet-name>
         <servlet-class>FinalEE.Controller.ProfileServlet</servlet-class>
@@ -39,11 +40,6 @@
         <servlet-class>FinalEE.Controller.MailTest</servlet-class>
     </servlet>
 
-    <servlet>
-        <servlet-name>AdminServlet</servlet-name>
-        <servlet-class>FinalEE.Controller.AdminServlet</servlet-class>
-    </servlet>
-    
     <servlet>
         <servlet-name>ManageAccountServlet</servlet-name>
         <servlet-class>FinalEE.Controller.Manage.ManageAccountServlet</servlet-class>
@@ -104,14 +100,17 @@
         <servlet-name>ManageStatisticServlet</servlet-name>
         <servlet-class>FinalEE.Controller.Manage.ManageStatisticServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>ManageCartServlet</servlet-name>
+        <servlet-class>FinalEE.Controller.Manage.ManageCartServlet</servlet-class>
+    </servlet>
 
 
     <servlet-mapping>
         <servlet-name>ManageAccountServlet</servlet-name>
         <url-pattern>/ManageAccountServlet</url-pattern>
     </servlet-mapping>
-    
+
     <servlet-mapping>
         <servlet-name>AdminManagerServlet</servlet-name>
         <url-pattern>/AdminManagerServlet</url-pattern>
@@ -126,12 +125,12 @@
         <servlet-name>ItemDetailServlet</servlet-name>
         <url-pattern>/ItemDetailServlet</url-pattern>
     </servlet-mapping>
-    
+
     <servlet-mapping>
         <servlet-name>CartServlet</servlet-name>
         <url-pattern>/CartServlet</url-pattern>
     </servlet-mapping>
-    
+
     <servlet-mapping>
         <servlet-name>ItemSearchServlet</servlet-name>
         <url-pattern>/ItemSearchServlet</url-pattern>
@@ -141,7 +140,7 @@
         <servlet-name>HeaderServlet</servlet-name>
         <url-pattern>/HeaderServlet</url-pattern>
     </servlet-mapping>
-    
+
     <servlet-mapping>
         <servlet-name>ProfileUserServlet</servlet-name>
         <url-pattern>/ProfileUserServlet</url-pattern>
@@ -150,11 +149,6 @@
     <servlet-mapping>
         <servlet-name>MailTest</servlet-name>
         <url-pattern>/MailTest</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-        <servlet-name>AdminServlet</servlet-name>
-        <url-pattern>/AdminServlet</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -209,9 +203,13 @@
         <servlet-name>ManageStockItemServlet</servlet-name>
         <url-pattern>/ManageStockItemServlet</url-pattern>
     </servlet-mapping>
-<servlet-mapping>
-    <servlet-name>ManageStatisticServlet</servlet-name>
-    <url-pattern>/ManageStatisticServlet</url-pattern>
-</servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>ManageStatisticServlet</servlet-name>
+        <url-pattern>/ManageStatisticServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageCartServlet</servlet-name>
+        <url-pattern>/ManageCartServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

@@ -234,7 +234,7 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableItemType">
                 <c:forEach items="${requestScope.itemTypeList}" var="itemType">
                     <c:if test="${not empty itemType}">
 

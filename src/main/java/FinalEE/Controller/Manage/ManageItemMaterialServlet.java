@@ -87,7 +87,7 @@ public class ManageItemMaterialServlet extends HttpServlet {
                     out.flush();
                     out.close();
                 }
-                case "itemMaterial_btnDelete" -> {
+                case "deleteItemMaterial" -> {
                     PrintWriter out = resp.getWriter();
                     JSONObject jsonResponse = new JSONObject();
 

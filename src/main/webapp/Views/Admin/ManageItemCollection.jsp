@@ -185,14 +185,11 @@
                         >
                             Refresh
                         </button>
-                        <input type="hidden" name="action" value="refreshAccount"/>
                     </form>
                 </div>
                 <h2 style="font-size: 30px">Quản lý bộ sưu tập</h2>
-                <form
-                        action="${pageContext.request.contextPath}/ManageItemCollectionServlet"
-                        method="post" onsubmit="return searchAndSortItemCollection()"
-                >
+                <form action="${pageContext.request.contextPath}/ManageItemCollectionServlet"
+                      method="post" onsubmit="return searchAndSortItemCollection()">
                     <div class="sorttable">
                         <div class="sort-search">
                             <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
@@ -221,6 +218,7 @@
                             </select>
                         </div>
                     </div>
+                    <input type="hidden" value="searchAndSortItemCollection" name="action">
                 </form>
             </div>
 
@@ -233,7 +231,7 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableItemCollection">
                 <c:forEach items="${requestScope.itemCollectionList}" var="itemCollection">
                     <c:if test="${not empty itemCollection}">
 

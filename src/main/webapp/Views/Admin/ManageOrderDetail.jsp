@@ -163,13 +163,7 @@
         <div class="orderdetail-data table-data active" data-type="orderDetailList">
             <div class="header-table">
                 <div class="AddOrderDetailDetail listbtn">
-                    <button
-                            class="btnHD btnAdd"
-                            id="orderDetail_addTrigger"
-                            style="margin-bottom: 4px"
-                    >
-                        Thêm
-                    </button>
+
                     <a
                             class="btnHD btnExcel"
                             style="margin-left: 5px; margin-bottom: 4px"
@@ -194,7 +188,7 @@
                 >
                     <div class="sorttable">
                         <div class="sort-search">
-                            <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                            <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
                             <div class="inputsearch">
                                 <select
                                         class="selecttype"
@@ -253,17 +247,6 @@
 
                                     <a class="btnHD btnDel" type="submit" onclick="deleteOrderDetail(${orderDetail.id})">Xóa</a>
 
-                                    <button
-                                            class="btnHD btnUpdateOrderDetail"
-                                            data-orderDetailID="${orderDetail.id}"
-                                            data-orderDetailOrderID="${orderDetail.order.id}"
-                                            data-orderDetailItemID="${orderDetail.stockItem.id}"
-                                            data-orderDetailAmount="${orderDetail.amount}"
-                                            data-orderDetailTotal="${orderDetail.total}"
-                                    >
-                                        Sửa
-                                    </button
-                                    >
                                 </div>
                             </td>
                         </tr>

@@ -198,8 +198,6 @@ function deleteCustomer(customerID) {
         console.log("error :>> ", error);
       },
     });
-  } else {
-    alert("a")
   }
 }
 
@@ -256,7 +254,7 @@ function searchAndSortCustomer(){
     alert("Không thể để dữ liệu trống");
     return false;
   }
-     if (customerSortType == "id") {
+     if (customerSearchType == "id") {
           var num = parseFloat(customerInputSearch);
           if (Number.isInteger(num)) {
                return true;
@@ -271,4 +269,40 @@ function searchAndSortCustomer(){
 
 function refreshCustomer(){
   location.href=adminManagerContextPath+"/ManageCustomerServlet";
+}
+
+function customerToExcel(tableID) {
+  let table = document.getElementById("tableCustomer");
+
+  let dataToSend = [];
+
+  // Lặp qua các dòng của bảng và thu thập thông tin từ mỗi ô cột
+  for (let i = 0; i < table.rows.length; i++) {
+    let currentRow = table.rows[i];
+
+    // Thu thập thông tin từ các ô cột trong dòng
+    let id = currentRow.cells[0].textContent;
+    let name = currentRow.cells[1].textContent;
+    let phoneNumber = currentRow.cells[2].textContent;
+    let email = currentRow.cells[3].textContent;
+    let address = currentRow.cells[4].textContent;
+
+    // Tạo đối tượng chứa thông tin từ dòng hiện tại
+    let customerData = {
+      id: id,
+      name: name,
+      phone_number: phoneNumber,
+      email: email,
+      address: address,
+    };
+
+    // Thêm đối tượng vào mảng dataToSend
+    dataToSend.push(customerData);
+  }
+
+  const workbook = XLSX.utils.book_new();
+  const sheet = XLSX.utils.json_to_sheet(dataToSend);
+  XLSX.utils.book_append_sheet(workbook, sheet, "Customers");
+
+  XLSX.writeFile(workbook, "customers.xlsx");
 }

@@ -176,13 +176,10 @@
                     >
                         Xuất Excel
                     </a>
-                    <form
-                            action="${pageContext.request.contextPath}/ManageSaleServlet"
-                            method="post"
-                    >
+                    <form>
                         <button
                                 class="btnHD btnload"
-                                style="margin-left: 5px; margin-bottom: 4px"
+                                style="margin-left: 5px; margin-bottom: 4px" onclick="refreshSale()"
                         >
                             Refresh
                         </button>
@@ -192,16 +189,15 @@
                 <h2 style="font-size: 30px">Quản lý giảm giá</h2>
                 <form
                         action="${pageContext.request.contextPath}/ManageSaleServlet"
-                        method="post"
+                        method="post" onsubmit="return searchAndSortSale()"
                 >
                     <div class="sorttable">
                         <div class="sort-search">
                             <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
                             <div class="inputsearch">
                                 <select class="selecttype" name="saleSearchType" id="saleSearchType">
-                                    <option value="" selected>--</option>
-                                    <option value="">Tên</option>
-                                    <option value="">Giá</option>
+                                    <option value="id">ID</option>
+                                    <option value="name">Tên</option>
                                 </select>
                                 <input
                                         type="text"
@@ -236,7 +232,7 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableSale">
                 <c:forEach items="${requestScope.saleList}" var="sale">
                     <c:if test="${not empty sale}">
 
@@ -249,12 +245,7 @@
                             <td>
                                 <div class="flex-center grpbtn">
 
-                                    <form action="${pageContext.request.contextPath}/ManageSaleServlet" method="post"
-                                          onsubmit="return confirmDelete()">
-                                        <button class="btnHD btnDel" type="submit">Xóa</button>
-                                        <input type="hidden" value="${sale.id}" name="saleID">
-                                        <input type="hidden" value="deleteSale" name="action">
-                                    </form>
+                                    <a class="btnHD btnDel" onclick="deleteSale(${sale.id})">Xóa</a>
 
                                     <a
                                             class="btnHD btnUpdateSale"
@@ -282,10 +273,7 @@
                     <span class="close clsUpdateSale">&times;</span>
 
                     <h2 class="text-center" style="padding: 16px 0">Cập Nhật Sản Phẩm Sale</h2>
-                    <form
-                            action="${pageContext.request.contextPath}/ManageSaleServlet"
-                            method="post"
-                    >
+                    <form>
                         <!--Sale ID-->
                         <div class="form-grp">
                             <input type="hidden" id="update_saleID" name="update_saleID"/>
@@ -340,7 +328,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="updateSale" class="btnHD btnAdd submit">Cập nhật</button>
+                            <a id="updateSale" class="btnHD btnAdd submit" onclick="updateSale()">Cập nhật</a>
                         </div>
                         <input type="hidden" value="updateSale" name="action"/>
                     </form>
@@ -352,10 +340,7 @@
                 <div class="add-modal">
                     <span class="close clsAddSale">&times;</span>
                     <h2 class="text-center" style="padding: 16px 0">Thêm Sản Phẩm Sale</h2>
-                    <form
-                            action="${pageContext.request.contextPath}/ManageSaleServlet"
-                            method="post"
-                    >
+                    <form>
                         <!--Sale Item ID-->
                         <div class="form-grp">
                             <label for="add_saleItemID">Sản Phẩm:</label>
@@ -406,7 +391,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addSale" class="btnHD btnAdd submit">Thêm</button>
+                            <a id="addSale" class="btnHD btnAdd submit" onclick="addSale()">Thêm</a>
                         </div>
                         <input type="hidden" value="addSale" name="action"/>
                     </form>
@@ -435,7 +420,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="${pageContext.request.contextPath}/Views/User/dest/tuh.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/Views/User/dest/admin.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
 </body>
 </html>

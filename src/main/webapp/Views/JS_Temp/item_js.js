@@ -364,3 +364,49 @@ function searchAndSortItem() {
 function refreshItem() {
     location.href = adminManagerContextPath + "/ManageItemServlet";
 }
+
+function itemToExcel() {
+    let table = document.getElementById("tableItem");
+
+    let dataToSend = [];
+
+    // Loop through the rows of the table and gather information from each column cell
+    for (let i = 0; i < table.rows.length; i++) {
+        let currentRow = table.rows[i];
+
+        // Gather information from the column cells in the current row
+        let id = currentRow.cells[0].textContent;
+        let productName = currentRow.cells[1].textContent;
+        let productType = currentRow.cells[2].textContent;
+        let collection = currentRow.cells[3].textContent;
+        let material = currentRow.cells[4].textContent;
+        let isNewProduct = currentRow.cells[5].textContent;
+        let isHotProduct = currentRow.cells[6].textContent;
+        let price = currentRow.cells[7].textContent;
+        let manufacturingYear = currentRow.cells[8].textContent;
+        let description=currentRow.cells[9].textContent;
+
+        // Create an object containing information from the current row
+        let productData = {
+            id: id,
+            productName: productName,
+            productType: productType,
+            collection: collection,
+            material: material,
+            is_new: isNewProduct,
+            is_hot: isHotProduct,
+            price: price,
+            year_produce: manufacturingYear,
+            description:description,
+        };
+
+        // Add the object to the dataToSend array
+        dataToSend.push(productData);
+    }
+
+    const workbook = XLSX.utils.book_new();
+    const sheet = XLSX.utils.json_to_sheet(dataToSend);
+    XLSX.utils.book_append_sheet(workbook, sheet, "Products");
+
+    XLSX.writeFile(workbook, "products.xlsx");
+}
