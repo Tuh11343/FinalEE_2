@@ -133,10 +133,13 @@
                 <a href="${pageContext.request.contextPath}/ManageOrderDetailServlet">Quản lý chi tiết hóa đơn</a>
                 <a href="${pageContext.request.contextPath}/ManageSaleServlet">Quản lý khuyến mãi sản phẩm</a>
                 <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
+                <a href="${pageContext.request.contextPath}/ManageCartServlet">Quản lý giỏ hàng</a>
             </c:if>
 
 
             <a href="${pageContext.request.contextPath}/ManageItemServlet">Quản lý sản phẩm</a>
+            <a href="${pageContext.request.contextPath}/ManageCartServlet">Quản lý giỏ hàng</a>
+
 
             <a href="${pageContext.request.contextPath}/ManageCustomerServlet">Quản lý khách hàng</a>
 
@@ -157,39 +160,39 @@
 
     <!--Center-->
     <div class="center">
-        <!--Stock Item-->
-        <div class="stockitem-data table-data active" data-type="stockItemList">
+        <!--Cart-->
+        <div class="collection-data table-data active" data-type="cartList">
+            <!--Add Cart Button-->
             <div class="header-table">
-                <!--Add StockItem Button-->
-                <div class="AddStockItem listbtn">
-                    <button
+                <div class="AddCart listbtn">
+                    <%--<button
                             class="btnHD btnAdd"
-                            id="stockItem_addTrigger"
+                            id="cart_addTrigger"
                             style="margin-bottom: 4px"
                     >
                         Thêm
-                    </button>
+                    </button>--%>
                     <a
                             class="btnHD btnExcel"
                             style="margin-left: 5px; margin-bottom: 4px"
-                            onclick="stockItemToExcel()"
+                            onclick="cartToExcel()"
                     >
                         Xuất Excel
                     </a>
                     <form>
                         <button
                                 class="btnHD btnload"
-                                style="margin-left: 5px; margin-bottom: 4px" onclick="refreshStockItem()"
+                                style="margin-left: 5px; margin-bottom: 4px" onclick="refreshCart()"
                         >
                             Refresh
                         </button>
-                        <input type="hidden" name="action" value="refreshStockItem"/>
+                        <input type="hidden" name="action" value="refreshAccount"/>
                     </form>
                 </div>
-                <h2 style="font-size: 30px">Quản lý màu sắc kích cỡ số lượng</h2>
+                <h2 style="font-size: 30px">Quản lý giỏ hàng</h2>
                 <form
-                        action="${pageContext.request.contextPath}/ManageStockItemServlet"
-                        method="post" onsubmit="return searchAndSortStockItem()"
+                        action="${pageContext.request.contextPath}/ManageCartServlet"
+                        method="post" onsubmit="return searchAndSortCart()"
                 >
                     <div class="sorttable">
                         <div class="sort-search">
@@ -197,212 +200,179 @@
                             <div class="inputsearch">
                                 <select
                                         class="selecttype"
-                                        name="stockItemSearchType"
-                                        id="stockItemSearchType"
+                                        name="cartSearchType"
+                                        id="cartSearchType"
                                 >
                                     <option value="id">ID</option>
-                                    <option value="itemID">ID sản phẩm</option>
+                                    <option value="customerID">ID khách hàng</option>
                                 </select>
                                 <input
                                         type="text"
-                                        name="stockItemInputSearch"
-                                        id="stockItemInputSearch"
+                                        name="cartInputSearch"
+                                        id="cartInputSearch"
                                 />
                                 <button class="btnHD btnsearch">Tìm</button>
                             </div>
                         </div>
                         <div class="sort-box">
-                            <label for="stockItemSortType">Sắp xếp theo:</label>
-                            <select name="stockItemSortType" id="stockItemSortType">
+                            <label for="cartSortType">Sắp xếp theo:</label>
+                            <select name="cartSortType" id="cartSortType">
                                 <option value="az">A-Z</option>
                                 <option value="za">Z-A</option>
                             </select>
                         </div>
                     </div>
-                    <input type="hidden" name="action" value="searchAndSortStockItem"/>
                 </form>
             </div>
 
-            <!--Table StockItem-->
-            <table class="item-table bang table">
+            <!--Table Item Collection-->
+            <table class="item-table bang">
                 <thead>
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">ID Sản Phẩm</th>
-                    <th scope="col">Màu</th>
-                    <th scope="col">Size</th>
-                    <th scope="col">Số Lượng</th>
-                    <th scope="col">Action</th>
+                    <th>ID</th>
+                    <th>ID thông tin sản phẩm</th>
+                    <th>ID khách hàng</th>
+                    <th>Số lượng</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
-                <tbody id="tableStockItem">
-                <c:forEach items="${requestScope.stockItemList}" var="stockItem">
-                    <c:if test="${not empty stockItem}">
+                <tbody id="tableCart">
+                <c:forEach items="${requestScope.cartList}" var="cart">
+                    <c:if test="${not empty cart}">
 
                         <tr>
-                            <td>${stockItem.id}</td>
-                            <td>${stockItem.item.id}</td>
-                            <td>${stockItem.color}</td>
-                            <td>${stockItem.size}</td>
-                            <td>${stockItem.amount}</td>
+                            <td>${cart.id}</td>
+                            <td>${cart.stockItem.id}</td>
+                            <td>${cart.customer.id}</td>
+                            <td>${cart.amount}</td>
+
                             <td>
                                 <div class="flex-center grpbtn">
 
-                                    <button class="btnHD btnDel" onclick="deleteStockItem(${stockItem.id})">Xóa</button>
-
-                                    <a
-                                            class="btnHD btnUpdateStockItem"
-                                            data-stockItemID="${stockItem.id}"
-                                            data-stockItemItemID="${stockItem.item.id}"
-                                            data-stockItemColor="${stockItem.color}"
-                                            data-stockItemSize="${stockItem.size}"
-                                            data-stockItemAmount="${stockItem.amount}"
+                                    <button class="btnHD btnDel" onclick="deleteCart(${cart.id})" type="submit">
+                                    <%--<a
+                                            class="btnHD btnUpdateCart"
+                                            data-cartID="${cart.id}"
+                                            data-stockItemID="${cart.stockItemID}"
+                                            data-customerID="${cart.customerID}"
+                                            data-amount="${cart.amount}"
                                     >
                                         Sửa
-                                    </a>
+                                    </a>--%>
                                 </div>
                             </td>
                         </tr>
 
                     </c:if>
+
                 </c:forEach>
                 </tbody>
             </table>
 
-            <!--Update StockItem Modal-->
-            <div id="update-stockItem" class="modal-update flex-center">
+            <!--Update Cart Modal-->
+            <div id="update-cart" class="modal-update flex-center">
                 <div class="update-modal">
-                    <span class="close clsUpdateStockItem">&times;</span>
+                    <span class="close clsUpdateCart">&times;</span>
 
-                    <h2 class="text-center" style="padding: 16px 0">
-                        Cập Nhật Số Lượng Hàng Hóa
-                    </h2>
+                    <h2 class="text-center" style="padding: 16px 0">Cập Nhật Giỏ Hàng</h2>
                     <form>
-
-                        <!--StockItem Item ID-->
+                        <!--Cart ID-->
                         <div class="form-grp">
                             <input
                                     type="hidden"
-                                    id="update_stockItemID"
-                                    name="update_stockItemID"
+                                    id="update_cartID"
+                                    name="update_cartID"
                             />
                         </div>
 
+                        <!--Stock Item ID-->
                         <div class="form-grp">
-                            <label for="update_stockItemItemID">Sản Phẩm:</label>
-                            <select id="update_stockItemItemID" name="update_stockItemItemID">
-                                <c:forEach items="${requestScope.itemList}" var="item">
-                                    <option value="${item.id}">${item.id} : ${item.name}</option>
+                            <label for="update_cartStockItemID">Loại thông tin sản phẩm:</label>
+                            <select id="update_cartStockItemID" name="update_cartStockItemID">
+                                <c:forEach items="${requestScope.stockItemList}" var="stockItem">
+                                    <option value="${stockItem.id}">${stockItem.item.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
 
-                        <!--StockItem Color-->
+                        <!--Customer ID-->
                         <div class="form-grp">
-                            <label for="update_stockItemColor">Màu:</label>
+                            <label for="update_cartCustomerID">Khách hàng:</label>
+                            <select id="update_cartCustomerID" name="update_cartCustomerID">
+                                <c:forEach items="${requestScope.customerList}" var="customer">
+                                    <option value="${customer.id}">${customer.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+
+                        <!--Amount-->
+                        <div class="form-grp">
+                            <label for="update_cartAmount">Số lượng:</label>
                             <input
                                     type="text"
                                     maxlength="100"
-                                    id="update_stockItemColor"
-                                    name="update_stockItemColor"
+                                    id="update_cartAmount"
+                                    name="update_cartAmount"
                                     value=""
-                                    placeholder="Nhập vào màu sản phẩm"
+                                    placeholder="Nhập vào số lượng"
                             />
                         </div>
-
-                        <!--StockItem Size-->
-                        <div class="form-grp">
-                            <label for="update_stockItemSize">Size:</label>
-                            <input
-                                    type="text"
-                                    maxlength="100"
-                                    id="update_stockItemSize"
-                                    name="update_stockItemSize"
-                                    value=""
-                                    placeholder="Nhập vào kích cỡ sản phẩm"
-                            />
-                        </div>
-
-                        <!--StockItem Amount-->
-                        <div class="form-grp">
-                            <label for="update_stockItemAmount">Số Lượng:</label>
-                            <input
-                                    type="number"
-                                    maxlength="100"
-                                    id="update_stockItemAmount"
-                                    name="update_stockItemAmount"
-                                    value=""
-                                    placeholder="Nhập vào số lượng sản phẩm"/>
-                        </div>
-
                         <div class="flex-center">
-                            <a id="updateStockItem" class="btn submit" onclick="updateStockItem()">Cập nhật</a>
+                            <button id="updateCart" class="btnHD btnAdd submit" onclick="updateCart()">Cập nhật</button>
                         </div>
-
-                        <input type="hidden" name="action" value="updateStockItem"/>
+                        <input type="hidden" value="updateCart" name="action"/>
                     </form>
                 </div>
             </div>
 
-            <!--Add StockItem Modal-->
-            <div id="add-stockItem" class="modal-add flex-center modal__addStockItem">
+            <!--Add Cart Modal-->
+            <div
+                    id="add-cart"
+                    class="modal-add flex-center modal__addCart"
+            >
                 <div class="add-modal">
-                    <span class="close clsAddStockItem">&times;</span>
-                    <h2 class="text-center" style="padding: 16px 0">Thêm Số Lượng Hàng Hóa</h2>
+                    <span class="close clsAddCart">&times;</span>
+                    <h2 class="text-center" style="padding: 16px 0">Thêm Giỏ Hàng</h2>
                     <form>
-                        <!--StockItem Item ID-->
+                        <!--Stock Item ID-->
                         <div class="form-grp">
-                            <label for="add_stockItemItemID">Sản Phẩm:</label>
-                            <select id="add_stockItemItemID" name="add_stockItemItemID">
-                                <c:forEach items="${requestScope.itemList}" var="item">
-                                    <option value="${item.id}">${item.id} : ${item.name}</option>
+                            <label for="add_cartStockItemID">Loại thông tin sản phẩm:</label>
+                            <select id="add_cartStockItemID" name="add_cartStockItemID">
+                                <c:forEach items="${requestScope.stockItemList}" var="stockItem">
+                                    <option value="${stockItem.id}">${stockItem.item.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
 
-                        <!--StockItem Color-->
+                        <!--Customer ID-->
                         <div class="form-grp">
-                            <label for="add_stockItemColor">Màu:</label>
+                            <label for="add_cartCustomerID">Khách hàng:</label>
+                            <select id="add_cartCustomerID" name="add_cartCustomerID">
+                                <c:forEach items="${requestScope.customerList}" var="customer">
+                                    <option value="${customer.id}">${customer.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+
+                        <!--Amount-->
+                        <div class="form-grp">
+                            <label for="add_cartAmount">Số lượng:</label>
                             <input
                                     type="text"
                                     maxlength="100"
-                                    id="add_stockItemColor"
-                                    name="add_stockItemColor"
+                                    id="add_cartAmount"
+                                    name="add_cartAmount"
                                     value=""
-                                    placeholder="Nhập vào màu sản phẩm"
-                            />
-                        </div>
-
-                        <!--StockItem Size-->
-                        <div class="form-grp">
-                            <label for="add_stockItemSize">Size:</label>
-                            <input
-                                    type="text"
-                                    maxlength="100"
-                                    id="add_stockItemSize"
-                                    name="add_stockItemSize"
-                                    value=""
-                                    placeholder="Nhập vào kích cỡ sản phẩm"
-                            />
-                        </div>
-
-                        <!--StockItem Amount-->
-                        <div class="form-grp">
-                            <label for="add_stockItemAmount">Số Lượng:</label>
-                            <input
-                                    type="number"
-                                    maxlength="100"
-                                    id="add_stockItemAmount"
-                                    name="add_stockItemAmount"
-                                    value=""
-                                    placeholder="Nhập vào số lượng sản phẩm"
+                                    placeholder="Nhập vào số lượng"
                             />
                         </div>
 
                         <div class="flex-center">
-                            <a id="addStockItem" class="btn submit" onclick="addStockItem()">Thêm</a>
+                            <button id="addCart" class="btnHD btnAdd submit" onclick="addCart()"> Thêm</button>
                         </div>
-                        <input type="hidden" name="action" value="addStockItem"/>
+                        <input type="hidden" value="addCart" name="action"/>
                     </form>
                 </div>
             </div>
@@ -421,7 +391,7 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"
 ></script>
-<script src="${pageContext.request.contextPath}/Views/JS_Temp/stockitem_js.js"></script>
+<script src="${pageContext.request.contextPath}/Views/JS_Temp/cart_js.js"></script>
 
 <script>
     const adminManagerContextPath = "${pageContext.request.contextPath}";

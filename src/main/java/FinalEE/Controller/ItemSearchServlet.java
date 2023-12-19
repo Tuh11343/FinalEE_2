@@ -180,7 +180,6 @@ public class ItemSearchServlet extends HttpServlet {
 
             req.setAttribute("minPrice", rangeMin);
             req.setAttribute("maxPrice", rangeMax);
-            req.setAttribute("","");
 
             req.setAttribute("sort", sortBy);
             req.setAttribute("itemSearchList", itemSearchList);

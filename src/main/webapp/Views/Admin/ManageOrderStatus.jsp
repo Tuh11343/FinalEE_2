@@ -178,9 +178,11 @@
                     >
                         Xuất Excel
                     </a>
-                    <form action="${pageContext.request.contextPath}/ManageOrderStatusServlet" method="post">
+                    <form>
 
-                        <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px">Refresh</button>
+                        <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px"
+                                onclick="refreshOrderStatus()">Refresh
+                        </button>
                         <input type="hidden" name="action" value="refreshOrderStatus">
 
                     </form>
@@ -248,8 +250,8 @@
 
                                     <a
                                             class="btnHD btnUpdateOrderStatus"
-                                            data-itemMaterialID="${orderStatus.id}"
-                                            data-itemMaterialName="${orderStatus.name}"
+                                            data-orderStatusID="${orderStatus.id}"
+                                            data-orderStatusName="${orderStatus.name}"
                                     >
                                         Sửa
                                     </a>
@@ -298,8 +300,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <a id="updateOrderStatus" class="btnHD btnAdd submit" onclick="updateOrderStatus()">Cập
-                                nhật</a>
+                            <a id="updateOrderStatus" class="btnHD btnAdd submit" onclick="updateOrderStatus()">Cập nhật</a>
                         </div>
                         <input type="hidden" name="action" value="updateOrderStatus">
 
@@ -327,9 +328,9 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addOrderStatus" class="btnHD btnAdd submit" onclick="addOrderStatus()">
+                            <a id="addOrderStatus" class="btnHD btnAdd submit" onclick="addOrderStatus()">
                                 Thêm
-                            </button>
+                            </a>
                         </div>
                         <input type="hidden" name="action" value="addOrderStatus">
 

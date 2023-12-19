@@ -27,11 +27,6 @@ public class SaleServiceImpl implements SaleService{
         try {
             // Kiểm tra xem sale có tồn tại trong database hay không
             Sale existingSale=saleRepository.findByID(sale.getId());
-            if(existingSale!=null&&existingSale.getItem().getId().equals(sale.getItem().getId())){
-                System.out.println("Mỗi sản phẩm chỉ có thể có 1 bản sale");
-                return false;
-            }
-
             saleRepository.save(sale);
             if (existingSale!=null) {
                 System.out.println("Cap nhat thanh cong sale:" + sale.getId());
@@ -95,6 +90,16 @@ public class SaleServiceImpl implements SaleService{
     public Sale findBySale(Integer id) {
         try{
             return saleRepository.findByID(id);
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Sale findByItemID(Integer itemID) {
+        try{
+            return saleRepository.findByItem_Id(itemID);
         }catch (Exception er){
             er.printStackTrace();
         }

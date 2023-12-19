@@ -2,7 +2,6 @@ package FinalEE.Controller.Manage;
 
 import FinalEE.Entity.*;
 import FinalEE.ServiceImpl.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -14,11 +13,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class ManageSaleServlet extends HttpServlet {
+public class ManageCartServlet extends HttpServlet {
 
     private AccountServiceImpl accountServiceImpl;
     private CustomerServiceImpl customerServiceImpl;
@@ -40,64 +37,21 @@ public class ManageSaleServlet extends HttpServlet {
 
         initData(req);
 
-        req.getRequestDispatcher("Views/Admin/ManageSale.jsp").forward(req, resp);
+        req.getRequestDispatcher("Views/Admin/ManageCart.jsp").forward(req, resp);
     }
-
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        try {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+        try{
+
             String action = req.getParameter("action");
             initData(req);
             switch (action) {
-                case "addSale" -> {
+                case "deleteCart" -> {
                     PrintWriter out = resp.getWriter();
                     JSONObject jsonResponse = new JSONObject();
 
-                    int itemId = Integer.parseInt(req.getParameter("add_saleItemID"));
-                    String name = req.getParameter("add_saleName");
-                    int onSale = Integer.parseInt(req.getParameter("add_saleOnSale"));
-                    double salePercentage = Double.parseDouble(req.getParameter("add_salePercentage"));
-
-                    Item item = itemServiceImpl.findByID(itemId);
-
-                    Sale sale = new Sale();
-                    sale.setSale_percentage(salePercentage);
-                    sale.setOn_sale(onSale);
-                    sale.setItem(item);
-                    sale.setName(name);
-
-                    if (!canAdd(sale)) {
-                        jsonResponse.put("saleExist", true);
-                    } else {
-                        if (saleServiceImpl.create(sale)) {
-                            jsonResponse.put("success", true);
-                        }
-                    }
-
-                    out.print(jsonResponse);
-                    out.flush();
-                    out.close();
-                }
-                case "updateSale" -> {
-                    PrintWriter out = resp.getWriter();
-                    JSONObject jsonResponse = new JSONObject();
-
-                    int id = Integer.parseInt(req.getParameter("update_saleID"));
-                    int itemId = Integer.parseInt(req.getParameter("update_saleItemID"));
-                    String name = req.getParameter("update_saleName");
-                    int onSale = Integer.parseInt(req.getParameter("update_saleOnSale"));
-                    double salePercentage = Double.parseDouble(req.getParameter("update_salePercentage"));
-
-                    Item item = itemServiceImpl.findByID(itemId);
-
-                    Sale sale = new Sale();
-                    sale.setId(id);
-                    sale.setSale_percentage(salePercentage);
-                    sale.setOn_sale(onSale);
-                    sale.setItem(item);
-                    sale.setName(name);
-
-                    if (saleServiceImpl.create(sale)) {
+                    int cartID = Integer.parseInt(req.getParameter("cartID"));
+                    if (cartServiceImpl.deleteByID(cartID)) {
                         jsonResponse.put("success", true);
                     }
 
@@ -105,55 +59,43 @@ public class ManageSaleServlet extends HttpServlet {
                     out.flush();
                     out.close();
                 }
-                case "deleteSale" -> {
-                    PrintWriter out = resp.getWriter();
-                    JSONObject jsonResponse = new JSONObject();
-
-                    int saleID = Integer.parseInt(req.getParameter("saleID"));
-                    if (saleServiceImpl.deleteByID(saleID)) {
-                        jsonResponse.put("success", true);
-                    }
-
-                    out.print(jsonResponse);
-                    out.flush();
-                    out.close();
-                }
-                case "searchAndSortSale" -> {
-                    String searchType = req.getParameter("saleSearchType");
-                    String saleInputSearch = req.getParameter("saleInputSearch");
+                case "searchAndSortCart" -> {
+                    String searchType = req.getParameter("cartSearchType");
+                    String cartInputSearch = req.getParameter("cartInputSearch");
                     switch (searchType) {
                         case "noData" -> {
 
                         }
                         case "id" -> {
-                            Integer saleID = Integer.parseInt(req.getParameter("saleInputSearch"));
-                            Sale sale = saleServiceImpl.findBySale(saleID);
-                            List<Sale> saleList = new ArrayList<>();
-                            saleList.add(sale);
+                            Integer cartID = Integer.parseInt(req.getParameter("cartInputSearch"));
+                            Cart cart = cartServiceImpl.findByID(cartID);
+                            List<Cart> cartList = new ArrayList<>();
+                            cartList.add(cart);
 
                             initData(req);
-                            req.setAttribute("saleList", saleList);
-                            req.getRequestDispatcher("Views/Admin/ManageSale.jsp").forward(req, resp);
+                            req.setAttribute("cartList", cartList);
+                            req.getRequestDispatcher("Views/Admin/ManageCart.jsp").forward(req, resp);
 
                         }
-                        case "name" -> {
-                            String saleSortType = req.getParameter("saleSortType");
-                            List<Sale> saleList = null;
-                            if (saleSortType.equals("az")) {
-                                saleList = saleServiceImpl.findAllByNameContains(saleInputSearch, "name", ItemServiceImpl.SortOrder.ASC);
-                            } else if (saleSortType.equals("za")) {
-                                saleList = saleServiceImpl.findAllByNameContains(saleInputSearch, "name", ItemServiceImpl.SortOrder.DESC);
+                        case "customerID" -> {
+                            String cartSortType = req.getParameter("cartSortType");
+                            List<Cart> cartList = null;
+                            if (cartSortType.equals("az")) {
+                                cartList = cartServiceImpl.findByCustomerID(Integer.parseInt(cartInputSearch), "customer_id", ItemServiceImpl.SortOrder.ASC);
+                            } else if (cartSortType.equals("za")) {
+                                cartList = cartServiceImpl.findByCustomerID(Integer.parseInt(cartInputSearch), "customer_id", ItemServiceImpl.SortOrder.DESC);
                             }
 
                             initData(req);
-                            req.setAttribute("saleList", saleList);
-                            req.getRequestDispatcher("Views/Admin/ManageSale.jsp").forward(req, resp);
+                            req.setAttribute("cartList", cartList);
+                            req.getRequestDispatcher("Views/Admin/ManageCart.jsp").forward(req, resp);
                         }
                     }
 
                 }
             }
-        } catch (Exception er) {
+
+        }catch (Exception er){
             er.printStackTrace();
         }
     }
@@ -213,15 +155,8 @@ public class ManageSaleServlet extends HttpServlet {
             if (cookie.getName().equals("signInAccountID")) {
                 Integer signInAccountID = Integer.parseInt(cookie.getValue());
                 Account account = accountServiceImpl.findByID(signInAccountID);
-                req.setAttribute("signInAccount", account);
+                req.setAttribute("signInAccount",account);
             }
         }
-    }
-
-    private boolean canAdd(Sale sale) {
-        if (saleServiceImpl.findByItemID(sale.getItem().getId()) != null) {
-            return false;
-        }
-        return true;
     }
 }

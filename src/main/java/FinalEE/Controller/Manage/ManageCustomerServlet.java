@@ -40,7 +40,7 @@ public class ManageCustomerServlet extends HttpServlet {
 
         initData(req);
 
-        req.getRequestDispatcher("Views/Admin/ManageItem.jsp").forward(req, resp);
+        req.getRequestDispatcher("Views/Admin/ManageCustomer.jsp").forward(req, resp);
     }
 
 
@@ -52,7 +52,7 @@ public class ManageCustomerServlet extends HttpServlet {
             initData(req);
             switch (action) {
                 /*Customer Handle*/
-                case "customer_btnAdd" -> {
+                case "addCustomer" -> {
 
                     PrintWriter out = resp.getWriter();
                     JSONObject jsonResponse = new JSONObject();
@@ -76,7 +76,7 @@ public class ManageCustomerServlet extends HttpServlet {
                     out.flush();
                     out.close();
                 }
-                case "customer_btnUpdate" -> {
+                case "updateCustomer" -> {
 
                     PrintWriter out = resp.getWriter();
                     JSONObject jsonResponse = new JSONObject();
@@ -103,7 +103,7 @@ public class ManageCustomerServlet extends HttpServlet {
                     out.close();
 
                 }
-                case "customer_btnDelete" -> {
+                case "deleteCustomer" -> {
                     PrintWriter out = resp.getWriter();
                     JSONObject jsonResponse = new JSONObject();
 

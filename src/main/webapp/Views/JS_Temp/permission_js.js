@@ -194,8 +194,6 @@ function deletePermission(permissionID) {
                 console.log("error :>> ", error);
             },
         });
-    } else {
-        alert("a")
     }
 }
 

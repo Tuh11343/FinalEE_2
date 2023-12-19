@@ -163,13 +163,13 @@
         <div class="order-data table-data active" data-type="orderList">
             <div class="header-table">
                 <div class="AddOrder listbtn">
-                    <button
+                    <%--<button
                             class="btnHD btnAdd"
                             id="order_addTrigger"
                             style="margin-bottom: 4px"
                     >
                         Thêm
-                    </button>
+                    </button>--%>
                     <a
                             class="btnHD btnExcel"
                             style="margin-left: 5px; margin-bottom: 4px"

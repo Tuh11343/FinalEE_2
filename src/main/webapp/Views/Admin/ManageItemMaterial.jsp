@@ -161,7 +161,6 @@
     <div class="center">
         <!--Item Material-->
         <div class="product-data table-data active" data-type="itemMaterialList">
-            s
             <div class="header-table">
                 <!--Add Item Image Button-->
                 <div class="AddItemMaterial listbtn">
@@ -172,7 +171,7 @@
                     >
                         Thêm
                     </button>
-                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px">
+                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="itemMaterialToExcel()">
                         Xuất Excel
                     </a>
                     <form>
@@ -231,7 +230,7 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableItemMaterial">
                 <c:forEach items="${requestScope.itemMaterialList}" var="itemMaterial">
                     <c:if test="${not empty itemMaterial}">
 
@@ -351,7 +350,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="${pageContext.request.contextPath}/Views/User/dest/tuh.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/Views/User/dest/admin.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
 </body>
 </html>

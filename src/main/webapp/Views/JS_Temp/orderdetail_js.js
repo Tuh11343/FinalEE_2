@@ -39,63 +39,6 @@ function showtable() {
 showtable();
 
 
-/*Order Detail*/
-function handleAddOrderDetail() {
-    var addOrderDetail = document.getElementById("orderDetail_addTrigger");
-    var modal = document.getElementById("add-orderDetail");
-    var btnClose = document.querySelector(".clsAddOrderDetail");
-    addOrderDetail.addEventListener("click", function () {
-        modal.classList.add("active");
-        console.log(1);
-    });
-    btnClose.addEventListener("click", function () {
-        modal.classList.remove("active");
-    });
-}
-
-handleAddOrderDetail();
-
-function handleUpdateOrderDetail() {
-    var updateOrderDetail = document.querySelectorAll(".btnUpdateOrderDetail");
-    var modal = document.getElementById("update-orderDetail");
-    var btnClose = document.querySelector(".clsUpdateOrderDetail");
-
-    updateOrderDetail.forEach(function (item) {
-        item.addEventListener("click", () => {
-            modal.style.display = "block";
-
-            var id = item.getAttribute("data-orderDetailID");
-            var orderID = item.getAttribute("data-orderDetailOrderID");
-            var stockItemID = item.getAttribute("data-orderDetailStockItemID");
-            var amount = item.getAttribute("data-orderDetailAmount");
-            var total = item.getAttribute("data-orderDetailTotal");
-
-            document.getElementById("update_orderDetailID").value = id;
-            document.getElementById("update_orderDetailAmount").value = amount;
-            document.getElementById("update_orderDetailTotal").value = total;
-
-            /!*Combobox DiscountCardID*!/
-            var update_orderDetail_selectElement = document.getElementById(
-                "update_orderDetailItemID"
-            );
-            for (var i = 0; i < update_orderDetail_selectElement.options.length; i++) {
-                var option = update_orderDetail_selectElement.options[i];
-                // So sánh giá trị tùy chọn với giá trị cần chọn
-                if (option.value === itemID) {
-                    // Đánh dấu tùy chọn là "selected"
-                    option.selected = true;
-                    break; // Thoát khỏi vòng lặp sau khi tìm thấy giá trị cần chọn
-                }
-            }
-        });
-    });
-    btnClose.addEventListener("click", function () {
-        modal.style.display = "none";
-    });
-}
-
-handleUpdateOrderDetail();
-
 
 function scrollPageHeader() {
     let header = document.querySelector(".header"),

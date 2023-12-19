@@ -18,5 +18,7 @@ public interface SaleService {
 
     Sale findBySale(Integer id);
 
+    Sale findByItemID(Integer itemID);
+
     
 }

@@ -157,7 +157,7 @@
 
     <!--Center-->
     <div class="center">
-        <div class="image-data table-data" data-type="itemImageList">
+        <div class="image-data table-data active" data-type="itemImageList">
             <div class="header-table">
                 <!--Add Item Image Button-->
                 <div class="AddItemImage listbtn">
@@ -177,18 +177,18 @@
                 </div>
                 <h2 style="font-size: 30px">Quản lý hình ảnh sản phẩm</h2>
 
-                <form action="${pageContext.request.contextPath}/ManageItemMaterialServlet" method="post"
+                <form action="${pageContext.request.contextPath}/ManageItemImageServlet" method="post"
                 onsubmit="return searchAndSortItemImage()">
                     <div class="sorttable">
                         <div class="sort-search">
-                            <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
+                            <a class="btnHD btngreen btnsearchbox">Tìm kiếm</a>
                             <div class="inputsearch">
-                                <select class="selecttype" name="" id="itemImageSearchType">
+                                <select class="selecttype" name="itemImageSearchType" id="itemImageSearchType">
                                     <option value="id">ID</option>
                                     <option value="itemID">ID Sản phẩm</option>
                                 </select>
-                                <input type="text" id="itemImageInputSearch"/>
-                                <a class="btnHD btnsearch">Tìm</a>
+                                <input type="text" id="itemImageInputSearch" name="itemImageInputSearch"/>
+                                <button class="btnHD btnsearch">Tìm</button>
                             </div>
                         </div>
 
@@ -202,6 +202,7 @@
 
                     </div>
 
+                    <input type="hidden" value="searchAndSortItemImage" name="action">
                 </form>
 
             </div>
@@ -216,7 +217,7 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableItemImage">
                 <c:forEach items="${requestScope.imageList}" var="itemImage">
                     <c:if test="${not empty itemImage}">
 
@@ -350,7 +351,7 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"
 ></script>
-<script src="${pageContext.request.contextPath}/Views/JS_Temp/itemtype_js.js"></script>
+<script src="${pageContext.request.contextPath}/Views/JS_Temp/itemimage_js.js"></script>
 
 <script>
     const adminManagerContextPath = "${pageContext.request.contextPath}";

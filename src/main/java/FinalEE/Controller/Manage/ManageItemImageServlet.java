@@ -94,7 +94,7 @@ public class ManageItemImageServlet extends HttpServlet {
                     out.flush();
                     out.close();
                 }
-                case "itemImage_btnDelete" -> {
+                case "deleteItemImage" -> {
                     PrintWriter out = resp.getWriter();
                     JSONObject jsonResponse = new JSONObject();
                     int itemImageID = Integer.parseInt(req.getParameter("itemImageID"));
@@ -119,7 +119,7 @@ public class ManageItemImageServlet extends HttpServlet {
                             itemImageList.add(itemImage);
 
                             initData(req);
-                            req.setAttribute("itemImageList", itemImageList);
+                            req.setAttribute("imageList", itemImageList);
                             req.getRequestDispatcher("Views/Admin/ManageItemImage.jsp").forward(req, resp);
 
                         }
@@ -133,7 +133,7 @@ public class ManageItemImageServlet extends HttpServlet {
                             }
 
                             initData(req);
-                            req.setAttribute("itemImageList", itemImageList);
+                            req.setAttribute("imageList", itemImageList);
                             req.getRequestDispatcher("Views/Admin/ManageItemImage.jsp").forward(req, resp);
                         }
                     }
