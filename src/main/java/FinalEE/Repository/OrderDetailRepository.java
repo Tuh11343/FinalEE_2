@@ -26,7 +26,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Intege
     @Query("select od from OrderDetail od where od.id=?1 or od.id IS NULL")
     OrderDetail findByID(Integer id);
 
-    OrderDetail findByIdAndStockItemId(Integer orderDetailID,Integer stockItemID);
+    OrderDetail findByOrderIdAndStockItemId(Integer orderID,Integer stockItemID);
 
 
 }

@@ -51,7 +51,7 @@ public class ManageOrderDetailServlet extends HttpServlet {
             String action = req.getParameter("action");
             initData(req);
             switch (action) {
-                case "addOrderDetail" -> {
+                /*case "addOrderDetail" -> {
                     PrintWriter out = resp.getWriter();
                     JSONObject jsonResponse = new JSONObject();
 
@@ -110,7 +110,7 @@ public class ManageOrderDetailServlet extends HttpServlet {
                     out.print(jsonResponse);
                     out.flush();
                     out.close();
-                }
+                }*/
                 case "deleteOrderDetail" -> {
                     PrintWriter out = resp.getWriter();
                     JSONObject jsonResponse = new JSONObject();
@@ -250,7 +250,7 @@ public class ManageOrderDetailServlet extends HttpServlet {
         }
     }
 
-    private boolean canOrder(OrderDetail orderDetail) {
+    /*private boolean canOrder(OrderDetail orderDetail) {
         try {
             if (orderDetail.getId() != null) {
 
@@ -270,5 +270,5 @@ public class ManageOrderDetailServlet extends HttpServlet {
             er.printStackTrace();
         }
         return false;
-    }
+    }*/
 }
