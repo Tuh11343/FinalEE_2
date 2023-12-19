@@ -153,7 +153,7 @@ public class CartServlet extends HttpServlet {
     private double calculateOrderDetailTotal(Cart cart) {
         double total = 0.0;
         Sale sale = cart.getStockItem().getItem().getSale();
-        if (sale != null) {
+        if (sale != null && sale.getOn_sale()==1) {
             total += cart.getStockItem().getItem().getPrice() * (1 - (sale.getSale_percentage() / 100)) * cart.getAmount();
         } else {
             total += cart.getStockItem().getItem().getPrice() * cart.getAmount();

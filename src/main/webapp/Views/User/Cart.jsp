@@ -124,8 +124,7 @@
                         <c:forEach items="${requestScope.cartList}" var="cart">
 
                             <c:set var="isSale" value="false"/>
-                            <c:set var="salePercentage"
-                                   value="${cart.stockItem.item.sale.sale_percentage}"/>
+                            <c:set var="salePercentage" value="${cart.stockItem.item.sale.sale_percentage}"/>
 
                             <%--Check If Sale--%>
                             <c:if test="${cart.stockItem.item.sale.on_sale eq 1}">

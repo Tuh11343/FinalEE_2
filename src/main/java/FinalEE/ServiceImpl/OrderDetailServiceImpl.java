@@ -163,7 +163,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public double calculateOrderDetailTotal(OrderDetail orderDetail) {
         Item item = orderDetail.getStockItem().getItem();
         int amount = orderDetail.getAmount();
-        if (item.getSale() != null) {
+        if (item.getSale() != null && item.getSale().getOn_sale()==1) {
             return (item.getPrice() * (1 - item.getSale().getSale_percentage() / 100)) * amount;
         } else {
             return item.getPrice() * amount;

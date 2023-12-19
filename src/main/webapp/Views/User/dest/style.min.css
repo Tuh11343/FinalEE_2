@@ -1717,7 +1717,7 @@ https://flickity.metafizzy.co
 .profilepage .warp .container {
   display: flex;
   justify-content: space-between;
-  gap: 30px;
+  gap: 20px;
 }
 .profilepage .warp__order {
   width: 65%;
@@ -1851,7 +1851,7 @@ https://flickity.metafizzy.co
   width: 25%;
 }
 .profilepage .warp__profile {
-  width: 35%;
+  width: 30%;
 }
 .profilepage .warp__profile--form .box-form {
   display: flex;

@@ -220,8 +220,6 @@ function deleteSale(saleID) {
                 console.log("error :>> ", error);
             },
         });
-    } else {
-        alert("a")
     }
 }
 

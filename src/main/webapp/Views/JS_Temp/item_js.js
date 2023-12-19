@@ -342,18 +342,11 @@ function searchAndSortItem() {
         return false;
     }
 
-    if (itemSearchType == "id") {
+    if (itemSearchType == "id"||itemSearchType == "lowerPrice" || itemSearchType == "higherPrice") {
         var num = parseFloat(itemInputSearch);
         if (Number.isInteger(num)) {
             return true;
         } else {
-            alert("Dữ liệu điền vào không hợp lệ");
-            return false;
-        }
-    }else if(itemSearchType == "lowerPrice" || itemSearchType == "higherPrice"){
-        if(isNaN(itemInputSearch)){
-            return true;
-        }else{
             alert("Dữ liệu điền vào không hợp lệ");
             return false;
         }
