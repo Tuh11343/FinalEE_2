@@ -235,28 +235,32 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             </thead>
             <tbody id="tableCustomer">
               <c:forEach items="${requestScope.customerList}" var="customer">
-                <tr>
-                  <td>${customer.id}</td>
-                  <td>${customer.name}</td>
-                  <td>${customer.phone_number}</td>
-                  <td>${customer.email}</td>
-                  <td>${customer.address}</td>
-                  <td>
-                    <div class="flex-center grpbtn">
+                <c:if test="${not empty customer}">
+
+                  <tr>
+                    <td>${customer.id}</td>
+                    <td>${customer.name}</td>
+                    <td>${customer.phone_number}</td>
+                    <td>${customer.email}</td>
+                    <td>${customer.address}</td>
+                    <td>
+                      <div class="flex-center grpbtn">
                         <button class="btnHD btnDel" type="submit" onclick="deleteCustomer()">Xóa</button>
-                      <a
-                        class="btnHD btnUpdateCustomer"
-                        data-customerID="${customer.id}"
-                        data-customerName="${customer.name}"
-                        data-customerPhoneNumber="${customer.phone_number}"
-                        data-customerEmail="${customer.email}"
-                        data-customerAddress="${customer.address}"
-                      >
-                        Sửa
-                      </a>
-                    </div>
-                  </td>
-                </tr>
+                        <a
+                                class="btnHD btnUpdateCustomer"
+                                data-customerID="${customer.id}"
+                                data-customerName="${customer.name}"
+                                data-customerPhoneNumber="${customer.phone_number}"
+                                data-customerEmail="${customer.email}"
+                                data-customerAddress="${customer.address}"
+                        >
+                          Sửa
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+
+                </c:if>
               </c:forEach>
             </tbody>
           </table>

@@ -193,8 +193,8 @@ public class HeaderServlet extends HttpServlet {
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.setOrder(order);
                     orderDetail.setAmount(cart.getAmount());
-                    orderDetail.setTotal(orderDetailServiceImpl.calculateOrderDetailTotal(orderDetail));
                     orderDetail.setStockItem(cart.getStockItem());
+                    orderDetail.setTotal(orderDetailServiceImpl.calculateOrderDetailTotal(orderDetail));
 
                     orderDetailServiceImpl.create(orderDetail);
                 }

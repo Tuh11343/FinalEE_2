@@ -132,6 +132,7 @@
                     hàng</a>
                 <a href="${pageContext.request.contextPath}/ManageOrderDetailServlet">Quản lý chi tiết hóa đơn</a>
                 <a href="${pageContext.request.contextPath}/ManageSaleServlet">Quản lý khuyến mãi sản phẩm</a>
+                <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
             </c:if>
 
 
@@ -151,8 +152,6 @@
 
             <a href="${pageContext.request.contextPath}/ManageStockItemServlet">Quản lý thông tin sản phẩm</a>
 
-            <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
-
         </div>
     </aside>
 
@@ -168,8 +167,8 @@
                         Xuất Excel
                     </a>
 
-                    <form action="${pageContext.request.contextPath}/ManageItemImageServlet" method="post">
-                        <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px">
+                    <form>
+                        <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px" onclick="refreshItemImage()">
                             Refresh
                         </button>
                         <input type="hidden" name="action" value="refreshItemImage"/>
@@ -178,8 +177,8 @@
                 </div>
                 <h2 style="font-size: 30px">Quản lý hình ảnh sản phẩm</h2>
 
-                <form action="${pageContext.request.contextPath}/ManageItemMaterialServlet" method="post">
-
+                <form action="${pageContext.request.contextPath}/ManageItemMaterialServlet" method="post"
+                onsubmit="return searchAndSortItemImage()">
                     <div class="sorttable">
                         <div class="sort-search">
                             <button class="btnHD btngreen btnsearchbox">Tìm kiếm</button>
@@ -219,31 +218,31 @@
                 </thead>
                 <tbody>
                 <c:forEach items="${requestScope.imageList}" var="itemImage">
-                    <tr>
-                        <td>${itemImage.id}</td>
-                        <td>${itemImage.item.id}</td>
-                        <td>${itemImage.image_url}</td>
-                        <td>
-                            <div class="flex-center grpbtn">
+                    <c:if test="${not empty itemImage}">
 
-                                <form action="${pageContext.request.contextPath}/ManageItemImageServlet" method="post"
-                                      onsubmit="return confirmDelete()">
-                                    <a class="btnHD btnDel" type="submit">Xóa</a>
-                                    <input type="hidden" value="${itemImage.id}" name="itemImageID">
-                                    <input type="hidden" value="deleteItemImage" name="action">
-                                </form>
+                        <tr>
+                            <td>${itemImage.id}</td>
+                            <td>${itemImage.item.id}</td>
+                            <td>${itemImage.image_url}</td>
+                            <td>
+                                <div class="flex-center grpbtn">
 
-                                <a
-                                        class="btnHD btnUpdateItemImage"
-                                        data-itemImageID="${itemImage.id}"
-                                        data-itemImageItemID="${itemImage.item.id}"
-                                        data-itemImageURL="${itemImage.image_url}"
-                                >
-                                    Sửa
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                                    <a class="btnHD btnDel" type="submit" onclick="deleteItemImage(${itemImage.id})">Xóa</a>
+
+                                    <a
+                                            class="btnHD btnUpdateItemImage"
+                                            data-itemImageID="${itemImage.id}"
+                                            data-itemImageItemID="${itemImage.item.id}"
+                                            data-itemImageURL="${itemImage.image_url}"
+                                    >
+                                        Sửa
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </c:if>
+
                 </c:forEach>
                 </tbody>
             </table>
@@ -251,7 +250,7 @@
             <!--Update Item Image Modal-->
             <div id="update-itemImage" class="modal-update flex-center">
                 <div class="update-modal">
-                    <form class="form__update" action="${pageContext.request.contextPath}/ManageItemImageServlet" method="post">
+                    <form class="form__update">
                         <span class="close clsUpdateItemImage">&times;</span>
 
                         <h2 class="text-center" style="padding: 16px 0">
@@ -288,7 +287,7 @@
 
 
                         <div class="flex-center">
-                            <button id="updateItemImage" class="btnHD btnAdd submit">Cập nhật</button>
+                            <a id="updateItemImage" class="btnHD btnAdd submit" onclick="updateItemImage()">Cập nhật</a>
                         </div>
 
                         <input type="hidden" value="updateItemImage" name="action">
@@ -299,7 +298,7 @@
             <!--Add Item Image Modal-->
             <div id="add-itemImage" class="modal-add flex-center modal__addItemImage">
                 <div class="add-modal">
-                    <form class="form__add" action="${pageContext.request.contextPath}/ManageItemImageServlet" method="post">
+                    <form class="form__add">
                         <span class="close clsAddItemImage">&times;</span>
                         <h2 class="text-center" style="padding: 16px 0">
                             Thêm Hình Ảnh Sản Phẩm
@@ -329,7 +328,7 @@
                         </div>
 
                         <div class="flex-center">
-                            <button id="addItemImage" class="btnHD btnAdd submit">Thêm</button>
+                            <a id="addItemImage" class="btnHD btnAdd submit" onclick="addItemImage()">Thêm</a>
                         </div>
 
                         <input type="hidden" value="addItemImage" name="action"/>
@@ -359,7 +358,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="${pageContext.request.contextPath}/Views/User/dest/tuh.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/Views/User/dest/admin.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
 </body>
 </html>

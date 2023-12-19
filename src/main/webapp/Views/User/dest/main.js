@@ -105,6 +105,7 @@ function sliderBanner() {
     wrapAround: true,
     autoPlay: 2000,
     imagesLoaded: true,
+    pauseAutoPlayOnHover: false
   });
 }
 /*sliderBanner();*/

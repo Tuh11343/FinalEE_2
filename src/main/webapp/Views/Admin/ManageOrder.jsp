@@ -132,6 +132,8 @@
                     hàng</a>
                 <a href="${pageContext.request.contextPath}/ManageOrderDetailServlet">Quản lý chi tiết hóa đơn</a>
                 <a href="${pageContext.request.contextPath}/ManageSaleServlet">Quản lý khuyến mãi sản phẩm</a>
+                <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
+
             </c:if>
 
 
@@ -151,7 +153,6 @@
 
             <a href="${pageContext.request.contextPath}/ManageStockItemServlet">Quản lý thông tin sản phẩm</a>
 
-            <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
 
         </div>
     </aside>
@@ -175,17 +176,14 @@
                     >
                         Xuất Excel
                     </a>
-                    <form action="${pageContext.request.contextPath}/ManageOrderServlet" method="post">
-
-                        <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px">Refresh</button>
-                        <input type="hidden" name="action" value="refreshOrder">
-
-                    </form>
+                    <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px" onclick="refreshOrder()">
+                        Refresh
+                    </button>
                 </div>
                 <h2 style="font-size: 30px">Quản lý hóa đơn</h2>
                 <form
                         action="${pageContext.request.contextPath}/ManageOrderServlet"
-                        method="post"
+                        method="post" onsubmit="return searchAndSortOrder()"
                 >
                     <div class="sorttable">
                         <div class="sort-search">
@@ -233,45 +231,45 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableOrder">
                 <c:forEach items="${requestScope.orderList}" var="order">
-                    <tr>
-                        <td>${order.id}</td>
-                        <td>${order.customer.id}</td>
-                        <td>${order.discountCard.id}</td>
-                        <td>${order.total}</td>
-                        <td>${order.date_purchase}</td>
-                        <td>${order.order_status.name}</td>
-                        <td>${order.address}</td>
-                        <td>${order.note}</td>
-                        <td>${order.email}</td>
-                        <td>
-                            <div class="flex-center grpbtn">
+                    <c:if test="${not empty order}">
 
-                                <form action="${pageContext.request.contextPath}/ManageOrderServlet" method="post"
-                                      onsubmit="return confirmDelete()">
-                                    <button class="btnHD btnDel" type="submit">Xóa</button>
-                                    <input type="hidden" value="${order.id}" name="orderID">
-                                    <input type="hidden" value="deleteOrder" name="action">
-                                </form>
+                        <tr>
+                            <td>${order.id}</td>
+                            <td>${order.customer.id}</td>
+                            <td>${order.discountCard.id}</td>
+                            <td>${order.total}</td>
+                            <td>${order.date_purchase}</td>
+                            <td>${order.order_status.name}</td>
+                            <td>${order.address}</td>
+                            <td>${order.note}</td>
+                            <td>${order.email}</td>
+                            <td>
+                                <div class="flex-center grpbtn">
 
-                                <button
-                                        class="btnHD btnUpdateOrder"
-                                        data-orderID="${order.id}"
-                                        data-orderCustomerID="${order.customer.id}"
-                                        data-orderTotal="${order.total}"
-                                        data-orderDatePurchase="${order.date_purchase}"
-                                        data-orderDiscountCardID="${order.discountCard.id}"
-                                        data-orderStatusID="${order.order_status.id}"
-                                        data-orderAddress="${order.address}"
-                                        data-orderNote="${order.note}"
-                                        data-orderEmail="${order.email}"
-                                >
-                                    Sửa
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                                    <button class="btnHD btnDel" type="submit" onclick="deleteOrder()">Xóa</button>
+
+                                    <button
+                                            class="btnHD btnUpdateOrder"
+                                            data-orderID="${order.id}"
+                                            data-orderCustomerID="${order.customer.id}"
+                                            data-orderTotal="${order.total}"
+                                            data-orderDatePurchase="${order.date_purchase}"
+                                            data-orderDiscountCardID="${order.discountCard.id}"
+                                            data-orderStatusID="${order.order_status.id}"
+                                            data-orderAddress="${order.address}"
+                                            data-orderNote="${order.note}"
+                                            data-orderEmail="${order.email}"
+                                    >
+                                        Sửa
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </c:if>
+
                 </c:forEach>
                 </tbody>
             </table>
@@ -283,10 +281,7 @@
                         <span class="close clsUpdateOrder">&times;</span>
 
                         <h2 class="text-center" style="padding: 16px 0">Cập Nhật Hóa Đơn</h2>
-                        <form
-                                action="${pageContext.request.contextPath}/ManageOrderServlet"
-                                method="post"
-                        >
+                        <form>
                             <!--Order ID-->
                             <div class="form-grp">
                                 <input type="hidden" id="update_orderID" name="update_orderID"/>
@@ -400,7 +395,7 @@
                             </div>
 
                             <div class="flex-center">
-                                <a id="updateOrder" class="btnHD btnAdd submit"
+                                <a id="updateOrder" class="btnHD btnAdd submit" onclick="updateOrder()"
                                 >Cập nhật</a
                                 >
                             </div>
@@ -413,11 +408,10 @@
             <!--Add Order Modal-->
             <div id="add-order" class="modal-add flex-center modal__addOrder">
                 <div class="add-modal">
-                    <form class="form__add" action="${pageContext.request.contextPath}/ManageOrderServlet"
-                          method="post">
+                    <form class="form__add">
                         <span class="close clsAddOrder">&times;</span>
                         <h2 class="text-center" style="padding: 16px 0">Thêm Hóa Đơn</h2>
-                        <form action="${pageContext.request.contextPath}/ManageOrderServlet" method="post">
+                        <form>
                             <!--Order Customer ID-->
                             <div class="form-grp">
                                 <label for="add_orderCustomerID">Khách Hàng:</label>
@@ -453,7 +447,7 @@
                                         maxlength="100"
                                         id="add_orderTotal"
                                         name="add_orderTotal"
-                                        value=""
+                                        value="0"
                                         placeholder="Nhập vào giá trị hóa đơn"
                                         disabled
                                 />
@@ -497,7 +491,7 @@
 
                             <!--Order Note-->
                             <div class="form-grp">
-                                <label for="add_orderNote">Ngày Mua:</label>
+                                <label for="add_orderNote">Ghi chú:</label>
                                 <input
                                         type="text"
                                         maxlength="100"
@@ -523,7 +517,7 @@
                             </div>
 
                             <div class="flex-center">
-                                <button id="addOrder" class="btnHD btnAdd submit">Thêm</button>
+                                <a id="addOrder" class="btnHD btnAdd submit" onclick="addOrder">Thêm</a>
                             </div>
 
                             <input type="hidden" value="addOrder" name="action"/>
@@ -554,7 +548,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="${pageContext.request.contextPath}/Views/User/dest/tuh.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/Views/User/dest/admin.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
 </body>
 </html>

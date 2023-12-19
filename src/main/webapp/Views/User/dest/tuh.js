@@ -48,6 +48,7 @@ function logInAjaxRequest() {
                     location.reload();
                 }
             } else if (data.success === 0) {
+                alert("Không có tài khoản nào tồn tại");
             }
         },
         error: function (error) {
@@ -289,40 +290,45 @@ function order(){
     let address=document.getElementById("address").value;
     let email=document.getElementById("emailOrder").value;
 
-    $.ajax({
-        type: "POST",
-        url: contextPath + "/HeaderServlet",
-        data: {
-            action: "order",
-            discountCardID: discountCardID,
-            note: note,
-            address: address,
-            email: email,
-            cartList: JSON.stringify(cartList),
-        },
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        success: function (data) {
-            if(data.outOfStock){
+    if(address == null || address == "" || email == null || email == ""){
+        alert("Không được để dữ liệu trống");
+    }else{
+        $.ajax({
+            type: "POST",
+            url: contextPath + "/HeaderServlet",
+            data: {
+                action: "order",
+                discountCardID: discountCardID,
+                note: note,
+                address: address,
+                email: email,
+                cartList: JSON.stringify(cartList),
+            },
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+            },
+            success: function (data) {
+                if(data.outOfStock){
 
-                var itemList=JSON.parse(data.itemList);
-                for(let i=0;i<itemList.length;i++){
-                    alert("Sản phẩm:"+itemList[i].name+" vượt quá số lượng");
+                    var itemList=JSON.parse(data.itemList);
+                    for(let i=0;i<itemList.length;i++){
+                        alert("Sản phẩm:"+itemList[i].name+" vượt quá số lượng");
+                    }
+
+                } else if(data.success === 1)
+                {
+                    alert("Đặt hàng thành công");
+                    localStorage.clear();
+                    window.location.reload();
                 }
-
-            } else if(data.success === 1)
-            {
-                localStorage.clear();
-                window.location.reload();
-            }
-            else
-                console.log("WTF");
-        },
-        error: function (error) {
-            console.log("error:" + error);
-        },
-    });
+                else
+                    console.log("WTF");
+            },
+            error: function (error) {
+                console.log("error:" + error);
+            },
+        });
+    }
 }
 
 function deleteCart(stockItemID){

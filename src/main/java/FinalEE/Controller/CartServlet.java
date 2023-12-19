@@ -33,66 +33,6 @@ public class CartServlet extends HttpServlet {
         try{
             String action = req.getParameter("action");
             switch (action) {
-                case "orderClick" -> {
-                    Customer signInCustomer = null;
-                    Integer discountCardID = null;
-                    Integer signInAccountID;
-
-                    List<Cookie> cookieList = List.of(req.getCookies());
-                    for (Cookie cookie : cookieList) {
-                        if (cookie.getName().equals("signInAccountID")) {
-                            signInAccountID = Integer.parseInt(cookie.getValue());
-                            Account account = accountServiceImpl.findByID(signInAccountID);
-                            signInCustomer = account.getCustomer();
-                        }
-                    }
-
-                    if (req.getParameter("customerDiscountCardID") != null) {
-                        discountCardID = Integer.parseInt(req.getParameter("customerDiscountCardID"));
-                    }
-
-                    DiscountCard discountCard = discountCardServiceImpl.findByID(discountCardID);
-
-                    if (signInCustomer == null) {
-                        signInCustomer = new Customer();
-                        signInCustomer.setName(req.getParameter("orderCustomerName"));
-                        signInCustomer.setPhone_number(req.getParameter("orderCustomerPhoneNumber"));
-                        customerServiceImpl.create(signInCustomer);
-                    }
-
-                    /*Create Oder*/
-                    Order order = new Order();
-                    order.setCustomer(signInCustomer);
-                    order.setTotal(0);
-                    order.setDate_purchase(new Date());
-                    order.setDiscountCard(discountCard);
-                    order.setNote(req.getParameter("orderNote"));
-                    order.setOrder_status(orderStatusServiceImpl.defaultOrder());
-                    order.setAddress(req.getParameter("orderAddress"));
-                    orderServiceImpl.create(order);
-
-                    if (order.getId() == null) {
-                        return;
-                    }
-
-                    /*Create Order Detail*/
-                    List<Cart> cartList = cartServiceImpl.findByCustomerID(signInCustomer.getId());
-                    for (Cart cart : cartList) {
-
-                        OrderDetail orderDetail = new OrderDetail();
-                        orderDetail.setOrder(order);
-                        orderDetail.setAmount(cart.getAmount());
-                        orderDetail.setTotal(orderDetailServiceImpl.calculateOrderDetailTotal(orderDetail));
-                        orderDetail.setStockItem(cart.getStockItem());
-
-                        orderDetailServiceImpl.create(orderDetail);
-                    }
-
-                    /*Remove Cart*/
-                    cartServiceImpl.deleteAllByCustomerID(signInCustomer.getId());
-                    resp.sendRedirect("/FinalEE/CartServlet");
-
-                }
                 case "itemDeleteClick" -> {
 
                     Integer deleteCartID;

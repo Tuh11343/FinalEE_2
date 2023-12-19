@@ -264,9 +264,11 @@ function searchAndSortSale() {
       saleSortType == null || saleSortType == "") {
     alert("Không thể để dữ liệu trống");
     return false;
-  } else {
-    return true;
   }
+
+
+    return true;
+
 }
 
 function refreshSale() {

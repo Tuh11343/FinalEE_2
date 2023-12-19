@@ -233,9 +233,18 @@ function searchAndSortItemMaterial() {
       itemMaterialSortType == null || itemMaterialSortType == "") {
     alert("Không thể để dữ liệu trống");
     return false;
-  } else {
-    return true;
   }
+     if (itemMaterialSortType == "id") {
+          var num = parseFloat(itemMaterialInputSearch);
+          if (Number.isInteger(num)) {
+               return true;
+          } else {
+              alert("Dữ liệu điền vào không hợp lệ");
+              return false;
+          }
+      }
+    return true;
+
 }
 
 function refreshItemMaterial() {

@@ -80,7 +80,7 @@ public class ManageDiscountCardServlet extends HttpServlet {
                     int id = Integer.parseInt(req.getParameter("update_discountCardID"));
                     int discountPercentage = Integer.parseInt(req.getParameter("update_discountCardDiscountPercentage"));
                     String name = req.getParameter("update_discountCardName");
-                    int customerID = Integer.parseInt(req.getParameter("update_discountCardID"));
+                    int customerID = Integer.parseInt(req.getParameter("update_discountCardCustomerID"));
 
                     Customer customer = customerServiceImpl.findByID(customerID);
 

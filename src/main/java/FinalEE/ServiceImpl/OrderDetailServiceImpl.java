@@ -29,8 +29,6 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 
     }
 
-
-
     @Override
     public boolean create(OrderDetail orderDetail) {
         try {
@@ -38,18 +36,31 @@ public class OrderDetailServiceImpl implements OrderDetailService{
             orderDetailRepository.save(orderDetail);
             Order order=orderRepository.findByID(orderDetail.getOrder().getId());
             order.setTotal(calculateOrderTotal(order));
+            orderRepository.save(order);
+
+            if (stockItemRepository.findById(orderDetail.getStockItem().getId()).isPresent()) {
+                StockItem stockItem = orderDetail.getStockItem();
+                if(existingOrderDetail!=null){
+                    int oldAmount=existingOrderDetail.getAmount();
+                    int newAmount=orderDetail.getAmount();
+                    if(oldAmount>newAmount){
+                        int increase=oldAmount-newAmount;
+                        stockItem.setAmount(stockItem.getAmount()+increase);
+                    }else if(oldAmount<newAmount){
+                        int decrease=newAmount-oldAmount;
+                        stockItem.setAmount(stockItem.getAmount()-decrease);
+                    }
+                }else{
+                    stockItem.setAmount(stockItem.getAmount() - orderDetail.getAmount());
+                }
+                stockItemRepository.save(stockItem);
+                System.out.println("Giam so luong thanh cong stockItem:" + stockItem.getId());
+            }else{
+                System.out.println("Giảm số lượng that bai stockItem:"+ orderDetail.getStockItem().getId());
+            }
 
             if(existingOrderDetail!=null){
                 System.out.println("Cap nhat thanh cong orderDetail:" + orderDetail.getId());
-                /*Decrease Stock Item Amount*/
-                if (stockItemRepository.findById(orderDetail.getStockItem().getId()).isPresent()) {
-                    StockItem stockItem = orderDetail.getStockItem();
-                    stockItem.setAmount(stockItem.getAmount() - orderDetail.getAmount());
-                    stockItemRepository.save(stockItem);
-                    System.out.println("Giam so luong thanh cong stockItem:" + stockItem.getId());
-                }else{
-                    System.out.println("Giảm số lượng that bai stockItem:"+ orderDetail.getStockItem().getId());
-                }
             } else {
                 System.out.println("Them thanh cong orderDetail:" + orderDetail.getId());
             }
