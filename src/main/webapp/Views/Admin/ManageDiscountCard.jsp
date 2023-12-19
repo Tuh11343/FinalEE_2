@@ -171,9 +171,9 @@
                     >
                         Thêm
                     </button>
-                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="discountCardToExcel()">
+                    <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="discountCardToExcel()">
                         Xuất Excel
-                    </a>
+                    </button>
                     <form>
                         <button
                                 class="btnHD btnload"
@@ -281,7 +281,7 @@
 
                     <h2 class="text-center" style="padding: 16px 0">Cập Nhật Thẻ Khuyến Mãi</h2>
                     <form>
-                        s
+
                         <!--Discount ID-->
                         <div class="form-grp">
                             <input type="hidden" id="update_discountID" name="update_discountID"/>

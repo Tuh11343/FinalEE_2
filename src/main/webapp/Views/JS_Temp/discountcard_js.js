@@ -299,31 +299,31 @@ function discountCardToExcel() {
 
     let dataToSend = [];
 
-    // Lặp qua các dòng của bảng và thu thập thông tin từ mỗi ô cột
+    // Loop through the rows of the table and gather information from each column cell
     for (let i = 0; i < table.rows.length; i++) {
         let currentRow = table.rows[i];
 
-        // Thu thập thông tin từ các ô cột trong dòng
+        // Gather information from the column cells in the current row
         let id = currentRow.cells[0].textContent;
-        let cus = currentRow.cells[1].textContent;
+        let customerID = currentRow.cells[1].textContent;
         let name = currentRow.cells[2].textContent;
-        let discount = currentRow.cells[3].textContent;
+        let salePercentage = currentRow.cells[3].textContent;
 
-        // Tạo đối tượng chứa thông tin từ dòng hiện tại
-        let discountData = {
+        // Create an object containing information from the current row
+        let productData = {
             id: id,
-            cus: cus,
-            name: name,
-            discount: discount,
+            customerID:customerID,
+            name:name,
+            salePercentage:salePercentage,
         };
 
-        // Thêm đối tượng vào mảng dataToSend
-        dataToSend.push(discountData);
+        // Add the object to the dataToSend array
+        dataToSend.push(productData);
     }
 
     const workbook = XLSX.utils.book_new();
     const sheet = XLSX.utils.json_to_sheet(dataToSend);
-    XLSX.utils.book_append_sheet(workbook, sheet, "Thẻ giảm giá");
+    XLSX.utils.book_append_sheet(workbook, sheet, "Discount Card");
 
-    XLSX.writeFile(workbook, "DiscountCard.xlsx");
+    XLSX.writeFile(workbook, "discountCard.xlsx");
 }
