@@ -222,7 +222,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               <c:forEach items="${requestScope.top5CustomersByAmount}" var="statistic">
                 <div  class="row  mb-4 pb-2" style="    border-bottom: 1px solid #aaac;" >
                 <span class=" col-md-3 text-center">${statistic[1]}</span>
-                <span class=" col-md-9  text-center">${statistic[0]}</span>
+                <span class=" col-md-9  text-center">${statistic[2]}</span>
                 </div>
               </c:forEach>
           </div>
