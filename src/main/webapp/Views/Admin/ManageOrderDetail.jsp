@@ -336,7 +336,7 @@
                                     id="update_orderDetailTotal"
                                     name="update_orderDetailTotal"
                                     value=""
-                                    placeholder="Nhập vào giá trị chi tiết hóa đơn"
+                                    <%--placeholder="Nhập vào giá trị chi tiết hóa đơn"--%>
                                     disabled
                             />
                         </div>
@@ -396,8 +396,8 @@
                                     maxlength="100"
                                     id="add_orderDetailTotal"
                                     name="add_orderDetailTotal"
-                                    value=""
-                                    placeholder="Nhập vào giá trị chi tiết hóa đơn"
+                                    value="0"
+                                    <%--placeholder="Nhập vào giá trị chi tiết hóa đơn"--%>
                                     disabled
                             />
                         </div>

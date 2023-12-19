@@ -21,5 +21,6 @@ public interface OrderDetailService {
     List<OrderDetail> findAllByTotalGreaterThan(double total, String sort, ItemServiceImpl.SortOrder sortOrder);
 
     OrderDetail findByID(Integer id);
+    OrderDetail findByIDAndStockItemID(Integer orderDetailID,Integer stockItemID);
 
 }

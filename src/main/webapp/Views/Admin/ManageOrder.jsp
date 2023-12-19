@@ -3,6 +3,7 @@
         uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib
         uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -240,7 +241,7 @@
                             <td>${order.customer.id}</td>
                             <td>${order.discountCard.id}</td>
                             <td>${order.total}</td>
-                            <td>${order.date_purchase}</td>
+                            <td><fmt:formatDate value="${order.date_purchase}" pattern="yyyy-MM-dd" /></td>
                             <td>${order.order_status.name}</td>
                             <td>${order.address}</td>
                             <td>${order.note}</td>
@@ -248,7 +249,7 @@
                             <td>
                                 <div class="flex-center grpbtn">
 
-                                    <button class="btnHD btnDel" type="submit" onclick="deleteOrder()">Xóa</button>
+                                    <button class="btnHD btnDel" type="submit" onclick="deleteOrder(${order.id})">Xóa</button>
 
                                     <button
                                             class="btnHD btnUpdateOrder"
@@ -257,7 +258,7 @@
                                             data-orderTotal="${order.total}"
                                             data-orderDatePurchase="${order.date_purchase}"
                                             data-orderDiscountCardID="${order.discountCard.id}"
-                                            data-orderStatusID="${order.order_status.id}"
+                                            data-orderOrderStatusID="${order.order_status.id}"
                                             data-orderAddress="${order.address}"
                                             data-orderNote="${order.note}"
                                             data-orderEmail="${order.email}"
@@ -346,8 +347,8 @@
 
                             <!--Order Status-->
                             <div class="form-grp">
-                                <label for="update_orderStatus">Tình trạng đơn hàng:</label>
-                                <select id="update_orderStatus" name="update_orderStatus">
+                                <label for="update_orderOrderStatusID">Tình trạng đơn hàng:</label>
+                                <select id="update_orderOrderStatusID" name="update_orderOrderStatusID">
                                     <c:forEach items="${requestScope.orderStatusList}" var="orderStatus">
                                         <option value="${orderStatus.id}">${orderStatus.name}</option>
                                     </c:forEach>
@@ -384,7 +385,7 @@
                             <div class="form-grp">
                                 <label for="update_orderEmail">Email đặt hàng:</label>
                                 <input
-                                        type="text"
+                                        type="email"
                                         maxlength="100"
                                         id="update_orderEmail"
                                         name="update_orderEmail"
@@ -395,13 +396,12 @@
                             </div>
 
                             <div class="flex-center">
-                                <a id="updateOrder" class="btnHD btnAdd submit" onclick="updateOrder()"
-                                >Cập nhật</a
-                                >
+                                <a id="updateOrder" class="btnHD btnAdd submit" onclick="updateOrder()">Cập nhật</a>
                             </div>
                             <input type="hidden" value="updateOrder" name="action">
 
                         </form>
+                    </form>
                 </div>
             </div>
 
@@ -468,8 +468,8 @@
 
                             <!--Order Status-->
                             <div class="form-grp">
-                                <label for="add_orderStatus">Tình trạng đơn hàng:</label>
-                                <select id="add_orderStatus" name="add_orderStatus">
+                                <label for="add_orderOrderStatusID">Tình trạng đơn hàng:</label>
+                                <select id="add_orderOrderStatusID" name="add_orderOrderStatusID">
                                     <c:forEach items="${requestScope.orderStatusList}" var="orderStatus">
                                         <option value="${orderStatus.id}">${orderStatus.name}</option>
                                     </c:forEach>
@@ -506,7 +506,7 @@
                             <div class="form-grp">
                                 <label for="add_orderEmail">Email đặt hàng:</label>
                                 <input
-                                        type="text"
+                                        type="email"
                                         maxlength="100"
                                         id="add_orderEmail"
                                         name="add_orderEmail"
@@ -517,12 +517,13 @@
                             </div>
 
                             <div class="flex-center">
-                                <a id="addOrder" class="btnHD btnAdd submit" onclick="addOrder">Thêm</a>
+                                <a id="addOrder" class="btnHD btnAdd submit" onclick="addOrder()">Thêm</a>
                             </div>
 
                             <input type="hidden" value="addOrder" name="action"/>
 
                         </form>
+                    </form>
                 </div>
             </div>
         </div>

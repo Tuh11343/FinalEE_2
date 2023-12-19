@@ -55,22 +55,22 @@ public class ManageOrderDetailServlet extends HttpServlet {
                     PrintWriter out = resp.getWriter();
                     JSONObject jsonResponse = new JSONObject();
 
-                    Integer orderID=Integer.parseInt(req.getParameter("add_orderDetailOrderID"));
-                    Integer stockItemID=Integer.parseInt(req.getParameter("add_orderDetailStockItemID"));
-                    int amount=Integer.parseInt(req.getParameter("add_orderDetailAmount"));
+                    Integer orderID = Integer.parseInt(req.getParameter("add_orderDetailOrderID"));
+                    Integer stockItemID = Integer.parseInt(req.getParameter("add_orderDetailStockItemID"));
+                    int amount = Integer.parseInt(req.getParameter("add_orderDetailAmount"));
 
-                    Order order=orderServiceImpl.findByID(orderID);
-                    StockItem stockItem=stockItemServiceImpl.findByID(stockItemID);
+                    Order order = orderServiceImpl.findByID(orderID);
+                    StockItem stockItem = stockItemServiceImpl.findByID(stockItemID);
 
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.setOrder(order);
                     orderDetail.setStockItem(stockItem);
                     orderDetail.setAmount(amount);
-                    orderDetail.setTotal(0);
+                    orderDetail.setTotal(orderDetailServiceImpl.calculateOrderDetailTotal(orderDetail));
 
-                    if(!canOrder(orderDetail)){
-                        jsonResponse.put("outOfStock",true);
-                    }else{
+                    if (!canOrder(orderDetail)) {
+                        jsonResponse.put("outOfStock", true);
+                    } else {
                         if (orderDetailServiceImpl.create(orderDetail)) {
                             jsonResponse.put("success", true);
                         }
@@ -84,23 +84,24 @@ public class ManageOrderDetailServlet extends HttpServlet {
                     PrintWriter out = resp.getWriter();
                     JSONObject jsonResponse = new JSONObject();
 
-                    Integer orderID=Integer.parseInt(req.getParameter("update_orderDetailOrderID"));
-                    Integer stockItemID=Integer.parseInt(req.getParameter("update_orderDetailStockItemID"));
-                    int amount=Integer.parseInt(req.getParameter("update_orderDetailAmount"));
-                    double total=Double.parseDouble(req.getParameter("update_orderDetailTotal"));
+                    int orderDetailID = Integer.parseInt(req.getParameter("update_orderDetailID"));
+                    Integer orderID = Integer.parseInt(req.getParameter("update_orderDetailOrderID"));
+                    Integer stockItemID = Integer.parseInt(req.getParameter("update_orderDetailStockItemID"));
+                    int amount = Integer.parseInt(req.getParameter("update_orderDetailAmount"));
 
-                    Order order=orderServiceImpl.findByID(orderID);
-                    StockItem stockItem=stockItemServiceImpl.findByID(stockItemID);
+                    Order order = orderServiceImpl.findByID(orderID);
+                    StockItem stockItem = stockItemServiceImpl.findByID(stockItemID);
 
                     OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.setId(orderDetailID);
                     orderDetail.setOrder(order);
                     orderDetail.setStockItem(stockItem);
                     orderDetail.setAmount(amount);
-                    orderDetail.setTotal(total);
+                    orderDetail.setTotal(orderDetailServiceImpl.calculateOrderDetailTotal(orderDetail));
 
-                    if(!canOrder(orderDetail)){
-                        jsonResponse.put("outOfStock",true);
-                    }else{
+                    if (!canOrder(orderDetail)) {
+                        jsonResponse.put("outOfStock", true);
+                    } else {
                         if (orderDetailServiceImpl.create(orderDetail)) {
                             jsonResponse.put("success", true);
                         }
@@ -249,23 +250,23 @@ public class ManageOrderDetailServlet extends HttpServlet {
         }
     }
 
-    private boolean canOrder(OrderDetail orderDetail){
-        try{
-            if(orderDetail.getId()!=null){
+    private boolean canOrder(OrderDetail orderDetail) {
+        try {
+            if (orderDetail.getId() != null) {
 
-                OrderDetail oldOrderDetail=orderDetailServiceImpl.findByID(orderDetail.getId());
-                int oldAmount=oldOrderDetail.getAmount();
-                int newAmount=orderDetail.getAmount();
-                if(oldAmount>newAmount){
+                OrderDetail oldOrderDetail = orderDetailServiceImpl.findByID(orderDetail.getId());
+                int oldAmount = oldOrderDetail.getAmount();
+                int newAmount = orderDetail.getAmount();
+                if (oldAmount > newAmount) {
                     return true;
-                }else if(oldAmount<newAmount){
-                    int decrease=newAmount-oldAmount;
+                } else if (oldAmount < newAmount) {
+                    int decrease = newAmount - oldAmount;
                     return decrease <= orderDetail.getStockItem().getAmount();
                 }
-            }else{
+            } else {
                 return orderDetail.getAmount() <= orderDetail.getStockItem().getAmount();
             }
-        }catch (Exception er){
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return false;

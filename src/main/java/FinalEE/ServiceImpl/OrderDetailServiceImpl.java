@@ -8,15 +8,17 @@ import FinalEE.Repository.OrderDetailRepository;
 import FinalEE.Repository.OrderRepository;
 import FinalEE.Repository.StockItemRepository;
 import FinalEE.Service.OrderDetailService;
+
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
 @Service
-public class OrderDetailServiceImpl implements OrderDetailService{
+public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Autowired
     private OrderDetailRepository orderDetailRepository;
@@ -29,37 +31,39 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 
     }
 
-    @Override
+    /*@Override
     public boolean create(OrderDetail orderDetail) {
         try {
             OrderDetail existingOrderDetail = orderDetailRepository.findByID(orderDetail.getId());
             orderDetailRepository.save(orderDetail);
-            Order order=orderRepository.findByID(orderDetail.getOrder().getId());
+
+            Order order = orderRepository.findByID(orderDetail.getOrder().getId());
             order.setTotal(calculateOrderTotal(order));
             orderRepository.save(order);
+            System.out.println(order.getTotal());
 
             if (stockItemRepository.findById(orderDetail.getStockItem().getId()).isPresent()) {
                 StockItem stockItem = orderDetail.getStockItem();
-                if(existingOrderDetail!=null){
-                    int oldAmount=existingOrderDetail.getAmount();
-                    int newAmount=orderDetail.getAmount();
-                    if(oldAmount>newAmount){
-                        int increase=oldAmount-newAmount;
-                        stockItem.setAmount(stockItem.getAmount()+increase);
-                    }else if(oldAmount<newAmount){
-                        int decrease=newAmount-oldAmount;
-                        stockItem.setAmount(stockItem.getAmount()-decrease);
+                if (existingOrderDetail != null) {
+                    int oldAmount = existingOrderDetail.getAmount();
+                    int newAmount = orderDetail.getAmount();
+                    if (oldAmount > newAmount) {
+                        int increase = oldAmount - newAmount;
+                        stockItem.setAmount(stockItem.getAmount() + increase);
+                    } else if (oldAmount < newAmount) {
+                        int decrease = newAmount - oldAmount;
+                        stockItem.setAmount(stockItem.getAmount() - decrease);
                     }
-                }else{
+                } else {
                     stockItem.setAmount(stockItem.getAmount() - orderDetail.getAmount());
                 }
                 stockItemRepository.save(stockItem);
                 System.out.println("Giam so luong thanh cong stockItem:" + stockItem.getId());
-            }else{
-                System.out.println("Giảm số lượng that bai stockItem:"+ orderDetail.getStockItem().getId());
+            } else {
+                System.out.println("Giảm số lượng that bai stockItem:" + orderDetail.getStockItem().getId());
             }
 
-            if(existingOrderDetail!=null){
+            if (existingOrderDetail != null) {
                 System.out.println("Cap nhat thanh cong orderDetail:" + orderDetail.getId());
             } else {
                 System.out.println("Them thanh cong orderDetail:" + orderDetail.getId());
@@ -67,6 +71,43 @@ public class OrderDetailServiceImpl implements OrderDetailService{
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return false;
+    }*/
+
+    @Override
+    public boolean create(OrderDetail orderDetail) {
+        try {
+            OrderDetail existingOrderDetail = orderDetailRepository.findByIdAndStockItemId(orderDetail.getId(), orderDetail.getStockItem().getId());
+            if(existingOrderDetail!=null){
+                StockItem stockItem=existingOrderDetail.getStockItem();
+                int oldAmount=existingOrderDetail.getAmount();
+                int newAmount=orderDetail.getAmount();
+                if (oldAmount > newAmount) {
+                    int increase = oldAmount - newAmount;
+                    stockItem.setAmount(stockItem.getAmount() + increase);
+                } else if (oldAmount < newAmount) {
+                    int decrease = newAmount - oldAmount;
+                    stockItem.setAmount(stockItem.getAmount() - decrease);
+                }
+                existingOrderDetail.setAmount(newAmount);
+                orderDetailRepository.save(existingOrderDetail);
+                System.out.println("Cap nhat thanh cong orderDetail:" + existingOrderDetail.getId());
+            }else{
+                StockItem stockItem=orderDetail.getStockItem();
+                stockItem.setAmount(stockItem.getAmount() - orderDetail.getAmount());
+                stockItemRepository.save(stockItem);
+                orderDetailRepository.save(orderDetail);
+                System.out.println("Them thanh cong orderDetail:" + orderDetail.getId());
+            }
+
+            Order order = orderRepository.findByID(orderDetail.getOrder().getId());
+            order.setTotal(calculateOrderTotal(order));
+            orderRepository.save(order);
+
+            return true;
+        } catch (Exception er) {
+            er.printStackTrace();
         }
         return false;
     }
@@ -82,9 +123,19 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 
     @Override
     public OrderDetail findByID(Integer id) {
-        try{
+        try {
             return orderDetailRepository.findByID(id);
-        }catch (Exception er){
+        } catch (Exception er) {
+            er.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public OrderDetail findByIDAndStockItemID(Integer orderDetailID, Integer stockItemID) {
+        try {
+            return orderDetailRepository.findByIdAndStockItemId(orderDetailID, stockItemID);
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return null;
@@ -102,7 +153,7 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 
     @Override
     public List<OrderDetail> findAllSort(String sort, ItemServiceImpl.SortOrder sortOrder) {
-        try{
+        try {
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
                 sortBy = Sort.by(sort).descending();
@@ -110,7 +161,7 @@ public class OrderDetailServiceImpl implements OrderDetailService{
                 sortBy = Sort.by(sort).ascending();
             }
             return orderDetailRepository.findAll(sortBy);
-        }catch (Exception er){
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return null;
@@ -118,15 +169,15 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 
     @Override
     public List<OrderDetail> findAllByOrderID(Integer orderID, String sort, ItemServiceImpl.SortOrder sortOrder) {
-        try{
+        try {
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
                 sortBy = Sort.by(sort).descending();
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            return orderDetailRepository.findAllByOrder_Id(orderID,sortBy);
-        }catch (Exception er){
+            return orderDetailRepository.findAllByOrder_Id(orderID, sortBy);
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return null;
@@ -134,15 +185,15 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 
     @Override
     public List<OrderDetail> findAllByTotalLessThan(double total, String sort, ItemServiceImpl.SortOrder sortOrder) {
-        try{
+        try {
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
                 sortBy = Sort.by(sort).descending();
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            return orderDetailRepository.findAllByTotalIsLessThan(total,sortBy);
-        }catch (Exception er){
+            return orderDetailRepository.findAllByTotalIsLessThan(total, sortBy);
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return null;
@@ -150,40 +201,40 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 
     @Override
     public List<OrderDetail> findAllByTotalGreaterThan(double total, String sort, ItemServiceImpl.SortOrder sortOrder) {
-        try{
+        try {
             Sort sortBy;
             if (sortOrder == ItemServiceImpl.SortOrder.DESC) {
                 sortBy = Sort.by(sort).descending();
             } else {
                 sortBy = Sort.by(sort).ascending();
             }
-            return orderDetailRepository.findAllByTotalIsGreaterThan(total,sortBy);
-        }catch (Exception er){
+            return orderDetailRepository.findAllByTotalIsGreaterThan(total, sortBy);
+        } catch (Exception er) {
             er.printStackTrace();
         }
         return null;
     }
 
-    public double calculateOrderDetailTotal(OrderDetail orderDetail){
-        Item item=orderDetail.getStockItem().getItem();
-        int amount=orderDetail.getAmount();
-        if(item.getSale()!=null){
-            return (item.getPrice()-(1- item.getSale().getSale_percentage()/100))*amount;
-        }else{
-            return item.getPrice()*amount;
+    public double calculateOrderDetailTotal(OrderDetail orderDetail) {
+        Item item = orderDetail.getStockItem().getItem();
+        int amount = orderDetail.getAmount();
+        if (item.getSale() != null) {
+            return (item.getPrice() * (1 - item.getSale().getSale_percentage() / 100)) * amount;
+        } else {
+            return item.getPrice() * amount;
         }
     }
 
-    public double calculateOrderTotal(Order order){
-        List<OrderDetail> orderDetailList=orderDetailRepository.findAllByOrder_Id(order.getId());
-        if(orderDetailList!=null&&!orderDetailList.isEmpty()){
-            double orderTotal=0;
-            for(OrderDetail orderDetail:orderDetailList){
-                orderTotal+=calculateOrderDetailTotal(orderDetail);
+    public double calculateOrderTotal(Order order) {
+        List<OrderDetail> orderDetailList = orderDetailRepository.findAllByOrder_Id(order.getId());
+        if (orderDetailList != null && !orderDetailList.isEmpty()) {
+            double orderTotal = 0;
+            for (OrderDetail orderDetail : orderDetailList) {
+                orderTotal += orderDetail.getTotal();
             }
-            if(order.getDiscountCard()!=null){
-                return orderTotal-(1- (double) order.getDiscountCard().getDiscount_percentage() /100);
-            }else
+            if (order.getDiscountCard() != null) {
+                return orderTotal * (1 - (double) order.getDiscountCard().getDiscount_percentage() / 100);
+            } else
                 return orderTotal;
         }
         return 0;
