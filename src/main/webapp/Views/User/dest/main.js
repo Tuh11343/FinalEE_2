@@ -108,7 +108,7 @@ function sliderBanner() {
     pauseAutoPlayOnHover: false
   });
 }
-/*sliderBanner();*/
+sliderBanner();
 
 const handleModal = () => {
   const btn_close = document.querySelector(".btn-close"),
