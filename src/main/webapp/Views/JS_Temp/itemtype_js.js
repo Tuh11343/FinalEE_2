@@ -261,7 +261,7 @@ function itemTypeToExcel() {
     let dataToSend = [];
 
     // Lặp qua các dòng của bảng và thu thập thông tin từ mỗi ô cột
-    for (let i = 1; i < table.rows.length; i++) {
+    for (let i = 0; i < table.rows.length; i++) {
         let currentRow = table.rows[i];
 
         // Thu thập thông tin từ các ô cột trong dòng

@@ -184,7 +184,7 @@ function orderToExcel() {
 
     let dataToSend = [];
 
-    for (let i = 1; i < table.rows.length; i++) {
+    for (let i = 0; i < table.rows.length; i++) {
         let currentRow = table.rows[i];
 
         let id = currentRow.cells[0].textContent;

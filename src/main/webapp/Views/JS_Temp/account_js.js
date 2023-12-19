@@ -191,7 +191,7 @@ function accountToExcel() {
     let dataToSend = [];
 
     // Loop through the rows of the table and gather information from each column cell
-    for (let i = 1; i < table.rows.length; i++) {
+    for (let i = 0; i < table.rows.length; i++) {
         let currentRow = table.rows[i];
 
         // Gather information from the column cells in the current row

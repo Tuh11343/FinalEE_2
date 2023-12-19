@@ -261,3 +261,31 @@ function searchAndSortPermission() {
 function refreshPermission() {
     location.href = adminManagerContextPath + "/ManagePermissionServlet";
 }
+
+function permissionToExcel() {
+    let table = document.getElementById("tablePermission");
+
+    let dataToSend = [];
+
+    for (let i = 0; i < table.rows.length; i++) {
+        let currentRow = table.rows[i];
+
+        let id = currentRow.cells[0].textContent;
+        let name = currentRow.cells[1].textContent;
+        let level = currentRow.cells[2].textContent;
+
+        let permissionData = {
+            id: id,
+            name: name,
+            level: level,
+        };
+
+        dataToSend.push(permissionData);
+    }
+
+    const workbook = XLSX.utils.book_new();
+    const sheet = XLSX.utils.json_to_sheet(dataToSend);
+    XLSX.utils.book_append_sheet(workbook, sheet, "Permissions");
+
+    XLSX.writeFile(workbook, "permissions.xlsx");
+}
