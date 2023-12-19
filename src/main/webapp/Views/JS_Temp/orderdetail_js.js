@@ -232,3 +232,35 @@ function refreshOrderDetail() {
     location.href = adminManagerContextPath + "/ManageOrderDetailServlet";
 }
 
+function orderDetailToExcel() {
+    let table = document.getElementById("tableOrderDetail");
+
+    let dataToSend = [];
+
+    for (let i = 0; i < table.rows.length; i++) {
+        let currentRow = table.rows[i];
+
+        let id = currentRow.cells[0].textContent;
+        let orderID = currentRow.cells[1].textContent;
+        let itemID = currentRow.cells[2].textContent;
+        let amount = currentRow.cells[3].textContent;
+        let total = currentRow.cells[4].textContent;
+
+        let permissionData = {
+            id: id,
+            orderID:orderID,
+            itemID:itemID,
+            amount:amount,
+            total:total,
+        };
+
+        dataToSend.push(permissionData);
+    }
+
+    const workbook = XLSX.utils.book_new();
+    const sheet = XLSX.utils.json_to_sheet(dataToSend);
+    XLSX.utils.book_append_sheet(workbook, sheet, "Order Detail");
+
+    XLSX.writeFile(workbook, "OrderDetail.xlsx");
+}
+

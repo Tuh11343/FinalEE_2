@@ -222,6 +222,7 @@
                             </select>
                         </div>
                     </div>
+                    <input type="hidden" value="searchAndSortCart" name="action">
                 </form>
             </div>
 
@@ -249,7 +250,7 @@
                             <td>
                                 <div class="flex-center grpbtn">
 
-                                    <button class="btnHD btnDel" onclick="deleteCart(${cart.id})" type="submit">
+                                    <button class="btnHD btnDel" onclick="deleteCart2(${cart.id})" type="submit">Xóa</button>
                                     <%--<a
                                             class="btnHD btnUpdateCart"
                                             data-cartID="${cart.id}"
@@ -269,7 +270,7 @@
                 </tbody>
             </table>
 
-            <!--Update Cart Modal-->
+            <%--<!--Update Cart Modal-->
             <div id="update-cart" class="modal-update flex-center">
                 <div class="update-modal">
                     <span class="close clsUpdateCart">&times;</span>
@@ -375,7 +376,7 @@
                         <input type="hidden" value="addCart" name="action"/>
                     </form>
                 </div>
-            </div>
+            </div>--%>
         </div>
     </div>
 </main>

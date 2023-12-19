@@ -205,7 +205,7 @@ public class ManageSaleServlet extends HttpServlet {
         req.setAttribute("permissionList", permissionList);
         req.setAttribute("saleList", saleList);
         req.setAttribute("stockItemList", stockItemList);
-        req.setAttribute("cartServiceImpl", cartServiceImpl);
+        req.setAttribute("cartServiceImpl", cartServiceImpl.getAllCart());
 
         //Lấy id account
         List<Cookie> cookieList = List.of(req.getCookies());

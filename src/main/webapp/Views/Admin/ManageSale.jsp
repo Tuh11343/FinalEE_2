@@ -133,6 +133,8 @@
                 <a href="${pageContext.request.contextPath}/ManageOrderDetailServlet">Quản lý chi tiết hóa đơn</a>
                 <a href="${pageContext.request.contextPath}/ManageSaleServlet">Quản lý khuyến mãi sản phẩm</a>
                 <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
+                <a href="${pageContext.request.contextPath}/ManageCartServlet">Quản lý giỏ hàng</a>
+
             </c:if>
 
 

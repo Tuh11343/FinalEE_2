@@ -266,3 +266,35 @@ function searchAndSortItemImage() {
 function refreshItemImage() {
   location.href = adminManagerContextPath + "/ManageItemImageServlet";
 }
+
+function itemImageToExcel() {
+  let table = document.getElementById("tableItemImage");
+
+  let dataToSend = [];
+
+  // Lặp qua các dòng của bảng và thu thập thông tin từ mỗi ô cột
+  for (let i = 1; i < table.rows.length; i++) {
+    let currentRow = table.rows[i];
+
+    // Thu thập thông tin từ các ô cột trong dòng
+    let id = currentRow.cells[0].textContent;
+    let productID = currentRow.cells[1].textContent;
+    let imageURL = currentRow.cells[2].textContent;
+
+    // Tạo đối tượng chứa thông tin từ dòng hiện tại
+    let ImagesData = {
+      id: id,
+      productID: productID,
+      imageURL:imageURL,
+    };
+
+    // Thêm đối tượng vào mảng dataToSend
+    dataToSend.push(ImagesData);
+  }
+
+  const workbook = XLSX.utils.book_new();
+  const sheet = XLSX.utils.json_to_sheet(dataToSend);
+  XLSX.utils.book_append_sheet(workbook, sheet, "Item Image");
+
+  XLSX.writeFile(workbook, "itemImage.xlsx");
+}
