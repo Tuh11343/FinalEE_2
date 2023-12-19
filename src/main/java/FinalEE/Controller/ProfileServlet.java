@@ -100,10 +100,7 @@ public class ProfileServlet extends HttpServlet {
 
             List<Order> customerOrderList = orderServiceImpl.findByCustomerID(customer.getId());
             req.setAttribute("customerOrderList", customerOrderList);
-
-
         }
-
 
         req.getRequestDispatcher("/Views/User/ProfileUser.jsp").forward(req, resp);
     }

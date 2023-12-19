@@ -107,8 +107,12 @@
 
                                         <span><fmt:formatDate value="${order.date_purchase}"
                                                               pattern="yyyy-MM-dd"/></span>
-                                    <p class="order__totalprice">Tổng tiền: <span>${order.total}</span>
-                                    </p>
+
+                                            <fmt:formatNumber value="${order.total}" pattern="#,###"
+                                                              var="formattedTotal"/>
+                                    <p class="order__totalprice">Tổng tiền: <span>${formattedTotal}</span></p>
+                                    <p>Trạng thái:<span>${order.order_status.name}</span></p>
+
                                 </div>
 
                                 <div class="iconarrow">
@@ -139,9 +143,10 @@
                                             <span>${orderDetail.stockItem.color}</span></p>
 
                                         <c:if test="${isSale eq true}">
-                                            <fmt:formatNumber value="${orderDetail.stockItem.item.price * 0.8}"
-                                                              pattern="#,###" var="salePrice"/>
-                                            <p class="price__product">Giá: <span>${salePrice}</span></p>
+                                            <c:set var="salePrice"
+                                                   value="${orderDetail.stockItem.item.price * (1-orderDetail.stockItem.item.sale.sale_percentage/100)}"/>
+                                            <fmt:formatNumber value="${salePrice}" pattern="#,###" var="formattedSalePrice"/>
+                                            <p class="price__product">Giá: <span>${formattedSalePrice}</span></p>
                                         </c:if>
                                         <c:if test="${isSale eq false}">
                                             <fmt:formatNumber value="${orderDetail.stockItem.item.price}"

@@ -277,11 +277,7 @@
                         </div>
                         <c:set var="itemCount" value="${itemCount+1}"/>
                     </c:if>
-
-
                 </c:forEach>
-
-
             </div>
         </div>
     </section>
@@ -296,7 +292,7 @@ document.addEventListener("DOMContentLoaded", function () {
   setTimeout(function () {
     // Add loaded class to hide the loader
     document.querySelector('.loader-container').classList.add('loaded');
-  }, 2000); // Adjust the timeout based on your loading time
+  }, 1500); // 1500 laf 1.5 giây đổi mây cái kia la luôn mấy cái kia đang la 2s
 });
 
 

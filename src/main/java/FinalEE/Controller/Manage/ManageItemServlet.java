@@ -182,9 +182,9 @@ public class ManageItemServlet extends HttpServlet {
                             String itemSortType = req.getParameter("itemSortType");
                             List<Item> itemList = null;
                             if (itemSortType.equals("az")) {
-                                itemList = itemServiceImpl.findAllByPriceLessThan(Double.parseDouble(itemInputSearch), "total", ItemServiceImpl.SortOrder.ASC);
+                                itemList = itemServiceImpl.findAllByPriceLessThan(Double.parseDouble(itemInputSearch), "price", ItemServiceImpl.SortOrder.ASC);
                             } else if (itemSortType.equals("za")) {
-                                itemList = itemServiceImpl.findAllByPriceLessThan(Double.parseDouble(itemInputSearch), "total", ItemServiceImpl.SortOrder.DESC);
+                                itemList = itemServiceImpl.findAllByPriceLessThan(Double.parseDouble(itemInputSearch), "price", ItemServiceImpl.SortOrder.DESC);
                             }
 
                             initData(req);
@@ -195,9 +195,9 @@ public class ManageItemServlet extends HttpServlet {
                             String itemSortType = req.getParameter("itemSortType");
                             List<Item> itemList = null;
                             if (itemSortType.equals("az")) {
-                                itemList = itemServiceImpl.findAllByPriceGreaterThan(Double.parseDouble(itemInputSearch), "total", ItemServiceImpl.SortOrder.ASC);
+                                itemList = itemServiceImpl.findAllByPriceGreaterThan(Double.parseDouble(itemInputSearch), "price", ItemServiceImpl.SortOrder.ASC);
                             } else if (itemSortType.equals("za")) {
-                                itemList = itemServiceImpl.findAllByPriceGreaterThan(Double.parseDouble(itemInputSearch), "total", ItemServiceImpl.SortOrder.DESC);
+                                itemList = itemServiceImpl.findAllByPriceGreaterThan(Double.parseDouble(itemInputSearch), "price", ItemServiceImpl.SortOrder.DESC);
                             }
 
                             initData(req);

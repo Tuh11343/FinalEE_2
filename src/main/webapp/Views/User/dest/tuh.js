@@ -226,7 +226,7 @@ function renderData() {
         for (let i = 0; i < cartList.length; i++) {
             var saleCost;
             var sale = cartList[i].stockItem.item.sale;
-            if (sale !== null) {
+            if (sale !== null && sale.on_sale == 1) {
                 saleCost = cartList[i].stockItem.item.price * (1 - sale.sale_percentage / 100);
                 totalCost += saleCost * cartList[i].amount;
             } else {
