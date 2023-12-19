@@ -160,7 +160,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
         <div class="w-100 row gap-5">
           <div class="bestsaling cardtstatic col-md-7">
             <h1 class="text-center mb-4">Top sản phẩm bán chạy nhất</h1>
-            <div class="row bestsaling__header">
+            <div class="row bestsaling__header mb-3">
               <span class="bestsaling__header--id col-1">Mã</span>
               <span
                       class="bestsaling__header--name name col-9 justify-content-center d-flex"
@@ -169,7 +169,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               <span class="bestsaling__header--number col-2">Số lượng</span>
             </div>
               <c:forEach items="${requestScope.top10BestSellingProducts}" var="statistic">
-                <div class="row align-items-center">
+                <div class="row align-items-center mb-4 pb-2" style="    border-bottom: 1px solid #aaac;">
                   <span class="col-1">${statistic[0]}</span>
                   <span class="col-9">${statistic[1]}</span>
                   <span class="col-2">${statistic[2]}</span>
@@ -177,7 +177,9 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               </c:forEach>
           </div>
           <div class="revenue cardtstatic col-md-4">
-            <div class="row bestsaling__header d-flex justify-content-between">
+            <h1 class="text-center mb-4">Top người dùng mua nhiều nhất</h1>
+
+            <div class="row bestsaling__header d-flex justify-content-between mb-3">
               <span
                       class="bestsaling__header--name name col-md-8 justify-content-center d-flex"
               >Tên người dùng</span
@@ -185,7 +187,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               <span class="bestsaling__header--number col-md-3">Doanh thu</span>
             </div>
               <c:forEach items="${requestScope.top5CustomersByRevenue}" var="statistic">
-                <div class="row align-items-center d-flex justify-content-between">
+                <div class="row align-items-center d-flex justify-content-between mb-4 pb-2" style="    border-bottom: 1px solid #aaac;">
                   <span class="col-md-8 justify-content-center d-flex"
                   >${statistic[1]}</span
                   >
@@ -196,25 +198,28 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
         </div>
         <div class="row gap-5 ">
           <div class="revenueforfiveyear cardtstatic col-md-4">
+            <h1 class="text-center mb-4">5 tháng doanh thu cao nhất</h1>
 
-            <div class="revenueforfiveyearheader row">
+            <div class="revenueforfiveyearheader row mb-3">
               <span class=" col-md-3 text-center">Tháng</span>
               <span class=" col-md-9  text-center">Doanh thu</span>
             </div>
               <c:forEach items="${requestScope.recentFiveMonthRevenue}" var="statistic">
-                <div class="row align-items-center text-center">
+                <div class="row align-items-center text-center mb-4 pb-2" style="    border-bottom: 1px solid #aaac;">
                   <span class="col-md-3 text-center ">${statistic[1]}</span>
                   <span class="col-md-9 text-center">${statistic[2]}</span>
                 </div>
               </c:forEach>
           </div>
           <div class="prodcutbyquantity cardtstatic col-md-7">
-            <div class="prodcutbyquantity__header row   ">
+            <h1 class="text-center mb-4">Top khách hàng mua nhiều sản phẩm nhất</h1>
+
+            <div class="prodcutbyquantity__header row   mb-3">
               <span class=" col-md-3 text-center">Tên khach hang</span>
               <span class=" col-md-9  text-center">Số lượng</span>
             </div>
               <c:forEach items="${requestScope.top5CustomersByAmount}" var="statistic">
-                <div  class="row" >
+                <div  class="row  mb-4 pb-2" style="    border-bottom: 1px solid #aaac;" >
                 <span class=" col-md-3 text-center">${statistic[1]}</span>
                 <span class=" col-md-9  text-center">${statistic[0]}</span>
                 </div>

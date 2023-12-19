@@ -223,7 +223,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                           let cart = data.cart;
                           let cartList = JSON.parse(localStorage.getItem("YOUR_CART"));
                           if (cartList != null) {
-                            console.log("Ok Not Null");
+
                             let index = cartList.findIndex((item) => {
                               console.log(item.stockItem.id === cart.stockItem.id);
                               return item.stockItem.id === cart.stockItem.id;
@@ -241,9 +241,6 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                             cartList.push(cart);
                             localStorage.setItem("YOUR_CART", JSON.stringify(cartList));
                           }
-                        } else {
-                          // Handle the case where 'notLogIn' is false
-                          alert("Logged in");
                         }
                         alert("thêm thành công"); //bao them thanh cong
                       },

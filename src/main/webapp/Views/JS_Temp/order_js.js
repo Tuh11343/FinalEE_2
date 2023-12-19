@@ -70,15 +70,15 @@ function handleUpdateOrder() {
             var total = item.getAttribute("data-orderTotal");
             var datePurchase = item.getAttribute("data-orderDatePurchase");
             var address = item.getAttribute("data-orderAddress");
-            var orderStatus = item.getAttribute("data-orderStatus");
+            var orderStatusID = item.getAttribute("data-orderOrderStatusID");
             var note = item.getAttribute("data-orderNote");
             var email = item.getAttribute("data-orderEmail");
 
             document.getElementById("update_orderID").value = id;
             document.getElementById("update_orderTotal").value = total;
-            document.getElementById("update_orderDatePurchase").value = datePurchase;
+            var date = new Date(datePurchase);
+            document.getElementById("update_orderDatePurchase").value = date.toISOString().split('T')[0];
             document.getElementById("update_orderAddress").value = address;
-            document.getElementById("update_orderStatus").value = orderStatus;
             document.getElementById("update_orderNote").value = note;
             document.getElementById("update_orderEmail").value = email;
 
@@ -94,8 +94,20 @@ function handleUpdateOrder() {
                 }
             }
 
+            /*Combobox OrderStatusID*/
+            update_order_selectElement = document.getElementById("update_orderOrderStatusID");
+            for (var i = 0; i < update_order_selectElement.options.length; i++) {
+                var option = update_order_selectElement.options[i];
+                // So sánh giá trị tùy chọn với giá trị cần chọn
+                if (option.value === orderStatusID) {
+                    // Đánh dấu tùy chọn là "selected"
+                    option.selected = true;
+                    break; // Thoát khỏi vòng lặp sau khi tìm thấy giá trị cần chọn
+                }
+            }
+
             /*Combobox DiscountCardID*/
-            var update_order_selectElement = document.getElementById(
+            update_order_selectElement = document.getElementById(
                 "update_orderDiscountCardID"
             );
             for (var i = 0; i < update_order_selectElement.options.length; i++) {
@@ -205,7 +217,155 @@ function orderToExcel() {
     XLSX.writeFile(workbook, "Order.xlsx");
 }
 
+function addOrder() {
 
+    let add_orderCustomerID=document.getElementById("add_orderCustomerID").value;
+    let add_orderDiscountCardID=document.getElementById("add_orderDiscountCardID").value;
+    let add_orderDatePurchase=document.getElementById("add_orderDatePurchase").value;
+    let add_orderOrderStatusID=document.getElementById("add_orderOrderStatusID").value;
+    let add_orderAddress=document.getElementById("add_orderAddress").value;
+    let add_orderEmail=document.getElementById("add_orderEmail").value;
+    let add_orderNote=document.getElementById("add_orderNote").value;
+
+    if (add_orderDatePurchase==null || add_orderDatePurchase == "" || add_orderAddress == null || add_orderAddress == ""
+    || add_orderEmail == null || add_orderEmail == "" || add_orderNote == null || add_orderNote == "") {
+        alert("Không thể để dữ liệu trống");
+    } else {
+        $.ajax({
+            type: "POST",
+            url: adminManagerContextPath + "/ManageOrderServlet",
+            data: {
+                action: "addOrder",
+                add_orderCustomerID:add_orderCustomerID,
+                add_orderNote:add_orderNote,
+                add_orderAddress:add_orderAddress,
+                add_orderEmail:add_orderEmail,
+                add_orderDiscountCardID:add_orderDiscountCardID,
+                add_orderDatePurchase:add_orderDatePurchase,
+                add_orderOrderStatusID:add_orderOrderStatusID,
+            }, headers: {
+                "X-Requested-With": "XMLHttpRequest",
+            },
+            success: function (data) {
+
+                data = JSON.parse(data);
+                if (data.success === true) {
+
+                    alert("Thêm hóa đơn thành công");
+                    location.href = adminManagerContextPath + "/ManageOrderServlet";
+
+                } else {
+                    alert("Có lỗi xảy trong hệ thống");
+                }
+            },
+            error: function (error) {
+                console.log("error :>> ", error);
+            },
+        });
+    }
+}
+
+function deleteOrder(orderID) {
+    // Trả về true nếu người dùng đã xác nhận, ngược lại trả về false
+    if (confirm('Bạn có chắc chắn xóa không?')) {
+        $.ajax({
+            type: "POST",
+            url: adminManagerContextPath + "/ManageOrderServlet",
+            data: {
+                action: "deleteOrder",
+                orderID: orderID,
+            },
+            success: function (data) {
+                data = JSON.parse(data);
+                if (data.success === true) {
+                    alert("Xóa hóa đơn thành công");
+                    location.href = adminManagerContextPath + "/ManageOrderServlet";
+
+                } else {
+                    alert("Có lỗi xảy trong hệ thống");
+                }
+            },
+            error: function (error) {
+                console.log("error :>> ", error);
+            },
+        });
+    }
+}
+
+function updateOrder() {
+    let update_orderID=document.getElementById("update_orderID").value;
+    let update_orderCustomerID=document.getElementById("update_orderCustomerID").value;
+    let update_orderDiscountCardID=document.getElementById("update_orderDiscountCardID").value;
+    let update_orderDatePurchase=document.getElementById("update_orderDatePurchase").value;
+    let update_orderOrderStatusID=document.getElementById("update_orderOrderStatusID").value;
+    let update_orderAddress=document.getElementById("update_orderAddress").value;
+    let update_orderEmail=document.getElementById("update_orderEmail").value;
+    let update_orderNote=document.getElementById("update_orderNote").value;
+    let update_orderTotal=document.getElementById("update_orderTotal").value;
+
+    if (update_orderDatePurchase==null || update_orderDatePurchase == "" || update_orderAddress == null || update_orderAddress == ""
+        || update_orderEmail == null || update_orderEmail == "" || update_orderNote == null || update_orderNote == "") {
+        alert("Không thể để dữ liệu trống");
+    }else {
+        $.ajax({
+            type: "POST",
+            url: adminManagerContextPath + "/ManageOrderServlet",
+            data: {
+                action: "updateOrder",
+                update_orderID:update_orderID,
+                update_orderCustomerID:update_orderCustomerID,
+                update_orderNote:update_orderNote,
+                update_orderAddress:update_orderAddress,
+                update_orderEmail:update_orderEmail,
+                update_orderDiscountCardID:update_orderDiscountCardID,
+                update_orderDatePurchase:update_orderDatePurchase,
+                update_orderOrderStatusID:update_orderOrderStatusID,
+                update_orderTotal:update_orderTotal,
+            }, headers: {
+                "X-Requested-With": "XMLHttpRequest",
+            },
+            success: function (data) {
+
+                data = JSON.parse(data);
+                if (data.success === true) {
+
+                    alert("Cập nhật chi tiết hóa đơn thành công");
+                    refreshOrder();
+
+                } else {
+                    alert("Có lỗi xảy trong hệ thống");
+                }
+            },
+            error: function (error) {
+                console.log("error :>> ", error);
+            },
+        });
+    }
+}
+
+function searchAndSortOrder() {
+    let orderSearchType = document.getElementById("orderSearchType").value;
+    let orderInputSearch = document.getElementById("orderInputSearch").value;
+    let orderSortType = document.getElementById("orderSortType").value;
+
+    if (orderSearchType == null || orderSearchType == "" || orderInputSearch == null || orderInputSearch == "" ||
+        orderSortType == null || orderSortType == "") {
+        alert("Không thể để dữ liệu trống");
+        return false;
+    }
+
+    if (orderSearchType == "id" || orderSearchType == "customerID") {
+        var num = parseFloat(orderInputSearch);
+        if (Number.isInteger(num)) {
+            return true;
+        } else {
+            alert("Dữ liệu điền vào không hợp lệ");
+            return false;
+        }
+    }
+    return true;
+
+}
 
 function refreshOrder() {
     location.href = adminManagerContextPath + "/ManageOrderServlet";

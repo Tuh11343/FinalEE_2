@@ -90,7 +90,7 @@ public class ManageOrderServlet extends HttpServlet {
                     order.setDate_purchase(datePurchaseFormatted);
                     order.setDiscountCard(discountCard);
                     order.setEmail(email);
-                    order.setOrder_status(orderStatusServiceImpl.defaultOrder());
+                    order.setOrder_status(orderStatusServiceImpl.findByID(Integer.parseInt(req.getParameter("add_orderOrderStatusID"))));
                     order.setNote(note);
                     order.setAddress(address);
 
@@ -134,9 +134,11 @@ public class ManageOrderServlet extends HttpServlet {
 
                     Customer customer = customerServiceImpl.findByID(customerID);
                     DiscountCard discountCard = discountCardServiceImpl.findByID(discountCardID);
-                    OrderStatus orderStatus = orderStatusServiceImpl.findByID(Integer.parseInt(req.getParameter("orderStatusID")));
+                    OrderStatus orderStatus = orderStatusServiceImpl.findByID(Integer.parseInt(req.getParameter("update_orderOrderStatusID")));
+                    int orderID=Integer.parseInt(req.getParameter("update_orderID"));
 
                     Order order = new Order();
+                    order.setId(orderID);
                     order.setCustomer(customer);
                     order.setTotal(total);
                     order.setDate_purchase(datePurchaseFormatted);
