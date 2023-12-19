@@ -34,7 +34,7 @@ function customerToExcel(tableID) {
 
     XLSX.writeFile(workbook, "customers.xlsx");
 }
-function accountToExcel() {
+/*function accountToExcel() {
     let table = document.getElementById("tableAccount");
 
     let dataToSend = [];
@@ -68,7 +68,7 @@ function accountToExcel() {
     XLSX.utils.book_append_sheet(workbook, sheet, "Accounts");
 
     XLSX.writeFile(workbook, "accounts.xlsx");
-}
+}*/
 
 function itemToExcel() {
     let table = document.getElementById("tableItem");
@@ -350,8 +350,8 @@ function updateDiscountCard() {
     });
 }
 
-function discountCardToExcel() {
-    let table = document.getElementById("tableDiscount");
+/*function discountCardToExcel() {
+    let table = document.getElementById("tableDiscountCard");
 
     let dataToSend = [];
 
@@ -382,7 +382,7 @@ function discountCardToExcel() {
     XLSX.utils.book_append_sheet(workbook, sheet, "Nguyên liệu");
 
     XLSX.writeFile(workbook, "ItemMaterial.xlsx");
-}
+}*/
 
 function searchAndSortDiscount() {
     let discountCardInputSearch = document.getElementById("discountCardInputSearch").value;
@@ -1724,7 +1724,7 @@ function updateOrder() {
     });
 }
 
-function orderToExcel() {
+/*function orderToExcel() {
     let table = document.getElementById("tableOrder");
 
     let dataToSend = [];
@@ -1760,7 +1760,7 @@ function orderToExcel() {
     XLSX.utils.book_append_sheet(workbook, sheet, "Order");
 
     XLSX.writeFile(workbook, "Order.xlsx");
-}
+}*/
 
 function searchAndSortOrder() {
     let orderInputSearch = document.getElementById("orderInputSearch").value;

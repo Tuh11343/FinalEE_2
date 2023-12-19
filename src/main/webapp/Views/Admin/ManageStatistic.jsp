@@ -130,6 +130,8 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               hàng</a>
             <a href="${pageContext.request.contextPath}/ManageOrderDetailServlet">Quản lý chi tiết hóa đơn</a>
             <a href="${pageContext.request.contextPath}/ManageSaleServlet">Quản lý khuyến mãi sản phẩm</a>
+            <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
+
           </c:if>
 
 
@@ -149,7 +151,6 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
           <a href="${pageContext.request.contextPath}/ManageStockItemServlet">Quản lý thông tin sản phẩm</a>
 
-          <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
 
         </div>
       </aside>
@@ -158,6 +159,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
         <!-- Thống kê -->
         <div class="w-100 row gap-5">
           <div class="bestsaling cardtstatic col-md-7">
+            <h1 class="text-center mb-4">Top sản phẩm bán chạy nhất</h1>
             <div class="row bestsaling__header">
               <span class="bestsaling__header--id col-1">Mã</span>
               <span

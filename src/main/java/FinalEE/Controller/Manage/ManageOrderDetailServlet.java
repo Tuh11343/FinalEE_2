@@ -8,8 +8,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,149 +44,148 @@ public class ManageOrderDetailServlet extends HttpServlet {
     }
 
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        initData(req);
-        switch (action) {
-            /*Order*/
-            case "addOrder" -> {
-                int customerID = Integer.parseInt(req.getParameter("add_orderCustomerID"));
-                int discountCardID = Integer.parseInt(req.getParameter("add_orderDiscountCardID"));
-                double total = Double.parseDouble(req.getParameter("add_orderTotal"));
-                String datePurchase = req.getParameter("add_orderDatePurchase");
+        try {
 
-                /*Xử lý định dạng date*/
-                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date datePurchaseFormatted = null;
-                try {
-                    datePurchaseFormatted = inputFormat.parse(datePurchase);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+            String action = req.getParameter("action");
+            initData(req);
+            switch (action) {
+                case "addOrderDetail" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
 
-                Customer customer = customerServiceImpl.findByID(customerID);
-                DiscountCard discountCard = discountCardServiceImpl.findByID(discountCardID);
+                    Integer orderID=Integer.parseInt(req.getParameter("add_orderDetailOrderID"));
+                    Integer stockItemID=Integer.parseInt(req.getParameter("add_orderDetailStockItemID"));
+                    int amount=Integer.parseInt(req.getParameter("add_orderDetailAmount"));
 
+                    Order order=orderServiceImpl.findByID(orderID);
+                    StockItem stockItem=stockItemServiceImpl.findByID(stockItemID);
 
-                Order order = new Order();
-                order.setCustomer(customer);
-                order.setTotal(total);
-                order.setDate_purchase(datePurchaseFormatted);
-                order.setDiscountCard(discountCard);
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.setOrder(order);
+                    orderDetail.setStockItem(stockItem);
+                    orderDetail.setAmount(amount);
+                    orderDetail.setTotal(0);
 
-                if (orderServiceImpl.create(order)) {
-                    resp.getWriter().println("<script>alert('Thêm hóa đơn thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Thêm hóa đơn thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManageOrderDetailServlet");
-            }
-            case "order_btnUpdate" -> {
-                int id = Integer.parseInt(req.getParameter("update_orderID"));
-                int customerID = Integer.parseInt(req.getParameter("update_orderCustomerID"));
-                int discountCardID = Integer.parseInt(req.getParameter("update_orderDiscountCardID"));
-                double total = Double.parseDouble(req.getParameter("update_orderTotal"));
-                String datePurchase = req.getParameter("update_orderDatePurchase");
-
-                /*Xử lý định dạng date*/
-                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date datePurchaseFormatted = null;
-                try {
-                    datePurchaseFormatted = inputFormat.parse(datePurchase);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                Customer customer = customerServiceImpl.findByID(customerID);
-                DiscountCard discountCard = discountCardServiceImpl.findByID(discountCardID);
-
-                Order order = new Order();
-                order.setId(id);
-                order.setCustomer(customer);
-                order.setTotal(total);
-                order.setDate_purchase(datePurchaseFormatted);
-                order.setDiscountCard(discountCard);
-
-                if (orderServiceImpl.create(order)) {
-                    resp.getWriter().println("<script>alert('Cập nhật hóa đơn thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Cập nhật hóa đơn thất bại!');</script>");
-                }
-
-                resp.sendRedirect("/FinalEE/ManageOrderDetailServlet");
-            }
-            case "order_btnDelete" -> {
-                int orderID = Integer.parseInt(req.getParameter("orderID"));
-                if (orderServiceImpl.deleteByID(orderID)) {
-                    resp.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thành công!');</script>");
-                } else {
-                    resp.getWriter().println("<script>alert('Xóa ảnh của sản phẩm thất bại!');</script>");
-                }
-                resp.sendRedirect("/FinalEE/ManageOrderDetailServlet");
-            }
-            case "searchAndSortOrder"-> {
-                String searchType = req.getParameter("orderSearchType");
-                String orderInputSearch = req.getParameter("orderInputSearch");
-                switch (searchType) {
-                    case "noData" -> {
-
-                    }
-                    case "id" -> {
-                        Integer orderID = Integer.parseInt(req.getParameter("orderInputSearch"));
-                        Order order = orderServiceImpl.findByID(orderID);
-                        List<Order> orderList = new ArrayList<>();
-                        orderList.add(order);
-
-                        req.setAttribute("orderList", orderList);
-                        req.getRequestDispatcher("Views/Admin/ManageOrder.jsp").forward(req, resp);
-
-                    }
-                    case "customerID" -> {
-                        String orderSortType = req.getParameter("orderSortType");
-                        List<Order> orderList = null;
-                        if (orderSortType.equals("az")) {
-                            orderList = orderServiceImpl.findAllByCustomerID(Integer.parseInt(orderInputSearch), "customer_id", ItemServiceImpl.SortOrder.ASC);
-                        } else if (orderSortType.equals("za")) {
-                            orderList = orderServiceImpl.findAllByCustomerID(Integer.parseInt(orderInputSearch), "customer_id", ItemServiceImpl.SortOrder.DESC);
+                    if(!canOrder(orderDetail)){
+                        jsonResponse.put("outOfStock",true);
+                    }else{
+                        if (orderDetailServiceImpl.create(orderDetail)) {
+                            jsonResponse.put("success", true);
                         }
-
-                        req.setAttribute("orderList", orderList);
-                        req.getRequestDispatcher("Views/Admin/ManageOrder.jsp").forward(req, resp);
                     }
-                    case "lowerPrice" -> {
-                        String orderSortType = req.getParameter("orderSortType");
-                        List<Order> orderList = null;
-                        if (orderSortType.equals("az")) {
-                            orderList = orderServiceImpl.findAllByTotalLessThan(Double.parseDouble(orderInputSearch), "total", ItemServiceImpl.SortOrder.ASC);
-                        } else if (orderSortType.equals("za")) {
-                            orderList = orderServiceImpl.findAllByTotalLessThan(Double.parseDouble(orderInputSearch), "total", ItemServiceImpl.SortOrder.DESC);
-                        }
 
-                        req.setAttribute("orderList", orderList);
-                        req.getRequestDispatcher("Views/Admin/ManageOrder.jsp").forward(req, resp);
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "updateOrderDetail" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    Integer orderID=Integer.parseInt(req.getParameter("update_orderDetailOrderID"));
+                    Integer stockItemID=Integer.parseInt(req.getParameter("update_orderDetailStockItemID"));
+                    int amount=Integer.parseInt(req.getParameter("update_orderDetailAmount"));
+                    double total=Double.parseDouble(req.getParameter("update_orderDetailTotal"));
+
+                    Order order=orderServiceImpl.findByID(orderID);
+                    StockItem stockItem=stockItemServiceImpl.findByID(stockItemID);
+
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.setOrder(order);
+                    orderDetail.setStockItem(stockItem);
+                    orderDetail.setAmount(amount);
+                    orderDetail.setTotal(total);
+
+                    if(!canOrder(orderDetail)){
+                        jsonResponse.put("outOfStock",true);
+                    }else{
+                        if (orderDetailServiceImpl.create(orderDetail)) {
+                            jsonResponse.put("success", true);
+                        }
                     }
-                    case "higherPrice" -> {
-                        String orderSortType = req.getParameter("orderSortType");
-                        List<Order> orderList = null;
-                        if (orderSortType.equals("az")) {
-                            orderList = orderServiceImpl.findAllByTotalGreaterThan(Double.parseDouble(orderInputSearch), "total", ItemServiceImpl.SortOrder.ASC);
-                        } else if (orderSortType.equals("za")) {
-                            orderList = orderServiceImpl.findAllByTotalGreaterThan(Double.parseDouble(orderInputSearch), "total", ItemServiceImpl.SortOrder.DESC);
-                        }
 
-                        req.setAttribute("orderList", orderList);
-                        req.getRequestDispatcher("Views/Admin/ManageOrder.jsp").forward(req, resp);
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "deleteOrderDetail" -> {
+                    PrintWriter out = resp.getWriter();
+                    JSONObject jsonResponse = new JSONObject();
+
+                    int orderDetailID = Integer.parseInt(req.getParameter("orderDetailID"));
+                    if (orderDetailServiceImpl.deleteByID(orderDetailID)) {
+                        jsonResponse.put("success", true);
+                    }
+
+                    out.print(jsonResponse);
+                    out.flush();
+                    out.close();
+                }
+                case "searchAndSortOrderDetail" -> {
+                    String searchType = req.getParameter("orderDetailSearchType");
+                    String orderInputSearch = req.getParameter("orderDetailInputSearch");
+                    switch (searchType) {
+                        case "noData" -> {
+
+                        }
+                        case "id" -> {
+                            Integer orderDetailID = Integer.parseInt(req.getParameter("orderDetailInputSearch"));
+                            OrderDetail orderDetail = orderDetailServiceImpl.findByID(orderDetailID);
+                            List<OrderDetail> orderDetailList = new ArrayList<>();
+                            orderDetailList.add(orderDetail);
+
+                            initData(req);
+                            req.setAttribute("orderDetailList", orderDetailList);
+                            req.getRequestDispatcher("Views/Admin/ManageOrderDetail.jsp").forward(req, resp);
+
+                        }
+                        case "orderID" -> {
+                            String orderDetailSortType = req.getParameter("orderDetailSortType");
+                            List<OrderDetail> orderDetailList = null;
+                            if (orderDetailSortType.equals("az")) {
+                                orderDetailList = orderDetailServiceImpl.findAllByOrderID(Integer.parseInt(orderInputSearch), "order_id", ItemServiceImpl.SortOrder.ASC);
+                            } else if (orderDetailSortType.equals("za")) {
+                                orderDetailList = orderDetailServiceImpl.findAllByOrderID(Integer.parseInt(orderInputSearch), "order_id", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            initData(req);
+                            req.setAttribute("orderDetailList", orderDetailList);
+                            req.getRequestDispatcher("Views/Admin/ManageOrderDetail.jsp").forward(req, resp);
+                        }
+                        case "lowerPrice" -> {
+                            String orderDetailSortType = req.getParameter("orderDetailSortType");
+                            List<OrderDetail> orderDetailList = null;
+                            if (orderDetailSortType.equals("az")) {
+                                orderDetailList = orderDetailServiceImpl.findAllByTotalLessThan(Double.parseDouble(orderInputSearch), "total", ItemServiceImpl.SortOrder.ASC);
+                            } else if (orderDetailSortType.equals("za")) {
+                                orderDetailList = orderDetailServiceImpl.findAllByTotalLessThan(Double.parseDouble(orderInputSearch), "total", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            initData(req);
+                            req.setAttribute("orderDetailList", orderDetailList);
+                            req.getRequestDispatcher("Views/Admin/ManageOrderDetail.jsp").forward(req, resp);
+                        }
+                        case "higherPrice" -> {
+                            String orderDetailSortType = req.getParameter("orderDetailSortType");
+                            List<OrderDetail> orderDetailList = null;
+                            if (orderDetailSortType.equals("az")) {
+                                orderDetailList = orderDetailServiceImpl.findAllByTotalGreaterThan(Double.parseDouble(orderInputSearch), "total", ItemServiceImpl.SortOrder.ASC);
+                            } else if (orderDetailSortType.equals("za")) {
+                                orderDetailList = orderDetailServiceImpl.findAllByTotalGreaterThan(Double.parseDouble(orderInputSearch), "total", ItemServiceImpl.SortOrder.DESC);
+                            }
+
+                            initData(req);
+                            req.setAttribute("orderDetailList", orderDetailList);
+                            req.getRequestDispatcher("Views/Admin/ManageOrderDetail.jsp").forward(req, resp);
+                        }
                     }
                 }
             }
-            case "refreshOrder"->{
-                List<Order> orderList=orderServiceImpl.getAllOrder();
-                req.setAttribute("orderList", orderList);
-                req.getRequestDispatcher("Views/Admin/ManageOrder.jsp").forward(req, resp);
-            }
+
+        } catch (Exception er) {
+            er.printStackTrace();
         }
     }
 
@@ -243,8 +244,30 @@ public class ManageOrderDetailServlet extends HttpServlet {
             if (cookie.getName().equals("signInAccountID")) {
                 Integer signInAccountID = Integer.parseInt(cookie.getValue());
                 Account account = accountServiceImpl.findByID(signInAccountID);
-                req.setAttribute("signInAccount",account);
+                req.setAttribute("signInAccount", account);
             }
         }
+    }
+
+    private boolean canOrder(OrderDetail orderDetail){
+        try{
+            if(orderDetail.getId()!=null){
+
+                OrderDetail oldOrderDetail=orderDetailServiceImpl.findByID(orderDetail.getId());
+                int oldAmount=oldOrderDetail.getAmount();
+                int newAmount=orderDetail.getAmount();
+                if(oldAmount>newAmount){
+                    return true;
+                }else if(oldAmount<newAmount){
+                    int decrease=newAmount-oldAmount;
+                    return decrease <= orderDetail.getStockItem().getAmount();
+                }
+            }else{
+                return orderDetail.getAmount() <= orderDetail.getStockItem().getAmount();
+            }
+        }catch (Exception er){
+            er.printStackTrace();
+        }
+        return false;
     }
 }

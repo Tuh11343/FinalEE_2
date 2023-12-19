@@ -231,9 +231,18 @@ function searchAndSortOrderStatus() {
       orderStatusSortType == null || orderStatusSortType == "") {
     alert("Không thể để dữ liệu trống");
     return false;
-  } else {
-    return true;
   }
+     if (orderStatusSortType == "id") {
+          var num = parseFloat(orderStatusInputSearch);
+          if (Number.isInteger(num)) {
+               return true;
+          } else {
+              alert("Dữ liệu điền vào không hợp lệ");
+              return false;
+          }
+      }
+    return true;
+
 }
 
 function refreshOrderStatus() {

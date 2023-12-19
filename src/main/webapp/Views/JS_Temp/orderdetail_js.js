@@ -36,13 +36,12 @@ function showtable() {
 showtable();
 
 
-
-/*Item Image*/
-function handleAddItemImage() {
-  var addItemImage = document.getElementById("itemImage_addTrigger");
-  var modal = document.getElementById("add-itemImage");
-  var btnClose = document.querySelector(".clsAddItemImage");
-  addItemImage.addEventListener("click", function () {
+/*Order Detail*/
+function handleAddOrderDetail() {
+  var addOrderDetail = document.getElementById("orderDetail_addTrigger");
+  var modal = document.getElementById("add-orderDetail");
+  var btnClose = document.querySelector(".clsAddOrderDetail");
+  addOrderDetail.addEventListener("click", function () {
     modal.classList.add("active");
     console.log(1);
   });
@@ -50,30 +49,32 @@ function handleAddItemImage() {
     modal.classList.remove("active");
   });
 }
-handleAddItemImage();
+handleAddOrderDetail();
+function handleUpdateOrderDetail() {
+  var updateOrderDetail = document.querySelectorAll(".btnUpdateOrderDetail");
+  var modal = document.getElementById("update-orderDetail");
+  var btnClose = document.querySelector(".clsUpdateOrderDetail");
 
-function handleUpdateItemImage() {
-  var updateItemImage = document.querySelectorAll(".btnUpdateItemImage");
-  var modal = document.getElementById("update-itemImage");
-  var btnClose = document.querySelector(".clsUpdateItemImage");
-
-  updateItemImage.forEach(function (item) {
+  updateOrderDetail.forEach(function (item) {
     item.addEventListener("click", () => {
       modal.style.display = "block";
 
-      var id=item.getAttribute("data-itemImageID");
-      var itemID = item.getAttribute("data-itemImageItemID");
-      var imageURL = item.getAttribute("data-itemImageURL");
+      var id=item.getAttribute("data-orderDetailID");
+      var orderID = item.getAttribute("data-orderDetailOrderID");
+      var stockItemID = item.getAttribute("data-orderDetailStockItemID");
+      var amount = item.getAttribute("data-orderDetailAmount");
+      var total = item.getAttribute("data-orderDetailTotal");
 
-      document.getElementById("update_itemImageID").value=id;
-      document.getElementById("update_itemImageURL").value = imageURL;
+      document.getElementById("update_orderDetailID").value=id;
+      document.getElementById("update_orderDetailAmount").value = amount;
+      document.getElementById("update_orderDetailTotal").value = total;
 
-      /*Combobox CustomerID*/
-      var update_itemImage_selectElement = document.getElementById(
-          "update_itemImageItemID"
+      /!*Combobox DiscountCardID*!/
+      var update_orderDetail_selectElement = document.getElementById(
+          "update_orderDetailItemID"
       );
-      for (var i = 0; i < update_itemImage_selectElement.options.length; i++) {
-        var option = update_itemImage_selectElement.options[i];
+      for (var i = 0; i < update_orderDetail_selectElement.options.length; i++) {
+        var option = update_orderDetail_selectElement.options[i];
         // So sánh giá trị tùy chọn với giá trị cần chọn
         if (option.value === itemID) {
           // Đánh dấu tùy chọn là "selected"
@@ -87,7 +88,7 @@ function handleUpdateItemImage() {
     modal.style.display = "none";
   });
 }
-handleUpdateItemImage();
+handleUpdateOrderDetail();
 
 
 function scrollPageHeader() {
@@ -139,21 +140,23 @@ function showSearchbox() {
 }
 showSearchbox();
 
-function addItemImage() {
+function addOrderDetail() {
 
-  let add_itemImageItemID = document.getElementById("add_itemImageItemID").value;
-  let add_itemImageURL = document.getElementById("add_itemImageURL").value;
+  let add_orderDetailOrderID=document.getElementById("add_orderDetailOrderID").value;
+  let add_orderDetailStockItemID=document.getElementById("add_orderDetailStockItemID").value;
+  let add_orderDetailAmount=document.getElementById("add_orderDetailTotal").value;
 
-  if (add_itemImageItemID == null || add_itemImageItemID == "" || add_itemImageURL== null || add_itemImageURL == "") {
+  if (add_orderDetailAmount == null || add_orderDetailAmount== "") {
     alert("Không thể để dữ liệu trống");
   } else {
     $.ajax({
       type: "POST",
-      url: adminManagerContextPath + "/ManageItemImageServlet",
+      url: adminManagerContextPath + "/ManageOrderDetailServlet",
       data: {
-        action: "addItemImage",
-        add_itemImageItemID:add_itemImageItemID,
-        add_itemImageURL:add_itemImageURL,
+        action: "addOrderDetail",
+        add_orderDetailOrderID:add_orderDetailOrderID,
+        add_orderDetailStockItemID:add_orderDetailStockItemID,
+        add_orderDetailAmount:add_orderDetailAmount,
       }, headers: {
         "X-Requested-With": "XMLHttpRequest",
       },
@@ -162,8 +165,8 @@ function addItemImage() {
         data = JSON.parse(data);
         if (data.success === true) {
 
-          alert("Thêm hình ảnh sản phẩm thành công");
-          location.href = adminManagerContextPath + "/ManageItemImageServlet";
+          alert("Thêm chi tiết đơn hàng thành công");
+          location.href = adminManagerContextPath + "/ManageOrderDetailServlet";
 
         } else {
           alert("Có lỗi xảy trong hệ thống");
@@ -176,21 +179,22 @@ function addItemImage() {
   }
 }
 
-function deleteItemImage(itemImageID) {
+function deleteOrderDetail(orderDetailID) {
   // Trả về true nếu người dùng đã xác nhận, ngược lại trả về false
   if (confirm('Bạn có chắc chắn xóa không?')) {
     $.ajax({
       type: "POST",
-      url: adminManagerContextPath + "/ManageItemImageServlet",
+      url: adminManagerContextPath + "/ManageOrderDetailServlet",
       data: {
-        action: "deleteItemImage",
-        itemImageID: itemImageID,
+        action: "deleteOrderDetail",
+        orderDetailID: orderDetailID,
       },
       success: function (data) {
         data = JSON.parse(data);
         if (data.success === true) {
-          alert("Xóa hình ảnh sản phẩm thành công");
-          location.href = adminManagerContextPath + "/ManageItemImageServlet";
+          alert("Xóa chi tiết hóa đơn thành công");
+          location.href = adminManagerContextPath + "/ManageOrderDetailServlet";
+
         } else {
           alert("Có lỗi xảy trong hệ thống");
         }
@@ -204,22 +208,26 @@ function deleteItemImage(itemImageID) {
   }
 }
 
-function updateItemImage() {
-  let update_itemImageID=document.getElementById("update_itemImageID").value;
-  let update_itemImageItemID = document.getElementById("update_itemImageItemID").value;
-  let update_itemImageURL = document.getElementById("update_itemImageURL").value;
+function updateOrderDetail() {
+  let update_orderDetailID=document.getElementById("update_orderDetailID").value;
+  let update_orderDetailOrderID=document.getElementById("update_orderDetailOrderID").value;
+  let update_orderDetailStockItemID=document.getElementById("update_orderDetailStockItemID").value;
+  let update_orderDetailAmount=document.getElementById("update_orderDetailTotal").value;
+  let update_orderDetailTotal=document.getElementById("update_orderDetailTotal").value;
 
-  if (update_itemImageItemID == null || update_itemImageItemID == "" || update_itemImageURL== null || update_itemImageURL == "") {
+  if (update_orderDetailAmount == null || update_orderDetailAmount== "") {
     alert("Không thể để dữ liệu trống");
-  } else {
+  }else {
     $.ajax({
       type: "POST",
-      url: adminManagerContextPath + "/ManageItemImageServlet",
+      url: adminManagerContextPath + "/ManageOrderDetailServlet",
       data: {
-        action: "updateItemImage",
-        update_itemImageID:update_itemImageID,
-        update_itemImageItemID:update_itemImageItemID,
-        update_itemImageURL:update_itemImageURL,
+        action: "updateOrderDetail",
+        update_orderDetailAmount:update_orderDetailAmount,
+        update_orderDetailID:update_orderDetailID,
+        update_orderDetailOrderID:update_orderDetailOrderID,
+        update_orderDetailStockItemID:update_orderDetailStockItemID,
+        update_orderDetailTotal:update_orderDetailTotal,
       }, headers: {
         "X-Requested-With": "XMLHttpRequest",
       },
@@ -228,8 +236,8 @@ function updateItemImage() {
         data = JSON.parse(data);
         if (data.success === true) {
 
-          alert("Cập nhật hình ảnh sản phẩm thành công");
-          refreshItemImage();
+          alert("Cập nhật chi tiết hóa đơn thành công");
+          refreshOrderDetail();
 
         } else {
           alert("Có lỗi xảy trong hệ thống");
@@ -242,29 +250,30 @@ function updateItemImage() {
   }
 }
 
-function searchAndSortItemImage() {
-  let itemImageSearchType = document.getElementById("itemImageSearchType").value;
-  let itemImageInputSearch = document.getElementById("itemImageInputSearch").value;
-  let itemImageSortType = document.getElementById("itemImageSortType").value;
+function searchAndSortOrderDetail() {
+  let orderDetailSearchType = document.getElementById("orderDetailSearchType").value;
+  let orderDetailInputSearch = document.getElementById("orderDetailInputSearch").value;
+  let orderDetailSortType = document.getElementById("orderDetailSortType").value;
 
-  if (itemImageSearchType == null || itemImageSearchType == "" || itemImageInputSearch == null || itemImageInputSearch == "" ||
-      itemImageSortType == null || itemImageSortType == "") {
+  if (orderDetailSearchType == null || orderDetailSearchType == "" || orderDetailInputSearch == null || orderDetailInputSearch == "" ||
+      orderDetailSortType == null || orderDetailSortType == "") {
     alert("Không thể để dữ liệu trống");
     return false;
   }
-     if (itemImageSortType == "id") {
-          var num = parseFloat(itemImageInputSearch);
-          if (Number.isInteger(num)) {
-               return true;
-          } else {
-              alert("Dữ liệu điền vào không hợp lệ");
-              return false;
-          }
-      }
-    return true;
+  if (orderDetailSortType == "id") {
+    var num = parseFloat(orderDetailInputSearch);
+    if (Number.isInteger(num)) {
+      return true;
+    } else {
+      alert("Dữ liệu điền vào không hợp lệ");
+      return false;
+    }
+  }
+  return true;
 
 }
 
-function refreshItemImage() {
-  location.href = adminManagerContextPath + "/ManageItemImageServlet";
+function refreshOrderDetail() {
+  location.href = adminManagerContextPath + "/ManageOrderDetailServlet";
 }
+

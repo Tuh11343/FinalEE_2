@@ -132,6 +132,7 @@
                     hàng</a>
                 <a href="${pageContext.request.contextPath}/ManageOrderDetailServlet">Quản lý chi tiết hóa đơn</a>
                 <a href="${pageContext.request.contextPath}/ManageSaleServlet">Quản lý khuyến mãi sản phẩm</a>
+                <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
             </c:if>
 
 
@@ -151,7 +152,6 @@
 
             <a href="${pageContext.request.contextPath}/ManageStockItemServlet">Quản lý thông tin sản phẩm</a>
 
-            <a href="${pageContext.request.contextPath}/ManageOrderStatusServlet">Quản lý tình trạng đơn hàng</a>
 
         </div>
     </aside>
@@ -169,12 +169,14 @@
                     >
                         Thêm
                     </button>
-                    <a class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="accountToExcel()"
+                    <button class="btnHD btnExcel" style="margin-left: 5px; margin-bottom: 4px" onclick="accountToExcel()"
                     >
                         Xuất Excel
-                    </a>
+                    </button>
                     <form>
-                        <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px" onclick="refreshAccount()">Refresh</button>
+                        <button class="btnHD btnload" style="margin-left: 5px; margin-bottom: 4px"
+                                onclick="refreshAccount()">Refresh
+                        </button>
                     </form>
 
                 </div>
@@ -228,30 +230,34 @@
                 </thead>
                 <tbody id="tableAccount">
                 <c:forEach items="${requestScope.accountList}" var="account">
-                    <tr>
-                        <td>${account.id}</td>
-                        <td>${account.permission.id}</td>
-                        <td>${account.customer.id}</td>
-                        <td>${account.name}</td>
-                        <td>${account.password}</td>
-                        <td>
-                            <div class="flex-center grpbtn">
+                    <c:if test="${not empty account}">
 
-                                <a class="btnHD btnDel" onclick="deleteAccount(${account.id})">Xóa</a>
+                        <tr>
+                            <td>${account.id}</td>
+                            <td>${account.permission.id}</td>
+                            <td>${account.customer.id}</td>
+                            <td>${account.name}</td>
+                            <td>${account.password}</td>
+                            <td>
+                                <div class="flex-center grpbtn">
 
-                                <a class="btnHD btnUpdateUser"
-                                        id="account_updateTrigger"
-                                        data-accountID="${account.id}"
-                                        data-customerID="${account.customer.id}"
-                                        data-permissionID="${account.permission.id}"
-                                        data-accountName="${account.name}"
-                                        data-accountPassword="${account.password}">
-                                    Sửa
-                                </a>
+                                    <a class="btnHD btnDel" onclick="deleteAccount(${account.id})">Xóa</a>
 
-                            </div>
-                        </td>
-                    </tr>
+                                    <a class="btnHD btnUpdateUser"
+                                       id="account_updateTrigger"
+                                       data-accountID="${account.id}"
+                                       data-customerID="${account.customer.id}"
+                                       data-permissionID="${account.permission.id}"
+                                       data-accountName="${account.name}"
+                                       data-accountPassword="${account.password}">
+                                        Sửa
+                                    </a>
+
+                                </div>
+                            </td>
+                        </tr>
+
+                    </c:if>
                 </c:forEach>
                 </tbody>
             </table>
@@ -422,7 +428,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="${pageContext.request.contextPath}/Views/User/dest/tuh.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/Views/User/dest/admin.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
 
 </body>

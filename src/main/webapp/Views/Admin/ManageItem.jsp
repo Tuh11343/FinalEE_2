@@ -235,57 +235,62 @@
                 </thead>
                 <tbody id="tableItem">
                 <c:forEach items="${requestScope.itemList}" var="item">
-                    <tr>
-                        <td>${item.id}</td>
-                        <td>${item.name}</td>
-                        <td>${item.itemType.id}</td>
-                        <td>${item.itemCollection.id}</td>
-                        <td>${item.itemMaterial.id}</td>
 
-                        <c:choose>
-                            <c:when test="${item.is_new==1}">
-                                <td>Mới</td>
-                            </c:when>
-                            <c:otherwise>
-                                <td></td>
-                            </c:otherwise>
-                        </c:choose>
+                    <c:if test="${not empty item}">
 
-                        <c:choose>
-                            <c:when test="${item.is_hot==1}">
-                                <td>Hot</td>
-                            </c:when>
-                            <c:otherwise>
-                                <td></td>
-                            </c:otherwise>
-                        </c:choose>
+                        <tr>
+                            <td>${item.id}</td>
+                            <td>${item.name}</td>
+                            <td>${item.itemType.id}</td>
+                            <td>${item.itemCollection.id}</td>
+                            <td>${item.itemMaterial.id}</td>
 
-                        <td>${item.price}</td>
-                        <td>${item.year_produce}</td>
-                        <td>${item.description}</td>
-                        <td>
-                            <div class="flex-center grpbtn">
+                            <c:choose>
+                                <c:when test="${item.is_new==1}">
+                                    <td>Mới</td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td></td>
+                                </c:otherwise>
+                            </c:choose>
 
-                                <button class="btnHD btnDel" onclick="deleteItem(${item.id})">Xóa</button>
+                            <c:choose>
+                                <c:when test="${item.is_hot==1}">
+                                    <td>Hot</td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td></td>
+                                </c:otherwise>
+                            </c:choose>
 
-                                <a
-                                        class="btnHD btnUpdateItem"
-                                        data-itemID="${item.id}"
-                                        data-itemName="${item.name}"
-                                        data-itemItemTypeID="${item.itemType.id}"
-                                        data-itemItemCollectionID="${item.itemCollection.id}"
-                                        data-itemItemMaterialID="${item.itemMaterial.id}"
-                                        data-itemIsNew="${item.is_new}"
-                                        data-itemIsHot="${item.is_hot}"
-                                        data-itemPrice="${item.price}"
-                                        data-itemYearProduce="${item.year_produce}"
-                                        data-itemDescription="${item.description}"
-                                >
-                                    Sửa
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                            <td>${item.price}</td>
+                            <td>${item.year_produce}</td>
+                            <td>${item.description}</td>
+                            <td>
+                                <div class="flex-center grpbtn">
+
+                                    <button class="btnHD btnDel" onclick="deleteItem(${item.id})">Xóa</button>
+
+                                    <a
+                                            class="btnHD btnUpdateItem"
+                                            data-itemID="${item.id}"
+                                            data-itemName="${item.name}"
+                                            data-itemItemTypeID="${item.itemType.id}"
+                                            data-itemItemCollectionID="${item.itemCollection.id}"
+                                            data-itemItemMaterialID="${item.itemMaterial.id}"
+                                            data-itemIsNew="${item.is_new}"
+                                            data-itemIsHot="${item.is_hot}"
+                                            data-itemPrice="${item.price}"
+                                            data-itemYearProduce="${item.year_produce}"
+                                            data-itemDescription="${item.description}"
+                                    >
+                                        Sửa
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </c:if>
                 </c:forEach>
                 </tbody>
             </table>

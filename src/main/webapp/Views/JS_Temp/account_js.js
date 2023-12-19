@@ -104,12 +104,10 @@ function deleteAccount(accountID) {
                 console.log("error :>> ", error);
             },
         });
-    } else {
-        alert("a")
     }
 }
 
-function updateAccount(){
+function updateAccount() {
     let update_accountID = document.getElementById("update_accountID").value;
     let update_accountName = document.getElementById("update_accountName").value;
     let update_accountPassword = document.getElementById("update_accountPassword").value;
@@ -125,7 +123,7 @@ function updateAccount(){
             url: adminManagerContextPath + "/ManageAccountServlet",
             data: {
                 action: "updateAccount",
-                update_accountID:update_accountID,
+                update_accountID: update_accountID,
                 update_accountName: update_accountName,
                 update_accountPassword: update_accountPassword,
                 update_accountCustomerID: update_accountCustomerID,
@@ -152,24 +150,76 @@ function updateAccount(){
     }
 }
 
-function searchAndSortAccount(){
-    let accountSearchType=document.getElementById("accountSearchType").value;
-    let accountInputSearch=document.getElementById("accountInputSearch").value;
-    let accountSortType= document.getElementById("accountSortType").value;
+function searchAndSortAccount() {
+    let accountSearchType = document.getElementById("accountSearchType").value;
+    let accountInputSearch = document.getElementById("accountInputSearch").value;
+    let accountSortType = document.getElementById("accountSortType").value;
 
     if (accountSearchType == null || accountSearchType == "" || accountInputSearch == null || accountInputSearch == "" ||
         accountSortType == null || accountSortType == "") {
         alert("Không thể để dữ liệu trống");
         return false;
-    }else{
-        return true;
     }
+
+    if (accountSearchType == "id" || accountSearchType == "customerID") {
+        var num = parseFloat(accountInputSearch);
+        if (Number.isInteger(num)) {
+            return true;
+        } else {
+            alert("Dữ liệu điền vào không hợp lệ");
+            return false;
+        }
+    } else if (accountSearchType == "lowerPrice" || accountSearchType == "higherPrice") {
+        if (isNaN(accountInputSearch)) {
+            return true;
+        } else {
+            alert("Dữ liệu điền vào không hợp lệ");
+            return false;
+        }
+    }
+    return true;
+
 }
 
-function refreshAccount(){
-    location.href=adminManagerContextPath+"/ManageAccountServlet";
+function refreshAccount() {
+    location.href = adminManagerContextPath + "/ManageAccountServlet";
 }
 
+function accountToExcel() {
+    let table = document.getElementById("tableAccount");
+
+    let dataToSend = [];
+
+    // Loop through the rows of the table and gather information from each column cell
+    for (let i = 1; i < table.rows.length; i++) {
+        let currentRow = table.rows[i];
+
+        // Gather information from the column cells in the current row
+        let id = currentRow.cells[0].textContent;
+        let permissionId = currentRow.cells[1].textContent;
+        let customerId = currentRow.cells[2].textContent;
+        let name = currentRow.cells[3].textContent;
+        let password = currentRow.cells[4].textContent;
+
+        // Create an object containing information from the current row
+        let accountData = {
+            id: id,
+            permission:  permissionId,
+            customer: customerId,
+            name: name,
+            password: password,
+        };
+
+        // Add the object to the dataToSend array
+        dataToSend.push(accountData);
+    }
+
+    const workbook = XLSX.utils.book_new();
+    const sheet = XLSX.utils.json_to_sheet(dataToSend);
+    XLSX.utils.book_append_sheet(workbook, sheet, "Accounts");
+
+    XLSX.writeFile(workbook, "accounts.xlsx");
+}
 
 /*Account*/
 function handleAddAccount() {

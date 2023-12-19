@@ -97,16 +97,25 @@ public class AdminManagerServlet extends HttpServlet {
         req.setAttribute("stockItemList", stockItemList);
         req.setAttribute("cartServiceImpl", cartServiceImpl);
 
+        Account signInAccount=null;
         //Lấy id account
         List<Cookie> cookieList = List.of(req.getCookies());
         for (Cookie cookie : cookieList) {
             if (cookie.getName().equals("signInAccountID")) {
                 Integer signInAccountID = Integer.parseInt(cookie.getValue());
-                Account account = accountServiceImpl.findByID(signInAccountID);
-                req.setAttribute("signInAccount",account);
+                signInAccount = accountServiceImpl.findByID(signInAccountID);
+                req.setAttribute("signInAccount",signInAccount);
             }
         }
-        req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, resp);
+        if(signInAccount!=null){
+            if(signInAccount.getPermission().getLevel()==1 || signInAccount.getPermission().getLevel()==2)
+                req.getRequestDispatcher("Views/Admin/QuanLy.jsp").forward(req, resp);
+            else{
+                resp.sendRedirect("/FinalEE/ItemServlet");
+            }
+        }
+        else
+            resp.sendRedirect("/FinalEE/ItemServlet");
     }
 
 

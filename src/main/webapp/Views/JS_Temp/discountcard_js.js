@@ -157,7 +157,7 @@ function addDiscountCard() {
         || add_discountCardCustomerID == null || add_discountCardCustomerID == "") {
         alert("Không thể để dữ liệu trống");
     } else {
-        var num = parseFloat(update_discountCardPercentage);
+        var num = parseFloat(add_discountCardPercentage);
         if(Number.isInteger(num)){
             $.ajax({
                 type: "POST",
@@ -218,8 +218,6 @@ function deleteDiscountCard(discountCardID) {
                 console.log("error :>> ", error);
             },
         });
-    } else {
-        alert("a")
     }
 }
 
@@ -281,7 +279,7 @@ function searchAndSortDiscountCard() {
         return false;
     }
     if (discountCardSearchType == "id" || discountCardSearchType == "customerID") {
-        var num = parseFloat(permissionInputSearch);
+        var num = parseFloat(discountCardInputSearch);
         if (Number.isInteger(num)) {
             return true;
         } else {
@@ -294,4 +292,38 @@ function searchAndSortDiscountCard() {
 
 function refreshDiscountCard() {
     location.href = adminManagerContextPath + "/ManageDiscountCardServlet";
+}
+
+function discountCardToExcel() {
+    let table = document.getElementById("tableDiscountCard");
+
+    let dataToSend = [];
+
+    // Lặp qua các dòng của bảng và thu thập thông tin từ mỗi ô cột
+    for (let i = 1; i < table.rows.length; i++) {
+        let currentRow = table.rows[i];
+
+        // Thu thập thông tin từ các ô cột trong dòng
+        let id = currentRow.cells[0].textContent;
+        let cus = currentRow.cells[1].textContent;
+        let name = currentRow.cells[2].textContent;
+        let discount = currentRow.cells[3].textContent;
+
+        // Tạo đối tượng chứa thông tin từ dòng hiện tại
+        let discountData = {
+            id: id,
+            cus: cus,
+            name: name,
+            discount: discount,
+        };
+
+        // Thêm đối tượng vào mảng dataToSend
+        dataToSend.push(discountData);
+    }
+
+    const workbook = XLSX.utils.book_new();
+    const sheet = XLSX.utils.json_to_sheet(dataToSend);
+    XLSX.utils.book_append_sheet(workbook, sheet, "Thẻ giảm giá");
+
+    XLSX.writeFile(workbook, "DiscountCard.xlsx");
 }
